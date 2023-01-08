@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Burak Karagol - Portfolio</title>
+
+	<link rel="stylesheet" href="style.css">
+	<script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<!----header---->
+	<div id="header">
+		<div class="container">
+			<nav>
+				<img src="images/logo.png" class="logo">
+				<ul id="sidemenu">
+					<i class="fa-solid fa-xmark" onclick="closemenu()"></i>
+					<li><a href="#header">Home</a></li>
+					<li><a href="#about">About</a></li>
+					<li><a href="#services">Services</a></li>
+					<li><a href="#portfolio">Portfolio</a></li>
+					<li><a href="#contact">Contact</a></li>
+				</ul>
+				<i class="fa-solid fa-bars" onclick="openmenu()"></i>
+			</nav>
+			<div class="header-text">
+				<p>Mechanical Engineer</p>
+				<h1>Hi, i'm <span>Burak</span> Karagol<br>From Turkey</h1>
+			</div>
+		</div>
+	</div>
+	
+	<!----about---->
+	<div id="about">
+		<div class="container">
+			<div class="row">
+				<div class="about-col-image">
+					<img src="images/user.png">
+				</div>
+				<div class="about-col-description">
+					<h1 class="sub-title">About Me</h1>
+					<p>
+						I am Burak, i am 24 years old. My biggest passion on life is constant joy of learning new diciplines. I always try to add new things to myself.<br>
+						If you want to get to know me better, you can check out my work here.
+					</p>
+					
+					<div class="tab-titles">
+						<p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+						<p class="tab-links" onclick="opentab('experience')">Experience</p>
+						<p class="tab-links" onclick="opentab('interests')">Interests</p>
+						<p class="tab-links" onclick="opentab('education')">Education</p>
+					</div>
+
+					<div class="tab-contents active-tab" id="skills">
+						<ul>
+							<li>
+								None of the following apps are my main equipment. 
+								 I have always seen programs not as a goal,
+								 but as a tool that will help me as I move towards the goal.
+								 <br>I don't want to say that i am expert at any of this applications.
+								 Because there is always something new to learn :)
+							</li>
+							<li><span>CAD / CAM Programs</span>
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> Solidworks
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> Fusion360
+							</li>
+							<li><span>Non-uniform modeling Programs</span>
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> Blender
+							<li><span>Game Development Engines</span>
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> Unity
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> Unreal Engine
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> Godot
+							</li>
+							<li><span>Programming Languages</span>
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> Shell
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> C
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> C++
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> C#
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> Python
+							</li>
+							<li><span>General</span>
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> Office Programs
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> Adobe Programs
+							</li>
+							<li><span>Languages</span>
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-arrow-right"></i> Turkish
+								<br><i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop white-box"></i>
+								<i class="fa-solid fa-stop"></i>
+								<i class="fa-solid fa-arrow-right"></i> English
+							</li>
+						</ul>
+					</div>
+					<div class="tab-contents" id="experience">
+						<ul>
+							<li>
+								You can count all the empty time between those dates. I was tring to learn a new thing or developing an personal project.
+							</li>
+							<li><span>Turkish Airlines (~ 9 Months)</span><br>09.2016 / 06.2017 - Intern</li>
+							<li><span>Rezonans Elektronik (~ 3 Months)</span><br>06.2017 / 09.2017 - Intern</li>
+							<li><span>Rezonans Elektronik (~ 3 Years)</span><br>09.2017 / 09.2020 - Full Time</li>
+							<li><span>Beyaz.NET (~ 4 Months)</span><br>02.2022 / 06.2022 - Intern</li>
+							<li><br><span>Total ~ 5 Years of Work Experience</span></li>
+						</ul>
+					</div>
+					<div class="tab-contents" id="interests">
+						<ul>
+							<li>
+								Ever since I could remember i was alwasy curious about mechanics. I can say that there isn't one machine on the house that i didn't tear apart when i was a child.<br>
+								My only motive is to understand how everything works. Over time this curiosity turned me into a engineer.
+							</li>
+							<li><span><i class="fa-solid fa-check white-box"></i></span> 3D Printing Technologies</li>
+							<li><span><i class="fa-solid fa-check white-box"></i></span> CAD / CAM</li>
+							<li><span><i class="fa-solid fa-check white-box"></i></span> Model / RC Vehicles</li>
+							<li><span><i class="fa-solid fa-check white-box"></i></span> Puzzle</li>
+							<li><span><i class="fa-solid fa-check white-box"></i></span> Game Development</li>
+							<li><span><i class="fa-solid fa-check white-box"></i></span> Programming / Coding</li>
+							<li><span><i class="fa-solid fa-check white-box"></i></span> Chess</li>
+							<li><span><i class="fa-solid fa-check white-box"></i></span> Swimming</li>
+						</ul>
+					</div>
+					<div class="tab-contents" id="education">
+						<ul>
+							<li><span>Highschool</span><br>Bagcilar Technical Highschool - Aircraft Maintenance</li>
+							<li><span>University</span><br>Marmara University - Mechatronics Engineering</li>
+							<li><br><span><b>Seminars & Certificates</b></span></li>
+							<li><i class="fa-solid fa-certificate dark-blue-box"></i>
+								<span>Certificate of Participation</span><br>
+								Marmara University Mechatronics Innovation Days 
+								<span class="gray-box">Istanbul/Turkey</span>
+							</li>
+							<li><i class="fa-solid fa-certificate dark-blue-box"></i>
+								<span>Certificate of Participation</span><br>
+								Istanbul Technical University – Industrial Engineering Student Symposium 
+								<span class="gray-box">Istanbul/Turkey</span>
+							</li>
+							<li><i class="fa-solid fa-certificate dark-blue-box"></i>
+								<span>First Accreditation Step in Aviation Education</span><br>
+								Justus von Liebig Schule 
+								<span class="gray-box">Manneheim/Germany</span>
+							</li>
+							<li><i class="fa-solid fa-certificate dark-blue-box"></i>
+								<span>Getting to Know the General Vocational Training Workshop</span><br>
+								Bfw – Unternehmen für Bildung 
+								<span class="gray-box">Heidelberg/Germany</span>
+							</li>
+							<li><i class="fa-solid fa-certificate dark-blue-box"></i>
+								<span>Security Awareness Certificate</span><br>
+								Civil aviation general directorate
+								<span class="gray-box">Istanbul/Turkey</span>
+							</li>
+							<li><i class="fa-solid fa-certificate dark-blue-box"></i>
+								<span>Occupational Health and Safety Training Certificate</span><br>
+								Ministry of National Education – Workplace Health and Safety Unit 
+								<span class="gray-box">Istanbul/Turkey</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!---services--->
+	<div id="services">
+		<div class="container">
+			<h1 class="sub-title">My Services</h1>
+			<div class="services-list">
+				<div>
+					<i class="fa-brands fa-unity"></i>
+					<h2>Game Development</h2>
+					<p>Developing custom games for myself and as a freelancer. Trying to improve myself with gamejam's. </p>
+					<a href="#contact">Learn More</a>
+				</div>
+				<div>
+					<i class="fa-solid fa-code"></i>
+					<h2>.NET Desktop Applications</h2>
+					<p>Developing custom desktop applications for making life easier!</p>
+					<a href="#contact">Learn More</a>
+				</div>
+				<div>
+					<i class="fa-solid fa-cube"></i>
+					<h2>CAD / CAM Modeling</h2>
+					<p>Designing parts, producing them for professional and personal use.</p>
+					<a href="#contact">Learn More</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!----portfolio---->
+	<div id="portfolio">
+		<div class="container">
+			<h1 class="sub-title">My Work</h1>
+			<div class="work-list">
+				<div class="work">
+					<img src="images/work-1.png">
+					<div class="layer">
+						<h3>City Racing Game</h3>
+						<p>City racer with procedural road generation. 2 different maps and personalizable car color.</p>
+						<a href="#contact"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+					</div>
+				</div>
+				<div class="work">
+					<img src="images/work-2.png">
+					<div class="layer">
+						<h3>3D Printed Part Price Calculator</h3>
+						<p>.NET application for calculating price of the parts depending on the selected material, electricity cost, and profit.</p>
+						<a href="#contact"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+					</div>
+				</div>
+				<div class="work">
+					<img src="images/work-3.png">
+					<div class="layer">
+						<h3>House Modeling and Rendering on Blender</h3>
+						<p>Recreating of an image of a room on blender.</p>
+						<a href="#contact"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+					</div>
+				</div>
+				<div class="work">
+					<img src="images/work-2.png">
+					<div class="layer">
+						<h3>Designing Mechanical Models and Simulations</h3>
+						<p>Redesigning a model and making stress simulations for safety factor calculations.</p>
+						<a href="#contact"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+					</div>
+				</div>
+				<div class="work">
+					<img src="images/work-3.png">
+					<div class="layer">
+						<h3>Printing my 3D Models For Personal Projects</h3>
+						<p>Modeling a house and printing it for my final thesis.</p>
+						<a href="#contact"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+					</div>
+				</div>
+				<div class="work">
+					<img src="images/work-1.png">
+					<div class="layer">
+						<h3>Sorting Algoirthms Visualizer</h3>
+						<p>A windows app developed with Python. Includes 4 different sorting algorithms, option for descending / ascending order, colorizing</p>
+						<a href="#contact"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+					</div>
+				</div>
+			</div>
+			<!--<a href="#contact" class="btn go-up">See More</a>-->
+		</div>
+	</div>
+	
+	<!----contact---->
+	<div id="contact">
+		<div class="container">
+			<div class="row">
+				<div class="contact-left">
+					<h1 class="sub-title">Contact Me</h1>
+					<h2>Please contact with me for more detailed information.</h2>
+					<a href="mailto:burak.karagol@outlook.com?&subject=Hi!%20I%20am%20interested%20in%20your%20work."><i class="fa-regular fa-envelope"></i> burak.karagol@outlook.com</a>
+					<p><i class="fa-solid fa-phone"></i> +90 541 821 84 61</p>
+					<div class="social-icons">
+						<a href="https://www.linkedin.com/in/burak-karagol-3451b91b0/"><i class="fa-brands fa-linkedin-in"></i></a>
+						<a href="https://mrlulez.itch.io/"><i class="fa-brands fa-itch-io"></i></a>
+						<a href="https://www.instagram.com/brkkaragol/?hl=tr"><i class="fa-brands fa-instagram"></i></a>
+						<a href="https://twitter.com/buraKaragol"><i class="fa-brands fa-twitter"></i></a>
+						<a href="https://github.com/BurakKaragol"><i class="fa-brands fa-github"></i></a>
+					</div>
+					<a href="documents/Burak_Karagol_CV.pdf" download class="btn btn2 go-up">Download My CV</a>
+				</div>
+				<div class="contact-right">
+					<form name="submit-to-google-sheet">
+						<input type="text", name="Name" placeholder="Your Name" required>
+						<input type="email", name="Email" placeholder="Your Email" required>
+						<textarea name="message" id="Message" rows="6" placeholder="Your Message" required></textarea>
+						<button type="submit" class="btn btn2 go-up">Submit</button>
+					</form>
+					<span id="msg"></span>
+				</div>
+			</div>
+		</div>
+		<div class="copyright">
+			<p>Made by Burak Karagol.</p>
+		</div>
+	</div>
+
+	<script>
+		var tablinks = document.getElementsByClassName("tab-links");
+		var tabcontents = document.getElementsByClassName("tab-contents");
+		var sidemenu = document.getElementById("sidemenu");
+
+		function opentab(tabname)
+		{
+			for(tablink of tablinks)
+			{
+				tablink.classList.remove("active-link");
+			}
+			
+			for(tabcontent of tabcontents)
+			{
+				tabcontent.classList.remove("active-tab");
+			}
+
+			event.currentTarget.classList.add("active-link");
+			document.getElementById(tabname).classList.add("active-tab");
+		}
+
+		function openmenu()
+		{
+			sidemenu.style.right = "0";
+		}
+
+		function closemenu()
+		{
+			sidemenu.style.right = "-200px";
+		}
+
+  		const scriptURL = 'https://script.google.com/macros/s/AKfycbzb8MAa8v2CKyP8v53E-CBF_qG-VJkWpbYrDP-FmcQPKr1JbIpYEA2t-L4BhREE6XUO/exec'
+  		const form = document.forms['submit-to-google-sheet']
+		const msg = document.getElementById("msg")
+
+  		form.addEventListener('submit', e => {
+    		e.preventDefault()
+    		fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      		.then(response => 
+			{
+				msg.innerHTML = "Message sent successfully!"
+				setTimeout(function()
+				{
+					msg.innerHTML = ""
+				}, 5000)
+				form.reset()
+			})
+      		.catch(error => console.error('Error!', error.message))
+		})
+	</script>
+</body>
+</html>
