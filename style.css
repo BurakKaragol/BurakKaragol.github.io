@@ -793,6 +793,11 @@ nav .fas
     {
         width: 100%;
     }
+
+    .layer p
+    {
+        font-size: large;
+    }
     
     #services
     {
