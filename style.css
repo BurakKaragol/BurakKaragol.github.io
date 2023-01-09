@@ -793,6 +793,10 @@ nav .fas
     {
         width: 100%;
     }
+    
+    .layer h3
+    {
+        font-size: larger;
 
     .layer p
     {
