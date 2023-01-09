@@ -105,6 +105,11 @@ nav ul li a:hover::after
     width: 100%;
 }
 
+nav button img
+{
+    width: 30px;
+}
+
 .header-text
 {
     font-size: 60px;
