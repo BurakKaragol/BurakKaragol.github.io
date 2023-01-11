@@ -796,6 +796,15 @@ nav .fas
         width: 100%;
     }
     
+    .layer h3
+    {
+        font-size: larger;
+
+    .layer p
+    {
+        font-size: large;
+    }
+    
     #services
     {
         padding: 15px 0;
