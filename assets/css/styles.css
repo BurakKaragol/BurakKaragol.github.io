@@ -790,7 +790,7 @@ img
   background-color: var(--general-light);
   border-radius: 0.5rem;
   overflow: hidden;
-  box-shadow: 0 4px 6pc rgba(174, 190, 205, 0.3);
+  box-shadow: 0 2px 1pc rgba(174, 190, 205, 0.3);
   transition: 0.5s;
 }
 
@@ -823,7 +823,7 @@ img
 
 .portfolio__content:hover
 {
-  box-shadow: 0 6px 8px rgba(174, 190, 205, 0.4);
+  box-shadow: 0 4px 2pc rgba(174, 190, 205, 0.4);
 }
 
 .portfolio__content:hover .portfolio__img
