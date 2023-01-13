@@ -740,7 +740,7 @@ img
 .project__container
 {
   padding: 1.5rem 1rem;
-  background-color: var(--first-color);
+  background-color: var(--general-dark);
   color: var(--second-color-dark);
   border-radius: 0.5rem;
   text-align: center;
@@ -758,7 +758,7 @@ img
 
 .project__title
 {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
 }
 
 .project__descrition
