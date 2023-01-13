@@ -1,443 +1,743 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Burak Karagol - Portfolio</title>
-	<link rel="icon" href="images/header.png" type="image/icon type">
-	<link rel="stylesheet" href="style.css">
-	<script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
-</head>
-<body>
-	<!----header---->
-	<div id="header">
-		<div class="container">
-			<nav>
-				<img src="images/logo.png" class="logo">
-				<ul id="sidemenu">
-					<img src="images/logos/xmark-solid.png" class="fas" onclick="closemenu()">
-					<li><a href="#header">Home</a></li>
-					<li><a href="#about">About</a></li>
-					<li><a href="#services">Services</a></li>
-					<li><a href="#portfolio">Portfolio</a></li>
-					<li><a href="#contact">Contact</a></li>
-					<button><img src="images/logos/hashtag-solid.png"></button>
-				</ul>
-				<img src="images/logos/bars-solid.png" class="fas" onclick="openmenu()">
-			</nav>
-			<div class="header-text">
-				<p>Mechanical Engineer</p>
-				<h1>Hi, i'm <span>Burak</span> Karagol<br>From Turkey</h1>
-			</div>
-		</div>
-	</div>
-	
-	<!----about---->
-	<div id="about">
-		<div class="container">
-			<div class="row">
-				<div class="about-col-image">
-					<img src="images/user.png">
-				</div>
-				<div class="about-col-description">
-					<h1 class="sub-title">About Me</h1>
-					<p>
-						I am Burak. I am a 24 years ol Mechatronics Engineer. My biggest passion on life is constant joy of learning new diciplines. I always try to add new things to myself.<br>
-						If you want to get to know me better, you can check out my work here.
-					</p>
-					
-					<div class="tab-titles">
-						<p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
-						<p class="tab-links" onclick="opentab('experience')">Experience</p>
-						<p class="tab-links" onclick="opentab('interests')">Interests</p>
-						<p class="tab-links" onclick="opentab('education')">Education</p>
-					</div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-					<div class="tab-contents active-tab" id="skills">
-						<ul>
-							<li>
-								None of the following apps are my main equipment. 
-								 I have always seen programs not as a goal,
-								 but as a tool that will help me as I move towards the goal.
-								 <br>I don't want to say that i am expert at any of this applications.
-								 Because there is always something new to learn :)
-							</li>
-							<li><span>CAD / CAM Programs</span>
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								Solidworks
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								Fusion360
-							</li>
-							<li><span>Non-uniform modeling Programs</span>
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								Blender
-							<li><span>Game Development Engines</span>
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								Unity
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								Unreal Engine
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								Godot
-							</li>
-							<li><span>Programming Languages</span>
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								C
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								C++
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								C#
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								Python
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								Shell
-							</li>
-							<li><span>General</span>
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								Office Programs
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								Adobe Programs
-							</li>
-							<li><span>Languages</span>
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/arrow-right-solid.png">
-								Turkish
-								<br>
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-solid.png">
-								<img src="images/logos/square-regular.png">
-								<img src="images/logos/arrow-right-solid.png">
-								English
-							</li>
-						</ul>
-					</div>
-					<div class="tab-contents" id="experience">
-						<ul>
-							<li>
-								You can count all the empty time between those dates. I was tring to learn a new thing or developing a personal project.
-							</li>
-							<li><span>Turkish Airlines <span class="secondary">(9 Months)</span></span><br>09.2016 / 06.2017 - Intern</li>
-							<li><span>Rezonans Elektronik <span class="secondary">(3 Months)</span></span><br>06.2017 / 09.2017 - Intern</li>
-							<li><span>Rezonans Elektronik <span class="secondary">(~3.5 Years)</span></span><br>09.2017 / 09.2020 - Full Time</li>
-							<li><span>Beyaz.NET <span class="secondary">(4 Months)</span></span><br>02.2022 / 06.2022 - Intern</li>
-							<li><br><span class="secondary">Total ~ 5 Years of Work Experience</span></li>
-						</ul>
-					</div>
-					<div class="tab-contents" id="interests">
-						<ul>
-							<li>
-								Ever since I could remember i was alwasy curious about mechanics. I can say that there isn't one machine on the house that i didn't tear apart when i was a child.<br>
-								My only motive is to understand how everything works. Over time this curiosity turned me into a engineer.
-							</li>
-							<li><span><img src="images/logos/check-solid.png"></i></span> 3D Printing Technologies</li>
-							<li><span><img src="images/logos/check-solid.png"></i></span> CAD / CAM</li>
-							<li><span><img src="images/logos/check-solid.png"></i></span> Model / RC Vehicles</li>
-							<li><span><img src="images/logos/check-solid.png"></i></span> Puzzle</li>
-							<li><span><img src="images/logos/check-solid.png"></i></span> Game Development</li>
-							<li><span><img src="images/logos/check-solid.png"></i></span> Programming / Coding</li>
-							<li><span><img src="images/logos/check-solid.png"></i></span> Chess</li>
-							<li><span><img src="images/logos/check-solid.png"></i></span> Swimming</li>
-						</ul>
-					</div>
-					<div class="tab-contents" id="education">
-						<ul>
-							<li><span>Highschool</span><br>Bagcilar Technical Highschool - Aircraft Maintenance</li>
-							<li><span>University</span><br>Marmara University - Mechatronics Engineering</li>
-							<li><br><span><b>Seminars & Certificates</b></span></li>
-							<li><img src="images/logos/certificate-solid.png">
-								<span>Certificate of Participation</span><br>
-								Marmara University Mechatronics Innovation Days 
-								<span class="secondary">Istanbul/Turkey</span>
-							</li>
-							<li><img src="images/logos/certificate-solid.png">
-								<span>Certificate of Participation</span><br>
-								Istanbul Technical University – Industrial Engineering Student Symposium 
-								<span class="secondary">Istanbul/Turkey</span>
-							</li>
-							<li><img src="images/logos/certificate-solid.png">
-								<span>First Accreditation Step in Aviation Education</span><br>
-								Justus von Liebig Schule 
-								<span class="secondary">Manneheim/Germany</span>
-							</li>
-							<li><img src="images/logos/certificate-solid.png">
-								<span>Getting to Know the General Vocational Training Workshop</span><br>
-								Bfw – Unternehmen für Bildung 
-								<span class="secondary">Heidelberg/Germany</span>
-							</li>
-							<li><img src="images/logos/certificate-solid.png">
-								<span>Security Awareness Certificate</span><br>
-								Civil aviation general directorate
-								<span class="secondary">Istanbul/Turkey</span>
-							</li>
-							<li><img src="images/logos/certificate-solid.png">
-								<span>Occupational Health and Safety Training Certificate</span><br>
-								Ministry of National Education – Workplace Health and Safety Unit 
-								<span class="secondary">Istanbul/Turkey</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        <!-- ===== SWIPER CSS ===== -->
+        <link rel="stylesheet" href="">
+        
+        <!-- ===== BOX ICONS ===== -->
+        <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
 
-	<!---services--->
-	<div id="services">
-		<div class="container">
-			<h1 class="sub-title">My Services</h1>
-			<div class="services-list">
-				<div>
-					<img src="images/logos/unity.png">
-					<h2>Game Development</h2>
-					<p>Developing custom games for myself and as a freelancer. Trying to improve myself with gamejam's. </p>
-					<a href="#contact">Learn More</a>
-				</div>
-				<div>
-					<img src="images/logos/code-solid.png">
-					<h2>.NET Desktop Applications</h2>
-					<p>Developing custom desktop applications for making life easier!</p>
-					<a href="#contact">Learn More</a>
-				</div>
-				<div>
-					<img src="images/logos/cube-solid.png">
-					<h2>CAD / CAM Modeling</h2>
-					<p>Designing parts, producing them for professional and personal use.</p>
-					<a href="#contact">Learn More</a>
-				</div>
-			</div>
-		</div>
-	</div>
+        <!-- ===== CSS ===== -->
+        <link rel="stylesheet" href="assets/css/styles.css">
 
-	<!----portfolio---->
-	<div id="portfolio">
-		<div class="container">
-			<h1 class="sub-title">My Work</h1>
-			<div class="work-list">
-				<div class="work">
-					<img src="images/work-1.png">
-					<div class="layer">
-						<h3><b>City Racing Game</b></h3>
-						<p>City racer with procedural road generation. 2 different maps and personalizable car color.</p>
-						<a href="#contact"><b>Learn More</b></a>
-					</div>
-				</div>
-				<div class="work">
-					<img src="images/work-2.png">
-					<div class="layer">
-						<h3><b>3D Printed Part Price Calculator</b></h3>
-						<p>.NET application for calculating price of the parts depending on the selected material, electricity cost, and profit.</p>
-						<a href="#contact"><b>Learn More</b></a>
-					</div>
-				</div>
-				<div class="work">
-					<img src="images/work-3.png">
-					<div class="layer">
-						<h3><b>House Modeling and Rendering on Blender</b></h3>
-						<p>Recreating of an image of a room on blender.</p>
-						<a href="#contact"><b>Learn More</b></a>
-					</div>
-				</div>
-				<div class="work">
-					<img src="images/work-4.png">
-					<div class="layer">
-						<h3><b>Designing Mechanical Models and Simulations</b></h3>
-						<p>Redesigning a model and making stress simulations for safety factor calculations.</p>
-						<a href="#contact"><b>Learn More</b></a>
-					</div>
-				</div>
-				<div class="work">
-					<img src="images/work-5.png">
-					<div class="layer">
-						<h3><b>Printing my 3D Models For Personal Projects</b></h3>
-						<p>You see the render of the model(blender). For realistic 3d print look alike render i used a custom shader.</p>
-						<a href="#contact"><b>Learn More</b></a>
-					</div>
-				</div>
-				<div class="work">
-					<img src="images/work-6.png">
-					<div class="layer">
-						<h3><b>Sorting Algoirthms Visualizer</b></h3>
-						<p>A windows app developed with Python. Includes 4 different sorting algorithms, option for descending / ascending order, colorizing</p>
-						<a href="#contact"><b>Learn More</b></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<!----contact---->
-	<div id="contact">
-		<div class="container">
-			<div class="row">
-				<div class="contact-left">
-					<h1 class="sub-title">Contact Me</h1>
-					<h2>Please contact with me for more detailed information.</h2>
-					<p><a href="mailto:burak.karagol@outlook.com?&subject=Hi!%20I%20am%20interested%20in%20your%20work."><img src="images/logos/envelope-solid.png"> burak.karagol@outlook.com</a></p>
-					<p><a href="tel:+90-507-211-41-58"><img src="images/logos/phone-solid.png"> +90 507 211 41 58</a></p>
-					<div class="social-icons">
-						<a href="https://www.linkedin.com/in/burak-karagol-3451b91b0/"><img src="images/logos/linkedin.png">
-						<a href="https://mrlulez.itch.io/"><img src="images/logos/itch-io.png"></a>
-						<a href="https://www.instagram.com/brkkaragol/?hl=tr"><img src="images/logos/instagram.png"></a>
-						<a href="https://twitter.com/buraKaragol"><img src="images/logos/twitter.png"></a>
-						<a href="https://github.com/BurakKaragol"><img src="images/logos/github.png"></a>
-					</div>
-					<a href="documents/Burak_Karagol_CV.pdf" download class="btn btn2 go-up"><b>Download My CV</b></a>
-				</div>
-				<div class="contact-right">
-					<form name="submit-to-google-sheet">
-						<input type="text", name="Name" placeholder="Your Name" required>
-						<input type="email", name="Email" placeholder="Your Email" required>
-						<textarea name="Message" id="Message" rows="6" placeholder="Your Message" required></textarea>
-						<button type="submit" class="btn btn2 go-up"><b>Submit</b></button>
-					</form>
-					<span id="msg"></span>
-				</div>
-			</div>
-		</div>
+        <title>Burak Karagol - Portfolio</title>
+    </head>
+    <body>
+        <!--===== SCROLL TOP =====-->
+        <a href="#" class="scrolltop" id="scroll-top">
+            <i class="fa-solid fa-chevron-up"></i>
+        </a>
+        
+        <!--===== HEADER =====-->
+        <header class="l-header" id="header">
+            <nav class="nav bd-container">
+                <a href="#" class="nav__logo">Burak Karagol - MrLulez</a>
 
-		<div class="copyright">
-			<p>Made by Burak Karagol. Thanks to <a href="https://www.youtube.com/@EasyTutorialsVideo">EasyTutorials</a></p>
-		</div>
-	</div>
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
+                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                        <li class="nav__item"><a href="#qualifications" class="nav__link">Qualifications</a></li>
+                        <li class="nav__item"><a href="#skills" class="nav__link">Skills</a></li>
+                        <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
+                        <li class="nav__item"><a href="#portfolio" class="nav__link">Portfolio</a></li>
+                        <li class="nav__item"><a href="#contact" class="nav__link">Contact Me</a></li>
+                    </ul>
+                </div>
 
-	<script>
-		var tablinks = document.getElementsByClassName("tab-links");
-		var tabcontents = document.getElementsByClassName("tab-contents");
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+        </header>
 
-		function opentab(tabname)
-		{
-			for(tablink of tablinks)
-			{
-				tablink.classList.remove("active-link");
-			}
-			
-			for(tabcontent of tabcontents)
-			{
-				tabcontent.classList.remove("active-tab");
-			}
+        <main class="l-main">
+            <!--===== HOME =====-->
+            <section class="home" id="home">
+                <div class="home__container bd-container bd-grid">
+                    <div class="home__img">
+                        <img src="assets/img/home1.png" alt="">
+                    </div>
 
-			event.currentTarget.classList.add("active-link");
-			document.getElementById(tabname).classList.add("active-tab");
-		}
-	</script>
-	<script>
-		var sidemenu = document.getElementById("sidemenu");
-		var hidden = document.getElementsByClassName("hidden");
+                    <div class="home-greeting-social">
+                        <div class="home__data">
+                            <span class="home__greeting">Hello, My name is</span>
+                            <h1 class="home__name">Burak Karagol</h1>
+                            <span class="home__profession">Mechatronics Engineer</span>
+                            <a href="assets/pdf/Burak_Karagol_CV.pdf" download class="button button-light home__button">Download CV</a>
+                        </div>
+    
+                        <div class="home__social">
+                            <a href="https://www.linkedin.com/in/burak-karagol-3451b91b0/" class="home__social-icon"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="https://github.com/BurakKaragol" class="home__social-icon"><i class="fa-brands fa-github"></i></a>
+                            <a href="https://mrlulez.itch.io/" class="home__social-icon"><i class="fa-brands fa-itch-io"></i></a>
+                            <a href="https://www.instagram.com/brkkaragol/?hl=tr" class="home__social-icon"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="https://api.whatsapp.com/send?phone=905072114158&text=Hello i have awesome project ideas!" class="home__social-icon"><i class="fa-brands fa-whatsapp"></i></a>
+                            <a href="https://telegram.me/brkkaragol" class="home__social-icon"><i class="fa-brands fa-telegram"></i></a>
+                            <a href="https://twitter.com/buraKaragol" class="home__social-icon"><i class="fa-brands fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!--===== ABOUT =====-->
+            <section class="about section bd-container" id="about">
+                <span class="section-subtitle">My history</span>
+                <h2 class="section-title">About me</h2>
 
-		function openmenu()
-		{
-			sidemenu.style.right = "0";
-		}
+                <div class="about__container">
+                    <div class="about__data">
+                        <p class="about__description">
+                            &emsp;I am Burak. I am a 24 years ol Mechatronics Engineer. 
+                            My biggest passion on life is constant joy of learning new diciplines. 
+                            I always try to learn new skills to inprove myself.<br>
+                            &emsp;There is nothing better than the pleasure of completing a project after so many failed attempts, sleepless hours and restarts.<br>
+                            &emsp;If you work with me you should know that no matter what i will always try to do my best on the project.<br>
+                            &emsp;If you want to check out my work, well... you are at the right place :)
+                        </p>
 
-		function closemenu()
-		{
-			sidemenu.style.right = "-200px";
-		}
-	</script>
-	<script>
-		const scriptURL = 'https://script.google.com/macros/s/AKfycbzb8MAa8v2CKyP8v53E-CBF_qG-VJkWpbYrDP-FmcQPKr1JbIpYEA2t-L4BhREE6XUO/exec'
-  		const form = document.forms['submit-to-google-sheet']
-		const msg = document.getElementById("msg")
+                        <div class="about__content">
+                            <span class="about__number">6</span>
+                            <span class="about__achievement">Years of work experience</span>
+                        </div>
 
-  		form.addEventListener('submit', e => {
-    		e.preventDefault()
-    		fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      		.then(response => 
-			{
-				msg.innerHTML = "Message sent successfully!"
-				setTimeout(function()
-				{
-					msg.innerHTML = ""
-				}, 5000)
-				form.reset()
-			})
-      		.catch(error => console.error('Error!', error.message))
-		})
-	</script>
-</body>
+                        <div class="about__content">
+                            <span class="about__number">4</span>
+                            <span class="about__achievement">Work branches</span>
+                        </div>
+
+                        <div class="about__content">
+                            <span class="about__number">Countless</span>
+                            <span class="about__achievement">Projects</span>
+                        </div>
+
+                        <div class="about__content">
+                            <span class="about__number">Lot's of</span>
+                            <span class="about__achievement">Fun on the journey</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--===== QUALIFICATION =====-->
+            <section class="qualification section bd-container" id="qualifications">
+                <span class="section-subtitle">Experience and Education</span>
+                <h2 class="section-title">Qualification</h2>
+
+                <div class="qualification__container bd-grid">
+                    <div class="qualification__content">
+                        <h2 class="qualification__title">
+                            <i class="fa-solid fa-briefcase qualification__title-icon"></i>
+                            Work Experience
+                        </h2>
+
+                        <div class="bd-grid">
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Turkish Airlines</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-briefcase qualification__icon"></i>
+                                        Intern
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-regular fa-calendar qualification__icon"></i>
+                                        09.2016 - 06.2017
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Rezonans Elektronik</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-briefcase qualification__icon"></i>
+                                        Intern
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-regular fa-calendar qualification__icon"></i>
+                                        06.2017 - 09.2017
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Rezonans Elektronik</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-briefcase qualification__icon"></i>
+                                        Full time
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-regular fa-calendar qualification__icon"></i>
+                                        09.2017 - 09.2020
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Beyaz.NET</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-briefcase qualification__icon"></i>
+                                        Intern
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-regular fa-calendar qualification__icon"></i>
+                                        02.2022 - 06.2022
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qualification__content">
+                        <h2 class="qualification__title">
+                            <i class="fa-solid fa-book qualification__title-icon"></i>
+                            Education
+                        </h2>
+
+                        <div class="bd-grid">
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Mechatronics Engineer</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-book qualification__icon"></i>
+                                        Marmara University
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-regular fa-calendar qualification__icon"></i>
+                                        09 2017 - 02 2023
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Aircraft Technician</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-book qualification__icon"></i>
+                                        Bagcilar Anadolu Teknik
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-regular fa-calendar qualification__icon"></i>
+                                        09 2013 - 06 2017
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Mehmet Akif Ersoy Middle School</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-book qualification__icon"></i>
+                                        Bagcilar Anadolu Teknik
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-regular fa-calendar qualification__icon"></i>
+                                        09 2009 - 06 2013
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Mehmet Akif Ersoy Primary School</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-book qualification__icon"></i>
+                                        Bagcilar Anadolu Teknik
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-regular fa-calendar qualification__icon"></i>
+                                        09 2005 - 06 2009
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qualification__content">
+                        <h2 class="qualification__title">
+                            <i class="fa-solid fa-certificate qualification__title-icon"></i>
+                            Seminars / Certificates
+                        </h2>
+
+                        <div class="bd-grid">
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Certificate of Participation</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-certificate qualification__icon"></i>
+                                        Marmara University Mechatronics Innovation Days
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-location-dot qualification__icon"></i>
+                                        Istanbul/Turkey
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Certificate of Participation</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-certificate qualification__icon"></i>
+                                        Istanbul Technical University – Industrial Engineering Student Symposium
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-location-dot qualification__icon"></i>
+                                        Istanbul/Turkey
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">First Accreditation Step in Aviation Education</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-certificate qualification__icon"></i>
+                                        Justus von Liebig Schule
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-location-dot qualification__icon"></i>
+                                        Manneheim/Germany
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Getting to Know the General Vocational Training Workshop</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-certificate qualification__icon"></i>
+                                        Bfw – Unternehmen für Bildung
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-location-dot qualification__icon"></i>
+                                        Heidelberg/Germany
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Security Awareness Certificate</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-certificate qualification__icon"></i>
+                                        Civil aviation general directorate
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-location-dot qualification__icon"></i>
+                                        Istanbul/Turkey
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="qualification__data">
+                                <h3 class="qualifiaction__area">Occupational Health and Safety Training Certificate</h3>
+
+                                <div class="qualification__box">
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-certificate qualification__icon"></i>
+                                        Ministry of National Education – Workplace Health and Safety Unit
+                                    </span>
+
+                                    <span class="qualification__work">
+                                        <i class="fa-solid fa-location-dot qualification__icon"></i>
+                                        Istanbul/Turkey
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!--===== SKILLS =====-->
+            <section class="skills section bd-container" id="skills">
+                <span class="section-subtitle">Why choose me</span>
+                <h2 class="section-title">My skills</h2>
+
+                <div class="skills__nav">
+                    <span class="skills__item active-skill" data-filter="all">All</span>
+                    <span class="skills__item" data-filter=".cadskill,.programming,.game,.app">CAD/CAM Modeling</span>
+                    <span class="skills__item" data-filter=".nonuni,.programming,.game,.app">Non Uniform Modeling</span>
+                    <span class="skills__item" data-filter=".gameskill,.programming,.game,.app">Game Development</span>
+                    <span class="skills__item" data-filter=".office,.programming,.game,.app">Office Programs</span>
+                    <span class="skills__item" data-filter=".abode,.programming,.game,.app">Adobe Programs</span>
+                    <span class="skills__item" data-filter=".langs,.programming,.game,.app">Languages</span>
+                    <span class="skills__item" data-filter=".programskill,.programming,.game,.app">Programming</span>
+                </div>
+
+                <div class="skills__container bd-grid">
+                    <div class="skills__content mix cadskill">
+                        <h3 class="skills__subtitle">CAD/CAM Modeling</h3>
+
+                        <div class="skills__data">
+                            <span class="skills__name">Solidworks - 85%</span>
+                            <span class="skills__bar skills__85"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">Fusion360 - 85%</span>
+                            <span class="skills__bar skills__85"></span>
+                        </div>
+                    </div>
+
+                    <div class="skills__content mix nonuni">
+                        <h3 class="skills__subtitle">Non Uniform Modeling</h3>
+
+                        <div class="skills__data">
+                            <span class="skills__name">Blender - 60%</span>
+                            <span class="skills__bar skills__60"></span>
+                        </div>
+                    </div>
+
+                    <div class="skills__content mix gameskill">
+                        <h3 class="skills__subtitle">Game Development</h3>
+
+                        <div class="skills__data">
+                            <span class="skills__name">Unity - 90%</span>
+                            <span class="skills__bar skills__90"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">Unreal Engine - 65%</span>
+                            <span class="skills__bar skills__65"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">Godot - 50%</span>
+                            <span class="skills__bar skills__50"></span>
+                        </div>
+                    </div>
+
+                    <div class="skills__content mix office">
+                        <h3 class="skills__subtitle">Office Programs</h3>
+
+                        <div class="skills__data">
+                            <span class="skills__name">Word - 80%</span>
+                            <span class="skills__bar skills__80"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">Excel - 80%</span>
+                            <span class="skills__bar skills__80"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">Powerpoint - 80%</span>
+                            <span class="skills__bar skills__80"></span>
+                        </div>
+                    </div>
+
+                    <div class="skills__content mix abode">
+                        <h3 class="skills__subtitle">Adobe Programs</h3>
+
+                        <div class="skills__data">
+                            <span class="skills__name">Photoshop - 65%</span>
+                            <span class="skills__bar skills__65"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">Illustrator - 50%</span>
+                            <span class="skills__bar skills__50"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">AfterEffects - 50%</span>
+                            <span class="skills__bar skills__50"></span>
+                        </div>
+                    </div>
+
+                    <div class="skills__content mix langs">
+                        <h3 class="skills__subtitle">Languages</h3>
+
+                        <div class="skills__data">
+                            <span class="skills__name">Turkish - Native(100%)</span>
+                            <span class="skills__bar skills__100"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">English - %85</span>
+                            <span class="skills__bar skills__85"></span>
+                        </div>
+                    </div>
+
+                    <div class="skills__content mix programskill">
+                        <h3 class="skills__subtitle">Programming</h3>
+
+                        <div class="skills__data">
+                            <span class="skills__name">C - 85%</span>
+                            <span class="skills__bar skills__85"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">C++ - 80%</span>
+                            <span class="skills__bar skills__80"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">C# - 90%</span>
+                            <span class="skills__bar skills__90"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">Python - 60%</span>
+                            <span class="skills__bar skills__60"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">Shell - 50%</span>
+                            <span class="skills__bar skills__50"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">Html - 65%</span>
+                            <span class="skills__bar skills__50"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">Css - 65%</span>
+                            <span class="skills__bar skills__50"></span>
+                        </div>
+                        <div class="skills__data">
+                            <span class="skills__name">JavaScript - 65%</span>
+                            <span class="skills__bar skills__50"></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--===== SERVICES =====-->
+            <section class="services section bd-container" id="services">
+                <span class="section-subtitle">What i offer</span>
+                <h2 class="section-title">Freelance Services</h2>
+
+                <div class="services__container bd-grid">
+                    <div class="services__data">
+                        <i class="fa-brands fa-unity services__icon"></i>
+                        <h3 class="services__title">Game Development</h3>
+                        <p class="services__description">I can make your game ideas come to life. Any style, any platform.</p>
+                        <a href="#contact_form" class="button">Know More</a>
+                    </div>
+
+                    <div class="services__data">
+                        <i class="fa-solid fa-display services__icon"></i>
+                        <h3 class="services__title">Application Development</h3>
+                        <p class="services__description">I can make desktop applications you want using .NET or Python.</p>
+                        <a href="#contact_form" class="button">Know More</a>
+                    </div>
+
+                    <div class="services__data">
+                        <i class="fa-solid fa-code services__icon"></i>
+                        <h3 class="services__title">Write Code</h3>
+                        <p class="services__description">I can write custom libraries for you.</p>
+                        <a href="#contact_form" class="button">Know More</a>
+                    </div>
+
+                    <div class="services__data">
+                        <i class="fa-solid fa-cube services__icon"></i>
+                        <h3 class="services__title">3D Modeling</h3>
+                        <p class="services__description">I can design/edit/create models for you.</p>
+                        <a href="#contact_form" class="button">Know More</a>
+                    </div>
+
+                    <div class="services__data">
+                        <i class="fa-solid fa-cubes services__icon"></i>
+                        <h3 class="services__title">3D Printing</h3>
+                        <p class="services__description">I can produce the models you want.</p>
+                        <a href="#contact_form" class="button">Know More</a>
+                    </div>
+
+                    <div class="services__data">
+                        <i class="fa-brands fa-hire-a-helper services__icon"></i>
+                        <h3 class="services__title">Help</h3>
+                        <p class="services__description">I can help if you are stuck on your project.</p>
+                        <a href="#contact_form" class="button">Know More</a>
+                    </div>
+                </div>
+            </section>
+
+            <!--===== PROJECT IN MIND =====-->
+            <section class="project section bd-container" id="services">
+                <div class="project__container bd-grid">
+                    <div class="project__data">
+                        <i class="fa-solid fa-message project__icon"></i>
+
+                        <div>
+                            <h2 class="project__title">Project in mind?</h2>
+                            <p class="project__descrition"><b>Do you have a project idea but don't know where to start? I can help you to bring your project to life!</b></p>
+                        </div>
+
+                        <div>
+                            <a href="#contact_form" class="button button-white"><b>Hire me!</b></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--===== PORTFOLIO =====-->
+            <section class="portfolio section bd-container" id="portfolio">
+                <span class="section-subtitle">My recent works</span>
+                <h2 class="section-title">Portfolio</h2>
+
+                <div class="portfolio__nav">
+                    <span class="portfolio__item active-portfolio" data-filter="all">All</span>
+                    <span class="portfolio__item" data-filter=".programming,.cadskill,.nonuni,.gameskill,.programskill,.office,.adobe,.langs">Programming</span>
+                    <span class="portfolio__item" data-filter=".game,.cadskill,.nonuni,.gameskill,.programskill,.office,.adobe,.langs">Game</span>
+                    <span class="portfolio__item" data-filter=".app,.cadskill,.nonuni,.gameskill,.programskill,.office,.adobe,.langs">Application</span>
+                </div>
+
+                <div class="portfolio__container bd-grid">
+                    <div class="portfolio__content mix programming">
+                        <a href=""><img src="assets/img/work1.jpg" alt="" class="portfolio__img"></a>
+                        <div class="portfolio__data">
+                            <span class="portfolio__subtitle">Web development</span>
+                            <a><h2 class="portfolio__title">New work done.</h2></a>
+                            <a href="#contact_form" class="button button-link">View Details</a>
+                        </div>
+                    </div>
+
+                    <div class="portfolio__content mix programming">
+                        <a href=""><img src="assets/img/work2.jpg" alt="" class="portfolio__img"></a>
+                        <div class="portfolio__data">
+                            <span class="portfolio__subtitle">Application development</span>
+                            <a><h2 class="portfolio__title">New work done.</h2></a>
+                            <a href="#contact_form" class="button button-link">View Details</a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio__content mix game">
+                        <a href=""><img src="assets/img/work3.jpg" alt="" class="portfolio__img"></a>
+                        <div class="portfolio__data">
+                            <span class="portfolio__subtitle">Web development</span>
+                            <a><h2 class="portfolio__title">New work done.</h2></a>
+                            <a href="#contact_form" class="button button-link">View Details</a>
+                        </div>
+                    </div>
+
+                    <div class="portfolio__content mix game">
+                        <a href=""><img src="assets/img/work4.jpg" alt="" class="portfolio__img"></a>
+                        <div class="portfolio__data">
+                            <span class="portfolio__subtitle">Web development</span>
+                            <a><h2 class="portfolio__title">New work done.</h2></a>
+                            <a href="#contact_form" class="button button-link">View Details</a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio__content mix app">
+                        <a><img src="assets/img/work5.jpg" alt="" class="portfolio__img"></a>
+                        <div class="portfolio__data">
+                            <span class="portfolio__subtitle">Web development</span>
+                            <a><h2 class="portfolio__title">New work done.</h2></a>
+                            <a href="#contact_form" class="button button-link">View Details</a>
+                        </div>
+                    </div>
+
+                    <div class="portfolio__content mix app">
+                        <a><img src="assets/img/work6.jpg" alt="" class="portfolio__img"></a>
+                        <div class="portfolio__data">
+                            <span class="portfolio__subtitle">Web development</span>
+                            <a><h2 class="portfolio__title">New work done.</h2></a>
+                            <a href="#contact_form" class="button button-link">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--===== CONTACTME =====-->
+            <section class="contact section bd-container" id="contact">
+                <span class="section-subtitle"></span>
+                <h2 class="section-title">Contact Me</h2>
+
+                <div class="contact__container bd-grid">
+                    <div class="contact__content bd-grid">
+                        <div class="contact__box">
+                            <!-- <i class="fa-solid fa-house contact__icon"></i> -->
+                            <i class="fa-solid fa-globe contact__icon"></i>
+                            <h3 class="contact__title">Location</h3>
+                            <span class="contact__description"><b>Istanbul -Turkey</b></span>
+                        </div>
+
+                        <div class="contact__box">
+                            <i class="fa-solid fa-phone contact__icon"></i>
+                            <h3 class="contact__title">Phone</h3>
+                            <span class="contact__description"><b><a href="tel:+90-507-211-41-58">+90 507-211-41-58</a></b></span>
+                        </div>
+                        
+                        <div class="contact__box">
+                            <i class="fa-solid fa-envelope contact__icon"></i>
+                            <h3 class="contact__title">E-Mail</h3>
+                            <span class="contact__description"><b><a href="mailto:burak.karagol@outlook.com?&subject=Hi!%20I%20am%20interested%20in%20your%20work.">burak.karagol@outlook.com</a></b></span>
+                        </div>
+                        
+                        <div class="contact__box">
+                            <i class="fa-solid fa-message contact__icon"></i>
+                            <h3 class="contact__title">Chat</h3>
+                            <div>
+                                <a href="https://api.whatsapp.com/send?phone=905072114158&text=Hello i have awesome project ideas!" class="contact__social"><i class="fa-brands fa-whatsapp"></i></a>
+                                <a href="https://telegram.me/brkkaragol" class="contact__social"><i class="fa-brands fa-telegram"></i></a>
+                                <a href="https://www.instagram.com/brkkaragol/?hl=tr" class="contact__social"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="section-subtitle" id="contact_form">For more information. You can ask me anything you want.</span>
+                    <h2 class="section-title">Contact Form</h2>
+                    <form name="submit-to-google-sheet" action="mailto:burak.karagol@outlook.com?subject=Hi! I really like your work :)" method="post" enctype="text/plain" class="contact__form">
+                        <div class="contact__inputs">
+                            <input type="text" name="Name" placeholder="Name" required class="contact__input">
+                            <input type="email" name="Email" placeholder="Email" required class="contact__input">
+                        </div>
+
+                        <div class="contact__inputs">
+                            <input type="text" name="Project" placeholder="Project" class="contact__input">
+                            <input type="number" name="Number" placeholder="Number" class="contact__input">
+                        </div>
+
+                        <textarea name="Message" id="" cols="0" rows="7" placeholder="Message" required class="contact__input"></textarea>
+                        
+                        <input type="submit" value="Submit" class="button contact_button">
+                        <p class="submit__message" id="msg"></p>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <!--===== FOOTER =====-->
+        <footer class="footer">
+            <div class="footer__container bd-container">
+                <h1 class="footer__title">Burak Karagol</h1>
+                <p class="footer__description">Hope you like my work!</p>
+                <div class="footer__social">
+                    <a href="https://www.linkedin.com/in/burak-karagol-3451b91b0/" class="footer__link"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://github.com/BurakKaragol" class="footer__link"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://mrlulez.itch.io/" class="footer__link"><i class="fa-brands fa-itch-io"></i></a>
+                    <a href="https://www.instagram.com/brkkaragol/?hl=tr" class="footer__link"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://api.whatsapp.com/send?phone=905072114158&text=Hello i have awesome project ideas!" class="footer__link"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://telegram.me/brkkaragol" class="footer__link"><i class="fa-brands fa-telegram"></i></a>
+                    <a href="https://twitter.com/buraKaragol" class="footer__link"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+                <p class="footer__copy">@2023 Burak Karagol<br>thanks to @Bedimcode</p>
+            </div>
+        </footer>
+        
+        <!-- ===== MIXITUP FILTER ===== -->
+        <script src="assets/js/mixitup.min.js"></script>
+        
+        <!-- ===== SWIPER JS ===== -->
+        <script src=""></script>
+        
+        <!-- ===== GSAP ===== -->
+        <script src="assets/js/gsap.min.js"></script>
+        
+        <!--===== MAIN JS =====-->
+        <script src="assets/js/main.js"></script>
+    </body>
 </html>
