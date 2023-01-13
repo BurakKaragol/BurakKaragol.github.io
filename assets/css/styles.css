@@ -607,9 +607,15 @@ img
 .skills__content
 {
   display: grid;
-  background-color: var(--general-lighten);
+  background-color: var(--general-dark);
   border-radius: 0.5rem;
   margin: 0 0.5rem;
+  transition: 0.8s;
+}
+
+.skills__content:hover
+{
+  background-color: var(--general-lighten);
 }
 
 .skills__name
