@@ -118,24 +118,24 @@ function activeSkill()
 }
 linkSkills.forEach(l => l.addEventListener('click', activeSkill))
 
-// const scriptURL = 'https://script.google.com/macros/s/AKfycbzb8MAa8v2CKyP8v53E-CBF_qG-VJkWpbYrDP-FmcQPKr1JbIpYEA2t-L4BhREE6XUO/exec'
-// const form = document.forms['submit-to-google-sheet']
-// const msg = document.getElementById("msg")
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzb8MAa8v2CKyP8v53E-CBF_qG-VJkWpbYrDP-FmcQPKr1JbIpYEA2t-L4BhREE6XUO/exec'
+const form = document.forms['submit-to-google-sheet']
+const msg = document.getElementById("msg")
 
-// form.addEventListener('submit', e => {
-//     e.preventDefault() //for sending the email at the same time
-//     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-//     .then(response => 
-//     {
-//         msg.innerHTML = "Message sent successfully!"
-//         setTimeout(function()
-//         {
-//             msg.innerHTML = ""
-//         }, 5000)
-//         form.reset()
-//     })
-//     .catch(error => console.error('Error!', error.message))
-// })
+form.addEventListener('submit', e => {
+    e.preventDefault() //for sending the email at the same time
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+    .then(response => 
+    {
+        msg.innerHTML = "Message sent successfully!"
+        setTimeout(function()
+        {
+            msg.innerHTML = ""
+        }, 5000)
+        form.reset()
+    })
+    .catch(error => console.error('Error!', error.message))
+})
 
 /*===== GSAP ANIMATION =====*/ 
 gsap.from('.home__img', {opacity: 0, duration: 2, delay: 0.5, x: 60})
