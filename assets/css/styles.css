@@ -131,7 +131,8 @@ body.dark-theme {
 
 .dark-theme .home__shape-wawes,
 .dark-theme .home__shape-circle,
-.dark-theme .qualification__img {
+.dark-theme .qualification__img,
+.dark-theme .qualification__img_alt {
   filter: invert(1);
 }
 
@@ -451,6 +452,10 @@ body.dark-theme {
   width: 40px;
 }
 
+.white img{
+  filter: invert(1);
+}
+
 .skills__name{
   font-size: var(--small-font-size);
   margin-bottom: .25rem;
@@ -530,6 +535,15 @@ body.dark-theme {
 }
 
 .qualification__img{
+  width: 150px;
+  position: absolute;
+  right: -3rem;
+  bottom: 12rem;
+  transform: rotate(15deg);
+  opacity: .1;
+}
+
+.qualification__img_alt{
   width: 150px;
   position: absolute;
   right: -3rem;
@@ -1259,6 +1273,12 @@ body.dark-theme {
     width: 300px;
     left: -6rem;
     bottom: 5rem;
+  }
+
+  .qualification__img_alt{
+    width: 300px;
+    left: 6rem;
+    bottom: 1.5rem;
   }
 
   .services__container{
