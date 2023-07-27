@@ -498,6 +498,13 @@ body.dark-theme {
   row-gap: 3.5rem;
 }
 
+.qualification__container span,
+.qualification__container h3{
+  max-width: 1000px;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
 .qualification__title{
   display: flex;
   justify-content: center;
@@ -549,7 +556,7 @@ body.dark-theme {
   right: -3rem;
   bottom: 12rem;
   transform: rotate(15deg);
-  opacity: .1;
+  opacity: .25;
 }
 
 /*=============== SERVICES ===============*/
@@ -1277,7 +1284,7 @@ body.dark-theme {
 
   .qualification__img_alt{
     width: 300px;
-    left: 6rem;
+    right: 4rem;
     bottom: 1.5rem;
   }
 
