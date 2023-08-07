@@ -17,7 +17,7 @@
   /* Change the first number */
   /* Blue: 207 - Purple: 250 - Pink: 356 - Teal: 174 */
   --gradient-color: linear-gradient(135deg,
-                      hsla(297, 72%, 58%, 0.5),
+                      hsla(297, 71%, 58%, 0.5),
                       hsla(196, 73%, 71%, 0.8));
 
   /*========== Font and typography ==========*/
@@ -961,7 +961,7 @@ body.dark-theme {
 /*=============== SCROLL UP ===============*/
 .scroll__up{
   position: fixed;
-  right: 1rem;
+  right: 2.5rem;
   bottom: -30%;
   background-color: var(--body-color);
   box-shadow: 0 4px 12px hsl(207, 24%, 35%, .15);
