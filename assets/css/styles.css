@@ -893,6 +893,7 @@ body.dark-theme {
 .footer__social{
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .footer__list{
