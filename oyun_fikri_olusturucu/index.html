@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+    <html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta keywords="" content="'Oyun Fikri Oluşturucu'">
+        <meta name="description" content="Oyun fikri olusturucu">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:image" content="/assets/img/preview.png"/>
+        <meta name="author" content="Burak Karagol">
+
+        <!--=============== REMIXICONS ===============-->
+        <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+        <!--=============== CSS ===============-->
+        <link rel="stylesheet" href="gig_styles.css">
+
+        <!--=============== MAIN JS ===============-->
+        <script src="data.js"></script>
+        <script src="gig_main.js"></script>
+
+        <title>Oyun Fikri Oluşturucu</title>
+    </head>
+    <body>
+        <header>
+            <h2 class="header__text">Oyun Fikri Oluşturucu</h2>
+        </header>
+
+        <main>
+            <div class="settings__container">
+                <div class="theme__container container">
+                    <p class="container__title">Tema :</p>
+                    <div class="selected__theme selected">
+                        <p id="selected-theme">Rastgele</p>
+                        <div class="theme__dropdown dropdown">
+                            <a class="dropdown__option" onclick="set_theme(-1)">Rastgele</a>
+                            <a class="dropdown__option" onclick="set_theme(0)">Hayatta Kalma</a>
+                            <a class="dropdown__option" onclick="set_theme(1)">Fantazi</a>
+                            <a class="dropdown__option" onclick="set_theme(2)">Gizem</a>
+                            <a class="dropdown__option" onclick="set_theme(3)">Aşk</a>
+                            <a class="dropdown__option" onclick="set_theme(4)">Korku</a>
+                            <a class="dropdown__option" onclick="set_theme(5)">Macera</a>
+                            <a class="dropdown__option" onclick="set_theme(6)">Savaş</a>
+                            <a class="dropdown__option" onclick="set_theme(7)">Barış</a>
+                            <a class="dropdown__option" onclick="set_theme(8)">Dostluk</a>
+                            <a class="dropdown__option" onclick="set_theme(9)">İntikam</a>
+                            <a class="dropdown__option" onclick="set_theme(10)">Büyüme</a>
+                            <a class="dropdown__option" onclick="set_theme(11)">Ölümsüzlük</a>
+                            <a class="dropdown__option" onclick="set_theme(12)">Teknoloji</a>
+                            <a class="dropdown__option" onclick="set_theme(13)">Totaliterlik</a>
+                            <a class="dropdown__option" onclick="set_theme(14)">Din</a>
+                            <a class="dropdown__option" onclick="set_theme(15)">Gelenek</a>
+                            <a class="dropdown__option" onclick="set_theme(16)">Zihinsel Hastalık</a>
+                            <a class="dropdown__option" onclick="set_theme(17)">Uzay Seyahati</a>
+                            <a class="dropdown__option" onclick="set_theme(18)">Keşif</a>
+                            <a class="dropdown__option" onclick="set_theme(19)">Hırs</a>
+                            <a class="dropdown__option" onclick="set_theme(20)">Adalet</a>
+                            <a class="dropdown__option" onclick="set_theme(21)">Vatanseverlik</a>
+                            <a class="dropdown__option" onclick="set_theme(22)">Yolsuzluk</a>
+                            <a class="dropdown__option" onclick="set_theme(23)">Sömürü</a>
+                            <a class="dropdown__option" onclick="set_theme(24)">Dünyanın Sonu</a>
+                            <a class="dropdown__option" onclick="set_theme(25)">Haksızlık</a>
+                            <a class="dropdown__option" onclick="set_theme(26)">Bilgisayar Korsanlığı</a>
+                            <a class="dropdown__option" onclick="set_theme(27)">Yapay Zeka</a>
+                            <a class="dropdown__option" onclick="set_theme(28)">Robot Hakları</a>
+                            <a class="dropdown__option" onclick="set_theme(29)">Dünya Dışı Yaşam</a>
+                            <a class="dropdown__option" onclick="set_theme(30)">Hastalık</a>
+                            <a class="dropdown__option" onclick="set_theme(31)">Ölüm Sonrası Hayat</a>
+                            <a class="dropdown__option" onclick="set_theme(32)">Dans</a>
+                            <a class="dropdown__option" onclick="set_theme(33)">Şarkı Söyleme</a>
+                            <a class="dropdown__option" onclick="set_theme(34)">Arıcılık</a>
+                            <a class="dropdown__option" onclick="set_theme(35)">Mühendislik</a>
+                            <a class="dropdown__option" onclick="set_theme(36)">Dikiş</a>
+                            <a class="dropdown__option" onclick="set_theme(37)">Moda</a>
+                            <a class="dropdown__option" onclick="set_theme(38)">Fırıncılık</a>
+                            <a class="dropdown__option" onclick="set_theme(39)">Pullarla Uğraşma</a>
+                            <a class="dropdown__option" onclick="set_theme(40)">Sanat</a>
+                            <a class="dropdown__option" onclick="set_theme(41)">Bahçecilik</a>
+                            <a class="dropdown__option" onclick="set_theme(42)">Mutluluk</a>
+                            <a class="dropdown__option" onclick="set_theme(43)">Üzüntü</a>
+                            <a class="dropdown__option" onclick="set_theme(44)">Eğlence Kavramı</a>
+                            <a class="dropdown__option" onclick="set_theme(45)">Soğukkanlılık</a>
+                            <a class="dropdown__option" onclick="set_theme(46)">Stereotipler</a>
+                            <a class="dropdown__option" onclick="set_theme(47)">Aile</a>
+                            <a class="dropdown__option" onclick="set_theme(48)">İlişkiler</a>
+                            <a class="dropdown__option" onclick="set_theme(49)">Gerçek</a>
+                            <a class="dropdown__option" onclick="set_theme(50)">Yalan</a>
+                            <a class="dropdown__option" onclick="set_theme(51)">Cesaret</a>
+                            <a class="dropdown__option" onclick="set_theme(52)">Korkaklık</a>
+                            <a class="dropdown__option" onclick="set_theme(53)">Matematik</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mood__container container">
+                    <p class="container__title">Mod :</p>
+                    <div class="selected__mood selected">
+                        <p id="selected-mood">Rastgele</p>
+                        <div class="mood__dropdown dropdown">
+                            <a class="dropdown__option" onclick="set_mood(-1)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_mood(0)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_mood(1)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_mood(2)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_mood(3)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_mood(4)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_mood(5)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_mood(6)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_mood(7)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_mood(8)">Secenek</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="genre__container container">
+                    <p class="container__title">Tür :</p>
+                    <div class="selected__genre selected">
+                        <p id="selected-genre">Rastgele</p>
+                        <div class="genre__dropdown dropdown">
+                            <a class="dropdown__option" onclick="set_genre(-1)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_genre(0)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_genre(1)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_genre(2)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_genre(3)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_genre(4)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_genre(5)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_genre(6)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_genre(7)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_genre(8)">Secenek</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="character__container container">
+                    <p class="container__title">Karakter :</p>
+                    <div class="selected__character selected">
+                        <p id="selected-character">Rastgele</p>
+                        <div class="character__dropdown dropdown">
+                            <a class="dropdown__option" onclick="set_character(-1)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_character(0)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_character(1)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_character(2)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_character(3)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_character(4)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_character(5)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_character(6)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_character(7)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_character(8)">Secenek</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="goal__container container">
+                    <p class="container__title">Amaç :</p>
+                    <div class="selected__goal selected">
+                        <p id="selected-goal">Rastgele</p>
+                        <div class="goal__dropdown dropdown">
+                            <a class="dropdown__option" onclick="set_goal(-1)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_goal(0)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_goal(1)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_goal(2)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_goal(3)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_goal(4)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_goal(5)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_goal(6)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_goal(7)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_goal(8)">Secenek</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting__container container">
+                    <p class="container__title">Kurulum :</p>
+                    <div class="selected__setting selected">
+                        <p id="selected-setting">Rastgele</p>
+                        <div class="setting__dropdown dropdown">
+                            <a class="dropdown__option" onclick="set_setting(-1)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_setting(0)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_setting(1)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_setting(2)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_setting(3)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_setting(4)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_setting(5)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_setting(6)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_setting(7)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_setting(8)">Secenek</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="joker__container container">
+                    <p class="container__title">Joker :</p>
+                    <div class="selected__joker selected">
+                        <p id="selected-joker">Rastgele</p>
+                        <div class="joker__dropdown dropdown">
+                            <a class="dropdown__option" onclick="set_joker(-1)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_joker(0)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_joker(1)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_joker(2)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_joker(3)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_joker(4)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_joker(5)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_joker(6)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_joker(7)">Secenek</a>
+                            <a class="dropdown__option" onclick="set_joker(8)">Secenek</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="idea__text" id="idea-text">
+                Henüz fikir oluşturulmadı
+            </p>
+            <button onclick="generate_random_game_idea()" id="generate-button">
+                Fikir Oluştur
+            </button>
+        </main>
+
+        <footer>
+            <p class="footer__text">by Burak Karagöl</p>
+            <a href="" class="footer__link">web sayfama göz atın</a>
+        </footer>
+    </body>
+</html>
