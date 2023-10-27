@@ -15,13 +15,13 @@
   --footer-color: hsl(207, 4%, 8%);
   --text-color-light: hsl(196, 73%, 51%);
 
-  --theme_color: red;
-  --mood-color: orange;
-  --genre-color: yellow;
-  --character-color: lightgreen;
-  --goal-color: green;
-  --setting-color: blue;
-  --joker-color: lightblue;
+  --theme_color: hsl(197, 90%, 73%);
+  --mood-color: hsl(120, 76%, 43%);
+  --genre-color: hsl(207, 63%, 51%);
+  --character-color: hsl(30, 84%, 59%);
+  --goal-color: hsl(60, 100%, 50%);
+  --setting-color: hsl(0, 70%, 57%);
+  --joker-color: hsl(330, 81%, 67%);
 
   /* Change the first number */
   /* Blue: 207 - Purple: 250 - Pink: 356 - Teal: 174 */
@@ -116,11 +116,26 @@ main {
   height: 64px;
 }
 
+.grid__container {
+  display: flex;
+  flex-direction: row;
+}
+
 .container__title {
   font-size: var(--h1-font-size);
   color: var(--title-color);
   text-align: left;
   padding-left: 16px;
+  
+}
+
+.fa-dice {
+  margin-left: 16px;
+  font-size: var(--h2-font-size);
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .selected__theme,
@@ -141,14 +156,43 @@ main {
 .selected__goal p,
 .selected__setting p,
 .selected__joker p {
-  color: var(--title-color);
   padding: 6px 0;
   font-weight: bold;
   text-align: center;
   font-size: var(--h2-font-size);
 }
 
+.selected__theme p {
+  color: var(--theme_color);
+}
+
+.selected__mood p {
+  color: var(--mood-color);
+}
+
+.selected__genre p {
+  color: var(--genre-color);
+}
+
+.selected__character p {
+  color: var(--character-color);
+}
+
+.selected__goal p {
+  color: var(--goal-color);
+}
+
+.selected__setting p {
+  color: var(--setting-color);
+}
+
+.selected__joker p {
+  color: var(--joker-color);
+}
+
 .dropdown {
+  min-width: 270px;
+  width: fit-content;
   height: 0;
   transition-duration: .5s;
 }
@@ -176,11 +220,11 @@ main {
   text-decoration: none;
   color: var(--title-color);
   padding-top: 6px;
-  text-overflow: ellipsis;
   text-align: center;
   background-color: var(--header-color);
   width: 100%;
-  height: 48px;
+  min-height: 48px;
+  height: fit-content;
   transition-duration: .2s;
 }
 
