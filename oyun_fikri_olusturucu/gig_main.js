@@ -1,95 +1,60 @@
 //#region Variables
 let themes = [
-    "theme1",
-    "theme2",
-    "theme3",
-    "theme4",
-    "theme5",
-    "theme6",
-    "theme7",
-    "theme8",
-    "theme9"
+    "Bilim Kurgu",
+    "Fantastik Bilim Kurgu",
+    "Yarış",
+    "Macera",
+    "Zombi"
 ]
 
 let moods = [
-    "mood1",
-    "mood2",
-    "mood3",
-    "mood4",
-    "mood5",
-    "mood6",
-    "mood7",
-    "mood8",
-    "mood9"
+    "Enerjik",
+    "Rahatlatıcı",
+    "Heyecan Verici",
+    "Stratejik"
 ]
 
 let genres = [
-    "genre1",
-    "genre2",
-    "genre3",
-    "genre4",
-    "genre5",
-    "genre6",
-    "genre7",
-    "genre8",
-    "genre9"
+    "Aksiyon",
+    "Gizli Nesne Bulma",
+    "Simülasyon",
+    "Yapım",
+    "RPG"
 ]
 
 let characters = [
-    "character1",
-    "character2",
-    "character3",
-    "character4",
-    "character5",
-    "character6",
-    "character7",
-    "character8",
-    "character9"
+    "Süper Kahraman ile",
+    "Gizemli Bir Yaratık İle",
+    "Ajan Olarak"
 ]
 
 let goals = [
-    "goal1",
-    "goal2",
-    "goal3",
-    "goal4",
-    "goal5",
-    "goal6",
-    "goal7",
-    "goal8",
-    "goal9"
+    "Hazine Bulmaya çalışıyorsunuz",
+    "Düşmanları Yok Etmeye çalışıyorsunuz",
+    "Kaçımaya çalışıyorsunuz",
+    "Rakipleri Geçmeye çalışıyorsunuz"
 ]
 
 let settings = [
-    "setting1",
-    "setting2",
-    "setting3",
-    "setting4",
-    "setting5",
-    "setting6",
-    "setting7",
-    "setting8",
-    "setting9"
+    "Ormanlık Alanda",
+    "Uzay İstasyonunda",
+    "Antik Tapınakta",
+    "Büyülü Ormanda"
 ]
 
 let jokers = [
-    "joker1",
-    "joker2",
-    "joker3",
-    "joker4",
-    "joker5",
-    "joker6",
-    "joker7",
-    "joker8",
-    "joker9"
+    "Sadece Gece Oynanabilir",
+    "Sadece Tek Elle Oynanabilir",
+    "Sadece Ses ile Kontrol"
 ]
 //#endregion
-
 
 window.onload = function() {
     fill_all();
 }
 
 //#region Fill Functions
+// fill the dropdowns according to the lists
 function fill_all() {
     fill_theme();
     fill_mood();
@@ -193,6 +158,7 @@ function fill_joker() {
 //#endregion
 
 //#region Set Functions
+// select the clicked list item. If -1 is selected the variable will be rolled
 let theme_index = -1;
 let theme_random = true;
 function set_theme(index) {
@@ -264,44 +230,41 @@ function set_joker(index) {
 }
 //#endregion
 
+// generate a random number between [min] and [max]
 function random_number(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
 }
 
+// generate a random number between [0] and [max]
 function random_number(max) {
 	return Math.floor(Math.random() * (max));
 }
 
-function generate_random_game_idea() {
-    var theme = "theme";
-    var mood = "mood";
-    var genre = "genre";
-    var character = "character";
-    var goal = "goal";
-    var setting = "setting";
-    var joker = "joker";
-
-    function fill_selections() {
-        theme = fill_theme_selections();
-        mood = fill_mood_selections();
-        genre = fill_genre_selections();
-        character = fill_character_selections();
-        goal = fill_goal_selections();
-        setting = fill_setting_selections();
-        joker = fill_joker_selections();
+document.addEventListener("keydown", function(event) {
+    let generate_button = document.getElementById("generate-button");
+    if (event.key == " ") {
+        generate_button.click();
     }
+});
 
+// generate random game idea. Main click function
+function generate_random_game_idea() {
     //write the idea with visual animation
     function write_idea(idea_template, total_time) {
-        console.log("writing idea: " + idea_template);
         let idea_text = document.getElementById("idea-text");
-        let generate_button = document.getElementById("generate-button");
         var total_lenght = get_complete_length(idea_template); // get the length of which the randomized value filled
         var template_length = idea_template.length;
         var wait_time = total_time * 600 / total_lenght; // calculate the wait time for each character
+        let generate_button = document.getElementById("generate-button");
+        let copy_button = document.getElementById("copy-button");
+        let dropdowns = document.getElementsByClassName("selected");
         generate_button.disabled = true; // disable the button so the user cannot spam the generate function and jam it.
         generate_button.innerHTML = "Oluşturuluyor"
+        copy_button.disabled = true;
         idea_text.innerHTML = "";
+        for (const dropdown of dropdowns) {
+            dropdown.classList.add("generating");
+        }
         var result = ``;
         let index = 0;
         function generate_next_char() {
@@ -311,7 +274,7 @@ function generate_random_game_idea() {
                         result += idea_template.charAt(index);
                         index ++;
                     }
-                    setTimeout(generate_next_char, 0);
+                    generate_next_char();
                 }
                 else {
                     result += idea_template.charAt(index);
@@ -324,7 +287,11 @@ function generate_random_game_idea() {
                 result = idea_template;
                 idea_text.innerHTML = result;
                 generate_button.disabled = false;
-                generate_button.innerHTML = "Fikir Oluştur"
+                generate_button.innerHTML = "Fikir Oluştur (Boşluk)";
+                copy_button.disabled = false;
+                for (const dropdown of dropdowns) {
+                    dropdown.classList.remove("generating");
+                }
             }
         }
 
@@ -333,21 +300,50 @@ function generate_random_game_idea() {
 
     roll_random_numbers();
     edit_all_icons();
-    fill_selections();
+
+    // variables
+    var theme = fill_theme_selections();
+    var mood = fill_mood_selections();
+    var genre = fill_genre_selections();
+    var character = fill_character_selections();
+    var goal = fill_goal_selections();
+    var setting = fill_setting_selections();
+    var joker = fill_joker_selections();
 
     let templates = [
-        `template1 deneme <span class='theme'>${theme}</span> <span class='mood'>${mood}</span> <span class='genre'>${genre}</span> <span class='character'>${character}</span> <span class='goal'>${goal}</span> <span class='setting'>${setting}</span> <span class='joker'>${joker}</span>`
-        // "template2 #theme# deneme #mood# #genre# boşluk #character# #goal# #setting# #joker#"
+        // `deneme <span class='theme'>${theme}</span> deneme <span class='mood'>${mood}</span> <span class='genre'>${genre}</span> deneme <span class='character'>${character}</span> deneme <span class='goal'>${goal}</span> <span class='setting'>${setting}</span> deneme <span class='joker'>${joker}</span>`,
+        `<span class='genre'>${genre}</span> türünde <span class='mood'>${mood}</span> bir <span class='theme'>${theme}</span> oyunu. <span class='character'>${character}</span> <span class='setting'>${setting}</span> <span class='goal'>${goal}</span>. Joker: <span class='joker'>${joker}</span>`,
+        // `Bir <span class='theme'>${theme}</span> oyunu <span class='mood'>${mood}</span> modunda. Oyuncu <span class='character'>${character}</span> karakterini kontrol edecek ve <span class='goal'>${goal}</span> için <span class='setting'>${setting}</span> ortamında macera yaşayacak.`,
+        // `<span class='theme'>${theme}</span> temalı bir oyun, <span class='mood'>${mood}</span> atmosferiyle. <span class='goal'>${goal}</span> için <span class='character'>${character}</span> karakteriyle oynayacaksınız, <span class='setting'>${setting}</span> ortamında.`,
+        // `<span class='theme'>${theme}</span> temasıyla bir oyun, <span class='mood'>${mood}</span> ve <span class='goal'>${goal}</span> ile. Oyuncu <span class='character'>${character}</span> karakterini yönlendirecek ve macerasını <span class='setting'>${setting}</span> yerinde yaşayacak.`,
+        // `<span class='theme'>${theme}</span> temalı, <span class='mood'>${mood}</span> modunda bir oyun. Oyuncu <span class='character'>${character}</span> karakteriyle <span class='goal'>${goal}</span> için <span class='setting'>${setting}</span> ortamında mücadele edecek.`
     ]
+    
+    var random = random_number(templates.length);
+    var selected_template = templates[random];
 
-    function select_random_template() {
-        var random = random_number(templates.length);
-        return templates[random];
-    }
-
-    var selected_template = select_random_template();
     // write_idea(selected_template, 10);
     write_idea(`<span class='theme'>Henüz</span> <span class='mood'>içeriğim</span> <span class='genre'>tamamlanmadığı</span> <span class='character'>için</span> <span class='goal'>oyun</span> <span class='setting'>fikri</span> <span class='joker'>oluşturamıyorum.</span>`, 10);
+}
+
+function copy_game_idea() {
+    let idea_text = document.getElementById("idea-text");
+    let button_icon = document.getElementById("button-icon");
+    var clipboard = idea_text.innerText;
+    navigator.clipboard.writeText(clipboard);
+    button_icon.classList.replace("fa-copy", "fa-check");
+    console.log("copied");
+    setTimeout(reset_copy_button, 1200);
+    button_icon.parentElement.disabled = true;
+    button_icon.parentElement.classList.add("copied");
+}
+
+function reset_copy_button() {
+    let button_icon = document.getElementById("button-icon");
+    button_icon.parentElement.disabled = false;
+    button_icon.parentElement.classList.remove("copied");
+    button_icon.classList.replace("fa-check", "fa-copy");
+    console.log("reset");
 }
 
 function roll_random_numbers() {
@@ -361,6 +357,7 @@ function roll_random_numbers() {
 }
 
 //#region Edit Random Icons
+// hide or show the randomization icon.
 function edit_all_icons() {
     edit_theme_icon();
     edit_mood_icon();
@@ -471,6 +468,7 @@ function edit_joker_icon() {
 //#endregion
 
 //#region Fill Selections
+// set the dropdown selections accordingly
 function fill_theme_selections() {
     var selected_theme = document.getElementById("selected-theme");
     theme = themes[theme_index];
@@ -522,6 +520,7 @@ function fill_joker_selections() {
 
 //#endregion
 
+// calculates the total length of the template with variables filled
 function get_complete_length(template) {
     total = template.length;
     if (template.includes("<span class='theme'>")) {

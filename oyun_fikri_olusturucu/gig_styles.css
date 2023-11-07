@@ -14,6 +14,8 @@
   --header-color: hsl(207, 4%, 15%);
   --footer-color: hsl(207, 4%, 8%);
   --text-color-light: hsl(196, 73%, 51%);
+  --text-color-disabled: hsl(20, 73%, 51%);
+  --text-color-copied: hsl(204, 73%, 51%);
 
   --theme_color: hsl(197, 90%, 73%);
   --mood-color: hsl(120, 76%, 43%);
@@ -146,7 +148,8 @@ main {
 .selected__setting,
 .selected__joker {
   background-color: var(--header-color);
-  height: 48px;
+  min-height: 48px;
+  height: fit-content;
 }
 
 .selected__theme p,
@@ -199,6 +202,14 @@ main {
 
 .selected:hover .dropdown {
   height: 480px;
+}
+
+.selected.generating {
+  opacity: 0.5;
+}
+
+.selected.generating:hover .dropdown {
+  height: 0px;
 }
 
 .theme__dropdown,
@@ -289,8 +300,8 @@ main {
 button {
   position: absolute;
   bottom: 10%;
-  left: calc(50% - 200px);
-  width: 400px;
+  left: calc(50% - 380px);
+  width: 600px;
   height: 120px;
   border: none;
   background-color: var(--first-color);
@@ -303,13 +314,68 @@ button {
 
 button:hover {
   bottom: calc(10% + 2px);
-  left: calc(50% - 202px);
+  left: calc(50% - 382px);
   background-color: var(--text-color-light);
   box-shadow: 8px 8px 2px var(--first-color);
 }
 
 button:disabled {
   opacity: 1;
+}
+
+#copy-button {
+  position: absolute;
+  bottom: 10%;
+  left: calc(50% + 240px);
+  width: 120px;
+  height: 120px;
+  border: none;
+  background-color: var(--first-color);
+  font-size: 3rem;
+  font-weight: bolder;
+  box-shadow: 2px 2px 0 var(--text-color-light);
+  transition-duration: .5s;
+  cursor: pointer;
+}
+
+#copy-button:hover {
+  bottom: calc(10% + 2px);
+  left: calc(50% + 238px);
+  background-color: var(--text-color-light);
+  box-shadow: 8px 8px 2px var(--first-color);
+}
+
+#copy-button:disabled {
+  opacity: 1;
+}
+
+#copy-button:disabled:hover {
+  bottom: calc(10% + 2px);
+  left: calc(50% + 238px);
+  background-color: var(--text-color-disabled);
+  box-shadow: 8px 8px 2px var(--first-color);
+}
+
+#copy-button.copied {
+  position: absolute;
+  bottom: 10%;
+  left: calc(50% + 240px);
+  width: 120px;
+  height: 120px;
+  border: none;
+  background-color: var(--text-color-copied);
+  font-size: 3rem;
+  font-weight: bolder;
+  box-shadow: 2px 2px 0 var(--text-color-light);
+  transition-duration: .5s;
+  cursor: pointer;
+}
+
+#copy-button.copied:disabled:hover {
+  bottom: calc(10% + 2px);
+  left: calc(50% + 238px);
+  background-color: var(--text-color-copied);
+  box-shadow: 8px 8px 2px var(--first-color);
 }
 
 /*========== FOOTER ==========*/
