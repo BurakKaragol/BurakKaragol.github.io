@@ -84,12 +84,13 @@ let jokers = [
 ]
 //#endregion
 
-let templates = [
-    "template1 <span class='theme'>#theme#</span> <span class='mood'>#mood#</span> <span class='genre'>#genre#</span> <span class='character'>#character#</span> <span class='goal'>#goal#</span> <span class='setting'>#setting#</span> <span class='joker'>#joker#</span>",
-    "template2 #theme# #mood# #genre# #character# #goal# #setting# #joker#"
-]
 
 window.onload = function() {
+    fill_all();
+}
+
+//#region Fill Functions
+function fill_all() {
     fill_theme();
     fill_mood();
     fill_genre();
@@ -99,7 +100,6 @@ window.onload = function() {
     fill_joker();
 }
 
-//#region Fill Functions
 function fill_theme() {
     for (let index = 0; index < themes.length; index++) {
         var link = document.createElement('a');
@@ -273,15 +273,81 @@ function random_number(max) {
 }
 
 function generate_random_game_idea() {
+    var theme = "theme";
+    var mood = "mood";
+    var genre = "genre";
+    var character = "character";
+    var goal = "goal";
+    var setting = "setting";
+    var joker = "joker";
+
+    function fill_selections() {
+        theme = fill_theme_selections();
+        mood = fill_mood_selections();
+        genre = fill_genre_selections();
+        character = fill_character_selections();
+        goal = fill_goal_selections();
+        setting = fill_setting_selections();
+        joker = fill_joker_selections();
+    }
+
+    //write the idea with visual animation
+    function write_idea(idea_template, total_time) {
+        console.log("writing idea: " + idea_template);
+        let idea_text = document.getElementById("idea-text");
+        let generate_button = document.getElementById("generate-button");
+        var total_lenght = get_complete_length(idea_template); // get the length of which the randomized value filled
+        var template_length = idea_template.length;
+        var wait_time = total_time * 600 / total_lenght; // calculate the wait time for each character
+        generate_button.disabled = true; // disable the button so the user cannot spam the generate function and jam it.
+        generate_button.innerHTML = "Oluşturuluyor"
+        idea_text.innerHTML = "";
+        var result = ``;
+        let index = 0;
+        function generate_next_char() {
+            if (index < template_length) {
+                if (idea_template.charAt(index) == '<') {
+                    while (idea_template.charAt(index) != '>') {
+                        result += idea_template.charAt(index);
+                        index ++;
+                    }
+                    setTimeout(generate_next_char, 0);
+                }
+                else {
+                    result += idea_template.charAt(index);
+                    idea_text.innerHTML = result;
+                    index++;
+                    setTimeout(generate_next_char, wait_time);
+                }
+            }
+            else {
+                result = idea_template;
+                idea_text.innerHTML = result;
+                generate_button.disabled = false;
+                generate_button.innerHTML = "Fikir Oluştur"
+            }
+        }
+
+        generate_next_char();
+    }
+
     roll_random_numbers();
     edit_all_icons();
     fill_selections();
+
+    let templates = [
+        `template1 deneme <span class='theme'>${theme}</span> <span class='mood'>${mood}</span> <span class='genre'>${genre}</span> <span class='character'>${character}</span> <span class='goal'>${goal}</span> <span class='setting'>${setting}</span> <span class='joker'>${joker}</span>`
+        // "template2 #theme# deneme #mood# #genre# boşluk #character# #goal# #setting# #joker#"
+    ]
+
+    function select_random_template() {
+        var random = random_number(templates.length);
+        return templates[random];
+    }
+
     var selected_template = select_random_template();
-    console.log(selected_template);
-    var result = fill_template(selected_template);
-    console.log(result);
-    // write_random_idea_overtime(result);
-    write_random_idea_overtime("Altyapım henüz tamamlanmadığından oyun fikirlerini henüz oluşturamıyorum. Birkaç gün içinde yeniden deneyin :)");
+    // write_idea(selected_template, 10);
+    write_idea(`<span class='theme'>Henüz</span> <span class='mood'>içeriğim</span> <span class='genre'>tamamlanmadığı</span> <span class='character'>için</span> <span class='goal'>oyun</span> <span class='setting'>fikri</span> <span class='joker'>oluşturamıyorum.</span>`, 10);
 }
 
 function roll_random_numbers() {
@@ -404,73 +470,87 @@ function edit_joker_icon() {
 }
 //#endregion
 
-function fill_selections() {
+//#region Fill Selections
+function fill_theme_selections() {
     var selected_theme = document.getElementById("selected-theme");
-    selected_theme.innerHTML = themes[theme_index];
+    theme = themes[theme_index];
+    selected_theme.innerHTML = theme;
+    return theme;
+}
+
+function fill_mood_selections() {
     var selected_mood = document.getElementById("selected-mood");
-    selected_mood.innerHTML = moods[mood_index];
+    mood = moods[mood_index];
+    selected_mood.innerHTML = mood;
+    return mood;
+}
+
+function fill_genre_selections() {
     var selected_genre = document.getElementById("selected-genre");
-    selected_genre.innerHTML = genres[genre_index];
+    genre = genres[genre_index];
+    selected_genre.innerHTML = genre;
+    return genre;
+}
+
+function fill_character_selections() {
     var selected_character = document.getElementById("selected-character");
-    selected_character.innerHTML = characters[character_index];
+    character = characters[character_index];
+    selected_character.innerHTML = character;
+    return character;
+}
+
+function fill_goal_selections() {
     var selected_goal = document.getElementById("selected-goal");
-    selected_goal.innerHTML = goals[goal_index];
+    goal = goals[goal_index];
+    selected_goal.innerHTML = goal
+    return goal;
+}
+
+function fill_setting_selections() {
     var selected_setting = document.getElementById("selected-setting");
-    selected_setting.innerHTML = settings[setting_index];
+    setting = settings[setting_index];
+    selected_setting.innerHTML = setting;
+    return setting;
+}
+
+function fill_joker_selections() {
     var selected_joker = document.getElementById("selected-joker");
-    selected_joker.innerHTML = jokers[joker_index];
+    joker = jokers[joker_index];
+    selected_joker.innerHTML = joker;
+    return joker;
 }
 
-function select_random_template() {
-    var random = random_number(templates.length);
-    return templates[random];
-}
+//#endregion
 
-function fill_template(template) {
-    var edited = template;
-    if (template.includes("#theme#")) {
-        edited = edited.replace("#theme#", themes[theme_index]);
+function get_complete_length(template) {
+    total = template.length;
+    if (template.includes("<span class='theme'>")) {
+        total -= 27;
+        total += theme.length;
     }
-    if (template.includes("#mood#")) {
-        edited = edited.replace("#mood#", moods[mood_index]);
+    if (template.includes("<span class='mood'>")) {
+        total -= 26;
+        total += mood.length;
     }
-    if (template.includes("#genre#")) {
-        edited = edited.replace("#genre#", genres[genre_index]);
+    if (template.includes("<span class='genre'>")) {
+        total -= 27;
+        total += genre.length;
     }
-    if (template.includes("#character#")) {
-        edited = edited.replace("#character#", characters[character_index]);
+    if (template.includes("<span class='character'>")) {
+        total -= 31;
+        total += character.length;
     }
-    if (template.includes("#goal#")) {
-        edited = edited.replace("#goal#", goals[goal_index]);
+    if (template.includes("<span class='goal'>")) {
+        total -= 27;
+        total += goal.length;
     }
-    if (template.includes("#setting#")) {
-        edited = edited.replace("#setting#", settings[setting_index]);
+    if (template.includes("<span class='setting'>")) {
+        total -= 29;
+        total += setting.length;
     }
-    if (template.includes("#joker#")) {
-        edited = edited.replace("#joker#", jokers[joker_index]);
+    if (template.includes("<span class='joker'>")) {
+        total -= 27;
+        total += joker.length;
     }
-    return edited;
-}
-
-function write_random_idea_overtime(idea) {
-    var idea_char_count = idea.length;
-    let idea_text = document.getElementById("idea-text");
-    let generate_button = document.getElementById("generate-button");
-    idea_text.innerHTML = "";
-    generate_button.disabled = true;
-    generate_button.innerHTML = "Oluşturuluyor"
-    let index = 0;
-    function writeNextChar() {
-        if (index < idea_char_count) {
-            idea_text.innerHTML += idea.charAt(index);
-            index++;
-            setTimeout(writeNextChar, 50);
-        }
-        else {
-            generate_button.disabled = false;
-            generate_button.innerHTML = "Fikir Oluştur"
-        }
-    }
-
-    writeNextChar();
+    return total;
 }
