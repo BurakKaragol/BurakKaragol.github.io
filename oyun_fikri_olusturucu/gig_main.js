@@ -2,16 +2,29 @@
 let themes = [
     "Bilim Kurgu",
     "Fantastik Bilim Kurgu",
-    "Yarış",
+    "Araba Yarışı",
+    "Motor Yarışı",
+    "Uçak Yarışı",
+    "Kaykay Yarışı",
     "Macera",
-    "Zombi"
+    "Zombi",
+    "Puzzle Çözme",
+    "Psikolojik Korku",
+    "Korku",
+    "Bulmaca"
 ]
 
 let moods = [
     "Enerjik",
     "Rahatlatıcı",
     "Heyecan Verici",
-    "Stratejik"
+    "Stratejik",
+    "Gerici",
+    "Keyif Verici",
+    "Akıl Alıcı",
+    "İlham Verici",
+    "Seri",
+    "Komik"
 ]
 
 let genres = [
@@ -19,7 +32,9 @@ let genres = [
     "Gizli Nesne Bulma",
     "Simülasyon",
     "Yapım",
-    "RPG"
+    "RPG",
+    "Macera",
+    "Korku"
 ]
 
 let characters = [
