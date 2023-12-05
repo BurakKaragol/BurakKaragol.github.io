@@ -49,6 +49,17 @@ let swiperProjects = new Swiper(".projects__container", {
     },
 });
 
+/*=============== SETTING SUBJECT ===============*/
+function setSubject(subject) {
+    let subjectInput = document.getElementById('contact-message');
+    subjectInput.innerText = "Hi, i want to get more info about your '" + subject + "' project.";
+}
+
+function setSubjectTr(subject) {
+    let subjectInputTr = document.getElementById('contact-message');
+    subjectInputTr.innerText = "Merhaba, '" + subject + "' projeniz hakkında daha fazla bilgi almak istiyorum.";
+}
+
 /*=============== EMAIL JS ===============*/
 const contactForm = document.getElementById('contact-form'),
     contactName = document.getElementById('contact-name'),

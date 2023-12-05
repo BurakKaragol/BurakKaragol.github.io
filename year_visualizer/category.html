@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta keywords="" content="'Year Visualizer'">
+        <meta name="description" content="Year Visualizer: Visualize a whole year by different aspects!">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:image" content="../assets/img/preview.png"/>
+        <meta name="author" content="Burak Karagol">
+
+        <!--=============== REMIXICONS ===============-->
+        <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+        <!--=============== CSS ===============-->
+        <link rel="stylesheet" href="yv_styles.css">
+
+        <!--=============== MAIN JS ===============-->
+        <script src="yv_data_handler.js"></script>
+
+        <title id="page-title">Year Visualizer - Mood / Emotion</title>
+    </head>
+    <body>
+        <div class="category__area">
+            <div class="graphics">
+                <div class="graphic__block block__1">
+                    <div class="header__block">
+                        <i class="fa fa-face-smile header__icon"></i>
+                        <h1 class="header" id="header-1">
+                            Header
+                        </h1>
+                        <h2 class="description">
+                            graphic
+                        </h2>
+                    </div>
+                    <div class="graphic graphic__1">
+                        <canvas class="canvas" id="canvas-1"></canvas>
+                    </div>
+                    <div class="footer__block">
+                        <button class="footer__button share__button" onclick="share(1)">
+                            <i class="fa fa-share-nodes footer__icon"></i>
+                            <h2>Share</h2>
+                        </button>
+                        <button class="footer__button download__button" onclick="download(1)">
+                            <i class="fa fa-download footer__icon"></i>
+                            <h2>Download</h2>
+                        </button>
+                    </div>
+                </div>
+                <div class="graphic__block block__2">
+                    <div class="header__block">
+                        <i class="fa fa-face-smile header__icon"></i>
+                        <h1 class="header" id="header-2">
+                            Header
+                        </h1>
+                        <h2 class="description">
+                            graphic
+                        </h2>
+                    </div>
+                    <div class="graphic graphic__2">
+                        <canvas class="canvas" id="canvas-2"></canvas>
+                    </div>
+                    <div class="footer__block">
+                        <button class="footer__button share__button" onclick="share(2)">
+                            <i class="fa fa-share-nodes footer__icon"></i>
+                            <h2>Share</h2>
+                        </button>
+                        <button class="footer__button download__button" onclick="download(2)">
+                            <i class="fa fa-download footer__icon"></i>
+                            <h2>Download</h2>
+                        </button>
+                    </div>
+                </div>
+                <div class="graphic__block block__total">
+                    <div class="header__block">
+                        <i class="fa fa-face-smile header__icon"></i>
+                        <h1 class="header">
+                            Total
+                        </h1>
+                        <h2 class="description">
+                            graphic
+                        </h2>
+                    </div>
+                    <div class="graphic graphic__total">
+                        <canvas class="canvas" id="canvas-3"></canvas>
+                    </div>
+                    <div class="footer__block">
+                        <button class="footer__button share__button" onclick="share(3)">
+                            <i class="fa fa-share-nodes footer__icon"></i>
+                            <h2>Share</h2>
+                        </button>
+                        <button class="footer__button download__button" onclick="download(3)">
+                            <i class="fa fa-download footer__icon"></i>
+                            <h2>Download</h2>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="loading" id="loading">
+                <h1>loading</h1>
+            </div>
+        </div>
+
+        <nav class="sidebar">
+            <ul>
+                <li class="mood__emotion sidebar__content" id="mood-sidebar">
+                    <a href="#" onclick="set_category_page('mood__emotion')">
+                        <i class="fa fa-face-smile fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Mood / Emotion
+                        </span>
+                    </a>
+                </li>
+                <li class="productivity sidebar__content" id="productivity-sidebar">
+                    <a href="#" onclick="set_category_page('productivity')">
+                        <i class="fa fa-chart-bar fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Productivity
+                        </span>
+                    </a>
+                </li>
+                <li class="activities sidebar__content" id="activities-sidebar">
+                    <a href="#" onclick="set_category_page('activities')">
+                        <i class="fa fa-running fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Activities
+                        </span>
+                    </a>
+                </li>
+                <li class="weather sidebar__content" id="weather-sidebar">
+                    <a href="#" onclick="set_category_page('weather')">
+                        <i class="fa fa-cloud-sun-rain fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Weather
+                        </span>
+                    </a>
+                </li>
+                <li class="health sidebar__content" id="health-sidebar">
+                    <a href="#" onclick="set_category_page('health')">
+                        <i class="fa fa-heartbeat fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Health
+                        </span>
+                    </a>
+                </li>
+                <li class="hobbies sidebar__content" id="hobbies-sidebar">
+                    <a href="#" onclick="set_category_page('hobbies')">
+                        <i class="fa fa-palette fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Hobbies
+                        </span>
+                    </a>
+                </li>
+                <li class="achievements sidebar__content" id="achievements-sidebar">
+                    <a href="#" onclick="set_category_page('achievements')">
+                        <i class="fa fa-trophy fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Achievements
+                        </span>
+                    </a>
+                </li>
+                <li class="learning sidebar__content" id="learning-sidebar">
+                    <a href="#" onclick="set_category_page('learning')">
+                        <i class="fa fa-brain fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Learning
+                        </span>
+                    </a>
+                </li>
+                <li class="relationships sidebar__content" id="relationships-sidebar">
+                    <a href="#" onclick="set_category_page('relationships')">
+                        <i class="fa fa-heart fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Relationships
+                        </span>
+                    </a>
+                </li>
+                <li class="travel sidebar__content" id="travel-sidebar">
+                    <a href="#" onclick="set_category_page('travel')">
+                        <i class="fa fa-plane fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Travel
+                        </span>
+                    </a>
+                </li>
+                <li class="money__spent sidebar__content" id="money-sidebar">
+                    <a href="#" onclick="set_category_page('money__spent')">
+                        <i class="fa fa-money fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Money Spent
+                        </span>
+                    </a>
+                </li>
+                <li class="social__media sidebar__content" id="social-sidebar">
+                    <a href="#" onclick="set_category_page('social__media')">
+                        <i class="fa fa-mobile-screen fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Social Media
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="main__menu">
+                <li class="active">
+                    <a href="index.html">
+                        <i class="fa fa-home fa-2xl"></i>
+                        <span class="sidebar__text">
+                            Main Page
+                        </span>
+                    </a>
+                </li>  
+            </ul>
+        </nav>
+    </body>
+</html>
