@@ -1,5 +1,5 @@
 // Your GitHub username
-const username = 'BurakKaragol';
+const username = 'corsproxy'; //BurakKaragol
 
 // Your repository name
 const repo = 'BurakKaragol.github.io';
@@ -8,7 +8,7 @@ const repo = 'BurakKaragol.github.io';
 const filePath = 'year_visualizer/index.html';
 
 // Your personal access token
-const token = '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';
+const token = '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';
 
 // Sample JSON data for initializationvar
 jsonData = 
