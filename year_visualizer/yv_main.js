@@ -85,7 +85,7 @@ function check(category) {
         mark(category, true, 0);
     }
     else if (button_r.classList.contains("selected")) {
-        mark(category, true, -1);
+        mark(category, true, 1);
     }
     else {
         mark(category, false, null);
@@ -547,8 +547,6 @@ function update_submit_button() {
     answered += social_1 ? 1 : 0;
     answered += social_2 ? 1 : 0;
 
-    console.log(answered);
-
     let submit_button = document.getElementById("submit-button");
     let submit_button_fill = document.getElementById("submit-fill");
     let submit_button_text = document.getElementById("submit-button-text");
@@ -571,7 +569,7 @@ function update_submit_button() {
 }
 
 function submit_pressed() {
-    // save the answers
+    save_answers();
     let submit_button = document.getElementById("submit-button");
     let submit_button_text = document.getElementById("submit-button-text");
     submit_button.style.width = "1400px";
@@ -582,6 +580,23 @@ function submit_pressed() {
     submit_button_text.innerText = "Submitted! Come back again tomorrow for filling the next day.";
     submit_button.disabled = true;
     disable_buttons();
+}
+
+function save_answers() {
+    jsonData = 
+    [[mood_1_selected, mood_2_selected],
+    [productivity_1_selected, productivity_2_selected],
+    [activities_1_selected, activities_2_selected],
+    [weather_1_selected, weather_2_selected],
+    [health_1_selected, health_2_selected],
+    [hobbies_1_selected, hobbies_2_selected],
+    [achievements_1_selected, achievements_2_selected],
+    [learning_1_selected, learning_2_selected],
+    [relationships_1_selected, relationships_2_selected],
+    [travel_1_selected, travel_2_selected],
+    [money_1_selected, money_2_selected],
+    [social_1_selected, social_2_selected]];
+    updateData();
 }
 
 function disable_buttons() {

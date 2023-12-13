@@ -791,8 +791,8 @@ li:hover i {
 .loading.show {
   visibility: visible;
   top: 0;
-  left: 0;
-  width: 100vw;
+  left: 80px;
+  width: calc(100vw - 80px);
   height: 100vh;
 }
 

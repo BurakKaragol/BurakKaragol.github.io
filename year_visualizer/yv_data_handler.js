@@ -78,6 +78,7 @@ var category_icons = {
     "money__spent": 'fa-money',
     "social__media" : 'fa-mobile-screen',
 };
+
 var category_first = {
     "mood__emotion": 'Feeling',
     "productivity": 'Progress',
@@ -92,6 +93,7 @@ var category_first = {
     "money__spent": 'Expenses',
     "social__media" : 'Online',
 };
+
 var category_second = {
     "mood__emotion": 'Emotion',
     "productivity": 'Efficency',
@@ -136,7 +138,11 @@ function get_category_page() {
 
 function show_loading() {
     var loading = document.getElementById("loading");
-    loading.classList.add("show");
+    if (loading) {
+        loading.classList.add("show");
+    } else {
+        console.error("Loading element not found");
+    }
 }
 
 function hide_loading() {
@@ -148,7 +154,7 @@ function update_category_page() {
     update_sidebar();
     update_header();
     draw_graphics();
-    setTimeout(hide_loading, 2000);
+    // setTimeout(hide_loading, 2000);
 }
 
 function update_sidebar() {
@@ -178,9 +184,19 @@ function update_header() {
         last_icon_class = category_icons[category];
     }
     let header1 = document.getElementById("header-1");
-    header1.innerText = category_first[category];
+    if (header1) {
+        header1.innerText = category_first[category];
+    }
+    else {
+        console.error("Header1 element not found");
+    }
     let header2 = document.getElementById("header-2");
-    header2.innerText = category_second[category];
+    if (header2) {
+        header2.innerText = category_second[category];
+    }
+    else {
+        console.error("Header2 element not found");
+    }
 }
 
 function draw_graphics() {
@@ -191,16 +207,21 @@ function draw_graphics() {
 
 function draw_graphic(index) {
     let canvas = document.getElementById("canvas-" + index);
-    let ctx = canvas.getContext('2d');
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const padding_x = 5;
-    const padding_y = 5;
-    const cell_size_x = 100;
-    const cell_size_y = 100;
-
-    ctx.fillRect(50, 50, 50, 50);
+    if (canvas) {
+        let ctx = canvas.getContext('2d');
+    
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+        const padding_x = 5;
+        const padding_y = 5;
+        const cell_size_x = 100;
+        const cell_size_y = 100;
+    
+        ctx.fillRect(50, 50, 50, 50);
+    }
+    else {
+        console.error("Canvas "  + index + " element not found")
+    }
 }
 
 function share(index) {
