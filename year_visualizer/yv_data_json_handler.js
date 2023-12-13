@@ -1,16 +1,9 @@
-// Your GitHub username
-const username = 'corsproxy'; //BurakKaragol
+const username = 'BurakKaragol';
 
-// Your repository name
 const repo = 'BurakKaragol.github.io';
 
-// Path to the text file within the repository
 const filePath = 'year_visualizer/index.html';
 
-// Your personal access token
-const token = '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';
-
-// Sample JSON data for initializationvar
 jsonData = 
 [["mood_emotion_feeling", "mood_emotion_emotion"],
 ["productivity_progress", "productivity_efficecncy"],
@@ -26,34 +19,5 @@ jsonData =
 ["social_media_online", "social_media_digital"]];
 
 async function updateData() {
-    const fileContent = JSON.stringify(jsonData);
-
-    try {
-        const existingData = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        const existingDataJson = await existingData.json();
-        const sha = existingDataJson.sha;
-
-        const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filePath}`, {
-            method: 'PUT',
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                message: 'Update data',
-                content: btoa(unescape(encodeURIComponent(fileContent))),
-                sha: sha,
-            }),
-        });
-
-        const updatedData = await response.json();
-        console.log('Data updated:', updatedData);
-    } catch (error) {
-        console.error('Error updating data:', error);
-    }
+    // update the data
 }
