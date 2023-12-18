@@ -1,5 +1,6 @@
 window.onload = function() {
     enable_buttons();
+    reload_page();
 }
 
 function select(category, selected) {
@@ -580,6 +581,7 @@ function submit_pressed() {
     submit_button_text.innerText = "Submitted! Come back again tomorrow for filling the next day.";
     submit_button.disabled = true;
     disable_buttons();
+    show_result_page();
 }
 
 function save_answers() {
@@ -596,7 +598,6 @@ function save_answers() {
     [travel_1_selected, travel_2_selected],
     [money_1_selected, money_2_selected],
     [social_1_selected, social_2_selected]];
-    updateData();
 }
 
 function disable_buttons() {

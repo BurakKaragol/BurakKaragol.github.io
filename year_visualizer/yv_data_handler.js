@@ -110,10 +110,6 @@ var category_second = {
 };
 //#endregion
 
-window.onload = function() {
-    reload_page();
-}
-
 function reload_page() {
     get_category_page();
     show_loading();
@@ -141,7 +137,7 @@ function show_loading() {
     if (loading) {
         loading.classList.add("show");
     } else {
-        console.error("Loading element not found");
+        console.log("Loading element not found");
     }
 }
 
@@ -188,14 +184,14 @@ function update_header() {
         header1.innerText = category_first[category];
     }
     else {
-        console.error("Header1 element not found");
+        console.log("Header1 element not found");
     }
     let header2 = document.getElementById("header-2");
     if (header2) {
         header2.innerText = category_second[category];
     }
     else {
-        console.error("Header2 element not found");
+        console.log("Header2 element not found");
     }
 }
 
@@ -220,7 +216,7 @@ function draw_graphic(index) {
         ctx.fillRect(50, 50, 50, 50);
     }
     else {
-        console.error("Canvas "  + index + " element not found")
+        console.log("Canvas "  + index + " element not found")
     }
 }
 

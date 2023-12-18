@@ -1,9 +1,3 @@
-const username = 'BurakKaragol';
-
-const repo = 'BurakKaragol.github.io';
-
-const filePath = 'year_visualizer/index.html';
-
 jsonData = 
 [["mood_emotion_feeling", "mood_emotion_emotion"],
 ["productivity_progress", "productivity_efficecncy"],
@@ -18,6 +12,15 @@ jsonData =
 ["money_spent_expenses", "money_spent_expenditure"],
 ["social_media_online", "social_media_digital"]];
 
-async function updateData() {
-    // update the data
+function show_result_page() {
+    let result_window = document.getElementById("result-box");
+    result_window.classList.remove("hide");
+    let result_window_textarea = document.getElementById("result-textarea");
+    result_window_textarea.innerText = jsonData;
+}
+
+function close_result_page() {
+    let result_window = document.getElementById("result-box");
+    result_window.classList.add("hide");
+    window.location.href = 'index.html';
 }

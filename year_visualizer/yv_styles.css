@@ -366,7 +366,7 @@ li:hover i {
 .submit__button {
   position: absolute;
   top: 5px;
-  right: 20px;
+  right: 30px;
   height: 85%;
   width: 600px;
   font-size: 3rem;
@@ -432,9 +432,9 @@ li:hover i {
 
 .input__button {
   display: flex;
-  margin: 16px 4px;
+  margin: 16px 2px;
   width: 420px;
-  height: 250px;
+  height: 248px;
   background: var(--button-idle-color);
   border-radius: 16px;
   box-shadow: 0 0 4px hsla(0, 0%, 50%, 0.2);
@@ -917,4 +917,50 @@ li:hover i {
 .canvas {
   width: 100%;
   height: 100%;
+}
+
+/*========== RESULT PAGE ==========*/
+.result__box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: var(--z-overlay);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(150, 150, 150, 0.5);
+}
+
+.content__area {
+  position: relative;
+  top: 150px;
+  left: 5vw;
+  width: 90vw;
+  height: 60vh;
+  font-size: 2rem;
+  padding: 16px 64px;
+  color: var(--text-color);
+  background-color: var(--sidebar-color);
+  resize: none;
+}
+
+.close__result__button {
+  position: absolute;
+  bottom: 100px;
+  left: 5vw;
+  width: 90vw;
+  height: 10vh;
+  color: var(--text-color);
+  background-color: var(--primary-color);
+  text-decoration: none;
+  font-size: 3rem;
+  padding-top: 15px;
+  text-align: center;
+}
+
+.close__result__button:hover {
+  background-color: var(--primary-dark-color);
+}
+
+.result__box.hide {
+  visibility: hidden;
 }
