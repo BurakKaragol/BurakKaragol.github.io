@@ -17,29 +17,29 @@
 
   /*========== Page Colors ==========*/
   --mood-color: hsl(44, 100%, 72%);
-  --mood-color-completed: hsl(44, 100%, 62%);
+  --mood-color-completed: #ffcb3d;
   --productivity-color: hsl(346, 100%, 81%);
-  --productivity-color-completed: hsl(346, 100%, 71%);
+  --productivity-color-completed: #ff6b8e;
   --activities-color: hsl(252, 100%, 81%);
-  --activities-color-completed: hsl(252, 100%, 71%);
+  --activities-color-completed: #896bff;
   --weather-color: hsl(197, 88%, 70%);
-  --weather-color-completed: hsl(197, 88%, 60%);
+  --weather-color-completed: #3fc0f3;
   --health-color: hsl(0, 88%, 65%);
-  --health-color-completed: hsl(0, 88%, 55%);
+  --health-color-completed: #f12727;
   --hobbies-color: hsl(34, 100%, 65%);
-  --hobbies-color-completed: hsl(34, 100%, 55%);
+  --hobbies-color-completed: #ff9c1a;
   --achievements-color: hsl(280, 45%, 64%);
-  --achievements-color-completed: hsl(280, 45%, 54%);
+  --achievements-color-completed: #9b55be;
   --learning-color: hsl(0, 100%, 75%);
-  --learning-color-completed: hsl(0, 100%, 65%);
+  --learning-color-completed: #ff4d4d;
   --relationships-color: hsl(212, 100%, 72%);
-  --relationships-color-completed: hsl(212, 100%, 62%);
+  --relationships-color-completed: #3d98ff;
   --travel-color: hsl(51, 78%, 60%);
-  --travel-color-completed: hsl(51, 78%, 50%);
+  --travel-color-completed: #e3c51c;
   --money-color: hsl(115, 54%, 70%);
-  --money-color-completed: hsl(115, 54%, 60%);
+  --money-color-completed: #6bd062;
   --social-color: hsl(245, 82%, 80%);
-  --social-color-completed: hsl(245, 82%, 70%);
+  --social-color-completed: #7e74f1;
 
   /*========== Input Buttons ==========*/
   --button-idle-color: rgba(100, 100, 100, 0.7);
