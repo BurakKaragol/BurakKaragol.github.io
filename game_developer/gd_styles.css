@@ -1,0 +1,26 @@
+* {
+  /*========== COLORS ==========*/
+  --background-color: #353535;
+  --section-background: #3d3d3d;
+  --section-bottom-line: #555555;
+  --text-color: #efefef;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 5px 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+section {
+  margin: 20px 0;
+  padding: 5px 20px;
+  background-color: var(--section-background);
+  box-shadow: 0 0 10px 10px #00000030;
+}
