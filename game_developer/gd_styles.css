@@ -4,6 +4,13 @@
   --section-background: #3d3d3d;
   --section-bottom-line: #555555;
   --text-color: #efefef;
+
+  /*========== FONT SIZES ==========*/
+  font-size: 10px; /*default font size all the rem values are going to be afected by this. Maximum content size (h1) is given every other level willl decrease in size*/
+  --h1: 1rem;
+  --h2: 0.75rem;
+  --h3: 0.5rem;
+  --h4: 0.25rem;
 }
 
 h1,
@@ -12,6 +19,22 @@ h3,
 h4 {
   margin: 5px 0;
   padding: 0;
+}
+
+h1 {
+  font-size: var(--h1);
+}
+
+h2 {
+  font-size: var(--h2);
+}
+
+h3 {
+  font-size: var(--h3);
+}
+
+h4 {
+  font-size: var(--h4);
 }
 
 body {
