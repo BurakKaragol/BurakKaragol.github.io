@@ -609,7 +609,7 @@ body.dark-theme {
 }
 
 .services__card:hover i {
-  transform: rotateY(360deg);
+  transform: rotateY(360deg) scale(1.33);
 }
 
 .services__card:hover .services__border {
@@ -630,6 +630,7 @@ body.dark-theme {
   width: 250px;
   border-radius: 0.75rem;
   margin-bottom: 1.25rem;
+  transition: 1s;
 }
 
 .projects__subtitle {
@@ -686,7 +687,7 @@ body.dark-theme {
 }
 
 .projects__img-container:hover .projects__description {
-  height: 92%;
+  height: 30%;
   opacity: 1;
 }
 
