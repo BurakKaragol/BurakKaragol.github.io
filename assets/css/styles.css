@@ -7,19 +7,19 @@
 
   /*========== Colors ==========*/
   /*Color mode HSL(hue, saturation, lightness)*/
-  --first-color: hsl(207, 65%, 65%);
-  --title-color: hsl(207, 4%, 16%);
-  --text-color: hsl(207, 4%, 28%);
-  --text-color-light: hsl(207, 4%, 56%);
-  --body-color: hsl(207, 4%, 99%);
-  --container-color: hsl(207, 4%, 95%);
+  --first-color: hsl(207, 75%, 58%);
+  --title-color: hsl(207, 8%, 18%);
+  --text-color: hsl(207, 5%, 32%);
+  --text-color-light: hsl(207, 6%, 50%);
+  --body-color: hsl(207, 6%, 97%);
+  --container-color: hsl(207, 5%, 93%);
 
   /* Change the first number */
   /* Blue: 207 - Purple: 250 - Pink: 356 - Teal: 174 */
   --gradient-color: linear-gradient(
-    135deg,
-    hsla(297, 71%, 58%, 0.5),
-    hsla(196, 73%, 71%, 0.8)
+  135deg,
+  hsla(285, 75%, 55%, 0.6), /* Adjusted purple */
+  hsla(200, 80%, 65%, 0.85) /* Deeper cyan */
   );
 
   /*========== Font and typography ==========*/
@@ -115,10 +115,10 @@ img {
 
 /*========== Variables Dark theme ==========*/
 body.dark-theme {
-  --title-color: hsl(207, 4%, 95%);
-  --text-color: hsl(207, 4%, 65%);
-  --body-color: hsl(207, 4%, 10%);
-  --container-color: hsl(207, 4%, 12%);
+  --title-color: hsl(207, 6%, 92%);
+  --text-color: hsl(207, 6%, 72%);
+  --body-color: hsl(207, 6%, 8%);
+  --container-color: hsl(207, 6%, 14%);
 }
 
 /*========== 
