@@ -1,80 +1,18 @@
+
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta keywords="" content="'Burak Karagol', Burak, Karagol, 'Burak Karagöl'">
-        <meta name="description" content="Personal Website/Resume of Burak Karagol">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta property="og:image" content="../assets/img/preview.png" />
-        <meta name="author" content="Burak Karagol">
-
-        <!--=============== FAVICON ===============-->
-        <link rel="shortcut icon" href="assets/img/preview.png" type="image/x-icon">
-
-        <!--=============== FONTAWESOME ===============-->
-        <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
-
-        <!--=============== REMIXICONS ===============-->
-        <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
-
-        <!--=============== CSS ===============-->
-        <link rel="stylesheet" href="./link_styles.css">
-
-        <title>Burak Karagol - Links</title>
-    </head>
-    <body>
-        <div class="link__container">
-            <h1 class="title">
-                Burak Karagöl
-            </h1>
-
-            <div class="link__buttons">
-                <div onclick="open_link('personal_website')" class="button">
-                    <i class="ri-rocket-line link__icon"></i>
-                    <p class="link__description">My Website</p>
-                </div>
-
-                <div onclick="open_link('linkedin')" class="button">
-                    <i class="ri-linkedin-line link__icon"></i>
-                    <p class="link__description">LinkedIN</p>
-                </div>
-                
-                <div onclick="open_link('github')" class="button">
-                    <i class="ri-github-line link__icon"></i>
-                    <p class="link__description">GitHub</p>
-                </div>
-
-                <div onclick="open_link('itch')" class="button">
-                    <i class="fa-brands fa-itch-io link__icon"></i>
-                    <p class="link__description">Ithc.io</p>
-                </div>
-
-                <div onclick="open_link('instagram')" class="button">
-                    <i class="ri-instagram-line link__icon"></i>
-                    <p class="link__description">Instagram</p>
-                </div>
-
-                <div onclick="open_link('twitch')" class="button">
-                    <i class="ri-twitch-line link__icon"></i>
-                    <p class="link__description">Twitch</p>
-                </div>
-
-                <div onclick="open_link('youtube')" class="button">
-                    <i class="ri-youtube-line link__icon"></i>
-                    <p class="link__description">YouTube</p>
-                </div>
-
-                <div onclick="open_link('twitter')" class="button">
-                    <i class="ri-twitter-x-line link__icon"></i>
-                    <p class="link__description">Twitter</p>
-                </div>
-            </div>
-        </div>
-
-        <!--=============== SCROLLREVEAL ===============-->
-        <script src="assets/js/scrollreveal.min.js"></script>
-
-        <!--=============== MAIN JS ===============-->
-        <script src="./link_main.js"></script>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burak Karagöl - Links</title>
+    <link rel="stylesheet" href="link_styles.css">
+    <script defer src="link_main.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Burak Karagöl</h1>
+        <div class="links" id="linksContainer"></div>
+        <footer class="footer">Visit my portfolio: <a href="https://burakkaragol.github.io/" target="_blank">burakkaragol.github.io</a></footer>
+    </div>
+</body>
 </html>

@@ -1,182 +1,131 @@
-:root {
-  /*========== COLORS ==========*/
-  --background-color: #1a1a1a;
-  --text-color: #ffffff;
-  --button-color: #355bb9;
-  --button-hover-color: #4977e9;
-  --button-hover-inner-color: #e2a66b;
-
-  /*========== MOBILE SIZES ==========*/
-  --title-mobile: 2.5rem;
-  --button-width-mobile: 85vw;
-  --button-height-mobile: 100px;
-  --button-margin-mobile: 16px 32px;
-  --icon-size-mobile: 60px;
-
-  /*========== PC SIZES ==========*/
-  --title-pc: 5rem;
-  --button-width-pc: 300px;
-  --button-height-pc: 300px;
-  --button-margin-pc: 32px;
-  --icon-size-pc: 200px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
 
 * {
-  transition-duration: 0.2s;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  background-color: var(--background-color);
-  background-image: url(./img/background_white_25.svg);
-  background-size: 290px;
-  background-repeat: repeat;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-}
-
-.title {
-  font-size: var(--title-mobile);
-  color: var(--text-color);
-  text-align: center;
-  text-shadow: -4px 4px black;
-  user-select: none;
-}
-
-.link__container {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.link__buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  flex-direction: row;
-  width: 90%;
-}
-
-.button {
-  display: flex;
-  user-select: none;
-  background-color: var(--button-color);
-  width: var(--button-width-mobile);
-  min-width: 300px;
-  height: var(--button-height-mobile);
-  margin: var(--button-margin-mobile);
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.button:hover {
-  cursor: pointer;
-  background-color: var(--button-hover-color);
-  scale: 1.05;
-}
-
-.button:hover .link__icon {
-  color: var(--button-hover-inner-color);
-}
-
-.button:hover .link__description {
-  color: var(--button-hover-inner-color);
-}
-
-.link__icon {
-  color: var(--text-color);
-  text-decoration: none;
-  font-size: var(--icon-size-mobile);
-  margin-left: 15px;
-}
-
-.link__description {
-  color: var(--text-color);
-  text-align: center;
-  font-size: 2.5rem;
-  margin: 16px;
-  margin-left: 10px;
-}
-
-@media screen and (min-width: 825px) {
-  body {
-    background-color: var(--background-color);
-    background-image: url(./img/background_white_25.svg);
-    background-size: 290px;
-    background-repeat: repeat;
-    background-position: center;
+    font-family: 'Poppins', sans-serif;
+    background-color: #0f0f0f;
+    color: #f0f0f0;
     display: flex;
     justify-content: center;
-  }
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.01), rgba(0, 0, 0, 1));
+}
 
-  .title {
-    font-size: var(--title-pc);
-    color: var(--text-color);
-    text-align: center;
-    text-shadow: -4px 4px black;
-    user-select: none;
-    margin: 16px;
-  }
-
-  .link__container {
-    display: flex;
+/* Main container */
+.container {
+    background-color: rgba(26, 26, 26, 0.95);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
     width: 100%;
-    height: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .link__buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    flex-direction: row;
-    width: 90%;
-  }
-
-  .button {
-    display: flex;
-    user-select: none;
-    background-color: var(--button-color);
-    width: var(--button-width-pc);
-    height: var(--button-height-pc);
-    margin: var(--button-margin-pc);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .button:hover {
-    cursor: pointer;
-    background-color: var(--button-hover-color);
-    scale: 1.1;
-  }
-
-  .button:hover .link__icon {
-    color: var(--button-hover-inner-color);
-    transition-duration: 0.4s;
-    scale: 1.1;
-  }
-
-  .button:hover .link__description {
-    color: var(--button-hover-inner-color);
-  }
-
-  .link__icon {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: var(--icon-size-pc);
-  }
-
-  .link__description {
-    color: var(--text-color);
+    max-width: 1200px;
     text-align: center;
-    font-size: 2.5rem;
-    margin: 16px;
-  }
+}
+
+/* Title */
+h1 {
+    font-size: 34px;
+    font-weight: 600;
+    color: #00aaff;
+    margin-bottom: 24px;
+}
+
+/* Links Grid - Square grid with equal height and width for each button */
+.links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+/* Individual link card - Make it square */
+.link-item {
+    background: #252525;
+    border-radius: 16px;
+    width: 100%;
+    aspect-ratio: 1/1; /* This forces perfect square */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+/* Icon */
+.link-item i {
+    font-size: 36px;
+    color: #00aaff;
+}
+
+/* Text */
+.link-item span {
+    font-size: 14px;
+}
+
+/* Hover effect for desktop */
+@media (hover: hover) {
+    .link-item:hover {
+        transform: translateY(-5px) scale(1.05);
+        background-color: #00aaff;
+        color: #fff;
+        box-shadow: 0 6px 16px rgba(0, 170, 255, 0.6);
+    }
+    .link-item:hover i {
+        color: #fff;
+    }
+}
+
+/* Footer */
+.footer {
+    font-size: 14px;
+    color: #888;
+}
+
+.footer a {
+    color: #00aaff;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile: Stack vertically, but make them rectangular for better fit */
+@media (max-width: 768px) {
+    .links {
+        grid-template-columns: 1fr;
+    }
+    .link-item {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 14px 16px;
+        height: auto;
+        aspect-ratio: unset;
+        gap: 12px;
+    }
+    .link-item i {
+        font-size: 24px;
+    }
+    .link-item span {
+        font-size: 16px;
+        text-align: left;
+        flex: 1;
+    }
 }

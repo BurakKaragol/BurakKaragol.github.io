@@ -1,45 +1,30 @@
-personal_website = "https://burakkaragol.github.io/"
-linkedin = "https://www.linkedin.com/in/burak-karagol-3451b91b0/"
-github = "https://github.com/BurakKaragol"
-itch = "https://mrlulez.itch.io/"
-instagram = "https://www.instagram.com/brkkaragol/?hl=tr"
-twitch = "https://www.twitch.tv/mrlulez"
-youtube = "https://www.youtube.com/channel/UCMqP-wqi9hXqKfkzfmoqa-w"
-twitter = "https://twitter.com/buraKaragol"
 
-function open_link(website) {
-    switch (website) {
-        case 'personal_website':
-            open_url(personal_website, false);
-            break;
-        case 'linkedin':
-            open_url(linkedin);
-            break;
-        case 'github':
-            open_url(github);
-            break;
-        case 'itch':
-            open_url(itch);
-            break;
-        case 'instagram':
-            open_url(instagram);
-            break;
-        case 'twitch':
-            open_url(twitch);
-            break;
-        case 'youtube':
-            open_url(youtube);
-            break;
-        case 'twitter':
-            open_url(twitter);
-            break;
-    }
-}
+const links = [
+    { name: "My Website", url: "https://burakkaragol.github.io/", icon: "fa-solid fa-rocket" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/burakkaragol/", icon: "fa-brands fa-linkedin" },
+    { name: "GitHub", url: "https://github.com/burakkaragol", icon: "fa-brands fa-github" },
+    { name: "Itch.io", url: "https://burakkaragol.itch.io/", icon: "fa-brands fa-itch-io" },
+    { name: "Instagram", url: "https://www.instagram.com/burakkaragol/", icon: "fa-brands fa-instagram" },
+    { name: "Twitch", url: "https://www.twitch.tv/burakkaragol", icon: "fa-brands fa-twitch" },
+    { name: "YouTube", url: "https://www.youtube.com/@burakkaragol", icon: "fa-brands fa-youtube" },
+    { name: "Twitter", url: "https://twitter.com/burakkaragol", icon: "fa-brands fa-x-twitter" }
+];
 
-function open_url(url, new_window = true) {
-    if (new_window) {
-        window.open(url, '_blank');
-    } else {
-        window.location.href = url;
-    }
-}
+const container = document.getElementById('linksContainer');
+
+links.forEach(link => {
+    const linkElement = document.createElement('a');
+    linkElement.classList.add('link-item');
+    linkElement.href = link.url;
+    linkElement.target = '_blank';
+
+    const icon = document.createElement('i');
+    icon.className = link.icon;
+
+    const text = document.createElement('span');
+    text.textContent = link.name;
+
+    linkElement.appendChild(icon);
+    linkElement.appendChild(text);
+    container.appendChild(linkElement);
+});
