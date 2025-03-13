@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Idea Generator</title>
+
+    <!-- FontAwesome for icons -->
+    <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
+
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body class="dark-theme">
+
+    <!--==================== GAME IDEA GENERATOR ====================-->
+    <section class="game-idea section" id="game-idea">
+        <h2 class="section__title">Game Idea Generator</h2>
+        <span class="section__subtitle">Get a unique game idea</span>
+
+        <div class="game-idea__container container">
+            <div class="game-idea__box">
+                <!-- Static Titles, Dynamic Content -->
+                <div class="game-idea__section">
+                    <strong>Genre</strong>
+                    <p><i id="genre-icon" class="fa-solid fa-question-circle"></i> <span id="genre-text">???</span></p>
+                </div>
+                <div class="game-idea__section">
+                    <strong>Setting</strong>
+                    <p><i id="setting-icon" class="fa-solid fa-question-circle"></i> <span id="setting-text">???</span></p>
+                </div>
+                <div class="game-idea__section">
+                    <strong>Mechanic</strong>
+                    <p><i id="mechanic-icon" class="fa-solid fa-question-circle"></i> <span id="mechanic-text">???</span></p>
+                </div>
+                <div class="game-idea__section">
+                    <strong>Twist</strong>
+                    <p><i id="twist-icon" class="fa-solid fa-question-circle"></i> <span id="twist-text">???</span></p>
+                </div>
+
+                <button id="generate-idea-btn" class="game-idea__button">
+                    <i class="fa-solid fa-dice"></i> Generate Idea
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Link to external JS -->
+    <script src="game_idea.js"></script>
+</body>
+</html>
