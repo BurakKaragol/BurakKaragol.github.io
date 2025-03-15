@@ -733,7 +733,7 @@ body.dark-theme {
 }
 
 .projects__container .swiper-pagination-bullets {
-  bottom: 0;
+  bottom: 20%;
 }
 
 .projects__container .swiper-pagination-bullet {
@@ -745,8 +745,40 @@ body.dark-theme {
   background-color: var(--title-color);
 }
 
+.web_projects_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--body-color); /* Matches page background */
+  border: 2px solid var(--title-color); /* Thin border */
+  border-radius: 10px;
+  width: fit-content; /* Ensures the button only takes the necessary width */
+  height: 60px;
+  margin: 20px auto 0 auto; /* Auto margins for horizontal centering */
+  padding: 0 20px; /* Adds some padding for better appearance */
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.web_projects_button:hover {
+  background: var(--first-color); /* Changes background on hover */
+  color: var(--body-color);
+}
+
+.web_projects_text {
+  font-size: var(--h2-font-size);
+  color: var(--title-color);
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.web_projects_button:hover .web_projects_text {
+  color: var(--body-color);
+}
+
 /*=============== CONTACT ===============*/
 .contact__container {
+  align-self: center;
   row-gap: 3.5rem;
 }
 

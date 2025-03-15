@@ -49,6 +49,22 @@ let swiperProjects = new Swiper(".projects__container", {
     },
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const projects = document.querySelectorAll(".web_projects_button");
+
+    projects.forEach(project => {
+        project.addEventListener("click", function () {
+            const url = project.getAttribute("data-url");
+            if (url) {
+                window.location.href = url; // Open project page
+            }
+        });
+
+        // Add hover effect to indicate clickability
+        project.style.cursor = "pointer";
+    });
+});
+
 /*=============== SETTING SUBJECT ===============*/
 function setSubject(subject) {
     let subjectInput = document.getElementById('contact-message');
