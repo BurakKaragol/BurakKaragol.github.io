@@ -1,0 +1,197 @@
+/* Projects Section */
+.projects {
+    padding: 3rem 2rem;
+    text-align: center;
+    height: 100vh; /* Full screen height */
+    overflow: hidden; /* Hide scrollbar */
+    position: relative;
+}
+
+/* Subtitle Styling */
+.project_section__subtitle {
+    text-align: center;
+    display: block;
+    font-size: var(--small-font-size);
+    color: var(--text-color-light);
+    margin-bottom: 1rem;
+}
+
+/* Background Shapes (Fixed, Non-Scrolling, Super Slow & Subtle) */
+.projects__background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* General Shape Styles */
+.projects__shape {
+    position: absolute;
+    opacity: 0.05; /* Less visible */
+    transform-origin: center;
+}
+
+/* Individual Shape Positions */
+.projects__shape1 { width: 400px; left: 5%; top: 20%; transform: rotate(25deg); }
+.projects__shape2 { width: 500px; right: 5%; bottom: 5%; transform: rotate(-30deg); }
+.projects__shape3 { width: 500px; left: 25%; top: 60%; transform: rotate(-20deg); }
+.projects__shape4 { width: 350px; right: 30%; bottom: 55%; transform: rotate(-55deg); }
+
+/* Prevent scrolling */
+html, body {
+    overflow-x: hidden;
+}
+
+/* Dark Mode Support */
+.dark-theme .projects__shape {
+    filter: invert(1);
+}
+
+/* ✅ Project Grid Layout - Keeps Bottom Items Slightly Visible */
+.projects__container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 per row on big screens */
+    grid-template-rows: repeat(3, 1fr); /* 3 rows visible */
+    gap: 2rem;
+    width: 100vw;
+    max-width: 100%;
+    padding: 2rem;
+    margin: 0 auto;
+    height: calc(100vh - 100px); /* Slightly reduced height to allow clipping */
+    overflow-y: scroll; /* Allows interaction with bottom items */
+    position: relative;
+    scroll-behavior: smooth;
+    padding-bottom: 4rem; /* Ensures last row is not completely cut */
+}
+
+/* Allow the bottom row to be slightly clipped */
+.projects__container::after {
+    content: "";
+    position: absolute;
+    bottom: -40px; /* Pushes the last row halfway down */
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--background-color)); /* Fades out */
+    pointer-events: none; /* Ensures hover still works */
+}
+
+/* Project Item Styling */
+.project__item {
+    position: relative;
+    overflow: hidden;
+    background: var(--container-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    width: 100%;
+    height: 300px; /* Fixed height */
+}
+
+/* ✅ Ensure the bottom row can be hovered over */
+.projects__container:hover {
+    overflow-y: auto;
+}
+
+/* Hover Effect: Slight Grow */
+.project__item:hover {
+    transform: scale(1.05);
+}
+
+/* Project Image */
+.project__image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    border-radius: 12px;
+}
+
+.project__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Hover Effect: Image Enlarges */
+.project__item:hover .project__image img {
+    transform: scale(1.1);
+}
+
+/* Project Content */
+.project__content {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    transition: 0.3s ease-in-out;
+    opacity: 0;
+}
+
+/* Project Title */
+.project__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    position: relative;
+    top: 100%;
+    transition: top 0.3s ease-in-out;
+}
+
+/* Project Description */
+.project__description {
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Hover Effect: Show Details */
+.project__item:hover .project__content {
+    opacity: 1;
+}
+
+/* Hover Effect: Move Title to Top */
+.project__item:hover .project__title {
+    top: 0;
+}
+
+/* Hover Effect: Fade in Description */
+.project__item:hover .project__description {
+    opacity: 1;
+}
+
+/* ✅ Responsive Adjustments */
+@media screen and (max-width: 1400px) {
+    .projects__container {
+        grid-template-columns: repeat(3, 1fr); /* 3 per row */
+        grid-template-rows: repeat(4, 1fr); /* 4 rows */
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .projects__container {
+        grid-template-columns: repeat(2, 1fr); /* 2 per row */
+        grid-template-rows: repeat(6, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .projects__container {
+        grid-template-columns: repeat(1, 1fr); /* 1 per row */
+        grid-template-rows: repeat(12, 1fr);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .projects__container {
+        grid-template-columns: repeat(1, 1fr); /* Single column on mobile */
+        grid-template-rows: repeat(12, 1fr);
+    }
+}
