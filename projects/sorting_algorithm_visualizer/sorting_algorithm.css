@@ -1,0 +1,126 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #1e1e1e;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    padding: 20px;
+    background: #2c2c2c;
+}
+
+/* Control Panel */
+#controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #333;
+    border-bottom: 2px solid white;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Select Dropdown */
+select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #444;
+    color: white;
+    border: 1px solid #777;
+    cursor: pointer;
+}
+
+/* Buttons */
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+#shuffle {
+    background: #007bff;
+    color: white;
+}
+#shuffle:hover {
+    background: #0056b3;
+}
+
+#start {
+    background: #28a745;
+    color: white;
+}
+#start:hover {
+    background: #1e7e34;
+}
+
+/* Sliders */
+input[type="range"] {
+    width: 120px;
+    height: 5px;
+    background: #666;
+    border-radius: 5px;
+    outline: none;
+    transition: background 0.2s;
+}
+input[type="range"]:hover {
+    background: #999;
+}
+
+/* Color Pickers */
+.color-picker-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.color-picker-label {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+input[type="color"] {
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+}
+
+/* Visualizer Area */
+#visualizer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 400px;
+    margin-top: 20px;
+    padding: 10px;
+    border: 2px solid white;
+    background: #282828;
+}
+
+/* Bars */
+.bar {
+    width: 20px;
+    margin: 2px;
+    transition: height 0.2s ease, background-color 0.2s ease;
+    border-radius: 5px;
+}
