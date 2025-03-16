@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathfinding Visualizer</title>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="path_finding.css">
+</head>
+<body>
+    <header>
+        <h1>Sorting Algorithms Visualizer</h1>
+    </header>
+
+    <section id="controls">
+        <!-- Grid Controls -->
+        <div class="button-group">
+            <label for="grid-size">Grid Size:</label>
+            <input type="number" id="grid-size" min="10" max="50" value="30">
+            <button class="control-btn blue" onclick="generateGrid()">Generate Grid</button>
+            <button class="control-btn blue" onclick="clearGrid()">Clear Grid</button>
+            <button class="control-btn blue" onclick="resetGrid()">Reset Everything</button>
+        </div>
+
+        <!-- Mode Selection -->
+        <div class="button-group">
+            <label for="mode">Mode:</label>
+            <button class="control-btn mode-btn" id="mode-start" onclick="setMode('start')">Place Start</button>
+            <button class="control-btn mode-btn" id="mode-end" onclick="setMode('end')">Place End</button>
+            <button class="control-btn mode-btn" id="mode-wall" onclick="setMode('wall')">Draw Walls</button>
+            <button class="control-btn mode-btn" id="mode-erase" onclick="setMode('erase')">Erase</button>
+        </div>
+
+        <!-- Speed & Algorithm -->
+        <div class="button-group">
+            <label for="speed">Speed:</label>
+            <input type="range" id="speed" min="10" max="100" value="50" step="5">
+            <span id="speed-value">100ms</span>
+
+            <label for="algorithm">Algorithm:</label>
+            <select id="algorithm">
+                <option value="astar">A* Algorithm</option>
+                <option value="bfs">Breadth-First Search (BFS)</option>
+                <option value="dfs">Depth-First Search (DFS)</option>
+                <option value="dijkstra">Dijkstra's Algorithm</option>
+            </select>
+
+            <button class="control-btn green" onclick="runAlgorithm()">Start</button>
+            <button class="control-btn white" onclick="stopAlgorithm()">Stop</button>
+        </div>
+    </section>
+
+    <section id="grid-container"></section>
+
+    <script src="path_finding.js"></script>
+</body>
+</html>

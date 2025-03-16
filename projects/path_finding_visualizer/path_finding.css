@@ -1,0 +1,158 @@
+/* Dark Theme Background */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Title Styling (Same as Sorting Visualizer) */
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 20px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Control Panel Styling - Full Width */
+#controls {
+    background-color: #2b2b2b;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 10px auto;
+    width: 95%; /* Expand to fit width */
+    max-width: 1200px; /* Max width */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Button Groups - Ensure they expand properly */
+.button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%; /* Ensures full width */
+    flex-wrap: wrap; /* Allows wrapping on small screens */
+}
+
+/* Buttons Styling */
+.control-btn {
+    padding: 8px 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.2s, transform 0.1s;
+    background-color: #444; /* Default state */
+    color: white;
+}
+
+/* Button Active State */
+.control-btn.active {
+    transform: scale(1.05);
+}
+
+/* Mode Selection Button - Default (Gray) */
+.mode-btn {
+    background-color: #555; /* Neutral color when inactive */
+    color: white;
+}
+
+/* Mode Selection - Active State */
+#mode-start.active {
+    background-color: #2ecc71; /* Green for Start */
+}
+
+#mode-end.active {
+    background-color: #e74c3c; /* Red for End */
+}
+
+#mode-wall.active {
+    background-color: #34495e; /* Dark Gray-Blue for Wall */
+}
+
+#mode-erase.active {
+    background-color: #f1c40f; /* Yellow for Erase */
+}
+
+/* Button Colors */
+.green { background-color: #2ecc71; color: white; }
+.red { background-color: #e74c3c; color: white; }
+.gray { background-color: #34495e; color: white; }
+.yellow { background-color: #f1c40f; color: black; }
+.blue { background-color: #2980b9; color: white; }
+.white { background-color: #ffffff; color: black; }
+
+.control-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Grid Container */
+#grid-container {
+    display: grid;
+    margin: 20px auto;
+    width: fit-content;
+    border: 2px solid #ffffff;
+}
+
+/* Grid Cells */
+.cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #444;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+/* Node Colors */
+.start { background-color: #2ecc71; } /* Bright Green */
+.end { background-color: #e74c3c; } /* Bright Red */
+.wall { background-color: #34495e; box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.2); } /* Dark Gray with glow */
+.visited { background-color: #f1c40f; animation: fadeIn 0.3s ease-in-out; } /* Yellow */
+.path { background-color: #3498db; animation: fadeIn 0.3s ease-in-out; } /* Bright Blue */
+
+/* Animations */
+@keyframes fadeIn {
+    from { background-color: #555; }
+    to { background-color: inherit; }
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 1024px) {
+    #controls {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .button-group {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .control-btn {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+    
+    #grid-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .cell {
+        width: 25px;
+        height: 25px;
+    }
+}
