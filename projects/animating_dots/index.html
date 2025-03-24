@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Animating Dots</title>
+  <link rel="stylesheet" href="dots.css" />
+</head>
+<body>
+  <div id="controls">
+    <label>
+      Point Count:
+      <input type="range" id="pointCount" min="10" max="1000" value="300" />
+      <span id="pointCountVal">100</span>
+    </label>
+
+    <label>
+      Point Speed:
+      <input type="range" id="pointSpeed" min="0.1" max="5" step="0.1" value="1" />
+      <span id="pointSpeedVal">1</span>
+    </label>
+
+    <label>
+      Wind X:
+      <input type="range" id="windX" min="-15" max="15" step="1" value="0" />
+      <span id="windXVal">0</span>
+    </label>
+
+    <label>
+      Wind Y:
+      <input type="range" id="windY" min="-15" max="15" step="1" value="0" />
+      <span id="windYVal">0</span>
+    </label>
+
+    <label>
+      Point Size:
+      <input type="range" id="pointSize" min="1" max="100" step="1" value="3" />
+      <span id="pointSizeVal">3</span>
+    </label>
+
+    <label>
+      Point Opacity:
+      <input type="range" id="pointOpacity" min="0" max="1" step="0.05" value="0.5" />
+      <span id="pointOpacityVal">0.5</span>
+    </label>
+
+    <label>
+      Line Distance:
+      <input type="range" id="lineDistance" min="10" max="300" step="10" value="100" />
+      <span id="lineDistanceVal">100</span>
+    </label>
+
+    <label>
+      Line Thickness:
+      <input type="range" id="lineThickness" min="0.1" max="5" step="0.1" value="1" />
+      <span id="lineThicknessVal">1</span>
+    </label>
+
+    <label>
+      Line Opacity:
+      <input type="range" id="lineOpacity" min="0" max="1" step="0.05" value="0.5" />
+      <span id="lineOpacityVal">0.5</span>
+    </label>
+    
+    <label>
+        Dot Color:
+        <input type="color" id="dotColor" value="#ffffff" />
+      </label>
+  
+      <label>
+        Line Color:
+        <input type="color" id="lineColor" value="#ffffff" />
+      </label>
+
+      <button id="resetButton">Reset to Defaults</button>
+  </div>
+
+  <canvas id="dotCanvas"></canvas>
+
+  <script src="dots.js"></script>
+</body>
+</html>
