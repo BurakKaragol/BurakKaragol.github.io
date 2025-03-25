@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #111;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+#ui {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+#imageInput {
+    margin-top: 10px;
+}
+
+canvas {
+    display: block;
+}
+
+#ui div {
+    margin-top: 10px;
+}
+
+#ui button {
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+:root {
+    --accent: #00bcd4;
+    --bg-dark: #1e1e1e;
+    --bg-light: #2c2c2c;
+    --text: #ffffff;
+}
+  
+#ui {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    background: var(--bg-light);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 280px;
+}
+
+#ui h1 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: var(--accent);
+}
+
+#ui input[type="file"] {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#ui div {
+    margin-top: 10px;
+}
+
+label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+input[type="range"] {
+    width: 100%;
+    appearance: none;
+    background: var(--bg-dark);
+    height: 6px;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    margin-top: -4px;
+    border: none;
+    box-shadow: 0 0 2px #000;
+}
+
+input[type="checkbox"] {
+    accent-color: var(--accent);
+    transform: scale(1.2);
+}
+
+button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 4px 0;
+    width: 100%;
+    transition: background 0.2s ease;
+}
+
+button:hover {
+    background: #0097a7;
+}

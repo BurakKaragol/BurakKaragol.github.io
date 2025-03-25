@@ -25,8 +25,15 @@ body {
     max-height: 95vh;
     overflow-y: auto;
     backdrop-filter: blur(10px);
-}
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}  
 
+#controls.hidden {
+    transform: translateX(-110%);
+    opacity: 0;
+    pointer-events: none;
+}
+  
 label {
     font-size: 14px;
     display: flex;
@@ -68,3 +75,28 @@ input[type="color"] {
 #resetButton:hover {
     background-color: #333;
 }
+
+#togglePanel {
+    position: absolute;
+    top: 10px;
+    left: 230px;
+    padding: 6px 12px;
+    background-color: #1e1e1e;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 3;
+    transition: left 0.3s ease, opacity 0.3s ease;
+}
+
+#togglePanel.minimized {
+    left: 10px;
+    opacity: 0.3;
+}
+
+#togglePanel:hover {
+    background-color: #333;
+    opacity: 1; /* pop back to full when hovered */
+}
+  

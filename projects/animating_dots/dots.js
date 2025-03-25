@@ -16,6 +16,7 @@ let mouse = {
     rightHeld: false
 };
   
+const backgroundColorPicker = document.getElementById('backgroundColor');
 const dotColorPicker = document.getElementById('dotColor');
 const lineColorPicker = document.getElementById('lineColor');
 
@@ -57,6 +58,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
     sliders.lineOpacity.value = 0.5;
   
     // Reset color pickers
+    backgroundColorPicker.value = '#000000';
     dotColorPicker.value = '#ffffff';
     lineColorPicker.value = '#ffffff';
   
@@ -177,7 +179,8 @@ function updatePoints() {
 
 // === Draw Points & Lines ===
 function draw() {
-    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = backgroundColorPicker.value;
+    ctx.fillRect(0, 0, width, height);
 
     const pointSize = parseFloat(sliders.pointSize.value);
     const pointOpacity = parseFloat(sliders.pointOpacity.value);
@@ -241,3 +244,20 @@ for (const [key, slider] of Object.entries(sliders)) {
     }
     });
 }
+
+const toggleButton = document.getElementById('togglePanel');
+const controlsPanel = document.getElementById('controls');
+
+toggleButton.addEventListener('click', () => {
+    const isHidden = controlsPanel.classList.contains('hidden');
+  
+    if (isHidden) {
+      controlsPanel.classList.remove('hidden');
+      toggleButton.innerText = 'Hide Controls';
+      toggleButton.classList.remove('minimized');
+    } else {
+      controlsPanel.classList.add('hidden');
+      toggleButton.innerText = 'Show Controls';
+      toggleButton.classList.add('minimized');
+    }
+});  
