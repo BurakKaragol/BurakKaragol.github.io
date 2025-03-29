@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Meshing Dots</title>
+    <link rel="stylesheet" href="mesh.css" />
+</head>
+<body>
+    <div id="controls-wrapper">
+        <div id="controls">
+            <label>
+                Point Count:
+                <input type="range" id="pointCount" min="10" max="500" value="100" />
+                <span id="pointCountVal">100</span>
+            </label>
+
+            <label>
+                Point Speed:
+                <input type="range" id="pointSpeed" min="0.1" max="5" step="0.1" value="1" />
+                <span id="pointSpeedVal">1</span>
+            </label>
+
+            <div id="colorGrid">
+                <div class="corner top-left">
+                    <label>Top Left</label>
+                    <input type="color" id="colorTopLeft" value="#ff0000" />
+                </div>
+
+                <div class="corner top-right">
+                    <label>Top Right</label>
+                    <input type="color" id="colorTopRight" value="#00ff00" />
+                </div>
+
+                <div class="corner bottom-left">
+                    <label>Bottom Left</label>
+                    <input type="color" id="colorBottomLeft" value="#0000ff" />
+                </div>
+
+                <div class="corner bottom-right">
+                    <label>Bottom Right</label>
+                    <input type="color" id="colorBottomRight" value="#ffff00" />
+                </div>
+            </div>
+
+            <label>
+                Point Color:
+                <input type="color" id="pointColor" value="#ffffff" />
+            </label>
+
+            <label>
+                Line Color:
+                <input type="color" id="lineColor" value="#000000" />
+            </label>
+
+            <label>
+                Mesh Opacity:
+                <input type="range" id="meshOpacity" min="0" max="1" step="0.05" value="0.5" />
+                <span id="meshOpacityVal">0.5</span>
+            </label>
+
+            <label>
+                Show Mesh:
+                <input type="checkbox" id="showMesh" checked />
+            </label>
+
+            <label>
+                Show Edges:
+                <input type="checkbox" id="showEdges" />
+            </label>
+
+            <button id="resetButton">Reset</button>
+        </div>
+        <button id="togglePanel">Hide Controls</button>
+    </div>
+
+    <canvas id="meshCanvas"></canvas>
+
+    <script src="https://unpkg.com/delaunator@5.0.0/delaunator.min.js"></script>
+    <script src="mesh.js"></script>
+</body>
+</html>
