@@ -328,7 +328,6 @@ body.dark-theme {
 }
 
 .home__perfil {
-  position: relative; /* Ensure canvas positions inside this */
   width: 170px;
   height: 260px;
   background: var(--gradient-color);
@@ -339,19 +338,7 @@ body.dark-theme {
   align-items: flex-end;
 }
 
-#dots-bg-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
-
 .home__perfil img {
-  position: relative;
-  z-index: 1;
   width: 150px;
 }
 
