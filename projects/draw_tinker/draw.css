@@ -1,0 +1,116 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: black;
+  color: white;
+  font-family: sans-serif;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.controls {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+button.active {
+  background-color: #5aaebd;
+}
+
+button.confirmable:hover {
+  background-color: #aa0000;
+}
+
+button.confirmable.confirming {
+  background-color: red;
+  color: white;
+}
+
+#propertiesPanel {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  padding: 10px 12px;
+  background-color: rgba(30, 30, 30, 0.95);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#propertiesPanel label {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.panel input[type="number"],
+.panel input[type="color"] {
+  flex: 1;
+  padding: 3px 5px;
+  border-radius: 2px;
+  border: none;
+  outline: none;
+}
+
+#multiColorLabel {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+#defaultsPanel {
+  position: absolute;
+  top: 50px; /* adjust depending on the Defaults button's height */
+  left: 303px; /* same as your button group’s left */
+  height: 150px;
+  z-index: 20;
+  padding: 10px 12px;
+  background-color: rgba(30, 30, 30, 0.95);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#defaultsPanel input[type="color"] {
+  border: 0.5px solid #444; /* thinner and darker */
+  border-radius: 2px;
+  width: 60px;
+  height: 28px;
+  background-color: #222;
+  outline: none;
+  cursor: pointer;
+}
+
+#defaultsPanel.hidden,
+#propertiesPanel.hidden,
+.hidden {
+  display: none;
+}

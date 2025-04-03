@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Draw & Tinker</title>
+  <link rel="stylesheet" href="draw.css" />
+</head>
+<body>
+
+  <canvas id="drawCanvas"></canvas>
+
+  <div class="controls">
+    <button class="modeBtn active" data-mode="select">Select</button>
+    <button class="modeBtn" data-mode="point">Point</button>
+    <button class="modeBtn" data-mode="line">Line</button>
+  
+    <button id="toggleGrid" class="toggleBtn active">Grid</button>
+    <button id="toggleSnap" class="toggleBtn">Snap</button>
+  
+    <button id="openDefaults">Defaults</button>
+    <button id="clearAll" class="confirmable">Clear Everything</button>
+  </div>
+  
+
+  <div id="propertiesPanel" class="panel hidden">
+    <label id="labelX">X: <input type="number" id="propX" /></label>
+    <label id="labelY">Y: <input type="number" id="propY" /></label>
+    <label id="labelColor">Color: <input type="color" id="propColor" /></label>
+  
+    <!-- 👇 New Multi-Select Color Control -->
+    <label id="multiColorLabel" class="hidden">Set All Color: 
+      <input type="color" id="multiColorInput" />
+    </label>
+  </div>
+  
+
+  <div id="defaultsPanel" class="panel hidden">
+    <h3>Default Colors</h3>
+    <label>Point Color: <input type="color" id="defaultPointColor" /></label>
+    <label>Line Color: <input type="color" id="defaultLineColor" /></label>
+  </div>  
+
+  <script type="module" src="draw.js"></script>
+</body>
+</html>
