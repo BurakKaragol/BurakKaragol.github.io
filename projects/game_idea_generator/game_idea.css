@@ -52,6 +52,10 @@
     font-size: 1.5rem;
 }
 
+.section-title {
+    font-size: 1.75rem;
+}
+
 /* Generate Button */
 .game-idea__button {
     position: relative;
@@ -79,4 +83,16 @@
 /* Active Effect: Slight Press Animation */
 .game-idea__button:active {
     transform: scale(0.96);
+}
+
+.lock-icon {
+    cursor:pointer;
+    margin-left:10px;
+    font-size: 1rem;
+    color: var(--text-color-light);
+    transition: color 0.3s;
+}
+
+.lock-icon:hover {
+    color: var(--first-color);
 }

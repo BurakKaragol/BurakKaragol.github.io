@@ -203,23 +203,44 @@ const twists = [
     { name: "There is a secret ending that can only be unlocked by never fighting", icon: "fa-peace" }
 ];
 
+const lockState = {
+    genre: false,
+    setting: false,
+    mechanic: false,
+    twist: false
+};
+
+function toggleLock(section) {
+    lockState[section] = !lockState[section];
+    const icon = document.getElementById(`${section}-lock`);
+    icon.className = `fa-solid ${lockState[section] ? 'fa-lock' : 'fa-lock-open'} lock-icon`;
+}
+
+// Setup lock toggles
+["genre", "setting", "mechanic", "twist"].forEach(section => {
+    document.getElementById(`${section}-lock`).addEventListener("click", () => toggleLock(section));
+});
+
+function rollSection(section, dataArray, iconId, textId, lockCheck, delay = 1000) {
+    if (lockCheck[section]) return;
+
+    let counter = 0;
+    const interval = 75;
+    const totalRolls = Math.floor(delay / interval);
+    const intervalId = setInterval(() => {
+        const item = dataArray[Math.floor(Math.random() * dataArray.length)];
+        document.getElementById(iconId).className = `fa-solid ${item.icon}`;
+        document.getElementById(textId).textContent = item.name;
+        counter++;
+        if (counter >= totalRolls) clearInterval(intervalId);
+    }, interval);
+}
+
 document.getElementById("generate-idea-btn").addEventListener("click", () => {
-    const genre = genres[Math.floor(Math.random() * genres.length)];
-    const setting = settings[Math.floor(Math.random() * settings.length)];
-    const mechanic = mechanics[Math.floor(Math.random() * mechanics.length)];
-    const twist = twists[Math.floor(Math.random() * twists.length)];
-
-    document.getElementById("genre-text").textContent = genre.name;
-    document.getElementById("genre-icon").className = `fa-solid ${genre.icon}`;
-
-    document.getElementById("setting-text").textContent = setting.name;
-    document.getElementById("setting-icon").className = `fa-solid ${setting.icon}`;
-
-    document.getElementById("mechanic-text").textContent = mechanic.name;
-    document.getElementById("mechanic-icon").className = `fa-solid ${mechanic.icon}`;
-
-    document.getElementById("twist-text").textContent = twist.name;
-    document.getElementById("twist-icon").className = `fa-solid ${twist.icon}`;
+    rollSection("genre", genres, "genre-icon", "genre-text", lockState, 1000);
+    rollSection("setting", settings, "setting-icon", "setting-text", lockState, 1100);
+    rollSection("mechanic", mechanics, "mechanic-icon", "mechanic-text", lockState, 1200);
+    rollSection("twist", twists, "twist-icon", "twist-text", lockState, 1300);
 });
 
 // Select the generate button
