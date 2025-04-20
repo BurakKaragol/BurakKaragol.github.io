@@ -285,9 +285,9 @@ async function downloadCanvasAsPNG(canvas, suggestedName = "palette.png") {
 }
 
 exportBtn.addEventListener("click", async () => {
-  const blockWidth = 100;
-  const blockHeight = 500;
-  const fontSize = 20;
+  const blockWidth = 200;
+  const blockHeight = 1000;
+  const fontSize = 40;
   const padding_top = blockWidth * 0.75;
   const padding_bottom = blockWidth * 0.25;
   
