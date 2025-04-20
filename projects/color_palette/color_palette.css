@@ -52,10 +52,15 @@
   
   .block-wrapper {
     position: relative;
-    display: flex;
     flex-grow: 1;
     height: 100%;
-    transition: flex-grow 0.3s ease;
+    transition: transform 0.2s ease;
+  }
+  
+  .block-wrapper.dragging {
+    transition: none;
+    pointer-events: none;
+    z-index: 10;
   }
   
   .color-block {
@@ -82,7 +87,7 @@
   
   .color-name,
   .hex-code {
-    font-size: 1.2rem;
+    font-size: 1.6rem;         /* ⬆️ Increased from 1.2rem */
     font-weight: bold;
     text-align: center;
     background: transparent;
@@ -90,7 +95,21 @@
     outline: none;
     width: 100%;
     color: inherit;
+    padding: 6px 0;            /* ⬆️ Add vertical spacing */
   }
+
+  .hex-code {
+    padding-bottom: 50px;
+  }
+  
+  .color-controls {
+    width: 100%;
+    padding: 0.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;                 /* ⬆️ Slightly larger gap */
+  }  
   
   .color-name:focus,
   .hex-code:focus {
@@ -99,36 +118,39 @@
   }
   
   .color-picker {
-    width: 90%;
-    margin: 0 auto;
-    height: 32px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    padding: 0;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
   }
   
+  /* Insert (+) button */
   .insert-btn {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 32px;
-    background-color: #fff;
-    color: #0f1b2d;
+    width: 40px;
+    height: 40px;
+    background-color: white;
     border-radius: 50%;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-size: 26px;
+    font-weight: bold;
+    font-family: monospace;
+    display: none;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
-    font-size: 22px;
-    font-family: monospace;
-    line-height: 1;
     cursor: pointer;
-    z-index: 10;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
+    z-index: 20;
+    transform: translateY(-50%);
+    transition: background-color 0.2s ease;
+  }
+  
+  .insert-btn:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .insert-btn.show {
     display: flex;
   }
   
@@ -142,41 +164,26 @@
     transform: translate(50%, -50%);
   }
   
-  .insert-btn.show {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  
-  .insert-btn:hover {
-    background-color: #eaeaea;
-  }
-  
+  /* Remove (🗑️) button */
   .remove-btn {
     position: absolute;
     top: 8px;
     right: 8px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: none;
+    width: 35px;
+    height: 35px;
+    background-color: rgba(255, 255, 255, 1);
+    opacity: 0.15;
+    border: 5px;
     border-radius: 4px;
     padding: 2px 6px;
     font-size: 14px;
     cursor: pointer;
     z-index: 5;
-    opacity: 0.8;
     transition: background 0.2s ease;
   }
   
   .remove-btn:hover {
-    background-color: rgba(255, 0, 0, 0.9);
+    background-color: rgba(255, 0, 0, 1);
     color: white;
-  }
-  
-  .drag-ghost {
-    position: fixed;
-    pointer-events: none;
-    opacity: 1;
-    z-index: 9999;
-    transform: translateX(-50%);
-    transition: none;
   }
   
