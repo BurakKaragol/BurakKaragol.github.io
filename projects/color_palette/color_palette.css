@@ -1,0 +1,182 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #faf9f6;
+    overflow: hidden;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #0f1b2d;
+    color: white;
+    height: 80px;
+  }
+  
+  header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .header-buttons button {
+    margin-left: 1rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+    font-weight: bold;
+    background-color: #ffffff15;
+    border: 2px solid white;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .header-buttons button:hover {
+    background-color: #ffffff30;
+  }
+  
+  #palette-container {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+  }
+  
+  .block-wrapper {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+    transition: flex-grow 0.3s ease;
+  }
+  
+  .color-block {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    user-select: none;
+    height: 100%;
+    position: relative;
+  }
+  
+  .color-controls {
+    width: 100%;
+    padding: 0.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .color-name,
+  .hex-code {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: inherit;
+  }
+  
+  .color-name:focus,
+  .hex-code:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  
+  .color-picker {
+    width: 90%;
+    margin: 0 auto;
+    height: 32px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .insert-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    background-color: #fff;
+    color: #0f1b2d;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 22px;
+    font-family: monospace;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    display: flex;
+  }
+  
+  .insert-btn.left {
+    left: 0;
+    transform: translate(-50%, -50%);
+  }
+  
+  .insert-btn.right {
+    right: 0;
+    transform: translate(50%, -50%);
+  }
+  
+  .insert-btn.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .insert-btn:hover {
+    background-color: #eaeaea;
+  }
+  
+  .remove-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 5;
+    opacity: 0.8;
+    transition: background 0.2s ease;
+  }
+  
+  .remove-btn:hover {
+    background-color: rgba(255, 0, 0, 0.9);
+    color: white;
+  }
+  
+  .drag-ghost {
+    position: fixed;
+    pointer-events: none;
+    opacity: 1;
+    z-index: 9999;
+    transform: translateX(-50%);
+    transition: none;
+  }
+  
