@@ -260,18 +260,73 @@ generateBtn.addEventListener("click", () => {
   renderPalette();
 });
 
-exportBtn.addEventListener("click", () => {
-  const data = colors.map((color, i) => ({
-    name: colorNames[i],
-    hex: color
-  }));
-  const json = JSON.stringify(data, null, 2);
-  const blob = new Blob([json], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "palette.json";
-  a.click();
+async function downloadCanvasAsPNG(canvas, suggestedName = "palette.png") {
+  if ('showSaveFilePicker' in window) {
+    const fileHandle = await window.showSaveFilePicker({
+      suggestedName,
+      types: [
+        {
+          description: "PNG Image",
+          accept: { "image/png": [".png"] },
+        },
+      ],
+    });
+
+    const writable = await fileHandle.createWritable();
+    const blob = await new Promise((res) => canvas.toBlob(res, "image/png"));
+    await writable.write(blob);
+    await writable.close();
+  } else {
+    const link = document.createElement("a");
+    link.download = suggestedName;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }
+}
+
+exportBtn.addEventListener("click", async () => {
+  const blockWidth = 100;
+  const blockHeight = 500;
+  const fontSize = 20;
+  const padding_top = blockWidth * 0.75;
+  const padding_bottom = blockWidth * 0.25;
+  
+  const columnCount = colors.length;
+  const canvas = document.createElement("canvas");
+  canvas.width = columnCount * blockWidth;
+  canvas.height = blockHeight;
+  
+  const ctx = canvas.getContext("2d");
+  
+  ctx.font = `bold ${fontSize}px 'Segoe UI', sans-serif`;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "top";
+  
+  for (let i = 0; i < columnCount; i++) {
+    const hex = colors[i];
+    const name = colorNames[i] || `Color ${i + 1}`;
+    const x = i * blockWidth;
+  
+    // Draw color block
+    ctx.fillStyle = hex;
+    ctx.fillRect(x, 0, blockWidth, blockHeight);
+  
+    // Set text color and outline
+    const contrast = getContrast(hex);
+  
+    ctx.save();
+    ctx.translate(x + blockWidth - padding_top, blockHeight - padding_bottom);
+    ctx.rotate(-Math.PI / 2);
+  
+    // Fill text
+    ctx.fillStyle = contrast;
+    ctx.fillText(name, 0, 0);
+    ctx.fillText(hex.toUpperCase(), 0, fontSize + 8);
+  
+    ctx.restore();
+  }
+
+  await downloadCanvasAsPNG(canvas);
 });
 
 renderPalette();
