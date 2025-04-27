@@ -285,48 +285,134 @@ async function downloadCanvasAsPNG(canvas, suggestedName = "palette.png") {
 }
 
 exportBtn.addEventListener("click", async () => {
-  const blockWidth = 200;
-  const blockHeight = 1000;
-  const fontSize = 40;
+  const blockWidth = 100;
+  const blockHeight = 500;
+  const fontSize = 20;
   const padding_top = blockWidth * 0.75;
   const padding_bottom = blockWidth * 0.25;
-  
+
   const columnCount = colors.length;
   const canvas = document.createElement("canvas");
   canvas.width = columnCount * blockWidth;
   canvas.height = blockHeight;
-  
+
   const ctx = canvas.getContext("2d");
-  
+
   ctx.font = `bold ${fontSize}px 'Segoe UI', sans-serif`;
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
-  
+
   for (let i = 0; i < columnCount; i++) {
     const hex = colors[i];
     const name = colorNames[i] || `Color ${i + 1}`;
     const x = i * blockWidth;
-  
-    // Draw color block
+
     ctx.fillStyle = hex;
     ctx.fillRect(x, 0, blockWidth, blockHeight);
-  
-    // Set text color and outline
+
     const contrast = getContrast(hex);
-  
+
     ctx.save();
     ctx.translate(x + blockWidth - padding_top, blockHeight - padding_bottom);
     ctx.rotate(-Math.PI / 2);
-  
-    // Fill text
+
     ctx.fillStyle = contrast;
     ctx.fillText(name, 0, 0);
     ctx.fillText(hex.toUpperCase(), 0, fontSize + 8);
-  
+
     ctx.restore();
   }
 
-  await downloadCanvasAsPNG(canvas);
+  const imgDataUrl = canvas.toDataURL("image/png");
+
+  showPreview(imgDataUrl);
 });
+
+function showPreview(dataUrl) {
+  // Create overlay
+  const overlay = document.createElement("div");
+  overlay.style.position = "fixed";
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = "100vw";
+  overlay.style.height = "100vh";
+  overlay.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+  overlay.style.display = "flex";
+  overlay.style.alignItems = "center";
+  overlay.style.justifyContent = "center";
+  overlay.style.zIndex = 1000;
+
+  // Create modal box
+  const modal = document.createElement("div");
+  modal.style.background = "#0f1b2d";
+  modal.style.padding = "0";
+  modal.style.borderRadius = "10px";
+  modal.style.textAlign = "center";
+  modal.style.maxWidth = "90vw";
+  modal.style.maxHeight = "90vh";
+  modal.style.display = "flex";
+  modal.style.flexDirection = "column";
+  modal.style.overflow = "hidden";
+
+  // Image inside modal
+  const imgWrapper = document.createElement("div");
+  imgWrapper.style.padding = "20px";
+  imgWrapper.style.flexGrow = "1";
+  imgWrapper.style.overflow = "auto";
+
+  const img = document.createElement("img");
+  img.src = dataUrl;
+  img.style.maxWidth = "100%";
+  img.style.height = "auto";
+  imgWrapper.appendChild(img);
+
+  // Download button bar
+  const downloadBtn = document.createElement("button");
+  downloadBtn.textContent = "Download PNG";
+  downloadBtn.style.width = "100%";
+  downloadBtn.style.padding = "16px 0";
+  downloadBtn.style.fontSize = "18px";
+  downloadBtn.style.width = "calc(100% - 40px)";
+  downloadBtn.style.margin = "0 20px 20px 20px";
+  downloadBtn.style.borderRadius = "10px";
+  downloadBtn.style.background = "#3b82f6";
+  downloadBtn.style.color = "white";
+  downloadBtn.style.border = "none";
+  downloadBtn.style.cursor = "pointer";
+  downloadBtn.style.transition = "background 0.3s ease";
+
+  // Hover animation
+  downloadBtn.addEventListener("mouseenter", () => {
+    downloadBtn.style.background = "#1b2b45"; // lighter hover
+  });
+  downloadBtn.addEventListener("mouseleave", () => {
+    downloadBtn.style.background = "#3b82f6"; // back to normal
+  });
+
+  // Download action
+  downloadBtn.addEventListener("click", async () => {
+    const blob = await (await fetch(dataUrl)).blob();
+    const fileHandle = await window.showSaveFilePicker({
+      suggestedName: "palette.png",
+      types: [{ description: "PNG Image", accept: { "image/png": [".png"] } }]
+    });
+    const writable = await fileHandle.createWritable();
+    await writable.write(blob);
+    await writable.close();
+    document.body.removeChild(overlay);
+  });
+
+  // Close overlay on outside click
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      document.body.removeChild(overlay);
+    }
+  });
+
+  modal.appendChild(imgWrapper);
+  modal.appendChild(downloadBtn);
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+}
 
 renderPalette();
