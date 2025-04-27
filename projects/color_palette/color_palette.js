@@ -105,7 +105,6 @@ function renderPalette() {
     block.appendChild(controls);
     wrapper.appendChild(block);
 
-    // 🗑️ Remove button
     const removeBtn = document.createElement("button");
     removeBtn.className = "remove-btn";
     removeBtn.textContent = "🗑️";
@@ -123,7 +122,6 @@ function renderPalette() {
     });
     block.appendChild(removeBtn);
 
-    // ➕ Insert button (left/right based on mouse)
     const insertBtn = document.createElement("div");
     insertBtn.className = "insert-btn";
     insertBtn.textContent = "+";
@@ -153,7 +151,6 @@ function renderPalette() {
       renderPalette();
     });
 
-    // 🧲 Drag Logic
     block.addEventListener("mousedown", (e) => {
       if (e.target.tagName === "INPUT" || e.target.classList.contains("remove-btn")) return;
 
@@ -297,7 +294,6 @@ exportBtn.addEventListener("click", async () => {
   canvas.height = blockHeight;
 
   const ctx = canvas.getContext("2d");
-
   ctx.font = `bold ${fontSize}px 'Segoe UI', sans-serif`;
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
@@ -324,12 +320,13 @@ exportBtn.addEventListener("click", async () => {
   }
 
   const imgDataUrl = canvas.toDataURL("image/png");
-
   showPreview(imgDataUrl);
 });
 
-function showPreview(dataUrl) {
-  // Create overlay
+let showName = true;
+let showHex = true;
+
+function showPreview(dataUrlInitial) {
   const overlay = document.createElement("div");
   overlay.style.position = "fixed";
   overlay.style.top = 0;
@@ -342,7 +339,6 @@ function showPreview(dataUrl) {
   overlay.style.justifyContent = "center";
   overlay.style.zIndex = 1000;
 
-  // Create modal box
   const modal = document.createElement("div");
   modal.style.background = "#0f1b2d";
   modal.style.padding = "0";
@@ -354,47 +350,104 @@ function showPreview(dataUrl) {
   modal.style.flexDirection = "column";
   modal.style.overflow = "hidden";
 
-  // Image inside modal
   const imgWrapper = document.createElement("div");
   imgWrapper.style.padding = "20px";
+  imgWrapper.style.paddingBottom = "10px";
   imgWrapper.style.flexGrow = "1";
   imgWrapper.style.overflow = "auto";
 
   const img = document.createElement("img");
-  img.src = dataUrl;
+  img.src = dataUrlInitial;
   img.style.maxWidth = "100%";
   img.style.height = "auto";
   imgWrapper.appendChild(img);
 
-  // Download button bar
+  const toggleWrapper = document.createElement("div");
+  toggleWrapper.style.display = "flex";
+  toggleWrapper.style.justifyContent = "center";
+  toggleWrapper.style.gap = "10px";
+  toggleWrapper.style.margin = "10px";
+  toggleWrapper.style.marginTop = "0px";
+
+  const nameToggle = document.createElement("button");
+  nameToggle.textContent = "Toggle Name";
+
+  const hexToggle = document.createElement("button");
+  hexToggle.textContent = "Toggle Hex";
+
+  function styleToggleButton(button) {
+    button.style.flex = "1";
+    button.style.margin = "10px";
+    button.style.padding = "10px 5px";
+    button.style.fontSize = "16px";
+    button.style.backgroundColor = "#e0e0e0";
+    button.style.color = "#333";
+    button.style.border = "2px solid #ccc";
+    button.style.borderRadius = "8px";
+    button.style.cursor = "pointer";
+    button.style.transition = "all 0.3s ease";
+    button.style.minWidth = "100px";
+  }
+
+  function setToggleActive(button, active) {
+    if (active) {
+      button.style.backgroundColor = "#3b82f6";
+      button.style.color = "white";
+      button.style.borderColor = "#3b82f6";
+    } else {
+      button.style.backgroundColor = "#e0e0e0";
+      button.style.color = "#333";
+      button.style.borderColor = "#ccc";
+    }
+  }
+
+  styleToggleButton(nameToggle);
+  styleToggleButton(hexToggle);
+
+  setToggleActive(nameToggle, showName);
+  setToggleActive(hexToggle, showHex);
+
+  nameToggle.addEventListener("click", () => {
+    showName = !showName;
+    setToggleActive(nameToggle, showName);
+    updatePreviewImage(img);
+  });
+
+  hexToggle.addEventListener("click", () => {
+    showHex = !showHex;
+    setToggleActive(hexToggle, showHex);
+    updatePreviewImage(img);
+  });
+
+  toggleWrapper.appendChild(nameToggle);
+  toggleWrapper.appendChild(hexToggle);
+
   const downloadBtn = document.createElement("button");
   downloadBtn.textContent = "Download PNG";
-  downloadBtn.style.width = "100%";
-  downloadBtn.style.padding = "16px 0";
-  downloadBtn.style.fontSize = "18px";
   downloadBtn.style.width = "calc(100% - 40px)";
   downloadBtn.style.margin = "0 20px 20px 20px";
-  downloadBtn.style.borderRadius = "10px";
+  downloadBtn.style.padding = "16px 0";
+  downloadBtn.style.fontSize = "18px";
   downloadBtn.style.background = "#3b82f6";
   downloadBtn.style.color = "white";
   downloadBtn.style.border = "none";
+  downloadBtn.style.borderRadius = "10px";
   downloadBtn.style.cursor = "pointer";
   downloadBtn.style.transition = "background 0.3s ease";
 
-  // Hover animation
   downloadBtn.addEventListener("mouseenter", () => {
-    downloadBtn.style.background = "#1b2b45"; // lighter hover
-  });
-  downloadBtn.addEventListener("mouseleave", () => {
-    downloadBtn.style.background = "#3b82f6"; // back to normal
+    downloadBtn.style.background = "#1b2b45";
   });
 
-  // Download action
+  downloadBtn.addEventListener("mouseleave", () => {
+    downloadBtn.style.background = "#3b82f6";
+  });
+
   downloadBtn.addEventListener("click", async () => {
-    const blob = await (await fetch(dataUrl)).blob();
+    const blob = await (await fetch(img.src)).blob();
     const fileHandle = await window.showSaveFilePicker({
       suggestedName: "palette.png",
-      types: [{ description: "PNG Image", accept: { "image/png": [".png"] } }]
+      types: [{ description: "PNG Image", accept: { "image/png": [".png"] } }],
     });
     const writable = await fileHandle.createWritable();
     await writable.write(blob);
@@ -402,17 +455,68 @@ function showPreview(dataUrl) {
     document.body.removeChild(overlay);
   });
 
-  // Close overlay on outside click
+  modal.appendChild(imgWrapper);
+  modal.appendChild(toggleWrapper);
+  modal.appendChild(downloadBtn);
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+
   overlay.addEventListener("click", (e) => {
     if (e.target === overlay) {
       document.body.removeChild(overlay);
     }
   });
+}
 
-  modal.appendChild(imgWrapper);
-  modal.appendChild(downloadBtn);
-  overlay.appendChild(modal);
-  document.body.appendChild(overlay);
+function updatePreviewImage(imgElement) {
+  const blockWidth = 100;
+  const blockHeight = 500;
+  const baseFontSize = 20;
+  const bigFontSize = 26;
+  const padding_top = blockWidth * 0.75;
+  const padding_bottom = blockWidth * 0.25;
+
+  const columnCount = colors.length;
+  const canvas = document.createElement("canvas");
+  canvas.width = columnCount * blockWidth;
+  canvas.height = blockHeight;
+
+  const ctx = canvas.getContext("2d");
+  ctx.textAlign = "left";
+  ctx.textBaseline = "top";
+
+  for (let i = 0; i < columnCount; i++) {
+    const hex = colors[i];
+    const name = colorNames[i] || `Color ${i + 1}`;
+    const x = i * blockWidth;
+
+    ctx.fillStyle = hex;
+    ctx.fillRect(x, 0, blockWidth, blockHeight);
+
+    const contrast = getContrast(hex);
+
+    ctx.save();
+    ctx.translate(x + blockWidth - padding_top, blockHeight - padding_bottom);
+    ctx.rotate(-Math.PI / 2);
+
+    ctx.fillStyle = contrast;
+
+    const bothVisible = showName && showHex;
+
+    if (bothVisible) {
+      ctx.font = `bold ${baseFontSize}px 'Segoe UI', sans-serif`;
+      if (showName) ctx.fillText(name, 0, -5);
+      if (showHex) ctx.fillText(hex.toUpperCase(), 0, baseFontSize + 5);
+    } else {
+      ctx.font = `bold ${bigFontSize}px 'Segoe UI', sans-serif`;
+      if (showName) ctx.fillText(name, 0, 13);
+      if (showHex) ctx.fillText(hex.toUpperCase(), 0, 13);
+    }
+
+    ctx.restore();
+  }
+
+  imgElement.src = canvas.toDataURL("image/png");
 }
 
 renderPalette();
