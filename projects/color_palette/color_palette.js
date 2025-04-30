@@ -11,6 +11,7 @@ let dragIndex = null;
 let dragElement = null;
 let blockRects = [];
 
+
 function generateRandomColor() {
   return "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0");
 }
@@ -41,6 +42,11 @@ function mixColors(c1, c2) {
 function renderPalette() {
   paletteContainer.innerHTML = "";
 
+  // Ensure colorNames matches colors.length
+  while (colorNames.length < colors.length) {
+    colorNames.push(`Color ${colorNames.length + 1}`);
+  }
+
   colors.forEach((color, index) => {
     const wrapper = document.createElement("div");
     wrapper.className = "block-wrapper";
@@ -58,7 +64,7 @@ function renderPalette() {
 
     const nameInput = document.createElement("input");
     nameInput.className = "color-name";
-    nameInput.value = colorNames[index];
+    nameInput.value = colorNames[index] || `Color ${index + 1}`;
     nameInput.addEventListener("input", () => {
       colorNames[index] = nameInput.value;
     });
@@ -250,12 +256,6 @@ function onMouseUp() {
 
   renderPalette();
 }
-
-generateBtn.addEventListener("click", () => {
-  colors = colors.map(() => generateRandomColor());
-  colorNames = colors.map((_, i) => `Color ${i + 1}`);
-  renderPalette();
-});
 
 async function downloadCanvasAsPNG(canvas, suggestedName = "palette.png") {
   if ('showSaveFilePicker' in window) {
@@ -518,5 +518,148 @@ function updatePreviewImage(imgElement) {
 
   imgElement.src = canvas.toDataURL("image/png");
 }
+
+function hslToHex(h, s, l) {
+  s /= 100;
+  l /= 100;
+  const k = n => (n + h / 30) % 12;
+  const a = s * Math.min(l, 1 - l);
+  const f = n =>
+    Math.round(255 * (l - a * Math.max(-1, Math.min(k(n) - 3, 9 - k(n), 1))))
+      .toString(16)
+      .padStart(2, "0");
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+function generatePaletteFromMode(count, mode) {
+  const baseHue = Math.floor(Math.random() * 360);
+  const grayLightCount = Math.max(1, Math.floor(count * 0.15));
+  const grayDarkCount = Math.max(1, Math.floor(count * 0.15));
+  const accentCount = count - grayLightCount - grayDarkCount;
+
+  const grayLights = [];
+  const grayDarks = [];
+  const accents = [];
+
+  const createNeutral = (light = true) => {
+    const h = Math.floor(Math.random() * 30);
+    const s = 4 + Math.random() * 8;
+    const l = light
+      ? 85 + Math.random() * 10
+      : 5 + Math.random() * 15;
+    return hslToHex(h, s, l);
+  };
+
+  const createAccent = (i) => {
+    let h = baseHue;
+    let s = 60 + Math.random() * 20;
+    let l = 45 + Math.random() * 10;
+    const spread = 15;
+
+    if (mode === "analogous") {
+      h = (baseHue + i * spread + Math.random() * 5 - 2.5) % 360;
+    } else if (mode === "complementary") {
+      h = (baseHue + (i % 2 === 0 ? 0 : 180) + Math.floor(i / 2) * spread) % 360;
+    } else if (mode === "monochromatic") {
+      h = baseHue;
+      l = 30 + i * (40 / Math.max(accentCount, 1));
+    } else if (mode === "triadic") {
+      const offset = (i % 3) * 120;
+      h = (baseHue + offset + Math.floor(i / 3) * spread) % 360;
+    } else if (mode === "tetradic") {
+      const base = (i % 4) * 90;
+      const shift = Math.floor(i / 4) * spread;
+      h = (baseHue + base + shift) % 360;
+    }
+
+    return hslToHex(h, s, l);
+  };
+
+  // Generate grays
+  for (let i = 0; i < grayDarkCount; i++) grayDarks.push(createNeutral(false));
+  for (let i = 0; i < grayLightCount; i++) grayLights.push(createNeutral(true));
+  for (let i = 0; i < accentCount; i++) accents.push(createAccent(i));
+
+  const groupSize = {
+    analogous: 5,
+    complementary: 2,
+    triadic: 3,
+    tetradic: 4,
+    monochromatic: accentCount
+  }[mode] || 3;
+
+  const sortedAccents = groupAndSortAccents(accents, groupSize);
+
+  const finalPalette = [...grayDarks, ...grayLights, ...sortedAccents];
+  colorNames = finalPalette.map((_, i) => `Color ${i + 1}`);
+  return finalPalette;
+}
+
+function groupAndSortAccents(accents, groupSize) {
+  const groups = [];
+
+  for (let i = 0; i < accents.length; i++) {
+    const groupIndex = Math.floor(i / groupSize);
+    if (!groups[groupIndex]) groups[groupIndex] = [];
+    groups[groupIndex].push(accents[i]);
+  }
+
+  return groups.flatMap(group =>
+    group.sort((a, b) => getHueFromHex(a) - getHueFromHex(b))
+  );
+}
+
+function getHueFromHex(hex) {
+  const r = parseInt(hex.slice(1, 3), 16) / 255;
+  const g = parseInt(hex.slice(3, 5), 16) / 255;
+  const b = parseInt(hex.slice(5, 7), 16) / 255;
+
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h = 0;
+
+  if (max !== min) {
+    if (max === r) h = (60 * ((g - b) / (max - min)) + 360) % 360;
+    else if (max === g) h = (60 * ((b - r) / (max - min)) + 120) % 360;
+    else h = (60 * ((r - g) / (max - min)) + 240) % 360;
+  }
+
+  return h;
+}
+
+function getLightnessFromHex(hex) {
+  const r = parseInt(hex.slice(1, 3), 16) / 255;
+  const g = parseInt(hex.slice(3, 5), 16) / 255;
+  const b = parseInt(hex.slice(5, 7), 16) / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+
+  return ((max + min) / 2) * 100;
+}
+
+const modePopup = document.getElementById("palette-mode-popup");
+
+generateBtn.addEventListener("click", (e) => {
+  const rect = generateBtn.getBoundingClientRect();
+  modePopup.style.top = `${rect.bottom + window.scrollY + 5}px`;
+  modePopup.style.left = `${rect.left + window.scrollX}px`;
+  modePopup.classList.toggle("hidden");
+});
+
+document.addEventListener("click", (e) => {
+  if (!modePopup.contains(e.target) && e.target !== generateBtn) {
+    modePopup.classList.add("hidden");
+  }
+});
+
+modePopup.querySelectorAll("button").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const mode = btn.dataset.mode;
+    colors = generatePaletteFromMode(colors.length, mode);
+    colorNames = colors.map((_, i) => `Color ${i + 1}`);
+    renderPalette();
+    modePopup.classList.add("hidden");
+  });
+});
 
 renderPalette();

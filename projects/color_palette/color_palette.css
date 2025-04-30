@@ -8,7 +8,7 @@ html, body {
   height: 100%;
   width: 100%;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #faf9f6;
+  background-color: hsl(217, 52%, 7%);
   overflow: hidden;
 }
 
@@ -183,4 +183,38 @@ header h1 {
 .remove-btn:hover {
   background-color: rgba(255, 0, 0, 1);
   color: white;
+}
+
+.mode-popup {
+  position: absolute;
+  background: #0f1b2d;
+  border: 2px solid white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  z-index: 3000;
+  padding: 8px;
+  gap: 6px;
+  min-width: 220px;
+}
+
+.mode-popup.hidden {
+  display: none;
+}
+
+.mode-popup button {
+  padding: 12px;
+  color: white;
+  background: #0f1b2d;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.mode-popup button:hover {
+  background: rgb(48, 87, 145);
 }
