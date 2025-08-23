@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Random Maze — Play & Replay</title>
+  <link rel="stylesheet" href="maze.css" />
+</head>
+<body>
+  <div id="stage">
+    <canvas id="maze"></canvas>
+  </div>
+
+  <aside id="ui">
+    <h1>Random Maze</h1>
+
+    <div class="row">
+      <div class="col">
+        <label for="rows">Rows</label>
+        <input id="rows" type="number" min="5" max="200" step="1" value="21">
+      </div>
+      <div class="col">
+        <label for="cols">Cols</label>
+        <input id="cols" type="number" min="5" max="200" step="1" value="31">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="hard">Hardness</label>
+        <select id="hard">
+          <option value="easy">Easy</option>
+          <option value="normal" selected>Normal</option>
+          <option value="twisty">Twisty</option>
+          <option value="hard">Hard</option>
+          <option value="labyrinth">Labyrinth</option>
+        </select>
+      </div>
+      <div class="col"></div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="loops">Loops (%)</label>
+        <input id="loops" type="range" min="0" max="100" step="5" value="30">
+        <div class="range-readout"><span id="loopsVal">30</span>%</div>
+      </div>
+      <div class="col">
+        <label for="straight">Straightness</label>
+        <input id="straight" type="range" min="0" max="100" step="5" value="45">
+        <div class="range-readout"><span id="straightVal">45</span></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <button id="btn-new" class="accent">New Maze (N)</button>
+      <!-- Replaces “Regenerate” -->
+      <button id="btn-retry" class="good">Replay Maze (R)</button>
+    </div>
+
+    <div class="row">
+      <button id="btn-solve" class="good">Show Solve Path</button>
+      <button id="btn-watch" class="warn">Watch Last Run (Space)</button>
+    </div>
+
+    <div class="toggles">
+      <label class="toggle">
+        <input id="toggle-trail" type="checkbox" checked>
+        <span>Show Recent Path (T)</span>
+      </label>
+    </div>
+
+    <div class="meter">
+      <div class="stat"><span class="badge">Timer</span><span id="time" class="value">00:00.000</span></div>
+      <div class="stat"><span class="badge">Best</span><span id="best" class="value">—</span></div>
+    </div>
+
+    <div class="legend">
+      <span class="key"><span class="dot"></span>Trail</span>
+      <span class="key"><span class="dot player"></span>Player</span>
+      <span class="key"><span class="dot goal"></span>Goal</span>
+      <span class="key"><span class="dot solve"></span>Solve</span>
+      <span class="key"><span class="line"></span>Replay</span>
+    </div>
+
+    <div class="sep"></div>
+    <div class="col">
+      <label>Controls</label>
+      <div class="help">
+        Arrows / WASD to move. N = new maze, R = replay maze, Space = watch last run, T = toggle recent path.
+      </div>
+    </div>
+
+    <div class="dpad">
+      <div></div>
+      <button data-move="up">↑</button>
+      <div></div>
+      <button data-move="left">←</button>
+      <button data-move="down">↓</button>
+      <button data-move="right">→</button>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <footer>Made for fast play & clean replays.</footer>
+  </aside>
+
+  <script src="maze.js"></script>
+</body>
+</html>
