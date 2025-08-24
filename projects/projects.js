@@ -23,3 +23,27 @@ document.addEventListener("DOMContentLoaded", function () {
         project.style.cursor = "pointer";
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const helpIcon = document.querySelector(".help-icon");
+    const helpOverlay = document.getElementById("helpOverlay");
+
+    if (helpIcon && helpOverlay) {
+        helpIcon.addEventListener("mouseenter", () => {
+            helpOverlay.classList.add("active");
+        });
+
+        helpIcon.addEventListener("mouseleave", () => {
+            helpOverlay.classList.remove("active");
+        });
+
+        helpOverlay.addEventListener("mouseenter", () => {
+            helpOverlay.classList.add("active");
+        });
+
+        helpOverlay.addEventListener("mouseleave", () => {
+            helpOverlay.classList.remove("active");
+        });
+    }
+});
+

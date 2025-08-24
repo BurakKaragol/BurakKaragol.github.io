@@ -34,6 +34,51 @@
     transform-origin: center;
 }
 
+/* Subtitle Styling */
+.project_section__subtitle {
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; /* spacing between text and icon */
+    font-size: var(--small-font-size);
+    color: var(--text-color-light);
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+/* Help Icon */
+.help-icon {
+    font-size: 1.1rem;
+    color: var(--text-color-light);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.help-icon:hover {
+    color: var(--first-color); /* highlight on hover */
+}
+
+/* Help Overlay */
+.help-overlay {
+    position: absolute;
+    top: 8rem; /* appears below subtitle */
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--container-color);
+    color: var(--text-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    padding: 1rem 1.5rem;
+    width: 820px;
+    display: none;
+    z-index: 999;
+}
+
+.help-overlay.active {
+    display: block;
+}
+
 /* Individual Shape Positions */
 .projects__shape1 { width: 400px; left: 5%; top: 20%; transform: rotate(25deg); }
 .projects__shape2 { width: 500px; right: 5%; bottom: 5%; transform: rotate(-30deg); }

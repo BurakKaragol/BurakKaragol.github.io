@@ -19,6 +19,100 @@ if(navClose){
     })
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    // 1) Safer external links
+    document.querySelectorAll('a[target="_blank"]').forEach(a => {
+    if (!a.rel.includes('noopener')) a.rel += (a.rel ? ' ' : '') + 'noopener';
+    if (!a.rel.includes('noreferrer')) a.rel += ' noreferrer';
+    });
+
+    // 2) Sync aria-expanded on menu toggle
+    const toggle = document.getElementById('nav-toggle');
+    const closeBtn = document.getElementById('nav-close');
+    const setExpanded = (open) => toggle && toggle.setAttribute('aria-expanded', String(open));
+    toggle && toggle.addEventListener('click', () => setExpanded(true));
+    closeBtn && closeBtn.addEventListener('click', () => setExpanded(false));
+
+    // 3) Make "View Web Projects" keyboard accessible
+    const webBtn = document.querySelector('.web_projects_button[data-url]');
+    if (webBtn) {
+    const go = () => location.href = webBtn.getAttribute('data-url');
+    webBtn.addEventListener('click', go);
+    webBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+    });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+const birthYear = 1998;
+const today = new Date();
+let age = today.getFullYear() - birthYear;
+
+// If birthday hasn't happened yet this year, subtract 1
+const birthMonth = 1;  // Change if you want exact month (0 = Jan, 11 = Dec)
+const birthDay = 1;    // Change if you want exact day
+const hasBirthdayPassed =
+    today.getMonth() > birthMonth ||
+    (today.getMonth() === birthMonth && today.getDate() >= birthDay);
+
+if (!hasBirthdayPassed) {
+    age--;
+}
+
+const ageEl = document.getElementById("age");
+if (ageEl) ageEl.textContent = age;
+});
+
+(function () {
+"use strict";
+
+function parseYMD(s) {
+    // s: 'YYYY-MM-DD'
+    const [y, m, d] = s.split("-").map(Number);
+    return new Date(y, (m || 1) - 1, d || 1);
+}
+
+function fullYearsSince(startDate, today = new Date()) {
+    let years = today.getFullYear() - startDate.getFullYear();
+    const m = today.getMonth() - startDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < startDate.getDate())) years--;
+    return years;
+}
+
+function pad(num, size) {
+    const s = String(num);
+    return s.length >= size ? s : ("0".repeat(size - s.length) + s);
+}
+
+function setAge() {
+    const el = document.getElementById("age");
+    if (!el) return;
+    const attr = el.getAttribute("data-birthdate") || "1998-01-01";
+    const dob = parseYMD(attr);
+    const age = fullYearsSince(dob);
+    el.textContent = age;
+}
+
+function setExperience() {
+    const el = document.getElementById("years-exp");
+    if (!el) return;
+    const startAttr = el.getAttribute("data-exp-start") || "2019-01-01";
+    const padLen = parseInt(el.getAttribute("data-pad") || "2", 10);
+
+    const start = parseYMD(startAttr);
+    const years = fullYearsSince(start);
+    el.textContent = pad(years, padLen);
+}
+
+// Run on DOM ready
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => { setAge(); setExperience(); });
+} else {
+    setAge(); setExperience();
+}
+})();
+
 /*=============== REMOVE MENU MOBILE ===============*/
 const navLink = document.querySelectorAll('.nav__link')
 

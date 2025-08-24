@@ -78,6 +78,24 @@ body {
   transition: background 0.4s; /* for dark mode animation */
 }
 
+.skip-link {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--container-color); color: var(--text-color);
+  padding: .5rem .75rem; border-radius: .5rem; z-index: 10000;
+}
+
+.skip-link:focus {
+  left: .5rem; top: .5rem; outline: 2px solid var(--first-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
 h1,
 h2,
 h3 {
