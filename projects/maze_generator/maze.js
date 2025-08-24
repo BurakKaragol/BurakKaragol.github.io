@@ -64,11 +64,11 @@
       this.grid[ai].walls &= ~dir;
       this.grid[bi].walls &= ~opp;
     }
-    generateRB(straightness=0.45, seedStart={r:0,c:0}){
+    generateRB(straightness=0.45){
       this.grid.forEach(c => { c.visited=false; c.walls=1|2|4|8; });
-      const st = { r:seedStart?.r??0, c:seedStart?.c??0, prevDir:0 };
+      const st = { r:0, c:0, prevDir:0 };
       const stack=[st];
-      this.grid[this.idx(st.r,st.c)].visited=true;
+      this.grid[this.idx(0,0)].visited=true;
       while(stack.length){
         const cur=stack[stack.length-1];
         const nbrs=this.neighbors(cur.r,cur.c).filter(n=>!this.grid[this.idx(n.r,n.c)].visited);
@@ -155,20 +155,19 @@
       this.replaying = false;
       this.replayData = null;
       this._replayStart = 0;
+      this._replayTimer = null;   // <— track pending replay start
       this.replayVisible = false;
 
       this.showSolve = false;
       this.solvePath = [];
 
-      this.bestMs = null; // <-- best time for current maze instance
+      this.bestMs = null;
 
       this._raf = null;
       this._lastTick = 0;
 
       this.resize();
       window.addEventListener('resize', () => { this.resize(); this.render(); });
-
-      // boot calls newMaze(true) later
     }
 
     sizeToFit() {
@@ -197,31 +196,35 @@
       return { loops, straightness: straight/100 };
     }
 
-    // New layout (may also change size); resets BEST (per your earlier request)
+    // Always recompute canvas size on every new maze to keep it perfectly centered/scaled
     newMaze(resetSize=false) {
-      if (resetSize) {
-        const prevR = this.rows, prevC = this.cols;
-        this._readParams();
-        if (this.rows !== prevR || this.cols !== prevC) this.sizeToFit();
-      } else {
-        this._readParams(); // ensure we use latest hardness values
-      }
+      // stop any replay and timers
+      if (this._replayTimer) { clearTimeout(this._replayTimer); this._replayTimer = null; }
+      this.replaying = false; this.replayVisible = false;
+
+      this._readParams();                 // rows/cols + knobs
+      this.sizeToFit();                   // <— recompute canvas size every time
       this.maze = new Maze(this.rows, this.cols);
 
       const { loops, straightness } = this._readParams();
       this.maze.generateRB(straightness);
       this.maze.braid(loops);
 
-      this.bestMs = null; // reset best on new maze
+      this.bestMs = null;                 // new layout → reset best
       this._updateBestLabel();
 
-      this._resetRunState(true); // place player at start, clear timer/trail, hide replay
+      this._resetRunState(true);
       this.render();
     }
 
-    // Replay the SAME layout; DO NOT reset best
+    // Restart same layout; do NOT reset best
     replayMaze() {
-      this._resetRunState(true); // keep maze, reset player/timer/trail
+      // kill any pending auto-replay & ensure controls are live
+      if (this._replayTimer) { clearTimeout(this._replayTimer); this._replayTimer = null; }
+      this.replaying = false;
+      this.replayVisible = false;
+
+      this._resetRunState(true);
       this.render();
     }
 
@@ -230,17 +233,12 @@
       this.trail = [{ r:this.player.r, c:this.player.c, t:0 }];
       this.startedAt = null;
       this.endedAt = null;
-
-      // keep last run data so you can still watch it if you want
       if (hideReplay) this.replayVisible = false;
-
-      this.showSolve = this.showSolve; // leave toggle as-is
       this._updateTimerLabel(0);
     }
 
     _updateTimerLabel(ms){ this.timeLabel.textContent = fmt(ms); }
     _updateBestLabel(){ this.bestLabel.textContent = (this.bestMs==null ? '—' : fmt(this.bestMs)); }
-
     startIfNeeded(){ if(!this.startedAt && !this.replaying) this.startedAt = now(); }
 
     tryMove(dr,dc){
@@ -257,16 +255,13 @@
       if(this.player.r===this.maze.goal.r && this.player.c===this.maze.goal.c){
         this.endedAt = now();
         const duration = this.endedAt - this.startedAt;
-        // update best (for this maze instance only)
-        if (this.bestMs==null || duration < this.bestMs) {
-          this.bestMs = duration; this._updateBestLabel();
-        }
-        // store last run for watch
+        if (this.bestMs==null || duration < this.bestMs) { this.bestMs = duration; this._updateBestLabel(); }
         const path = this.trail.map(p => ({ r:p.r, c:p.c, tRel:p.t }));
         const total = path.length ? path[path.length-1].tRel : duration;
         this.replayData = { path, duration: total };
         this.replayVisible = false;
-        setTimeout(()=>this.playReplay(), 350);
+        if (this._replayTimer) clearTimeout(this._replayTimer);
+        this._replayTimer = setTimeout(()=>this.playReplay(), 350);
       }
     }
 
@@ -289,8 +284,8 @@
       else if (k==='arrowdown' || k==='s') this.tryMove(+1,0);
       else if (k==='arrowleft' || k==='a') this.tryMove(0,-1);
       else if (k==='arrowright'|| k==='d') this.tryMove(0,+1);
-      else if (k==='r') this.replayMaze();           // <- Replay Maze (same layout)
-      else if (k==='n') this.newMaze(true);          // New Maze (potentially new size)
+      else if (k==='r') this.replayMaze();           // Replay Maze (same layout)
+      else if (k==='n') this.newMaze(true);          // New Maze (new layout, size respected)
       else if (k===' ') { if(this.replayData) this.playReplay(); } // Watch last run
       else if (k==='t') { this.showTrail = !this.showTrail; $('#toggle-trail').checked = this.showTrail; }
     }
