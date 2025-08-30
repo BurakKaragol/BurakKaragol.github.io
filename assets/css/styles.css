@@ -647,6 +647,63 @@ body.dark-theme {
   opacity: 1;
 }
 
+/*deneme*/
+/* Button base (hidden at idle) */
+.services__cta {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  height: 44px;
+  border: 1px solid var(--text-color-light);
+  background: var(--container-color);
+  color: var(--title-color);
+  border-radius: 999px;
+  font: inherit;
+  font-weight: var(--font-semi-bold);
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease, background 0.35s ease, border-color 0.35s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+/* Reveal on hover and when the card (or its children) has focus */
+.services__card:hover .services__cta,
+.services__card:focus-within .services__cta {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Hover/focus feedback */
+.services__cta:hover,
+.services__cta:focus-visible {
+  outline: none;
+  background: color-mix(in oklab, var(--container-color) 80%, var(--title-color) 20%);
+  border-color: var(--title-color);
+}
+
+/* Keyboard accessibility for the card itself (optional but useful) */
+.services__card {
+  position: relative;
+}
+.services__card:focus-within {
+  outline: 2px solid color-mix(in oklab, var(--title-color) 60%, transparent);
+  outline-offset: 2px;
+}
+
+/* Touch devices: no hover, so show the CTA */
+@media (hover: none) {
+  .services__cta {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
 /*=============== PROJECTS ===============*/
 .projects__container {
   overflow: initial;
