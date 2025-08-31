@@ -647,13 +647,12 @@ body.dark-theme {
   opacity: 1;
 }
 
-/*deneme*/
 /* Button base (hidden at idle) */
 .services__cta {
   position: absolute;
   left: 1rem;
   right: 1rem;
-  bottom: 1rem;
+  bottom: 3.5rem;
   height: 44px;
   border: 1px solid var(--text-color-light);
   background: var(--container-color);

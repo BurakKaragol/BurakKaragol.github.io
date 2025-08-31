@@ -170,51 +170,100 @@ function setSubjectTr(subject) {
     subjectInputTr.innerText = "Merhaba, '" + subject + "' projeniz hakkında daha fazla bilgi almak istiyorum.";
 }
 
-  function goToContact(serviceName) {
+function goToContact(serviceName) {
     // Update the URL hash (helps if you have nav based on #contact)
     if (location.hash !== '#contact') {
-      history.pushState(null, '', '#contact');
+        history.pushState(null, '', '#contact');
     }
 
     // Try to find the contact section
     const contact = document.getElementById('contact') || document.querySelector('[data-section="contact"]') || document.querySelector('section#contact, .contact, #Contact, [id*="contact" i]');
     if (contact) {
-      // Smooth scroll into view
-      contact.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Smooth scroll into view
+        contact.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-      // Try common subject/message selectors
-      const subjectInput =
+        // Try common subject/message selectors
+        const subjectInput =
         contact.querySelector('input[name="subject"]') ||
         contact.querySelector('input[id*="subject" i]') ||
         contact.querySelector('input[type="text"]');
 
-      const messageInput =
+        const messageInput =
         contact.querySelector('textarea[name="message"]') ||
         contact.querySelector('textarea[id*="message" i]') ||
         contact.querySelector('textarea');
 
-      // Prefill values
-      const subjectText = `Inquiry: ${serviceName}`;
-      const messageText = `Hi Burak,\n\nI'm interested in **${serviceName}**. Could you please get back to me with details (timeline, pricing, and next steps)?\n\nThanks!`;
+        // Prefill values
+        const subjectText = `Inquiry: ${serviceName}`;
+        const messageText = `Hi Burak,\n\nI'm interested in **${serviceName}**. Could you please get back to me with details (timeline, pricing, and next steps)?\n\nThanks!`;
 
-      if (subjectInput) {
+        if (subjectInput) {
         subjectInput.value = subjectText;
         subjectInput.dispatchEvent(new Event('input', { bubbles: true })); // for any reactive bindings
-      }
-      if (messageInput) {
+        }
+        if (messageInput) {
         messageInput.value = messageText;
         messageInput.dispatchEvent(new Event('input', { bubbles: true }));
-      }
+        }
 
-      // Focus first available field without breaking smooth scroll
-      setTimeout(() => {
+        // Focus first available field without breaking smooth scroll
+        setTimeout(() => {
         (subjectInput || messageInput || contact).focus({ preventScroll: true });
-      }, 250);
+        }, 250);
     } else {
-      // Fallback: jump via hash if no section found yet
-      location.href = '#contact';
+        // Fallback: jump via hash if no section found yet
+        location.href = '#contact';
     }
-  }
+}
+
+function goToContactTr(serviceName) {
+    // URL hash for navigation
+    if (location.hash !== '#contact') {
+        history.pushState(null, '', '#contact');
+    }
+
+    // Find the contact section
+    const contact = document.getElementById('contact') 
+                    || document.querySelector('[data-section="contact"]') 
+                    || document.querySelector('section#contact, .contact, #Contact, [id*="contact" i]');
+
+    if (contact) {
+        // Smooth scroll
+        contact.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Inputs
+        const subjectInput =
+        contact.querySelector('input[name="subject"]') ||
+        contact.querySelector('input[id*="subject" i]') ||
+        contact.querySelector('input[type="text"]');
+
+        const messageInput =
+        contact.querySelector('textarea[name="message"]') ||
+        contact.querySelector('textarea[id*="message" i]') ||
+        contact.querySelector('textarea');
+
+        // Prefill Turkish texts
+        const subjectText = `Hizmet Talebi: ${serviceName}`;
+        const messageText = `Merhaba Burak,\n\n${serviceName} konusunda seninle iletişime geçmek istiyorum. Bana süre, fiyat ve sonraki adımlar hakkında bilgi verebilir misin?\n\nTeşekkürler.`;
+
+        if (subjectInput) {
+        subjectInput.value = subjectText;
+        subjectInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        if (messageInput) {
+        messageInput.value = messageText;
+        messageInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+
+        // Focus first field after scroll
+        setTimeout(() => {
+        (subjectInput || messageInput || contact).focus({ preventScroll: true });
+        }, 250);
+    } else {
+        // fallback
+        location.href = '#contact';
+    }
+}
 
 /*=============== EMAIL JS ===============*/
 const contactForm = document.getElementById('contact-form'),
