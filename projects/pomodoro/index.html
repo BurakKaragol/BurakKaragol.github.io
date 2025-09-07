@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pomodoro</title>
+  <link rel="stylesheet" href="pomodoro.css" />
+</head>
+<body>
+  <!-- Background & attention pulse -->
+  <canvas id="bg"></canvas>
+  <div id="attention-overlay" aria-hidden="true"></div>
+
+  <!-- Panels row -->
+  <main class="panels">
+    <!-- Left: Stats -->
+    <section id="panel-stats" class="panel">
+      <div class="panel-inner">
+        <h2>Today</h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-value" id="statFocusCount">0</div>
+            <div class="stat-label">Focus Sessions</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="statFocusMinutes">0</div>
+            <div class="stat-label">Focused Minutes</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="statBreakMinutes">0</div>
+            <div class="stat-label">Break Minutes</div>
+          </div>
+        </div>
+
+        <h2>This Week</h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-value" id="statWeekFocus">0</div>
+            <div class="stat-label">Focused Minutes</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="statWeekBreak">0</div>
+            <div class="stat-label">Break Minutes</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">&nbsp;</div>
+            <div class="stat-label">&nbsp;</div>
+          </div>
+        </div>
+
+        <div class="history">
+          <h3>Recent Sessions</h3>
+          <ul id="historyList"></ul>
+        </div>
+
+        <div class="stats-actions">
+          <button id="exportData">Export JSON</button>
+          <button id="clearData">Clear History</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Center: Timer -->
+    <section id="panel-controls" class="panel">
+      <div class="panel-inner center-stack">
+        <div class="state-badge" id="stateBadge">FOCUS</div>
+        <div class="cycle-info" id="cycleInfo">Pomodoro 1/4</div>
+
+        <div class="timer" id="timer">25:00</div>
+
+        <div class="progress">
+          <div id="progressFill" class="progress-fill" style="width:0%"></div>
+        </div>
+
+        <div class="controls">
+          <button id="btnStart">Start</button>
+          <button id="btnPause" disabled>Pause</button>
+          <button id="btnReset">Reset</button>
+          <button id="btnSkip">Skip</button>
+          <button id="btnStartOver">Start Over</button>
+        </div>
+
+        <div class="configs">
+          <div class="config-group">
+            <label for="durFocus">Focus (min)</label>
+            <input type="number" id="durFocus" min="1" max="240" value="25" />
+          </div>
+          <div class="config-group">
+            <label for="durShort">Short Break (min)</label>
+            <input type="number" id="durShort" min="1" max="60" value="5" />
+          </div>
+          <div class="config-group">
+            <label for="durLong">Long Break (min)</label>
+            <input type="number" id="durLong" min="1" max="90" value="15" />
+          </div>
+          <div class="config-group">
+            <label for="cyclesToLong">Cycles to Long Break</label>
+            <input type="number" id="cyclesToLong" min="1" max="12" value="4" />
+          </div>
+
+          <div class="hint">Tip: <kbd>Space</kbd> start/pause, <kbd>S</kbd> skip, <kbd>R</kbd> reset.</div>
+        </div>
+
+        <div class="continue-cta">
+            <button id="btnContinue" class="btn btn-primary btn-continue" hidden>Continue</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Tasks -->
+    <section id="panel-tasks" class="panel">
+      <div class="panel-inner">
+        <div class="tasks-header">
+          <input id="taskInput" type="text" placeholder="Add a focus task and hit Enter…" />
+        </div>
+
+        <!-- Completion bar + congrats -->
+        <div class="tasks-progress">
+          <div id="tasksProgressFill"></div>
+          <span id="tasksProgressText">0/0</span>
+        </div>
+        <div id="tasksCongrats" class="tasks-congrats" hidden>Congrats! All tasks complete 🎉</div>
+
+        <ul id="taskList" class="tasks"></ul>
+
+        <div class="tasks-footer">
+          <button id="clearDone">Clear Completed</button>
+          <button id="clearAll">Clear All</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating Settings (independent; bottom-center) -->
+  <section id="settings-panel" class="panel settings-panel collapsed" aria-label="Settings">
+    <div class="panel-inner">
+      <h2>Settings</h2>
+
+      <div class="settings-grid">
+        <label class="switch"><input type="checkbox" id="autoAdvance" /><span>Auto-advance</span></label>
+        <label class="switch"><input type="checkbox" id="softFocus" /><span>Soft background during focus</span></label>
+        <label class="switch"><input type="checkbox" id="muteToggle" /><span>Play sound on finish</span></label>
+        <label class="switch"><input type="checkbox" id="notifyToggle" /><span>Desktop notifications</span></label>
+      </div>
+
+      <div class="select-row">
+        <label for="soundPreset">Sound Style</label>
+        <select id="soundPreset">
+          <option value="beep">Beep (short)</option>
+          <option value="blip">Blip</option>
+          <option value="chime">Chime</option>
+          <option value="bell">Bell</option>
+          <option value="ping">Ping</option>
+        </select>
+      </div>
+
+      <div class="volume-row">
+        <div class="volume-labels">
+          <span>Sound Volume</span>
+          <span id="volumeValue">70%</span>
+        </div>
+        <input id="volumeSlider" type="range" min="0" max="100" step="1" value="70" />
+        <div class="settings-actions">
+          <button id="btnTestSound">Test Sound</button>
+          <button id="btnTestNotify">Test Notify</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating big-time when timer panel is hidden -->
+  <div id="floatingTime" class="floating-time collapsed">25:00</div>
+
+  <!-- Bottom island -->
+  <div class="dock" role="toolbar" aria-label="Panel toggles">
+    <button class="dock-btn" data-toggle="panel-stats" aria-pressed="true">Stats</button>
+    <button class="dock-btn" data-toggle="panel-controls" aria-pressed="true">Timer</button>
+    <button class="dock-btn" data-toggle="panel-tasks" aria-pressed="true">Tasks</button>
+    <button class="dock-btn" data-toggle="settings-panel" aria-pressed="false">Settings</button>
+    <button class="dock-btn dock-btn-all" id="toggleAllPanels" aria-pressed="false">All</button>
+  </div>
+
+  <script src="pomodoro.js"></script>
+</body>
+</html>

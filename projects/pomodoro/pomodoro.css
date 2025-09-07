@@ -1,0 +1,445 @@
+:root{
+  --bg-deep:#0F1418;
+  --panel:#1B2329;
+  --panel-br:#2B333A;
+  --text:#E6EDF3;
+  --muted:#9AA6B2;
+  --progress-color:#2A89E9;
+  --island-shadow: 0 18px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.02) inset;
+
+  /* shared center-column width (used by timer + settings for perfect alignment) */
+  --center-min: 780px;
+  --center-vw:  52vw;
+  --center-max: 960px;
+}
+
+*{box-sizing:border-box}
+html,body{
+  height:100%; margin:0; color:var(--text); background:var(--bg-deep);
+  font:16px/1.5 Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  overflow:hidden;
+}
+
+/* ===================== Background ===================== */
+#bg{
+  position:fixed; inset:0; width:100%; height:100%; display:block; z-index:0; pointer-events:none;
+  background: radial-gradient(1200px 1200px at 80% -10%, #223 0%, #111 60%, #0a0d10 100%);
+}
+
+/* Attention pulse */
+#attention-overlay{
+  position:fixed; inset:0; z-index:3; pointer-events:none;
+  background: radial-gradient(420px 420px at 50% 50%, rgba(255,255,255,.12), transparent 70%),
+              radial-gradient(920px 920px at 50% 50%, rgba(255,120,80,.14), transparent 60%);
+  opacity:0; transform:scale(1);
+}
+#attention-overlay.show{ animation:att 1100ms ease-out 0s 3 }
+@keyframes att{0%{opacity:0}25%{opacity:1;transform:scale(1.02)}100%{opacity:0}}
+
+/* ===================== Row layout (tight trio) ===================== */
+.panels{
+  position:relative; z-index:2;
+  width:min(1500px, 96vw);
+  height:calc(100vh - 150px);
+  margin:0 auto;
+
+  display:grid;
+  grid-template-columns: auto auto auto;    /* size to panel contents */
+  column-gap:12px;                           /* tight spacing */
+  align-items:center;
+  justify-content:center;
+}
+
+#panel-stats, #panel-controls, #panel-tasks{ height:64vh }
+#panel-stats, #panel-tasks{ width:clamp(320px, 24vw, 400px) }
+#panel-controls{ width:clamp(var(--center-min), var(--center-vw), var(--center-max)) }
+
+/* ===================== Panel shell (smooth show/hide) ===================== */
+.panel{
+  background: linear-gradient(180deg,
+              color-mix(in oklab, var(--panel) 82%, transparent),
+              color-mix(in oklab, var(--panel) 86%, transparent));
+  border:1px solid var(--panel-br);
+  border-radius:20px;
+  box-shadow:0 14px 36px rgba(0,0,0,.32);
+  overflow:hidden;
+
+  opacity:1; transform:translateY(0) scale(1);
+  transition: opacity .36s ease, transform .36s ease, filter .36s ease, box-shadow .36s ease;
+  will-change: opacity, transform;
+}
+.panel-inner{
+  padding:22px;
+  height:100%;
+  display:flex; flex-direction:column;
+  max-height:5000px;
+  transition: max-height .42s ease, opacity .32s ease, filter .32s ease, transform .32s ease, padding .32s ease;
+  will-change: max-height, opacity, transform;
+}
+
+/* Show/Hide states (shell + content animate) */
+.panel.show-anim{ opacity:0; transform:translateY(12px) scale(.985) }
+.panel.show-anim .panel-inner{
+  max-height:0; opacity:0; transform:translateY(8px); filter:blur(3px); padding-top:0; padding-bottom:0;
+}
+.panel.hide-anim{ opacity:0; transform:translateY(-10px) scale(.985) }
+.panel.hide-anim .panel-inner{
+  max-height:0; opacity:0; transform:translateY(-8px); filter:blur(3px); padding-top:0; padding-bottom:0;
+}
+.panel.collapsed{ visibility:hidden; pointer-events:none }
+.panel.collapsed .panel-inner{
+  max-height:0; opacity:0; transform:translateY(-8px); filter:blur(3px); padding-top:0; padding-bottom:0;
+}
+
+/* ===================== Timer & progress ===================== */
+.center-stack{ display:flex; flex-direction:column; align-items:center; text-align:center }
+.state-badge{
+  font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+  padding:.45rem 1.05rem; border-radius:999px; margin-bottom:6px;
+  border:1px solid #2b333a; color:#cdd5dd; background:#11161b;
+}
+body.break.short .state-badge{ color:#00131a; background:linear-gradient(90deg,#5EC8FF,#8ad8ff); border-color:transparent }
+body.break.long  .state-badge{ color:#03240b; background:linear-gradient(90deg,#8EE887,#c4f1bd); border-color:transparent }
+
+/* make the container fill the center column even though .center-stack aligns center */
+.center-stack .continue-cta{
+  width:100%;
+  align-self:stretch;   /* overrides parent align-items:center */
+  overflow:hidden;      /* keeps the reveal animation clean */
+}
+
+/* button: ensure it behaves like a block-level element */
+.btn-continue{ display:block }
+
+.cycle-info{ opacity:.9; font-weight:700; margin:2px 0 8px }
+.timer{
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(104px, 14vw, 260px);
+  line-height:1; font-weight:900; letter-spacing:.02em;
+  text-shadow:0 10px 32px rgba(0,0,0,.45);
+  margin:6px 0 10px;
+}
+.progress{
+  width:min(880px, 95%); height:12px; border-radius:999px;
+  background:#0f1318; border:1px solid #2b333c; margin:8px auto 6px; overflow:hidden
+}
+.progress-fill{ height:100%; width:0%; background:var(--progress-color); border-radius:999px; transition:width .35s ease }
+
+/* Controls & numeric config */
+.controls{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:10px }
+.controls button{
+  background:#222a35; color:var(--text); border:1px solid #2f3944;
+  padding:0.95rem 1.25rem; border-radius:14px; cursor:pointer;
+  font-size:1.06rem; font-weight:800; min-width:126px;
+  transition: transform .12s ease, background .2s ease, box-shadow .2s ease;
+}
+.controls button:hover:not(:disabled){ transform:translateY(-1px) }
+.controls button:active:not(:disabled){
+  background:color-mix(in oklab, var(--progress-color) 60%, #222a35);
+  box-shadow:0 0 0 3px color-mix(in oklab, var(--progress-color) 30%, transparent) inset;
+}
+.controls button:disabled{ background:#10151a; border-color:#2a2f36; color:#7e8993; box-shadow:none }
+
+.configs{ margin-top:14px; display:grid; gap:14px; grid-template-columns: repeat(4, 1fr) }
+@media (max-width: 1500px){ .configs{ grid-template-columns: repeat(2, 1fr) } }
+.config-group{ display:flex; flex-direction:column; gap:6px }
+.config-group input{
+  background:#0f1318; border:1px solid #2b333c; color:var(--text);
+  border-radius:12px; padding:.8rem .9rem; width:100%; font-size:1.02rem
+}
+.hint{ grid-column:1/-1; opacity:.75; font-size:.92rem }
+
+/* ===================== Stats ===================== */
+#panel-stats h2{ margin:.1rem 0 6px; font-size:1.02rem; opacity:.85 }
+.stats-grid{ display:grid; gap:10px; grid-template-columns: repeat(3, 1fr); margin-bottom:10px }
+.stat{
+  background:#11161b; border:1px solid #24303a; border-radius:12px;
+  padding:16px; text-align:center
+}
+.stat-value{ font-size:1.9rem; font-weight:800 }
+.stat-label{ opacity:.75; font-size:.92rem }
+
+.history{ flex:1; display:flex; flex-direction:column; min-height:0 }
+.history h3{ margin:10px 0 6px; opacity:.85 }
+#historyList{
+  list-style:none; margin:0; padding:0; flex:1; min-height:0; overflow:auto;
+  border:1px solid #24303a; border-radius:12px
+}
+#historyList li{
+  display:flex; justify-content:space-between; gap:10px;
+  padding:8px 10px; border-bottom:1px solid #1e2831; font-size:.98rem
+}
+#historyList li:last-child{ border-bottom:none }
+
+.stats-actions{ display:flex; gap:8px; margin-top:10px }
+.stats-actions button,
+.tasks-footer button{ /* <-- Clear Completed styled here */
+  background:#222a35; color:var(--text); border:1px solid #2f3944;
+  padding:.7rem 1rem; border-radius:12px; cursor:pointer; font-weight:800;
+  transition: transform .12s ease, background .2s ease, box-shadow .2s ease;
+}
+.stats-actions button:hover,
+.tasks-footer button:hover{ transform:translateY(-1px) }
+.stats-actions button:active,
+.tasks-footer button:active{
+  background:color-mix(in oklab, var(--progress-color) 60%, #222a35);
+  box-shadow:0 0 0 3px color-mix(in oklab, var(--progress-color) 30%, transparent) inset;
+}
+
+/* ===================== Tasks ===================== */
+#panel-tasks .panel-inner{ display:flex; flex-direction:column }
+#panel-tasks .tasks-header{ display:flex; gap:8px }
+#taskInput{
+  flex:1; background:#0f1318; border:1px solid #2b333c; color:var(--text);
+  border-radius:12px; padding:.8rem .9rem; font-size:1.02rem
+}
+
+/* Completion bar + congrats */
+.tasks-progress{
+  position:relative; height:12px; border-radius:999px;
+  background:#0f1318; border:1px solid #2b333c; margin:10px 0 8px; overflow:hidden;
+}
+.tasks-progress > #tasksProgressFill{
+  height:100%; width:0%; background:var(--progress-color);
+  border-radius:999px; transition:width .35s ease;
+}
+.tasks-progress > #tasksProgressText{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  font-size:.88rem; opacity:.8;
+}
+.tasks-congrats{ margin:6px 0 0; text-align:center; font-weight:800; color:#a5f3a1; }
+
+.tasks{
+  list-style:none; margin:10px 0 0; padding:0;
+  display:flex; flex-direction:column; gap:8px;
+  flex:1; min-height:0; overflow:auto;
+}
+.tasks li{
+  display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:10px;
+  background:#11161b; border:1px solid #24303a; border-radius:12px; padding:10px 12px
+}
+.tasks li .title{ opacity:.92 }
+.tasks li.done .title{ text-decoration:line-through; opacity:.55 }
+
+/* ===================== Settings Panel (aligned & compact) ===================== */
+.settings-panel{
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 110px;
+  /* exact same width rule as the center timer panel = visually even spacing */
+  width: clamp(var(--center-min), var(--center-vw), var(--center-max));
+  max-height: 17vh;
+  overflow: auto;
+  z-index: 6;
+}
+.settings-panel .panel-inner{ padding:10px 12px; gap:8px }
+.settings-panel h2{ margin:0 0 4px; font-size:.95rem; opacity:.8 }
+
+/* switches row */
+.settings-grid{
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin:0;
+}
+.switch{ display:inline-flex; align-items:center; gap:8px; white-space:nowrap }
+.switch input{ transform:scale(.9); }
+
+/* sound preset inline */
+.select-row{ display:inline-flex; align-items:center; gap:10px; margin:0 }
+.select-row label{ font-weight:700; font-size:.95rem; opacity:.9 }
+.select-row select{
+  height:34px; padding:.35rem .6rem; border-radius:10px;
+  background:#0f1318; border:1px solid #2b333c; color:var(--text); font-weight:700;
+}
+
+/* volume row: label | slider | test sound | test notify */
+.volume-row{
+  display:grid; grid-template-columns:auto 1fr auto auto;
+  align-items:center; column-gap:10px; row-gap:8px; margin-top:2px;
+}
+.volume-labels{ display:flex; align-items:center; gap:8px; min-width:160px; font-weight:700; opacity:.9 }
+#volumeSlider{ margin:0; height:6px; appearance:none; border-radius:999px; background:#0f1318; border:1px solid #2b333c }
+#volumeSlider::-webkit-slider-thumb{ appearance:none; width:14px; height:14px; border-radius:50%; background:var(--progress-color); border:1px solid #2b333c; cursor:pointer }
+#volumeSlider::-moz-range-thumb{ width:14px; height:14px; border-radius:50%; background:var(--progress-color); border:1px solid #2b333c; cursor:pointer }
+
+.settings-actions{ display:flex; gap:8px; justify-content:flex-end }
+.settings-actions button{
+  background:#202832; color:var(--text); border:1px solid #2b333c;
+  padding:.5rem .8rem; border-radius:10px; font-weight:800; cursor:pointer;
+  transition: transform .12s ease, background .2s ease, box-shadow .2s ease;
+}
+.settings-actions button:hover{ transform:translateY(-1px) }
+
+/* ===================== Continue CTA (expand on reveal + responsive hover) ===================== */
+/* Robust hide */
+#btnContinue[hidden]{ display:none !important; }
+
+/* Container prevents reveal animation from peeking */
+.continue-cta{ margin-top:18px; overflow:hidden }
+
+/* Base look aligned with buttons */
+.btn-continue{
+  position:relative;
+  width:100%;
+  height:56px;
+  font-size:1.05rem;
+  font-weight:800;
+  letter-spacing:.02em;
+  border-radius:14px;
+  background: var(--btn-primary-bg, #2b86ff);
+  color: var(--btn-primary-fg, #ffffff);
+  border:1px solid var(--btn-primary-border, #4896ff);
+  box-shadow: 0 6px 22px rgba(0,0,0,.22), inset 0 0 0 2px rgba(255,255,255,.06);
+  transform: scaleX(.96); /* slight resting squeeze */
+  transform-origin:center;
+  transition:
+    transform .18s cubic-bezier(.2,.8,.2,1),
+    box-shadow .22s ease,
+    filter .22s ease,
+    opacity .18s ease;
+  opacity:.98;
+}
+
+/* Horizontal EXPAND on reveal */
+.btn-continue.reveal{
+  animation: cta-reveal .38s cubic-bezier(.16,.84,.24,1.12) both;
+}
+@keyframes cta-reveal{
+  0%   { transform: scaleX(.40) translateY(8px); opacity:0; }
+  60%  { transform: scaleX(1.03) translateY(0); opacity:1; }
+  100% { transform: scaleX(1.00); }
+}
+
+/* Responsive hover (wider + lift) */
+.btn-continue:hover{
+  transform: scale(1.025) translateY(-1px);            /* was scaleX(1.02) */
+  box-shadow: 0 10px 28px rgba(0,0,0,.30), inset 0 0 0 2px rgba(255,255,255,.10);
+}
+
+/* Pressed: reduce scale a touch to feel clicky */
+.btn-continue:active{
+  transform: scale(0.997) translateY(0);
+  box-shadow: 0 2px 10px rgba(0,0,0,.18), inset 0 0 0 2px rgba(255,255,255,.12);
+}
+
+/* Subtle sheen sweep on hover */
+.btn-continue::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(110deg, transparent 40%, rgba(255,255,255,.16) 50%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform .6s ease;
+  pointer-events:none;
+}
+.btn-continue:hover::after{ 
+  transform: scaleX(1.2) translateY(-1px);
+  transform: translateX(120%);
+}
+
+/* Match focus-mode’s gray-ish palette */
+.focus-active .btn-continue{
+  filter: grayscale(.35) saturate(.85) brightness(.95);
+  background: var(--btn-primary-bg-focus, #3a4656);
+  border-color: var(--btn-primary-border-focus, #4b5666);
+  color: var(--btn-primary-fg-focus, #E6EDF3);
+}
+
+/* ===================== Floating big-time (silent timer) ===================== */
+.floating-time{
+  position:fixed; left:50%; top:50%; transform:translate(-50%,-50%);
+  z-index:2; pointer-events:none;
+  font-variant-numeric: tabular-nums;
+  font-weight:900; letter-spacing:.02em;
+  font-size:clamp(86px, 12vw, 260px);
+  color:rgba(230,237,243,.95);
+  text-shadow:0 10px 32px rgba(0,0,0,.45);
+  transition:opacity .25s ease, visibility .25s ease, filter .25s ease;
+}
+.floating-time.collapsed{ opacity:0; visibility:hidden }
+
+/* ===================== Focus attenuation ===================== */
+body.focus-active #bg{ filter:grayscale(1) saturate(.25) brightness(.95) }
+body.focus-active .panel,
+body.focus-active .controls button,
+body.focus-active .tasks li,
+body.focus-active .stat{
+  transition: filter .35s ease, opacity .35s ease, background-color .35s ease;
+  filter:grayscale(.85) saturate(.45);
+  opacity:.95;
+}
+
+/* ── Global suppression used by the “All” button (no state change) ───────── */
+.panel.suppressed{
+  opacity:0;
+  transform: translateY(-10px) scale(.985);
+  pointer-events:none;
+}
+.panel.suppressed .panel-inner{
+  max-height:0;
+  opacity:0;
+  transform: translateY(-8px);
+  filter: blur(3px);
+  padding-top:0;
+  padding-bottom:0;
+}
+
+/* ALL toggle: hide full panel chrome, not just content */
+.panel.suppressed,
+.settings-panel.suppressed{
+  opacity: 0;                           /* fade the whole thing */
+  background: transparent !important;   /* kill glass/bg */
+  border-color: transparent !important; /* kill borders */
+  box-shadow: none !important;          /* kill shadow */
+  pointer-events: none;                 /* don’t block clicks */
+  transition: opacity .28s ease, background-color .28s ease,
+              box-shadow .28s ease, border-color .28s ease;
+}
+.panel.suppressed::before,
+.panel.suppressed::after,
+.settings-panel.suppressed::before,
+.settings-panel.suppressed::after{
+  opacity: 0 !important;                /* hide any blur overlays */
+}
+
+.panel.suppressed .panel-inner{ background: transparent !important; box-shadow: none !important; }
+
+/* keep existing transitions on panels for smoothness */
+.panel,
+.settings-panel{
+  transition: opacity .28s ease, transform .28s ease,
+              background-color .28s ease, box-shadow .28s ease;
+}
+
+/* ===================== Bottom island ===================== */
+.dock{
+  position:fixed; left:50%; bottom:24px; transform:translateX(-50%);
+  z-index:5; display:flex; gap:8px; align-items:center; padding:10px 12px;
+  border-radius:999px; border:1px solid #263240; box-shadow:var(--island-shadow); backdrop-filter: blur(10px);
+  transition: background .25s ease, border-color .25s ease, opacity .25s ease;
+}
+body.focus-active .dock{ background: rgba(32,39,46,.88); border-color:#2d3844; opacity:.78 }
+body.focus-active .dock .dock-btn[aria-pressed="true"]{ background:#2a3138; border-color:#3a444f; box-shadow:none }
+body.break .dock:not(.force-gray){
+  background: color-mix(in oklab, #5EC8FF 22%, #141b22 78%);
+  border-color: color-mix(in oklab, #5EC8FF 45%, #263240);
+  opacity:.95;
+}
+
+.dock-btn{
+  background:#202832; color:var(--text); border:1px solid #2b333c;
+  padding:.75rem 1rem; border-radius:999px; cursor:pointer; font-weight:800; font-size:.98rem;
+  transition:transform .12s ease, background .2s ease, box-shadow .2s ease;
+}
+.dock-btn:hover{ transform:translateY(-1px) }
+.dock-btn[aria-pressed="true"]{
+  background:var(--progress-color);
+  border-color:color-mix(in oklab, var(--progress-color) 65%, #2b333c);
+  box-shadow:0 0 0 3px color-mix(in oklab, var(--progress-color) 30%, transparent) inset;
+}
+
+/* Optional icon style for the All toggle */
+.dock-btn-all{ font-weight:900; letter-spacing:.02em }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none!important; transition:none!important }
+}
