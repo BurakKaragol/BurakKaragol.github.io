@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>İnteraktif Duygu Çarkı</title>
+  <link rel="stylesheet" href="emotion.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header>
+      <div class="crumbs" id="crumbs"><b>Hepsi</b></div>
+      <div class="hint">İpucu: <kbd>Esc</kbd> geri</div>
+      <button id="btnLang" class="btnLang" title="TR / EN">TR</button>
+      <button id="btnRestart" class="btnLang" title="Sıfırla">↺</button>
+      <button id="btnMode" class="btnLang" title="Tümü / Step">Tümü</button>
+    </header>
+
+    <svg id="wheel" viewBox="-550 -550 1100 1100" aria-label="İnteraktif Duygu Çarkı">
+      <g id="g-ring-1" class="ring"></g>
+      <g id="g-ring-2" class="ring"></g>
+      <g id="g-ring-3" class="ring"></g>
+      <text class="centerTitle" x="0" y="0" id="centerTitle">Duygu Çarkı</text>
+    </svg>
+
+    <button class="btnBack" id="btnBack" title="Geri Dön (Esc)">⟵ Geri</button>
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <script src="emotion.js" defer></script>
+</body>
+</html>
