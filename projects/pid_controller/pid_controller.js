@@ -1,355 +1,385 @@
 /* =========================================================
-   PID Controller Visualization (stacked controls + SP slider)
+   PID Mouse Follower with Presets, Randomize, Patterns & Trails
 ========================================================= */
 
-// ---------- Utilities ----------
-const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-
-// ---------- PID Controller ----------
 class PID {
-  constructor({kp=1,ki=0,kd=0,dt=0.01,tf=0,umin=-Infinity,umax=Infinity,iclamp=Infinity,dOnMeas=true}={}){
-    this.kp=kp; this.ki=ki; this.kd=kd; this.dt=dt; this.tf=tf;
-    this.umin=umin; this.umax=umax; this.iclamp=Math.abs(iclamp);
-    this.dOnMeas=dOnMeas;
-    this.integrator=0; this.prevMeas=0; this.prevErr=0; this.dState=0;
+  constructor({ kp=1, ki=0, kd=0, dt=1/240, tf=0.02, iclamp=1e6 } = {}) {
+    this.kp = kp; this.ki = ki; this.kd = kd;
+    this.dt = dt; this.tf = tf; this.iclamp = iclamp;
+    this.integrator = 0; this.prevMeas = 0; this.dState = 0;
+    this.lastP = 0; this.lastI = 0; this.lastD = 0;
   }
-  reset(){ this.integrator=0; this.prevMeas=0; this.prevErr=0; this.dState=0; }
-  update(setpoint, measurement){
-    const e = setpoint - measurement;
-
+  reset() {
+    this.integrator = 0; this.prevMeas = 0; this.dState = 0;
+  }
+  update(setpoint, meas) {
+    const e = setpoint - meas;
     const P = this.kp * e;
 
     this.integrator += this.ki * e * this.dt;
-    this.integrator = clamp(this.integrator, -this.iclamp, this.iclamp);
+    this.integrator = Math.max(-this.iclamp, Math.min(this.iclamp, this.integrator));
+    const I = this.integrator;
 
-    const dInput = this.dOnMeas ? (measurement - this.prevMeas) : (e - this.prevErr);
-    let D = 0;
-    if (this.kd > 0 && this.tf > 0){
-      const a = this.tf / (this.tf + this.dt);
-      const b = 1 / (this.tf + this.dt);
-      this.dState = a*this.dState - this.kd*b*dInput; // minus with dOnMeas
+    const dIn = meas - this.prevMeas;
+    let D;
+    if (this.kd > 0 && this.tf > 0) {
+      const a = this.tf / (this.tf + this.dt), b = 1 / (this.tf + this.dt);
+      this.dState = a * this.dState - this.kd * b * dIn;
       D = this.dState;
     } else {
-      D = this.dOnMeas ? -this.kd * dInput / this.dt : this.kd * dInput / this.dt;
+      D = -this.kd * dIn / this.dt;
     }
 
-    const u = P + this.integrator + D;
-    const uSat = clamp(u, this.umin, this.umax);
-
-    this.prevMeas = measurement;
-    this.prevErr = e;
-    return uSat;
+    this.lastP = P; this.lastI = I; this.lastD = D;
+    this.prevMeas = meas;
+    return P + I + D;
   }
 }
 
-// ---------- Plants ----------
-class FirstOrderPlant {
-  constructor({K=1, tau=1, y=0, ymin=-Infinity, ymax=Infinity}={}){
-    this.K=K; this.tau=tau; this.y=y; this.ymin=ymin; this.ymax=ymax;
-  }
-  step(u, dt){ const dydt=(-this.y + this.K*u)/this.tau; this.y+=dydt*dt; this.y=clamp(this.y,this.ymin,this.ymax); return this.y; }
-  reset(y0=0){ this.y=y0; }
-}
-class SecondOrderPlant {
-  constructor({K=1, w=2.5, z=0.3, y=0, v=0, ymin=-Infinity, ymax=Infinity}={}){
-    this.K=K; this.w=w; this.z=z; this.y=y; this.v=v; this.ymin=ymin; this.ymax=ymax;
-  }
-  step(u, dt){
-    const w2=this.w*this.w;
-    const a=this.K*w2*u - 2*this.z*this.w*this.v - w2*this.y;
-    this.v += a*dt; this.y += this.v*dt; this.y=clamp(this.y,this.ymin,this.ymax);
-    return this.y;
-  }
-  reset(y0=0){ this.y=y0; this.v=0; }
-}
-
-// ---------- Plotter ----------
-class Plot {
-  constructor(canvas){
-    this.canvas=canvas; this.ctx=canvas.getContext('2d');
-    this.margin=38; this.history=[]; this.maxPoints=6000; this.xSpan=10;
-    this.yMin=-2; this.yMax=2;
-  }
-  setWindow(xSpan){ this.xSpan=xSpan; }
-  setYRange(min,max){ this.yMin=min; this.yMax=max; }
-  clearData(){ this.history.length=0; }
-  push(t, sp, pv, u){ this.history.push({t,sp,pv,u}); if(this.history.length>this.maxPoints) this.history.shift(); }
-  draw(){
-    const c=this.canvas, ctx=this.ctx, w=c.width, h=c.height;
-    ctx.clearRect(0,0,w,h);
-    ctx.fillStyle='#0b1014'; ctx.fillRect(0,0,w,h);
-
-    const m=this.margin, x0=m, y0=m, x1=w-m, y1=h-m;
-    ctx.strokeStyle='#2b333a'; ctx.strokeRect(x0,y0,x1-x0,y1-y0);
-
-    const T=this.history.length?this.history[this.history.length-1].t:0;
-    const xmin=Math.max(0,T-this.xSpan), xmax=xmin+this.xSpan;
-
-    // grid
-    ctx.globalAlpha=.25; ctx.strokeStyle='#2b333a'; ctx.beginPath();
-    const xGrid=8,yGrid=6;
-    for(let i=0;i<=xGrid;i++){ const x=x0+(i/xGrid)*(x1-x0); ctx.moveTo(x,y0); ctx.lineTo(x,y1); }
-    for(let j=0;j<=yGrid;j++){ const y=y0+(j/yGrid)*(y1-y0); ctx.moveTo(x0,y); ctx.lineTo(x1,y); }
-    ctx.stroke(); ctx.globalAlpha=1;
-
-    ctx.fillStyle='#9aa6b2'; ctx.font='11px Inter, Arial';
-    ctx.fillText(`t: ${xmin.toFixed(1)} → ${xmax.toFixed(1)} s`, x0, y0-6);
-    ctx.fillText(`y: [${this.yMin.toFixed(2)}, ${this.yMax.toFixed(2)}]`, x0+170, y0-6);
-
-    const xmap=t=>x0+(t-xmin)/(xmax-xmin)*(x1-x0);
-    const ymap=v=>y1-(v-this.yMin)/(this.yMax-this.yMin)*(y1-y0);
-
-    const series=(key,color)=>{ ctx.strokeStyle=color; ctx.beginPath(); let on=false;
-      for(const p of this.history){ if(p.t<xmin||p.t>xmax) continue; const x=xmap(p.t), y=ymap(p[key]); if(!on){ctx.moveTo(x,y); on=true;} else ctx.lineTo(x,y); }
-      ctx.stroke();
-    };
-    series('sp','#ffb74d'); series('pv','#3da9fc'); series('u','#4caf50');
-  }
-}
-
-// ---------- Metrics ----------
-class Metrics {
-  constructor(){ this.reset(); }
-  reset(){ this.ISE=0; this.IAE=0; this.maxOvershoot=0; this.settled=false; }
-  update(sp,pv,dt){ const e=sp-pv; this.ISE+=e*e*dt; this.IAE+=Math.abs(e)*dt; }
-  computeOvershoot(sp,pv){ if(sp!==0){ const os=Math.max(0,(pv-sp)/Math.abs(sp)*100); if(os>this.maxOvershoot) this.maxOvershoot=os; } }
-  checkSettled(window){
-    if(window.length<60) return false;
-    const last=window.slice(-60), sp=last[last.length-1].sp||0;
-    const band=Math.max(0.02*Math.max(1,Math.abs(sp)),0.01);
-    this.settled=last.every(p=>Math.abs(p.pv-sp)<=band);
-    return this.settled;
-  }
-}
-
-// ---------- UI ----------
 const $ = id => document.getElementById(id);
-
 const ui = {
-  // sim
-  dt:$('dt'), duration:$('duration'), setpoint:$('setpoint'), initialPV:$('initialPV'), fps:$('fps'),
-  // pid
-  kp:$('kp'), ki:$('ki'), kd:$('kd'),
-  kpNum:$('kp_num'), kiNum:$('ki_num'), kdNum:$('kd_num'),
-  tf:$('tf'), umin:$('umin'), umax:$('umax'), iclamp:$('iclamp'),
-  dOnMeas:$('d_on_meas'),
-  // plant
-  plantModel:$('plantModel'),
-  p1K:$('p1_K'), p1Tau:$('p1_tau'),
-  p2K:$('p2_K'), p2w:$('p2_w'), p2z:$('p2_z'),
-  ymin:$('ymin'), ymax:$('ymax'),
-  // disturbance
-  dEnable:$('d_enable'), dTime:$('d_time'), dMag:$('d_mag'),
-  // buttons
-  startPause:$('startPause'), reset:$('reset'), export:$('export'),
-  presetZN:$('presetZN'), presetSoft:$('presetSoft'),
-  // plot & status
-  plot:$('plot'), status:$('status'), metrics:$('metrics'),
-  // SP slider
-  spSlider:$('sp_slider'), spLabel:$('sp_value'),
-  // plant subpanels
-  pFirst: document.querySelector('.plant.first'),
-  pSecond: document.querySelector('.plant.second'),
+  stage: $('stage'), status: $('status'),
+  kp: $('kp'), ki: $('ki'), kd: $('kd'),
+  kpNum: $('kp_num'), kiNum: $('ki_num'), kdNum: $('kd_num'),
+  tf: $('tf'), iclamp: $('iclamp'),
+  reset: $('reset'), random: $('randomize')
 };
 
-let pid, plant, plot, metrics;
-let running=false, t=0, sp=1, y=0, u=0;
-let dtSim=0.01, duration=60;
-let lastFrame=0, frameInterval=1000/60;
-let historyRef=[];
+const ctx = ui.stage.getContext('2d');
+let DPR = window.devicePixelRatio || 1;
 
-// ---------- Build / Reset ----------
-function buildPID(){
-  pid = new PID({
-    kp:+ui.kp.value, ki:+ui.ki.value, kd:+ui.kd.value,
-    dt:+ui.dt.value, tf:+ui.tf.value,
-    umin:+ui.umin.value, umax:+ui.umax.value,
-    iclamp:+ui.iclamp.value, dOnMeas:ui.dOnMeas.checked
-  });
+let target = { x: 0, y: 0, fixed: false };
+let dot    = { x: 0, y: 0, vx: 0, vy: 0 };
+
+let pidX = new PID(), pidY = new PID();
+
+const DT         = 1 / 240;
+const MAX_ACCEL  = 8000;
+const MAX_SPEED  = 2400;
+const DRAG       = 0;
+
+let acc = 0;
+
+/* ================= TRAILS ================= */
+const DOT_TRAIL_MAX     = 450;   // number of points
+const TARGET_TRAIL_MAX  = 450;
+const DOT_TRAIL_ALPHA0  = 0.95;  // newest alpha
+const TGT_TRAIL_ALPHA0  = 0.85;
+const DOT_TRAIL_ALPHA_MIN = 0.02;
+const TGT_TRAIL_ALPHA_MIN = 0.02;
+
+const dotTrail = [];     // [{x,y}]
+const targetTrail = [];  // [{x,y}]
+
+function pushTrailPoint(arr, x, y, maxLen){
+  arr.push({x, y});
+  if (arr.length > maxLen) arr.shift();
 }
-function buildPlant(){
-  const ymin=+ui.ymin.value, ymax=+ui.ymax.value;
-  if(ui.plantModel.value==='first'){
-    plant=new FirstOrderPlant({K:+ui.p1K.value, tau:+ui.p1Tau.value, y:+ui.initialPV.value, ymin, ymax});
-    ui.pFirst.classList.remove('hidden'); ui.pSecond.classList.add('hidden');
-  } else {
-    plant=new SecondOrderPlant({K:+ui.p2K.value, w:+ui.p2w.value, z:+ui.p2z.value, y:+ui.initialPV.value, ymin, ymax});
-    ui.pFirst.classList.add('hidden'); ui.pSecond.classList.remove('hidden');
-  }
-}
-function resetSim(){
-  dtSim=+ui.dt.value;
-  duration=+ui.duration.value;
-  sp=+ui.setpoint.value;
-  y=+ui.initialPV.value;
-  t=0; u=0; running=false;
-  ui.startPause.textContent='Start';
-
-  buildPID(); buildPlant();
-
-  plot.clearData();
-  plot.setWindow(Math.min(20,duration));
-  const ymax=Math.max(2, Math.abs(sp)*1.5+1);
-  plot.setYRange(-ymax, ymax);
-
-  // sync SP slider to y-range & current SP
-  ui.spSlider.min=(-ymax).toFixed(2);
-  ui.spSlider.max=(+ymax).toFixed(2);
-  ui.spSlider.value=sp.toFixed(2);
-  ui.spLabel.textContent=`SP: ${(+ui.spSlider.value).toFixed(2)}`;
-
-  metrics.reset(); historyRef=[];
-  drawFrame(true);
+function clearTrails(){
+  dotTrail.length = 0;
+  targetTrail.length = 0;
 }
 
-// ---------- Sim loop ----------
-function stepSim(){
-  const d=(ui.dEnable.checked && t>=+ui.dTime.value)? +ui.dMag.value : 0;
-  u=pid.update(sp,y);
-  y=plant.step(u + d, dtSim);
-  t+=dtSim;
-  metrics.update(sp,y,dtSim);
-  metrics.computeOvershoot(sp,y);
-  historyRef.push({t,sp,pv:y});
-  if(historyRef.length>3000) historyRef.shift();
-}
-function drawFrame(force=false){
-  const now=performance.now();
-  if(!force){
-    const fpsCap=+ui.fps.value || 60;
-    frameInterval=1000/Math.max(30, Math.min(120, fpsCap));
-    if(now-lastFrame<frameInterval) return;
-  }
-  lastFrame=now;
+/* ================= PRESETS ================= */
+const PRESETS = {
+  soft:   { kp: 5,   ki: 0.2,  kd: 1.4, tf: 0.03,  iclamp: 500 },
+  glide:  { kp: 3,   ki: 0.1,  kd: 0.6, tf: 0.04,  iclamp: 600 },
+  snappy: { kp: 11,  ki: 0,    kd: 2.8, tf: 0.015, iclamp: 400 },
+  aggr:   { kp: 15,  ki: 0.3,  kd: 3.2, tf: 0.012, iclamp: 800 },
+  lazy:   { kp: 1.5, ki: 0.05, kd: 0.2, tf: 0.05,  iclamp: 1000 },
+  osc:    { kp: 18,  ki: 0,    kd: 0.5, tf: 0.01,  iclamp: 300 },
+};
+let activePreset = null;
 
-  plot.push(t, sp, y, u);
-  plot.draw();
-
-  ui.status.textContent=`t = ${t.toFixed(2)} s | PV = ${y.toFixed(3)} | u = ${u.toFixed(3)}`;
-  const settled=metrics.checkSettled(plot.history);
-  ui.metrics.textContent=`ISE: ${metrics.ISE.toFixed(3)} | IAE: ${metrics.IAE.toFixed(3)} | Overshoot: ${metrics.maxOvershoot.toFixed(1)}% | Settled: ${settled ? 'Yes' : '—'}`;
+function setInputs(p) {
+  ui.kp.value = ui.kpNum.value = p.kp;
+  ui.ki.value = ui.kiNum.value = p.ki;
+  ui.kd.value = ui.kdNum.value = p.kd;
+  ui.tf.value = p.tf;
+  ui.iclamp.value = p.iclamp;
 }
-function loop(){
-  if(running){
-    let simTime=0, frameSec=frameInterval/1000;
-    while(simTime<frameSec){
-      stepSim(); simTime+=dtSim;
-      if(t>=duration){ running=false; ui.startPause.textContent='Start'; break; }
+
+function applyPreset(name) {
+  setInputs(PRESETS[name]);
+  activePreset = { name, params: { ...PRESETS[name] } };
+  refreshPresets();
+  reset();
+}
+function clearPreset() { activePreset = null; refreshPresets(); }
+function refreshPresets() {
+  document.querySelectorAll('.preset-btn').forEach(b =>
+    b.classList.toggle('active', activePreset && b.dataset.preset === activePreset.name)
+  );
+}
+function maybeClear() {
+  if (!activePreset) return;
+  const p = activePreset.params;
+  const eq = (a, b) => +a === +b;
+  if (!(eq(ui.kp.value, p.kp) && eq(ui.ki.value, p.ki) && eq(ui.kd.value, p.kd) &&
+        eq(ui.tf.value, p.tf) && eq(ui.iclamp.value, p.iclamp))) clearPreset();
+}
+
+function randomize() {
+  clearPreset();
+  const p = {
+    kp: (Math.random() * 20).toFixed(2),
+    ki: (Math.random() * 5).toFixed(2),
+    kd: (Math.random() * 5).toFixed(2),
+    tf: (Math.random() * 0.05).toFixed(3),
+    iclamp: Math.floor(Math.random() * 1000 + 200)
+  };
+  setInputs(p);
+  reset();
+}
+
+/* ================= PATTERNS ================= */
+let activePattern = null; // {name, t0}
+function setPattern(name) {
+  activePattern = { name, t0: performance.now()/1000 };
+  refreshPatterns();
+}
+function clearPattern() { activePattern = null; refreshPatterns(); }
+function refreshPatterns() {
+  document.querySelectorAll('.pattern-btn').forEach(b =>
+    b.classList.toggle('active', activePattern && b.id === "pattern_"+activePattern.name)
+  );
+}
+
+function updatePatternTarget(t) {
+  if (!activePattern) return;
+  const elapsed = t - activePattern.t0;
+  const w = ui.stage.clientWidth, h = ui.stage.clientHeight;
+  const cx = w/2, cy = h/2;
+  const r = Math.min(w,h)/3;
+  const speed = 1; // cycles per second
+
+  switch(activePattern.name) {
+    case 'circle': {
+      const ang = elapsed*speed;
+      target.x = cx + r * Math.cos(ang);
+      target.y = cy + r * Math.sin(ang);
+      break;
+    }
+    case 'square': {
+      const T=8; const p=(elapsed*speed)%T; const side=T/4;
+      if(p<side){ target.x=cx-r+2*r*(p/side); target.y=cy-r; }
+      else if(p<2*side){ target.x=cx+r; target.y=cy-r+2*r*((p-side)/side); }
+      else if(p<3*side){ target.x=cx+r-2*r*((p-2*side)/side); target.y=cy+r; }
+      else { target.x=cx-r; target.y=cy+r-2*r*((p-3*side)/side); }
+      break;
+    }
+    case 'triangle': {
+      const T=6; const p=(elapsed*speed)%T; const side=T/3;
+      const pts=[[cx,cy-r],[cx+r,cy+r],[cx-r,cy+r]];
+      const s=Math.floor(p/side), u=(p%side)/side;
+      const a=pts[s], b=pts[(s+1)%3];
+      target.x=a[0]+(b[0]-a[0])*u;
+      target.y=a[1]+(b[1]-a[1])*u;
+      break;
+    }
+    case 'infinity': {
+      const ang = elapsed*speed;
+      target.x = cx + r*Math.sin(ang);
+      target.y = cy + r*Math.sin(ang)*Math.cos(ang);
+      break;
     }
   }
-  drawFrame();
-  requestAnimationFrame(loop);
+  target.fixed = true; // patterns always fix target
 }
 
-// ---------- Bindings ----------
-function bindTwoWay(range, number){
-  const sync=(src,dst)=>()=>{ dst.value=src.value; buildPID(); };
-  range.addEventListener('input', sync(range, number));
-  number.addEventListener('input', sync(number, range));
+/* ================= HELPERS ================= */
+function sizeCanvas() {
+  const r = ui.stage.getBoundingClientRect();
+  DPR = window.devicePixelRatio || 1;
+  ui.stage.width = Math.floor(r.width * DPR);
+  ui.stage.height = Math.floor(r.height * DPR);
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  clearTrails(); // keep visuals clean on resize
 }
-function wireInputs(){
-  bindTwoWay(ui.kp, ui.kpNum);
-  bindTwoWay(ui.ki, ui.kiNum);
-  bindTwoWay(ui.kd, ui.kdNum);
+function centerTarget() {
+  target.x = ui.stage.clientWidth / 2;
+  target.y = ui.stage.clientHeight / 2;
+}
+function reset() {
+  dot.x = ui.stage.clientWidth * 0.25;
+  dot.y = ui.stage.clientHeight * 0.5;
+  dot.vx = dot.vy = 0;
+  if (!target.fixed && !activePattern) centerTarget();
 
-  ['kp','ki','kd','kpNum','kiNum','kdNum','tf','umin','umax','iclamp']
-    .forEach(id=> (ui[id]||{}).addEventListener?.('input', buildPID));
-  ui.dOnMeas.addEventListener('change', buildPID);
+  pidX = new PID({ kp:+ui.kp.value, ki:+ui.ki.value, kd:+ui.kd.value, dt:DT, tf:+ui.tf.value, iclamp:+ui.iclamp.value });
+  pidY = new PID({ kp:+ui.kp.value, ki:+ui.ki.value, kd:+ui.kd.value, dt:DT, tf:+ui.tf.value, iclamp:+ui.iclamp.value });
 
-  ui.plantModel.addEventListener('change', buildPlant);
-  ['p1K','p1Tau','p2K','p2w','p2z','ymin','ymax']
-    .forEach(id=> (ui[id]||{}).addEventListener?.('input', buildPlant));
-
-  // Sim + disturbance (live-read where needed)
-  ;['dt','duration','initialPV','fps','d_enable','d_time','d_mag'].forEach(id=>{
-    const el=$(id); el && el.addEventListener('input', ()=>{});
-  });
-
-  // Setpoint number <-> slider sync
-  ui.setpoint.addEventListener('input', ()=>{
-    sp=+ui.setpoint.value;
-    if (sp < +ui.spSlider.min) ui.spSlider.min = sp.toFixed(2);
-    if (sp > +ui.spSlider.max) ui.spSlider.max = sp.toFixed(2);
-    ui.spSlider.value = sp.toFixed(2);
-    ui.spLabel.textContent = `SP: ${sp.toFixed(2)}`;
-  });
-  ui.spSlider.addEventListener('input', ()=>{
-    sp=+ui.spSlider.value;
-    ui.setpoint.value=sp.toFixed(2);
-    ui.spLabel.textContent=`SP: ${sp.toFixed(2)}`;
-  });
-
-  ui.startPause.addEventListener('click', ()=>{ running=!running; ui.startPause.textContent=running?'Pause':'Start'; });
-  ui.reset.addEventListener('click', resetSim);
-  ui.presetZN.addEventListener('click', ()=>{ ui.kp.value=ui.kpNum.value=2.0; ui.ki.value=ui.kiNum.value=1.2; ui.kd.value=ui.kdNum.value=0.1; buildPID(); });
-  ui.presetSoft.addEventListener('click', ()=>{ ui.kp.value=ui.kpNum.value=1.0; ui.ki.value=ui.kiNum.value=0.3; ui.kd.value=ui.kdNum.value=0.05; buildPID(); });
-  ui.export.addEventListener('click', ()=>{
-    if(!plot.history.length) return;
-    const rows=[['t','SP','PV','u']];
-    for(const p of plot.history){ rows.push([p.t.toFixed(5), p.sp.toFixed(6), p.pv.toFixed(6), p.u.toFixed(6)]); }
-    const csv=rows.map(r=>r.join(',')).join('\n');
-    const blob=new Blob([csv],{type:'text/csv'});
-    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='pid_data.csv'; a.click(); URL.revokeObjectURL(a.href);
-  });
+  clearTrails();
+}
+function mousePos(e) {
+  const r = ui.stage.getBoundingClientRect();
+  return { x: e.clientX - r.left, y: e.clientY - r.top };
 }
 
-// Tabs — robust delegation and clean initial state
-function wireTabs(){
-  const panes = {
-    sim: document.getElementById('pane-sim'),
-    pid: document.getElementById('pane-pid'),
-    plant: document.getElementById('pane-plant'),
-    dist: document.getElementById('pane-dist'),
-    legend: document.getElementById('pane-legend'),
-  };
+/* ================= POINTER ================= */
+function wirePointer() {
+  ui.stage.addEventListener('pointerdown', e => {
+    if (e.button !== 0) return;
+    clearPattern(); // cancel pattern on click
+    if (!target.fixed) {
+      const p = mousePos(e);
+      target.x = p.x; target.y = p.y; target.fixed = true;
+    } else {
+      target.fixed = false;
+    }
+  });
+  ui.stage.addEventListener('pointermove', e => {
+    if (!target.fixed && !activePattern) {
+      const p = mousePos(e);
+      target.x = p.x; target.y = p.y;
+    }
+  });
+  ui.stage.addEventListener('dblclick', () => { clearPattern(); target.fixed = false; centerTarget(); clearTrails(); });
+  ui.stage.addEventListener('pointerleave', () => { if (!target.fixed && !activePattern) { centerTarget(); clearTrails(); } });
+}
 
-  const tabbar = document.querySelector('.tabs');
-  if (!tabbar) return;
+/* ================= UI ================= */
+function bindTwoWay(r, n) {
+  const f = (s, d) => () => { d.value = s.value; maybeClear(); reset(); };
+  r.addEventListener('input', f(r, n));
+  n.addEventListener('input', f(n, r));
+}
+function wireUI() {
+  bindTwoWay(ui.kp, ui.kpNum); bindTwoWay(ui.ki, ui.kiNum); bindTwoWay(ui.kd, ui.kdNum);
+  [ui.tf, ui.iclamp].forEach(el => el.addEventListener('input', () => { maybeClear(); reset(); }));
 
-  // Only one pane visible on start
-  Object.values(panes).forEach(p => p.classList.remove('show'));
-  panes.sim.classList.add('show');
-  tabbar.querySelectorAll('.tab').forEach(t=>{
-    const on = t.dataset.tab === 'sim';
-    t.classList.toggle('active', on);
-    t.setAttribute('aria-selected', on ? 'true' : 'false');
+  Object.keys(PRESETS).forEach(name => {
+    const b = document.querySelector(`[data-preset="${name}"]`);
+    if (b) b.addEventListener('click', () => applyPreset(name));
   });
 
-  // Delegated click
-  tabbar.addEventListener('click', (e)=>{
-    const btn = e.target.closest('.tab');
-    if (!btn) return;
-    const key = btn.dataset.tab;
-    if (!key || !panes[key]) return;
+  ui.random.addEventListener('click', randomize);
+  ui.reset.addEventListener('click', reset);
 
-    tabbar.querySelectorAll('.tab').forEach(t=>{
-      const on = t === btn;
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
+  // Pattern buttons
+  document.getElementById('pattern_circle')  ?.addEventListener('click',()=>{ setPattern('circle');   clearTrails(); });
+  document.getElementById('pattern_square')  ?.addEventListener('click',()=>{ setPattern('square');   clearTrails(); });
+  document.getElementById('pattern_triangle')?.addEventListener('click',()=>{ setPattern('triangle'); clearTrails(); });
+  document.getElementById('pattern_infinity')?.addEventListener('click',()=>{ setPattern('infinity'); clearTrails(); });
 
-    Object.values(panes).forEach(p => p.classList.remove('show'));
-    panes[key].classList.add('show');
+  window.addEventListener('keydown', e => {
+    if (e.key.toLowerCase() === 'c') { clearPattern(); target.fixed = false; centerTarget(); clearTrails(); }
   });
 }
 
-// Canvas resize (HiDPI)
-function onResizeCanvas(){
-  const dpr=window.devicePixelRatio||1;
-  const rect=ui.plot.getBoundingClientRect();
-  ui.plot.width=Math.floor(rect.width*dpr);
-  ui.plot.height=Math.floor(rect.height*dpr);
-  plot.draw();
-}
-window.addEventListener('resize', onResizeCanvas, {passive:true});
+/* ================= SIMULATION ================= */
+function simStep(dt) {
+  const ax = Math.max(-MAX_ACCEL, Math.min(MAX_ACCEL, pidX.update(target.x, dot.x)));
+  const ay = Math.max(-MAX_ACCEL, Math.min(MAX_ACCEL, pidY.update(target.y, dot.y)));
+  dot.vx += (ax - DRAG * dot.vx) * dt;
+  dot.vy += (ay - DRAG * dot.vy) * dt;
 
-// ---------- Boot ----------
-let plotRef;
-document.addEventListener('DOMContentLoaded', ()=>{
-  wireTabs();
-  wireInputs();
-  plotRef=new Plot(ui.plot); plot=plotRef; metrics=new Metrics();
-  resetSim();
-  onResizeCanvas();
-  requestAnimationFrame(loop);
+  const spd = Math.hypot(dot.vx, dot.vy);
+  if (spd > MAX_SPEED) { const s = MAX_SPEED / spd; dot.vx *= s; dot.vy *= s; }
+
+  dot.x += dot.vx * dt; dot.y += dot.vy * dt;
+
+  // clamp to canvas
+  dot.x = Math.max(0, Math.min(dot.x, ui.stage.clientWidth));
+  dot.y = Math.max(0, Math.min(dot.y, ui.stage.clientHeight));
+
+  // record trails (after movement)
+  pushTrailPoint(dotTrail, dot.x, dot.y, DOT_TRAIL_MAX);
+  pushTrailPoint(targetTrail, target.x, target.y, TARGET_TRAIL_MAX);
+}
+
+/* ================= RENDERING ================= */
+function drawGrid(){
+  ctx.strokeStyle = '#2b333a'; ctx.globalAlpha = 0.25;
+  ctx.beginPath();
+  for (let x=0;x<=ui.stage.clientWidth;x+=40){ctx.moveTo(x,0);ctx.lineTo(x,ui.stage.clientHeight);}
+  for (let y=0;y<=ui.stage.clientHeight;y+=40){ctx.moveTo(0,y);ctx.lineTo(ui.stage.clientWidth,y);}
+  ctx.stroke(); ctx.globalAlpha = 1;
+}
+
+function drawTrail(points, baseColor, alpha0, alphaMin){
+  if (points.length < 2) return;
+  // Parse baseColor (expects #RRGGBB)
+  const r = parseInt(baseColor.slice(1,3),16);
+  const g = parseInt(baseColor.slice(3,5),16);
+  const b = parseInt(baseColor.slice(5,7),16);
+
+  // Draw as multiple short segments fading out
+  for (let i=1;i<points.length;i++){
+    const p0 = points[i-1], p1 = points[i];
+    const t  = i / (points.length-1);           // 0..1 old->new
+    const a  = alphaMin + (alpha0 - alphaMin) * t;
+    ctx.strokeStyle = `rgba(${r},${g},${b},${a.toFixed(3)})`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.stroke();
+  }
+}
+
+function render() {
+  ctx.clearRect(0, 0, ui.stage.clientWidth, ui.stage.clientHeight);
+
+  // grid
+  drawGrid();
+
+  // trails (draw target trail first, then dot trail)
+  drawTrail(targetTrail, '#ffb74d', TGT_TRAIL_ALPHA0, TGT_TRAIL_ALPHA_MIN);
+  drawTrail(dotTrail,    '#3da9fc', DOT_TRAIL_ALPHA0, DOT_TRAIL_ALPHA_MIN);
+
+  // target crosshair
+  ctx.strokeStyle = '#ffb74d'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(target.x-12,target.y);ctx.lineTo(target.x+12,target.y);
+  ctx.moveTo(target.x,target.y-12);ctx.lineTo(target.x,target.y+12);ctx.stroke();
+
+  // line to target
+  ctx.strokeStyle = '#3da9fc'; ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(dot.x,dot.y); ctx.lineTo(target.x,target.y); ctx.stroke();
+
+  // follower dot
+  ctx.fillStyle = '#3da9fc';
+  ctx.beginPath();
+  ctx.arc(dot.x,dot.y,8,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle='#2f82c4'; ctx.stroke();
+
+  const P=Math.hypot(pidX.lastP,pidY.lastP),
+        I=Math.hypot(pidX.lastI,pidY.lastI),
+        D=Math.hypot(pidX.lastD,pidY.lastD),
+        U=Math.hypot(pidX.lastP+pidX.lastI+pidX.lastD,pidY.lastP+pidY.lastI+pidY.lastD);
+
+  ui.status.textContent =
+    `P=${P.toFixed(1)} I=${I.toFixed(1)} D=${D.toFixed(1)} | |u|=${U.toFixed(1)} | `+
+    (activePattern ? `Pattern: ${activePattern.name}` : `Target ${target.fixed?'fixed':'follow'}`);
+}
+
+/* ================= LOOP ================= */
+let last=performance.now();
+function frame(now){
+  const dt=(now-last)*0.001; last=now; acc+=dt;
+  const t = now/1000;
+  if(activePattern) updatePatternTarget(t);
+
+  while(acc>=DT){simStep(DT); acc-=DT;}
+  render(); requestAnimationFrame(frame);
+}
+
+/* ================= BOOT ================= */
+function start(){
+  sizeCanvas();
+  wireUI();
+  wirePointer();
+  centerTarget();
+  dot.x=ui.stage.clientWidth*0.25; dot.y=ui.stage.clientHeight*0.5;
+  reset();
+  refreshPresets();
+  refreshPatterns();
+  requestAnimationFrame(frame);
+}
+window.addEventListener('resize',()=>{
+  sizeCanvas();
+  if(!target.fixed && !activePattern) centerTarget();
 });
+document.addEventListener('DOMContentLoaded', start);

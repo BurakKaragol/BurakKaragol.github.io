@@ -3,140 +3,74 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PID Controller Visualization</title>
+  <title>PID Mouse Follower</title>
   <link rel="stylesheet" href="./pid_controller.css" />
-  <meta name="description" content="Interactive PID controller visualization with live plotting and plant models.">
 </head>
 <body>
   <header class="app-header">
-    <h1>PID Controller Visualization</h1>
-    <div class="sub">Tabbed controls — viewport-locked, no page scrolling.</div>
+    <h1>PID Mouse Follower</h1>
+    <div class="sub">Click toggles fixed/follow. Double-click or press ‘C’ to recenter.</div>
   </header>
 
   <main class="layout">
-    <!-- LEFT: Controls (tabbed, stacked at top) -->
+    <!-- LEFT: Controls -->
     <section class="panel controls no-scroll">
-      <nav class="tabs" role="tablist" aria-label="Control Tabs">
-        <button class="tab active" data-tab="sim"  role="tab" aria-selected="true">Simulation</button>
-        <button class="tab" data-tab="pid"         role="tab" aria-selected="false">PID</button>
-        <button class="tab" data-tab="plant"       role="tab" aria-selected="false">Plant</button>
-        <button class="tab" data-tab="dist"        role="tab" aria-selected="false">Disturbance</button>
-        <button class="tab" data-tab="legend"      role="tab" aria-selected="false">Legend</button>
-      </nav>
-
-      <div class="tabpanes">
-        <!-- Simulation -->
-        <div class="pane show" id="pane-sim" role="tabpanel" aria-labelledby="tab-sim">
-          <div class="grid one">
-            <div class="row"><label>dt (s)</label><input id="dt" type="number" step="0.001" min="0.001" value="0.01"></div>
-            <div class="row"><label>Duration (s)</label><input id="duration" type="number" step="1" min="1" value="60"></div>
-            <div class="row"><label>Setpoint</label><input id="setpoint" type="number" step="0.1" value="1.0"></div>
-            <div class="row"><label>Initial PV</label><input id="initialPV" type="number" step="0.1" value="0.0"></div>
-            <div class="row"><label>FPS cap</label><input id="fps" type="number" min="30" max="120" step="1" value="60"></div>
-          </div>
-          <div class="buttons">
-            <button id="startPause">Start</button>
-            <button id="reset">Reset</button>
-            <button id="export">Export CSV</button>
-          </div>
+      <div class="group">
+        <div class="row">
+          <label>Kp</label>
+          <input id="kp" type="range" min="0" max="20" step="0.01" value="8.0">
+          <input id="kp_num" class="num" type="number" min="0" max="20" step="0.01" value="8.0">
         </div>
-
-        <!-- PID -->
-        <div class="pane" id="pane-pid" role="tabpanel" aria-labelledby="tab-pid">
-          <div class="grid one">
-            <div class="row">
-              <label>Kp</label>
-              <input id="kp" type="range" min="0" max="10" step="0.01" value="1.5">
-              <input id="kp_num" class="num" type="number" min="0" max="10" step="0.01" value="1.5">
-            </div>
-            <div class="row">
-              <label>Ki</label>
-              <input id="ki" type="range" min="0" max="10" step="0.01" value="0.5">
-              <input id="ki_num" class="num" type="number" min="0" max="10" step="0.01" value="0.5">
-            </div>
-            <div class="row">
-              <label>Kd</label>
-              <input id="kd" type="range" min="0" max="10" step="0.01" value="0.2">
-              <input id="kd_num" class="num" type="number" min="0" max="10" step="0.01" value="0.2">
-            </div>
-            <div class="row"><label>Derivative filter τ<sub>d</sub> (s)</label><input id="tf" type="number" min="0" step="0.001" value="0.02"></div>
-            <div class="row"><label>u min</label><input id="umin" type="number" step="0.1" value="-10"></div>
-            <div class="row"><label>u max</label><input id="umax" type="number" step="0.1" value="10"></div>
-            <div class="row"><label>Integrator clamp ±</label><input id="iclamp" type="number" step="0.1" value="5.0"></div>
-            <div class="row"><label><input id="d_on_meas" type="checkbox" checked> Derivative on measurement</label></div>
-          </div>
-          <div class="buttons">
-            <button id="presetZN">Preset: Z-N-ish</button>
-            <button id="presetSoft">Preset: Soft</button>
-          </div>
+        <div class="row">
+          <label>Ki</label>
+          <input id="ki" type="range" min="0" max="10" step="0.01" value="0.0">
+          <input id="ki_num" class="num" type="number" min="0" max="10" step="0.01" value="0.0">
         </div>
-
-        <!-- Plant -->
-        <div class="pane" id="pane-plant" role="tabpanel" aria-labelledby="tab-plant">
-          <div class="grid one">
-            <div class="row"><label>Model</label>
-              <select id="plantModel">
-                <option value="first">First-Order Lag</option>
-                <option value="second">Second-Order (underdamped)</option>
-              </select>
-            </div>
-
-            <div class="plant first">
-              <div class="row"><label>K</label><input id="p1_K" type="number" step="0.1" value="1.0"></div>
-              <div class="row"><label>τ (s)</label><input id="p1_tau" type="number" step="0.01" value="1.0"></div>
-            </div>
-
-            <div class="plant second hidden">
-              <div class="row"><label>K</label><input id="p2_K" type="number" step="0.1" value="1.0"></div>
-              <div class="row"><label>ω (rad/s)</label><input id="p2_w" type="number" step="0.1" value="2.5"></div>
-              <div class="row"><label>ζ</label><input id="p2_z" type="number" step="0.01" value="0.3"></div>
-            </div>
-
-            <div class="row"><label>y min</label><input id="ymin" type="number" step="0.1" value="-999"></div>
-            <div class="row"><label>y max</label><input id="ymax" type="number" step="0.1" value="999"></div>
-          </div>
+        <div class="row">
+          <label>Kd</label>
+          <input id="kd" type="range" min="0" max="10" step="0.01" value="2.2">
+          <input id="kd_num" class="num" type="number" min="0" max="10" step="0.01" value="2.2">
         </div>
-
-        <!-- Disturbance -->
-        <div class="pane" id="pane-dist" role="tabpanel" aria-labelledby="tab-dist">
-          <div class="grid one">
-            <div class="row"><label>Time (s)</label><input id="d_time" type="number" step="0.1" value="10"></div>
-            <div class="row"><label>Magnitude</label><input id="d_mag" type="number" step="0.1" value="0.5"></div>
-            <div class="row"><label><input id="d_enable" type="checkbox"> Enable</label></div>
-          </div>
+        <div class="row">
+          <label>Derivative filter τ<sub>d</sub> (s)</label>
+          <input id="tf" class="num wide" type="number" min="0" step="0.001" value="0.02">
         </div>
-
-        <!-- Legend -->
-        <div class="pane" id="pane-legend" role="tabpanel" aria-labelledby="tab-legend">
-          <div class="legend-compact">
-            <div class="chip sp">Setpoint (SP)</div>
-            <div class="chip pv">Process Variable (PV)</div>
-            <div class="chip u">Controller Output (u)</div>
-          </div>
-          <p class="muted">Tip: Use the presets to get a feel, then fine-tune Kp, Ki, Kd.</p>
+        <div class="row">
+          <label>Integrator clamp ±</label>
+          <input id="iclamp" class="num wide" type="number" min="0" step="0.1" value="500">
         </div>
+      </div>
+
+      <div class="buttons">
+        <button id="preset_soft"   data-preset="soft"   class="preset-btn">Soft</button>
+        <button id="preset_glide"  data-preset="glide"  class="preset-btn">Glide</button>
+        <button id="preset_snappy" data-preset="snappy" class="preset-btn">Snappy</button>
+        <button id="preset_aggr"   data-preset="aggr"   class="preset-btn">Aggressive</button>
+        <button id="preset_lazy"   data-preset="lazy"   class="preset-btn">Lazy</button>
+        <button id="preset_osc"    data-preset="osc"    class="preset-btn">Oscillatory</button>
+        <button id="randomize">🎲 Randomize</button>
+        <button id="reset">Reset</button>
+      </div>
+
+      <div class="buttons">
+        <button id="pattern_circle" class="pattern-btn">Circle</button>
+        <button id="pattern_square" class="pattern-btn">Square</button>
+        <button id="pattern_triangle" class="pattern-btn">Triangle</button>
+        <button id="pattern_infinity" class="pattern-btn">∞ Infinity</button>
       </div>
     </section>
 
-    <!-- RIGHT: Plot -->
+    <!-- RIGHT: Canvas -->
     <section class="panel viz">
-      <canvas id="plot" width="1200" height="700" aria-label="Live plot"></canvas>
-
-      <!-- Vertical Setpoint slider (overlay at right) -->
-      <div class="sp-slider" aria-label="Setpoint slider">
-        <input id="sp_slider" type="range" min="-2" max="2" step="0.01" value="1.0" orient="vertical" />
-        <div class="sp-label"><span id="sp_value">SP: 1.00</span></div>
-      </div>
-
+      <canvas id="stage" width="1200" height="700"></canvas>
       <div class="info">
-        <div id="status">t = 0.00 s | PV = 0.00 | u = 0.00</div>
-        <div id="metrics">ISE: 0.000 | IAE: 0.000 | Overshoot: 0.0% | Settled: —</div>
+        <div id="status"></div>
       </div>
     </section>
   </main>
 
   <footer class="app-footer">
-    <span>Made for tuning & teaching — no dependencies.</span>
+    <span>Try presets or randomize PID values. Circle chases target with 2D PID control.</span>
   </footer>
 
   <script src="./pid_controller.js"></script>
