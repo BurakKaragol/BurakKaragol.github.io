@@ -1,0 +1,51 @@
+:root{
+  --bg:#0F1418; --panel:#1B2329; --grid:#2D333A; --text:#E6EDF3;
+  --road:#2A2F35; --grass:#0F1713; --tree:#2E6E3F; --bld:#1E242A; --bld-br:#37414A;
+  --accent:#3DA9FC; --accent2:#FF9E44; --accent3:#A678FF; --muted:#9AA6B2;
+  --island-shadow: 0 18px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.02) inset;
+}
+
+html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+#wrap{position:fixed;inset:0;display:grid;grid-template-rows:auto 1fr}
+
+header{
+  display:flex;gap:.75rem;align-items:center;padding:.5rem .75rem;
+  background:linear-gradient(180deg,#11181e 0%, #0f1418 100%);
+  border-bottom:1px solid #151b20;box-shadow:0 10px 30px rgba(0,0,0,.25)
+}
+header .pill{padding:.35rem .6rem;border:1px solid #1f2730;border-radius:10px;background:#141a20;color:var(--muted);font-size:.85rem}
+header .kbd{border:1px solid #2a3340;border-radius:6px;padding:.08rem .35rem;background:#0e1317;color:#cdd6df;font-family:ui-monospace,monospace}
+
+#canvas{width:100%;height:100%;display:block;cursor:default}
+
+/* Context menu */
+#menu{
+  position:fixed;inset:auto auto 0 0;display:none;min-width:220px;background:#12171c;border:1px solid #1e252c;border-radius:12px;
+  box-shadow:0 18px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.03) inset;z-index:10
+}
+#menu ul{margin:6px 0;padding:6px 0;list-style:none}
+#menu li{padding:.5rem .75rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+#menu li:hover{background:#161d23}
+#menu .chk{opacity:.8}
+#menu hr{border:none;border-top:1px solid #1c232a;margin:.35rem 0}
+
+/* Modal (Tags/Seed/Style) */
+#modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.45);z-index:15}
+#modal .card{
+  width:min(520px,90vw);background:#11161b;border:1px solid #1e262e;border-radius:16px;
+  box-shadow:var(--island-shadow);padding:1rem
+}
+.row{display:flex;gap:.75rem;align-items:center;margin:.5rem 0}
+.row label{width:110px;color:var(--muted)}
+.row input, .row select{flex:1;background:#0d1216;border:1px solid #222b34;border-radius:10px;color:#e6edf3;padding:.5rem}
+.actions{display:flex;justify-content:flex-end;gap:.5rem;margin-top:1rem}
+.btn{padding:.45rem .8rem;border-radius:10px;border:1px solid #27313b;background:#141a20;color:#cfe3fb;cursor:pointer}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{border-color:#255b8c;background:#0f2131}
+
+/* Legend (bottom-left) */
+#legend{
+  position:fixed;left:12px;bottom:12px;font-size:.85rem;color:#b7c0c9;background:#10161b;border:1px solid #1b232b;
+  padding:.5rem .6rem;border-radius:10px;opacity:.85
+}
+#legend b{color:#dfe8f1}

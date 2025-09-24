@@ -1,302 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Projects</title>
 
-    <!-- FontAwesome for icons -->
-    <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
 
-    <!-- Link to external CSS -->
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="projects.css">
+  <link rel="stylesheet" href="../assets/css/styles.css"/>
+  <link rel="stylesheet" href="projects.css"/>
 </head>
 <body class="dark-theme">
 
-    <!-- Background Shapes (Fixed, Non-Scrolling) -->
-    <div class="projects__background">
-        <img src="../assets/img/shape-wawes.svg" alt="" class="home__shape-wawes projects__shape projects__shape1">
-        <img src="../assets/img/shape-circle.svg" alt="" class="home__shape-circle projects__shape projects__shape2">
-        <img src="../assets/img/shape-wawes.svg" alt="" class="home__shape-wawes projects__shape projects__shape3">
-        <img src="../assets/img/shape-circle.svg" alt="" class="home__shape-circle projects__shape projects__shape4">
+  <!-- Subtle, huge background shapes -->
+  <div class="projects__background">
+    <img src="../assets/img/shape-wawes.svg" alt="" class="bg-shape s1">
+    <img src="../assets/img/shape-circle.svg" alt="" class="bg-shape s2">
+    <img src="../assets/img/shape-wawes.svg" alt="" class="bg-shape s3">
+    <img src="../assets/img/shape-circle.svg" alt="" class="bg-shape s4">
+  </div>
+
+  <!-- Header -->
+  <header class="projects__header">
+    <div class="projects__head-left">
+      <h1 class="projects__title">Projects</h1>
+      <i class="fas fa-question-circle help-icon" id="helpIcon" aria-describedby="helpTooltip" tabindex="0"></i>
     </div>
 
-    <!--==================== PROJECTS ====================-->
-    <section class="projects section">
-        <h2 class="section__title">My Projects</h2>
-        <span class="project_section__subtitle">
-            Explore my work
-            <i class="fas fa-question-circle help-icon"></i>
-        </span>
+    <!-- Secret Key: first 4 boxed slots + tail (boxless) -->
+    <div class="secret-wrap" id="secretWrap">
+      <div class="secret-head" id="secretHead" aria-label="Secret code — first 4 slots"></div>
+      <div class="secret-tail" id="secretTail" aria-label="Secret code progress"></div>
+    </div>
+  </header>
 
-        <!-- Help Overlay -->
-        <div class="help-overlay" id="helpOverlay">
-            <div class="help-content">
-                <p>
-                    👋 Welcome!<br>
-                    This page is a collection of my interactive and experimental projects.<br>
-                    Hover over any card to see more details, and click to dive in.<br>
-                    Many of these projects were built through a mix of AI collaboration and pure creative flow.<br>
-                    What matters most is the final experience — so explore, experiment, and most importantly, have fun! 🎨✨
-                </p>
+  <!-- Fixed-position tooltip (hover) -->
+  <div id="helpTooltip" class="help-tooltip" role="tooltip" hidden>
+    👋 Welcome!<br>
+      This page is a collection of my interactive and experimental projects.<br>
+      Hover over any card to see more details, and click to dive in.<br>
+      Many of these projects were built through a mix of AI collaboration and pure creative flow.<br>
+      What matters most is the final experience — so explore, experiment, and most importantly, have fun! 🎨✨
+  </div>
+
+  <!-- Projects Grid (4 per row on desktop) -->
+  <section class="projects section">
+    <div class="projects__container container">
+      <div class="projects__grid" id="projectsGrid">
+
+        <!-- ==== All project cards ==== -->
+        <article class="card" data-url="game_idea_generator/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/game_idea_generator.png')"></div>
+          <div class="body">
+            <h3 class="title">Game Idea Generator</h3>
+            <p class="desc">Generate random mechanics and constraints.</p>
+            <div class="actions">
+              <a class="btn primary" href="game_idea_generator/">Open</a>
+              <button class="btn" data-details>Details</button>
             </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="sorting_algorithm_visualizer/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/sorting_algorithm_visualizer.png')"></div>
+          <div class="body">
+            <h3 class="title">Data Sorting Visualizer</h3>
+            <p class="desc">Bubble, Merge, Quick Sort visualizations.</p>
+            <div class="actions">
+              <a class="btn primary" href="sorting_algorithm_visualizer/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="path_finding_visualizer/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/path_finding_algorithm_visualizer.png')"></div>
+          <div class="body">
+            <h3 class="title">Pathfinding Viz</h3>
+            <p class="desc">A*, Dijkstra, DFS, BFS on grids.</p>
+            <div class="actions">
+              <a class="btn primary" href="path_finding_visualizer/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="animating_dots/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/animating_dots.png')"></div>
+          <div class="body">
+            <h3 class="title">Animating Dots</h3>
+            <p class="desc">Floating dots and mouse gravity.</p>
+            <div class="actions">
+              <a class="btn primary" href="animating_dots/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="circle_packing/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/circle_packing.png')"></div>
+          <div class="body">
+            <h3 class="title">Circle Packing</h3>
+            <p class="desc">Generate art with colorful circle packing.</p>
+            <div class="actions">
+              <a class="btn primary" href="circle_packing/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="meshing_dots/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/meshing_dots.png')"></div>
+          <div class="body">
+            <h3 class="title">Meshing Dots</h3>
+            <p class="desc">Interactive triangular mesh animations.</p>
+            <div class="actions">
+              <a class="btn primary" href="meshing_dots/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="draw_tinker/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/draw_tinker.png')"></div>
+          <div class="body">
+            <h3 class="title">Draw & Tinker</h3>
+            <p class="desc">Interactive drawing and merging shapes.</p>
+            <div class="actions">
+              <a class="btn primary" href="draw_tinker/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="qr_code/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/qr_code.png')"></div>
+          <div class="body">
+            <h3 class="title">QR Generator</h3>
+            <p class="desc">Generate QR codes with options.</p>
+            <div class="actions">
+              <a class="btn primary" href="qr_code/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="color_palette/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/color_palette.png')"></div>
+          <div class="body">
+            <h3 class="title">Color Palette</h3>
+            <p class="desc">Generate harmonious palettes.</p>
+            <div class="actions">
+              <a class="btn primary" href="color_palette/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="maze_generator/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/maze_generator.png')"></div>
+          <div class="body">
+            <h3 class="title">Maze Generator</h3>
+            <p class="desc">Generate and solve mazes quickly.</p>
+            <div class="actions">
+              <a class="btn primary" href="maze_generator/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="pomodoro/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/pomodoro.png')"></div>
+          <div class="body">
+            <h3 class="title">Pomodoro Focus</h3>
+            <p class="desc">Minimal Pomodoro with tasks & stats.</p>
+            <div class="actions">
+              <a class="btn primary" href="pomodoro/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="pid_controller/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/pid_controller.png')"></div>
+          <div class="body">
+            <h3 class="title">PID Mouse Follower</h3>
+            <p class="desc">2D PID visualizer with patterns.</p>
+            <div class="actions">
+              <a class="btn primary" href="pid_controller/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Secret card gets injected here on unlock -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Details Modal -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="backdrop" data-close></div>
+
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+      <div class="hero" id="dlgHero"></div>
+
+      <div class="content">
+        <h2 id="dlgTitle"></h2>
+
+        <!-- brief blurb from the card -->
+        <p id="dlgDesc" class="dlg-desc"></p>
+
+        <!-- quick stats -->
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-label">Time to build</div>
+            <div class="stat-value" id="dlgTime">—</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">Difficulty</div>
+            <div class="meter" aria-label="Difficulty">
+              <div class="meter-fill" id="dlgDiffBar" style="width:0%"></div>
+            </div>
+            <div class="stat-sub" id="dlgDiffLabel">—</div>
+          </div>
         </div>
 
-        <div class="projects__container container">
+        <!-- tags/tech chips -->
+        <div class="meta" id="dlgMeta"></div>
 
-            <div class="project__item" data-url="game_idea_generator/">
-                <div class="project__image">
-                    <img src="../assets/img/projects/game_idea_generator.png" alt="Game Idea Generator">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Game Idea Generator</h3>
-                    <p class="project__description">A web-based tool that generates random game ideas with unique mechanics.</p>
-                </div>
-            </div>
+        <!-- long explanation -->
+        <h3 class="section-title">What it does</h3>
+        <p id="dlgLong" class="dlg-long"></p>
 
-            <div class="project__item" data-url="sorting_algorithm_visualizer/">
-                <div class="project__image">
-                    <img src="../assets/img/projects/sorting_algorithm_visualizer.png" alt="Data Sorting Visualizer">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Data Sorting Visualizer</h3>
-                    <p class="project__description">A visual representation of sorting algorithms like Bubble Sort, Merge Sort, and Quick Sort.</p>
-                </div>
-            </div>
+        <h3 class="section-title">How it works</h3>
+        <ul id="dlgHow" class="dlg-how"></ul>
+      </div>
 
-            <div class="project__item" data-url="path_finding_visualizer/">
-                <div class="project__image">
-                    <img src="../assets/img/projects/path_finding_algorithm_visualizer.png" alt="Pathfinding Algorithms">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Pathfinding Algorithms Visualizer</h3>
-                    <p class="project__description">Interactive visualization of A*, Dijkstra, DFS and BFS pathfinding algorithms.</p>
-                </div>
-            </div>
-            
-            <div class="project__item" data-url="animating_dots/">
-                <div class="project__image">
-                    <img src="../assets/img/projects/animating_dots.png" alt="Animating Dots">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Animating Dots</h3>
-                    <p class="project__description">An interactive animation of floating dots and lines with customizable visuals and mouse-controlled gravity.</p>
-                </div>
-            </div>
-            
-            <div class="project__item" data-url="circle_packing/">
-                <div class="project__image">
-                    <img src="../assets/img/projects/circle_packing.png" alt="Circle Packing">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Circle Packing</h3>
-                    <p class="project__description">Generate colorful circle-packed art from any image using a visual algorithm.</p>
-                </div>
-            </div>
-            
-            <div class="project__item" data-url="meshing_dots/">
-                <div class="project__image">
-                    <img src="../assets/img/projects/meshing_dots.png" alt="Meshing Dots">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Meshing Dots</h3>
-                    <p class="project__description">Interactive triangular mesh animation with customizable colors and controls.</p>
-                </div>
-            </div>
-            
-            <div class="project__item" data-url="draw_tinker/">
-                <div class="project__image">
-                    <img src="../assets/img/projects/draw_tinker.png" alt="Draw Tinker">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Draw and Tinker</h3>
-                    <p class="project__description">Interactive drawing and tinkering area where you can mix and merge shapes.</p>
-                </div>
-            </div>
-            
-            <div class="project__item" data-url="qr_code/">
-                <div class="project__image">
-                    <img src="../assets/img/projects/qr_code.png" alt="QR Code">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">QR Generator</h3>
-                    <p class="project__description">Easily generate QR codes and download them right away.</p>
-                </div>
-            </div>
-            
-            <div class="project__item" data-url="color_palette/">
-                <div class="project__image">
-                    <img src="../assets/img/projects/color_palette.png" alt="Color Palette">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Color Palette</h3>
-                    <p class="project__description">Easily generate color palettes for your projects.</p>
-                </div>
-            </div>
-            
-            <div class="project__item" data-url="maze_generator/">
-                <div class="project__image">
-                    <img src="../assets/img/projects/maze_generator.png" alt="Maze Generator">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">MAze Generator</h3>
-                    <p class="project__description">Generate mazes and try solve them in the shortest time possible.</p>
-                </div>
-            </div>
+      <div class="foot">
+        <button class="btn" data-close>Close</button>
+        <a class="btn primary" id="dlgOpen" href="#" target="_self" rel="noopener">Open Project</a>
+      </div>
+    </div>
+  </div>
 
-            <div class="project__item" data-url="pomodoro/">
-                <div class="project__image">
-                    <img src="../assets/img/projects/pomodoro.png" alt="Pomodoro Focus Timer">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Pomodoro Focus</h3>
-                    <p class="project__description">A smooth, distraction-light Pomodoro with tasks, stats, and animated background.</p>
-                </div>
-            </div>
-
-            <div class="project__item" data-url="pid_controller/">
-                <div class="project__image">
-                    <img src="../assets/img/projects/pid_controller.png" alt="PID Mouse Follower & Visualizer">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">PID Mouse Follower</h3>
-                    <p class="project__description">Interactive 2D PID visualizer with presets, randomize, click/follow toggle, trails, and pattern targets (circle, square, triangle, ∞).</p>
-                </div>
-            </div>
-
-            <!-- <div class="project__item">
-                <div class="project__image">
-                    <img src="https://fakeimg.pl/600x300/808080/d1d1d1?text=Work+in+progress" alt="AI Text Generator">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">AI Text Generator</h3>
-                    <p class="project__description">Generates short stories, blog posts, or code snippets using GPT-based AI models.</p>
-                </div>
-            </div>
-
-            <div class="project__item">
-                <div class="project__image">
-                    <img src="https://fakeimg.pl/600x300/808080/d1d1d1?text=Work+in+progress" alt="Music Visualizer">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Music Visualizer</h3>
-                    <p class="project__description">A real-time music visualizer that reacts to audio input and creates stunning animations.</p>
-                </div>
-            </div>
-
-            <div class="project__item">
-                <div class="project__image">
-                    <img src="https://fakeimg.pl/600x300/808080/d1d1d1?text=Work+in+progress" alt="Physics Simulator">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">2D Physics Simulator</h3>
-                    <p class="project__description">A web-based physics sandbox with gravity, collision, and object manipulation.</p>
-                </div>
-            </div>
-
-            <div class="project__item">
-                <div class="project__image">
-                    <img src="https://fakeimg.pl/600x300/808080/d1d1d1?text=Work+in+progress" alt="Portfolio Generator">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Portfolio Website Generator</h3>
-                    <p class="project__description">A tool that helps users generate and customize personal portfolio websites.</p>
-                </div>
-            </div>
-
-            <div class="project__item">
-                <div class="project__image">
-                    <img src="https://fakeimg.pl/600x300/808080/d1d1d1?text=Work+in+progress" alt="Dungeon Generator">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Dungeon Map Generator</h3>
-                    <p class="project__description">Creates procedural dungeon maps for tabletop RPGs and video games.</p>
-                </div>
-            </div>
-
-            <div class="project__item">
-                <div class="project__image">
-                    <img src="https://fakeimg.pl/600x300/808080/d1d1d1?text=Work+in+progress" alt="Color Palette Generator">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Color Palette Generator</h3>
-                    <p class="project__description">Generates and visualizes harmonious color palettes for designers and developers.</p>
-                </div>
-            </div>
-
-            <div class="project__item">
-                <div class="project__image">
-                    <img src="https://fakeimg.pl/600x300/808080/d1d1d1?text=Work+in+progress" alt="Text to Handwriting">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Text to Handwriting</h3>
-                    <p class="project__description">Converts typed text into realistic handwriting style output.</p>
-                </div>
-            </div>
-
-            <div class="project__item">
-                <div class="project__image">
-                    <img src="https://fakeimg.pl/600x300/808080/d1d1d1?text=Work+in+progress" alt="Custom Soundboard">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Custom Soundboard</h3>
-                    <p class="project__description">A simple web-based soundboard for playing custom audio clips.</p>
-                </div>
-            </div>
-
-            <div class="project__item">
-                <div class="project__image">
-                    <img src="https://fakeimg.pl/600x300/808080/d1d1d1?text=Work+in+progress" alt="Font Preview Tool">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Font Preview Tool</h3>
-                    <p class="project__description">A web app to preview and compare different fonts with custom text input.</p>
-                </div>
-            </div>
-
-            <div class="project__item">
-                <div class="project__image">
-                    <img src="https://fakeimg.pl/600x300/808080/d1d1d1?text=Work+in+progress" alt="Fractal Generator">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Fractal Generator</h3>
-                    <p class="project__description">Creates and renders different fractal patterns in real-time.</p>
-                </div>
-            </div>
-
-            <div class="project__item">
-                <div class="project__image">
-                    <img src="https://fakeimg.pl/600x300/808080/d1d1d1?text=Work+in+progress" alt="Advanced To-Do App">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Advanced To-Do App</h3>
-                    <p class="project__description">A task manager with categories, deadlines, and progress tracking.</p>
-                </div>
-            </div>
-
-            <div class="project__item">
-                <div class="project__image">
-                    <img src="https://fakeimg.pl/600x300/808080/d1d1d1?text=Work+in+progress" alt="Random Map Generator">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">Random Map Generator</h3>
-                    <p class="project__description">Creates procedural world maps using noise functions.</p>
-                </div>
-            </div> -->
-
-            <div class="project__item">
-                <div class="project__image">
-                    <img src="../assets/img/projects/more_coming_soon.png" alt="More coming Soon">
-                </div>
-                <div class="project__content">
-                    <h3 class="project__title">More Fun Projects</h3>
-                    <p class="project__description">More projects coming soon</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script src="projects.js"></script>
+  <script src="projects.js"></script>
 </body>
 </html>
