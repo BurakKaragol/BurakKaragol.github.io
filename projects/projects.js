@@ -355,7 +355,7 @@ function injectSecretCard(){
 
   const h3 = document.createElement('h3');
   h3.className = 'title';
-  h3.textContent = 'MrLule // Secret Console';
+  h3.textContent = 'Secret Console';
 
   const p = document.createElement('p');
   p.className = 'desc';
