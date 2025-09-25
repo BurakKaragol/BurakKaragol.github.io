@@ -344,7 +344,7 @@ function injectSecretCard(){
   const card = document.createElement('article');
   card.className = 'card';
   card.dataset.secret = '1';
-  card.setAttribute('data-url', 'terminal.html');
+  card.setAttribute('data-url', 'secret_page/');
 
   const thumb = document.createElement('div');
   thumb.className = 'thumb';
@@ -366,7 +366,7 @@ function injectSecretCard(){
 
   const aOpen = document.createElement('a');
   aOpen.className = 'btn primary';
-  aOpen.href = 'terminal.html';
+  aOpen.href = 'secret_page/';
   aOpen.textContent = 'Open';
 
   const btnDet = document.createElement('button');
