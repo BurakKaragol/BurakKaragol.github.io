@@ -13,12 +13,16 @@
   function sep() { print(''); }
 
   // ---------- Game state ----------
-  const SAVE_KEY = 'scq_console_v7';
+  const SAVE_KEY = 'scq_console_v11';
 
   const stateDefault = {
     cwd: '/',
-    unlocked: { locked1:false, locked2:false, locked3:false, locked4:false, locked5:false },
-    stage: 1,  // 1..5 (after 5, finished)
+    unlocked: {
+      locked1:false, locked2:false, locked3:false,
+      locked4:false, locked5:false, locked6:false,
+      locked7:false, locked8:false, locked9:false, locked10:false
+    },
+    stage: 1,  // 1..10 (after 10, finished)
     notesSeen: []
   };
   let state = { ...stateDefault };
@@ -29,10 +33,11 @@
 
   function persist(){ localStorage.setItem(SAVE_KEY, JSON.stringify(state)); }
 
-  // ---------- File system ----------
+  // ---------- File system (fresh 10-level design) ----------
   const FS = {
     '/': { type:'dir', children:[
-      'desk', 'locked1', 'locked2', 'locked3', 'locked4', 'locked5',
+      'desk',
+      'locked1','locked2','locked3','locked4','locked5','locked6','locked7','locked8','locked9','locked10',
       'what_to_do.txt', 'motd.txt', 'ascii_banner.txt'
     ]},
 
@@ -44,14 +49,14 @@ there IS a small reward — something custom from me.
 
 Rules:
 - Use: ls, ls -R, pwd, cd <folder>, open <file>, unlock <folder> <password>, clear, help, exit
-- Start in /desk, read the notes, figure out the first password.
 - Each deeper folder depends on info you found earlier.
-
-Tip: Read carefully. Burak leaves clues for Future-Burak. And for you.` },
+- Hints are scattered. Read carefully.` },
 
     '/motd.txt': { type:'file', content:
 `Message of the Day:
-"Finish one project before starting three." — Future Burak, every week` },
+"Finish one project before starting three." — Future Burak, every week
+
+Lucky number: 7.` },
 
     '/ascii_banner.txt': { type:'file', content:
 `   ____              _         _       
@@ -65,8 +70,18 @@ Hidden console. Minimal adult supervision.` },
     // ----- DESK -----
     '/desk': { type:'dir', children:[
       'projects.txt','todo.txt','picky_things.txt','note_readme.txt',
-      'daily_thoughts.txt','ascii_coffee.txt'
+      'daily_thoughts.txt','ascii_coffee.txt','pin_hunt.txt','ascii_cat.txt'
     ] },
+
+    '/desk/pin_hunt.txt': { type:'file', content:
+`PIN HUNT (because why make it easy?)
+
+- First digit: hiding in plain sight inside ascii_coffee.txt
+- Second digit: found by reading the rule in todo.txt (count the letters in "TODO")
+- Third digit: stolen by a cat — check ascii_cat.txt
+- Fourth digit: the message of the day knows a "lucky number" (see /motd.txt)
+
+Assemble them in order.` },
 
     '/desk/projects.txt': { type:'file', content:
 `Fabriception (idle factory builder — still "in progress")
@@ -80,10 +95,10 @@ Color Palette Editor (premium vibes, under-polished)` },
 `Note to self:
 - Stop starting new projects before finishing old ones
 - Don't ever use 1234 again, it’s embarrassing
-- PIN must start with 5
+- PIN must start with a hint in the coffee file
 - Second digit = number of letters in "TODO"
-- Third digit = second digit - 1
-- Last digit = 7, because lucky` },
+- Third digit = ...where did the cat put it?
+- Last digit = I left it in today's message` },
 
     '/desk/picky_things.txt': { type:'file', content:
 `Rules of Burak:
@@ -107,11 +122,21 @@ Color Palette Editor (premium vibes, under-polished)` },
 |      |]
 \\      /
  \`----' 
-Coffee first, unlocking later.` },
+Coffee first, unlocking later.
+
+Shots: 5` },
+
+    '/desk/ascii_cat.txt': { type:'file', content:
+` /\\_/\\
+( o.o )   I stole a digit. Catch me if you can!
+ > ^ <
+
+Clue:   =^.^=    3    =^.^=
+(It's not a trick: the digit is literally 3.)` },
 
     // ----- LOCKED 1 -----
     '/locked1': { type:'dir', hidden:true, children:[
-      'sum_hint.txt','words.txt','shopping_list.txt','ascii_cat.txt'
+      'sum_hint.txt','words.txt','shopping_list.txt','ascii_cat_decoy.txt'
     ] },
 
     '/locked1/sum_hint.txt': { type:'file', content:
@@ -153,10 +178,8 @@ The word you land on opens the next door.` },
 - tiny screws
 - more sticky notes` },
 
-    '/locked1/ascii_cat.txt': { type:'file', content:
-` /\\_/\\
-( o.o )  meow
- > ^ <   (no hints here, sorry)` },
+    '/locked1/ascii_cat_decoy.txt': { type:'file', content:
+`(=^･ω･^=)  This one has no digits. Wrong cat.` },
 
     // ----- LOCKED 2 -----
     '/locked2': { type:'dir', hidden:true, children:[
@@ -178,7 +201,9 @@ Check /desk/projects.txt in the order listed.
 `  _
 <(o )
  ( .>
-^^ ^^  Duck debugging in progress… quack.` },
+^^ ^^  Duck debugging in progress… quack.
+
+hi` },
 
     // ----- LOCKED 3 -----
     '/locked3': { type:'dir', hidden:true, children:[
@@ -186,10 +211,8 @@ Check /desk/projects.txt in the order listed.
     ] },
 
     '/locked3/rules.txt': { type:'file', content:
-`It’s in the rules. Use the SHOUTED words from /desk/picky_things.txt,
-in order, joined with dashes. Ignore punctuation. Lowercase everything.
-
-Example format: word1-word2-word3` },
+`Use the SHOUTED words from /desk/picky_things.txt,
+in order, joined with dashes. Ignore punctuation. Lowercase everything.` },
 
     '/locked3/example.txt': { type:'file', content:
 `Example (not the answer): APPLE-BANANA-CHERRY → apple-banana-cherry` },
@@ -203,20 +226,17 @@ Example format: word1-word2-word3` },
     '/locked3/ascii_robot.txt': { type:'file', content:
 `[::]  beep
  |__|  boop
- /__\\  totally helpful robot (not actually)` },
+ /__\\  totally helpful robot (not actually)
+
+hi` },
 
     // ----- LOCKED 4 -----
     '/locked4': { type:'dir', hidden:true, children:[
-      'final_note.txt','spoilers.txt','ascii_dragon.txt'
+      'midgame_note.txt','spoilers.txt','ascii_dragon.txt'
     ] },
 
-    '/locked4/final_note.txt': { type:'file', content:
-`If you came this far, congrats.
-The final password is ANYTHING YOU WANT IT TO BE.
-
-(You can change it in the bla_bla() function, trust me…)
-
-…or maybe it’s literally "anythingyouwant". Heh.` },
+    '/locked4/midgame_note.txt': { type:'file', content:
+`Mid-game checkpoint. No finales here — keep going.` },
 
     '/locked4/spoilers.txt': { type:'file', content:
 `Spoilers:
@@ -230,26 +250,21 @@ The final password is ANYTHING YOU WANT IT TO BE.
      /O  O  \\__    //
     /     /\\_  \\__//
     \\__  \\_/  /  /
-      \\___/\\_/__/
-Roar. (dramatic but irrelevant)` },
+      \\___/\\_/__/  (dramatic but irrelevant)` },
 
     // ----- LOCKED 5 -----
     '/locked5': { type:'dir', hidden:true, children:[
-      'reward.txt','hall_of_fame.txt','ascii_confetti.txt'
+      'greetings_puzzle.txt','hall_of_fame.txt','ascii_confetti.txt'
     ] },
 
-    '/locked5/reward.txt': { type:'file', content:
-`✔ Access Granted.
+    '/locked5/greetings_puzzle.txt': { type:'file', content:
+`The bird and the bot share something in common.
+Find what they BOTH say.
 
-You win! Ping me with the phrase:
-“I solved the Burak console. The secret number is 42 :)” — I owe you a coffee.
-
-(Yes, Future-Me, that also means you.)` },
+Answer is just the two characters that greet you. Lowercase.` },
 
     '/locked5/hall_of_fame.txt': { type:'file', content:
-`Hall of Fame:
-- You (probably)
-- Future You (definitely)` },
+`Temporary Hall of Fame placeholder. Not the end.` },
 
     '/locked5/ascii_confetti.txt': { type:'file', content:
 `*  .    *      .  *
@@ -257,19 +272,121 @@ You win! Ping me with the phrase:
  .   *   \\o/   *   .
    *      |      *
  *   .   / \\  .    *
-Confetti.exe launched!` },
+(celebration deferred)` },
+
+    // ----- LOCKED 6 -----
+    '/locked6': { type:'dir', hidden:true, children:[
+      'helper_hint.txt','credits.txt','ascii_gear.txt'
+    ] },
+
+    '/locked6/helper_hint.txt': { type:'file', content:
+`Two helpers guided you earlier:
+
+- The debugging bird in one folder
+- The totally helpful machine in another
+
+Name them in order, lowercased, no spaces.
+
+(If you forgot: check /locked2/ascii_duck.txt and /locked3/ascii_robot.txt)` },
+
+    '/locked6/credits.txt': { type:'file', content:
+`Credits:
+- Duck (QA, quacks analyst)
+- Robot (beep boop morale officer)
+- Coffee (producer)` },
+
+    '/locked6/ascii_gear.txt': { type:'file', content:
+`  ___
+ / _ \\
+| (_) |
+ \\___/  grind grind (useless gear)` },
+
+    // ----- LOCKED 7 -----
+    '/locked7': { type:'dir', hidden:true, children:[
+      'final_prep.txt','camera_note.txt','confetti_plan.txt'
+    ] },
+
+    '/locked7/final_prep.txt': { type:'file', content:
+`Almost done.
+
+From your sticky notes:
+- Secure the webcam with something
+- And remember the running total of post-its this week
+
+Join them: the thing + the number (lowercase; number stays digits).` },
+
+    '/locked7/camera_note.txt': { type:'file', content:
+`The webcam trick again? Tape works. (See: sticky notes.)` },
+
+    '/locked7/confetti_plan.txt': { type:'file', content:
+`Release confetti when someone types the magic word.
+(This file does nothing.)` },
+
+    // ----- LOCKED 8 -----
+    '/locked8': { type:'dir', hidden:true, children:[
+      'number_fusion.txt','ledger.txt','ascii_abacus.txt'
+    ] },
+
+    '/locked8/number_fusion.txt': { type:'file', content:
+`Remember earlier:
+- The index you used for the word list (sum of the Stage-1 PIN digits)
+- The weekly post-it count in sticky notes
+
+Fuse them by concatenation: <index><count>` },
+
+    '/locked8/ledger.txt': { type:'file', content:
+`Index from Stage-2 was 19. Sticky note count was 47. Do the fusion.` },
+
+    '/locked8/ascii_abacus.txt': { type:'file', content:
+`o o o | o o o o |  <-- mathy but useless` },
+
+    // ----- LOCKED 9 -----
+    '/locked9': { type:'dir', hidden:true, children:[
+      'meta_note.txt','philosophy.txt','todo_again.txt'
+    ] },
+
+    '/locked9/meta_note.txt': { type:'file', content:
+`If you got here, you clearly get the joke.
+The "final password" could be anything you want…
+or maybe it’s literally: anythingyouwant` },
+
+    '/locked9/philosophy.txt': { type:'file', content:
+`Half-finished projects are Schrödinger’s apps: neither broken nor shipped.` },
+
+    '/locked9/todo_again.txt': { type:'file', content:
+`TODO (meta edition):
+- Consider finishing things
+- Consider considering finishing things
+- Consider shipping` },
+
+    // ----- LOCKED 10 -----
+    '/locked10': { type:'dir', hidden:true, children:[
+      'congratulations.txt','pep_talk.txt','ascii_flag.txt'
+    ] },
+
+    '/locked10/congratulations.txt': { type:'file', content:
+`You won. just come to me and say the answer is 42. And i owe you a coffee :)` },
+
+    '/locked10/pep_talk.txt': { type:'file', content:
+`Future-Me, no more tinkering. Deploy. Celebrate. Repeat.` },
+
+    '/locked10/ascii_flag.txt': { type:'file', content:
+` \\o/  victory banner ready
+  |   (waiting on the magic word)
+ / \\` },
   };
 
   // ---------- Visibility helpers ----------
   function isLockedFolder(path) {
     return path.startsWith('/locked');
   }
+  // Prefix-safe: map path to its top-level key (locked1..locked10)
   function isVisible(path) {
-    if (path.startsWith('/locked1')) return state.unlocked.locked1;
-    if (path.startsWith('/locked2')) return state.unlocked.locked2;
-    if (path.startsWith('/locked3')) return state.unlocked.locked3;
-    if (path.startsWith('/locked4')) return state.unlocked.locked4;
-    if (path.startsWith('/locked5')) return state.unlocked.locked5;
+    const first = '/' + path.split('/').filter(Boolean)[0];
+    if (first && first.startsWith('/locked')) {
+      const key = first.slice(1); // "lockedX"
+      return !!state.unlocked[key];
+    }
     return true;
   }
 
@@ -356,14 +473,18 @@ Confetti.exe launched!` },
   }
 
   // ---------- Secure answers (hash-only) ----------
-  // We store only SHA-256 hex of the *normalized* expected inputs.
-  // locked1 (PIN) compares raw; others compare lowercased.
+  // SHA-256 of normalized input (raw for Stage-1 PIN, lower for word answers).
   const ANSWER_CONFIG = {
-    '/locked1': { hash: 'dae89e11241685c65efa5f0ae0828574ab3a20de919325fbf83f9f2ff929dded', norm: 'raw' },
-    '/locked2': { hash: 'a9c1034fb623883b5786268bbde25a871b72c9920a4ff708d516e4852bcf7da0', norm: 'lower' },
-    '/locked3': { hash: '4e0fcd08acb1b150fd9237ebbd9c2e3abacc0d030264ee18a68cf41272845c89', norm: 'lower' },
-    '/locked4': { hash: '0823962b883f285dcfe9c83e20632db74a11ee861df41e072077f66c6726044a', norm: 'lower' },
-    '/locked5': { hash: '49ff2d138a8ab421d279ed81ee0af26df6439fd0ae4eb6f7369f2111bf2142f1', norm: 'lower' },
+    '/locked1':  { hash: 'dae89e11241685c65efa5f0ae0828574ab3a20de919325fbf83f9f2ff929dded', norm: 'raw'   }, // 5437
+    '/locked2':  { hash: 'a9c1034fb623883b5786268bbde25a871b72c9920a4ff708d516e4852bcf7da0', norm: 'lower' }, // pancake
+    '/locked3':  { hash: '4e0fcd08acb1b150fd9237ebbd9c2e3abacc0d030264ee18a68cf41272845c89', norm: 'lower' }, // fsmpqc
+    '/locked4':  { hash: '0823962b883f285dcfe9c83e20632db74a11ee861df41e072077f66c6726044a', norm: 'lower' }, // coffee-tabs-solder
+    '/locked5':  { hash: '8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4', norm: 'lower' }, // hi
+    '/locked6':  { hash: 'e8974dc678ab763260403410050f2331126a0f62a2b80ee7cfaf8baeaa73ab4b', norm: 'lower' }, // robotduck
+    '/locked7':  { hash: '87961caa2b40ac5a460f3e691cff1c66a7a3efca8f00e56ad6feb75393fd833f', norm: 'lower' }, // tape47
+    '/locked8':  { hash: '8eec27653c19ed078b2f3bae16ff901d16347d7917d2b8e2317914e2437bf324', norm: 'lower' }, // 1947
+    '/locked9':  { hash: '49ff2d138a8ab421d279ed81ee0af26df6439fd0ae4eb6f7369f2111bf2142f1', norm: 'lower' }, // anythingyouwant
+    '/locked10': { hash: '08dcde391c03a55a45f823c01f62d2bbf2b28af3b560444a320e017ea2f60847', norm: 'lower' }, // shipit
   };
 
   async function sha256Hex(text){
@@ -395,7 +516,7 @@ Confetti.exe launched!` },
 
   function cmd_ls(args=[]){
     const a0 = (args[0] || '').toLowerCase();
-    const recursive = (a0 === '-r' || a0 === '-R' || a0 === '/s'); // support -R, -r, /s
+    const recursive = (a0 === '-r' || a0 === '-R' || a0 === '/s');
     print('Path: ' + state.cwd);
     const lines = buildTree(state.cwd, recursive, '');
     lines.forEach(print);
@@ -443,11 +564,16 @@ Confetti.exe launched!` },
 
     const ok = await matchesHash(password || '', cfg);
     if (ok) {
-      if (target === '/locked1') { state.unlocked.locked1 = true; state.stage = Math.max(state.stage, 2); }
-      if (target === '/locked2') { state.unlocked.locked2 = true; state.stage = Math.max(state.stage, 3); }
-      if (target === '/locked3') { state.unlocked.locked3 = true; state.stage = Math.max(state.stage, 4); }
-      if (target === '/locked4') { state.unlocked.locked4 = true; state.stage = Math.max(state.stage, 5); }
-      if (target === '/locked5') { state.unlocked.locked5 = true; state.stage = Math.max(state.stage, 6); }
+      if (target === '/locked1')  { state.unlocked.locked1  = true; state.stage = Math.max(state.stage, 2); }
+      if (target === '/locked2')  { state.unlocked.locked2  = true; state.stage = Math.max(state.stage, 3); }
+      if (target === '/locked3')  { state.unlocked.locked3  = true; state.stage = Math.max(state.stage, 4); }
+      if (target === '/locked4')  { state.unlocked.locked4  = true; state.stage = Math.max(state.stage, 5); }
+      if (target === '/locked5')  { state.unlocked.locked5  = true; state.stage = Math.max(state.stage, 6); }
+      if (target === '/locked6')  { state.unlocked.locked6  = true; state.stage = Math.max(state.stage, 7); }
+      if (target === '/locked7')  { state.unlocked.locked7  = true; state.stage = Math.max(state.stage, 8); }
+      if (target === '/locked8')  { state.unlocked.locked8  = true; state.stage = Math.max(state.stage, 9); }
+      if (target === '/locked9')  { state.unlocked.locked9  = true; state.stage = Math.max(state.stage,10); }
+      if (target === '/locked10') { state.unlocked.locked10 = true; state.stage = Math.max(state.stage,11); }
       persist();
       print('✔ Unlocked: ' + target);
     } else {
@@ -587,7 +713,10 @@ Confetti.exe launched!` },
     function restrictUnlock(cands){
       return cands.filter(c => {
         const abs = c.startsWith('/') ? c : resolvePath(c);
-        return ['/locked1','/locked2','/locked3','/locked4','/locked5'].includes(abs);
+        return [
+          '/locked1','/locked2','/locked3','/locked4','/locked5',
+          '/locked6','/locked7','/locked8','/locked9','/locked10'
+        ].includes(abs);
       });
     }
 
