@@ -475,16 +475,16 @@ or maybe it’s literally: anythingyouwant` },
   // ---------- Secure answers (hash-only) ----------
   // SHA-256 of normalized input (raw for Stage-1 PIN, lower for word answers).
   const ANSWER_CONFIG = {
-    '/locked1':  { hash: 'dae89e11241685c65efa5f0ae0828574ab3a20de919325fbf83f9f2ff929dded', norm: 'raw'   }, // 5437
-    '/locked2':  { hash: 'a9c1034fb623883b5786268bbde25a871b72c9920a4ff708d516e4852bcf7da0', norm: 'lower' }, // pancake
-    '/locked3':  { hash: '4e0fcd08acb1b150fd9237ebbd9c2e3abacc0d030264ee18a68cf41272845c89', norm: 'lower' }, // fsmpqc
-    '/locked4':  { hash: '0823962b883f285dcfe9c83e20632db74a11ee861df41e072077f66c6726044a', norm: 'lower' }, // coffee-tabs-solder
-    '/locked5':  { hash: '8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4', norm: 'lower' }, // hi
-    '/locked6':  { hash: 'e8974dc678ab763260403410050f2331126a0f62a2b80ee7cfaf8baeaa73ab4b', norm: 'lower' }, // robotduck
-    '/locked7':  { hash: '87961caa2b40ac5a460f3e691cff1c66a7a3efca8f00e56ad6feb75393fd833f', norm: 'lower' }, // tape47
-    '/locked8':  { hash: '8eec27653c19ed078b2f3bae16ff901d16347d7917d2b8e2317914e2437bf324', norm: 'lower' }, // 1947
-    '/locked9':  { hash: '49ff2d138a8ab421d279ed81ee0af26df6439fd0ae4eb6f7369f2111bf2142f1', norm: 'lower' }, // anythingyouwant
-    '/locked10': { hash: '08dcde391c03a55a45f823c01f62d2bbf2b28af3b560444a320e017ea2f60847', norm: 'lower' }, // shipit
+    '/locked1':  { hash: 'dae89e11241685c65efa5f0ae0828574ab3a20de919325fbf83f9f2ff929dded', norm: 'raw'   },
+    '/locked2':  { hash: 'a9c1034fb623883b5786268bbde25a871b72c9920a4ff708d516e4852bcf7da0', norm: 'lower' },
+    '/locked3':  { hash: '4e0fcd08acb1b150fd9237ebbd9c2e3abacc0d030264ee18a68cf41272845c89', norm: 'lower' },
+    '/locked4':  { hash: '0823962b883f285dcfe9c83e20632db74a11ee861df41e072077f66c6726044a', norm: 'lower' },
+    '/locked5':  { hash: '8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4', norm: 'lower' },
+    '/locked6':  { hash: 'e8974dc678ab763260403410050f2331126a0f62a2b80ee7cfaf8baeaa73ab4b', norm: 'lower' },
+    '/locked7':  { hash: '87961caa2b40ac5a460f3e691cff1c66a7a3efca8f00e56ad6feb75393fd833f', norm: 'lower' },
+    '/locked8':  { hash: '8eec27653c19ed078b2f3bae16ff901d16347d7917d2b8e2317914e2437bf324', norm: 'lower' },
+    '/locked9':  { hash: '49ff2d138a8ab421d279ed81ee0af26df6439fd0ae4eb6f7369f2111bf2142f1', norm: 'lower' },
+    '/locked10': { hash: '08dcde391c03a55a45f823c01f62d2bbf2b28af3b560444a320e017ea2f60847', norm: 'lower' },
   };
 
   async function sha256Hex(text){
