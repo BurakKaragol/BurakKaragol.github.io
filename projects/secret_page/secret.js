@@ -42,30 +42,30 @@
     ]},
 
     '/what_to_do.txt': { type:'file', content:
-`Hi. You found my tiny hidden console.
+  `Hi. You found my tiny hidden console.
 
-This is a little game buried in my site. If you reach the end,
-there IS a small reward — something custom from me.
+  This is a little game buried in my site. If you reach the end,
+  there IS a small reward — something custom from me.
 
-Rules:
-- Use: ls, ls -R, pwd, cd <folder>, open <file>, unlock <folder> <password>, clear, help, exit
-- Each deeper folder depends on info you found earlier.
-- Hints are scattered. Read carefully.` },
+  Rules:
+  - Use: ls, ls -R, pwd, cd <folder>, open <file>, unlock <folder> <password>, clear, help, exit
+  - Each deeper folder depends on info you found earlier.
+  - Hints are scattered. Read carefully.` },
 
     '/motd.txt': { type:'file', content:
-`Message of the Day:
-"Finish one project before starting three." — Future Burak, every week
+  `Message of the Day:
+  "Finish one project before starting three." — Future Burak, every week
 
-Lucky number: 7.` },
+  Lucky number: 7.` },
 
     '/ascii_banner.txt': { type:'file', content:
-`   ____              _         _       
-  / __ )____  _____(_)____   (_)______
- / __  / __ \\/ ___/ / ___/  / / ___/
-/ /_/ / /_/ (__  ) (__  )  / (__  ) 
-/_____/\\____/____/_/____/  /_/____/  
+  `   ____              _         _       
+    / __ )____  _____(_)____   (_)______
+  / __  / __ \\/ ___/ / ___/  / / ___/
+  / /_/ / /_/ (__  ) (__  )  / (__  ) 
+  /_____/\\____/____/_/____/  /_/____/  
 
-Hidden console. Minimal adult supervision.` },
+  Hidden console. Minimal adult supervision.` },
 
     // ----- DESK -----
     '/desk': { type:'dir', children:[
@@ -74,65 +74,65 @@ Hidden console. Minimal adult supervision.` },
     ] },
 
     '/desk/pin_hunt.txt': { type:'file', content:
-`PIN HUNT (because why make it easy?)
+  `PIN HUNT (because why make it easy?)
 
-- First digit: hiding in plain sight inside ascii_coffee.txt
-- Second digit: found by reading the rule in todo.txt (count the letters in "TODO")
-- Third digit: stolen by a cat — check ascii_cat.txt
-- Fourth digit: the message of the day knows a "lucky number" (see /motd.txt)
+  - First digit: hiding in plain sight inside ascii_coffee.txt
+  - Second digit: found by reading the rule in todo.txt (count the letters in "TODO")
+  - Third digit: stolen by a cat — check ascii_cat.txt
+  - Fourth digit: the message of the day knows a "lucky number" (see /motd.txt)
 
-Assemble them in order.` },
+  Assemble them in order.` },
 
     '/desk/projects.txt': { type:'file', content:
-`Fabriception (idle factory builder — still "in progress")
-ScreenPad (PyQt6 UI playground — half-baked)
-Macropad (hardware exists, software… waiting)
-Portfolio Admin Panel (shiny PyQt6 manager, 40% complete)
-QR Code Generator (looked cool, got distracted)
-Color Palette Editor (premium vibes, under-polished)` },
+  `Fabriception (idle factory builder — still "in progress")
+  ScreenPad (PyQt6 UI playground — half-baked)
+  Macropad (hardware exists, software… waiting)
+  Portfolio Admin Panel (shiny PyQt6 manager, 40% complete)
+  QR Code Generator (looked cool, got distracted)
+  Color Palette Editor (premium vibes, under-polished)` },
 
     '/desk/todo.txt': { type:'file', content:
-`Note to self:
-- Stop starting new projects before finishing old ones
-- Don't ever use 1234 again, it’s embarrassing
-- PIN must start with a hint in the coffee file
-- Second digit = number of letters in "TODO"
-- Third digit = ...where did the cat put it?
-- Last digit = I left it in today's message` },
+  `Note to self:
+  - Stop starting new projects before finishing old ones
+  - Don't ever use 1234 again, it’s embarrassing
+  - PIN must start with a hint in the coffee file
+  - Second digit = number of letters in "TODO"
+  - Third digit = ...where did the cat put it?
+  - Last digit = I left it in today's message` },
 
     '/desk/picky_things.txt': { type:'file', content:
-`Rules of Burak:
-- COFFEE > tea (always)
-- TABS, not spaces (but sometimes spaces… don’t tell anyone)
-- Don’t forget to buy a new SOLDERing iron tip` },
+  `Rules of Burak:
+  - COFFEE > tea (always)
+  - TABS, not spaces (but sometimes spaces… don’t tell anyone)
+  - Don’t forget to buy a new SOLDERing iron tip` },
 
     '/desk/note_readme.txt': { type:'file', content:
-`If you’re snooping, welcome. If you’re Future-Me… go finish Fabriception.` },
+  `If you’re snooping, welcome. If you’re Future-Me… go finish Fabriception.` },
 
     '/desk/daily_thoughts.txt': { type:'file', content:
-`Daily Thoughts:
-- Why do I have 6 half-finished tools that all almost do the same thing?
-- Idea: color picker that picks moods, not colors. (too much?)
-- If you're reading this, hydrate.` },
+  `Daily Thoughts:
+  - Why do I have 6 half-finished tools that all almost do the same thing?
+  - Idea: color picker that picks moods, not colors. (too much?)
+  - If you're reading this, hydrate.` },
 
     '/desk/ascii_coffee.txt': { type:'file', content:
-` ( (
-  ) )
-........
-|      |]
-\\      /
- \`----' 
-Coffee first, unlocking later.
+  ` ( (
+    ) )
+  ........
+  |      |]
+  \\      /
+  \`----' 
+  Coffee first, unlocking later.
 
-Shots: 5` },
+  Shots: 5` },
 
     '/desk/ascii_cat.txt': { type:'file', content:
-` /\\_/\\
-( o.o )   I stole a digit. Catch me if you can!
- > ^ <
+  ` /\\_/\\
+  ( o.o )   I stole a digit. Catch me if you can!
+  > ^ <
 
-Clue:   =^.^=    3    =^.^=
-(It's not a trick: the digit is literally 3.)` },
+  Clue:   =^.^=    3    =^.^=
+  (It's not a trick: the digit is literally 3.)` },
 
     // ----- LOCKED 1 -----
     '/locked1': { type:'dir', hidden:true, children:[
@@ -140,46 +140,46 @@ Clue:   =^.^=    3    =^.^=
     ] },
 
     '/locked1/sum_hint.txt': { type:'file', content:
-`Digits whisper secrets.
-Add them up, then count your way down the list.
-The word you land on opens the next door.` },
+  `Digits whisper secrets.
+  Add them up, then count your way down the list.
+  The word you land on opens the next door.` },
 
     '/locked1/words.txt': { type:'file', content:
-` 1: anchor
- 2: comet
- 3: pixel
- 4: orange
- 5: prism
- 6: lantern
- 7: velvet
- 8: canyon
- 9: waffle
-10: kiwi
-11: nebula
-12: marble
-13: mustard
-14: orbit
-15: plum
-16: quartz
-17: rocket
-18: cedar
-19: pancake
-20: dune
-21: basil
-22: mint
-23: apricot
-24: denim
-25: copper` },
+  ` 1: anchor
+  2: comet
+  3: pixel
+  4: orange
+  5: prism
+  6: lantern
+  7: velvet
+  8: canyon
+  9: waffle
+  10: kiwi
+  11: nebula
+  12: marble
+  13: mustard
+  14: orbit
+  15: plum
+  16: quartz
+  17: rocket
+  18: cedar
+  19: pancake
+  20: dune
+  21: basil
+  22: mint
+  23: apricot
+  24: denim
+  25: copper` },
 
     '/locked1/shopping_list.txt': { type:'file', content:
-`Shopping (definitely unrelated):
-- bananas (not a hint)
-- duct tape
-- tiny screws
-- more sticky notes` },
+  `Shopping (definitely unrelated):
+  - bananas (not a hint)
+  - duct tape
+  - tiny screws
+  - more sticky notes` },
 
     '/locked1/ascii_cat_decoy.txt': { type:'file', content:
-`(=^･ω･^=)  This one has no digits. Wrong cat.` },
+  `(=^･ω･^=)  This one has no digits. Wrong cat.` },
 
     // ----- LOCKED 2 -----
     '/locked2': { type:'dir', hidden:true, children:[
@@ -187,23 +187,23 @@ The word you land on opens the next door.` },
     ] },
 
     '/locked2/diary.txt': { type:'file', content:
-`Future-me, the password is the FIRST LETTERS of the projects I kept starting:
-Check /desk/projects.txt in the order listed.
-(No tricks. Lowercase them and put them together.)` },
+  `Future-me, the password is the FIRST LETTERS of the projects I kept starting:
+  Check /desk/projects.txt in the order listed.
+  (No tricks. Lowercase them and put them together.)` },
 
     '/locked2/brain_dump.txt': { type:'file', content:
-`Brain Dump:
-- If I rename Fabriception again I will lose all momentum.
-- New idea: "Skyscraper Potato" — sounds like a band. Not a password.
-- Reminder: update README on literally everything.` },
+  `Brain Dump:
+  - If I rename Fabriception again I will lose all momentum.
+  - New idea: "Skyscraper Potato" — sounds like a band. Not a password.
+  - Reminder: update README on literally everything.` },
 
     '/locked2/ascii_duck.txt': { type:'file', content:
-`  _
-<(o )
- ( .>
-^^ ^^  Duck debugging in progress… quack.
+  `  _
+  <(o )
+  ( .>
+  ^^ ^^  Duck debugging in progress… quack.
 
-hi` },
+  hi` },
 
     // ----- LOCKED 3 -----
     '/locked3': { type:'dir', hidden:true, children:[
@@ -211,153 +211,170 @@ hi` },
     ] },
 
     '/locked3/rules.txt': { type:'file', content:
-`Use the SHOUTED words from /desk/picky_things.txt,
-in order, joined with dashes. Ignore punctuation. Lowercase everything.` },
+  `Use the SHOUTED words from /desk/picky_things.txt,
+  in order, joined with dashes. Ignore punctuation. Lowercase everything.` },
 
     '/locked3/example.txt': { type:'file', content:
-`Example (not the answer): APPLE-BANANA-CHERRY → apple-banana-cherry` },
+  `Example (not the answer): APPLE-BANANA-CHERRY → apple-banana-cherry` },
 
     '/locked3/sticky_notes.txt': { type:'file', content:
-`Sticky Notes:
-- Put tape on the webcam (paranoia level moderate)
-- Post-it count this week: 47
-- You are doing great. (This is not a clue.)` },
+  `Sticky Notes:
+  - Put tape on the webcam (paranoia level moderate)
+  - Post-it count this week: 47
+  - You are doing great. (This is not a clue.)` },
 
     '/locked3/ascii_robot.txt': { type:'file', content:
-`[::]  beep
- |__|  boop
- /__\\  totally helpful robot (not actually)
+  `[::]  beep
+  |__|  boop
+  /__\\  totally helpful robot (not actually)
 
-hi` },
+  hi` },
 
     // ----- LOCKED 4 -----
     '/locked4': { type:'dir', hidden:true, children:[
-      'midgame_note.txt','spoilers.txt','ascii_dragon.txt'
+      'midgame_note.txt','greetings_puzzle.txt','spoilers.txt','ascii_dragon.txt'
     ] },
 
     '/locked4/midgame_note.txt': { type:'file', content:
-`Mid-game checkpoint. No finales here — keep going.` },
+  `Mid-game checkpoint. No finales here — keep going.
+  Next, find what BOTH the duck and the robot say.` },
+
+    // (Moved here so Stage 5 is solvable before unlocking it)
+    '/locked4/greetings_puzzle.txt': { type:'file', content:
+  `The bird and the bot share something in common.
+  Find what they BOTH say.
+
+  Answer is just the two characters that greet you. Lowercase.` },
 
     '/locked4/spoilers.txt': { type:'file', content:
-`Spoilers:
-- The cake is a lie.*
-- *But your reward is real.
-- Also not a hint.` },
+  `Spoilers:
+  - The cake is a lie.*
+  - *But your reward is real.
+  - Also not a hint.` },
 
     '/locked4/ascii_dragon.txt': { type:'file', content:
-`           / \\  //\\
-     |\\___/|      \\\\//
-     /O  O  \\__    //
-    /     /\\_  \\__//
-    \\__  \\_/  /  /
-      \\___/\\_/__/  (dramatic but irrelevant)` },
+  `           / \\  //\\
+      |\\___/|      \\\\//
+      /O  O  \\__    //
+      /     /\\_  \\__//
+      \\__  \\_/  /  /
+        \\___/\\_/__/  (dramatic but irrelevant)` },
 
     // ----- LOCKED 5 -----
     '/locked5': { type:'dir', hidden:true, children:[
-      'greetings_puzzle.txt','hall_of_fame.txt','ascii_confetti.txt'
+      // (Moved helper for Stage 6 here)
+      'helper_hint.txt','hall_of_fame.txt','ascii_confetti.txt'
     ] },
 
-    '/locked5/greetings_puzzle.txt': { type:'file', content:
-`The bird and the bot share something in common.
-Find what they BOTH say.
+    '/locked5/helper_hint.txt': { type:'file', content:
+  `Two helpers guided you earlier:
 
-Answer is just the two characters that greet you. Lowercase.` },
+  - The debugging bird in one folder
+  - The totally helpful machine in another
+
+  Name them in order, lowercased, no spaces.
+
+  (If you forgot: check /locked2/ascii_duck.txt and /locked3/ascii_robot.txt)` },
 
     '/locked5/hall_of_fame.txt': { type:'file', content:
-`Temporary Hall of Fame placeholder. Not the end.` },
+  `Temporary Hall of Fame placeholder. Not the end.` },
 
     '/locked5/ascii_confetti.txt': { type:'file', content:
-`*  .    *      .  *
-   *   .   *  *
- .   *   \\o/   *   .
-   *      |      *
- *   .   / \\  .    *
-(celebration deferred)` },
+  `*  .    *      .  *
+    *   .   *  *
+  .   *   \\o/   *   .
+    *      |      *
+  *   .   / \\  .    *
+  (celebration deferred)` },
 
     // ----- LOCKED 6 -----
     '/locked6': { type:'dir', hidden:true, children:[
-      'helper_hint.txt','credits.txt','ascii_gear.txt'
+      'credits.txt','ascii_gear.txt'
     ] },
 
-    '/locked6/helper_hint.txt': { type:'file', content:
-`Two helpers guided you earlier:
-
-- The debugging bird in one folder
-- The totally helpful machine in another
-
-Name them in order, lowercased, no spaces.
-
-(If you forgot: check /locked2/ascii_duck.txt and /locked3/ascii_robot.txt)` },
-
     '/locked6/credits.txt': { type:'file', content:
-`Credits:
-- Duck (QA, quacks analyst)
-- Robot (beep boop morale officer)
-- Coffee (producer)` },
+  `Credits:
+  - Duck (QA, quacks analyst)
+  - Robot (beep boop morale officer)
+  - Coffee (producer)` },
 
     '/locked6/ascii_gear.txt': { type:'file', content:
-`  ___
- / _ \\
-| (_) |
- \\___/  grind grind (useless gear)` },
+  `  ___
+  / _ \\
+  | (_) |
+  \\___/  grind grind (useless gear)` },
 
     // ----- LOCKED 7 -----
     '/locked7': { type:'dir', hidden:true, children:[
-      'final_prep.txt','camera_note.txt','confetti_plan.txt'
+      'final_prep.txt','camera_note.txt','confetti_plan.txt',
+      // (Moved Stage-8 hint files here)
+      'number_fusion.txt','ledger.txt'
     ] },
 
     '/locked7/final_prep.txt': { type:'file', content:
-`Almost done.
+  `Almost done.
 
-From your sticky notes:
-- Secure the webcam with something
-- And remember the running total of post-its this week
+  From your sticky notes:
+  - Secure the webcam with something
+  - And remember the running total of post-its this week
 
-Join them: the thing + the number (lowercase; number stays digits).` },
+  Join them: the thing + the number (lowercase; number stays digits).` },
 
     '/locked7/camera_note.txt': { type:'file', content:
-`The webcam trick again? Tape works. (See: sticky notes.)` },
+  `The webcam trick again? Tape works. (See: sticky notes.)` },
 
     '/locked7/confetti_plan.txt': { type:'file', content:
-`Release confetti when someone types the magic word.
-(This file does nothing.)` },
+  `Release confetti when someone types the magic word.
+  (This file does nothing.)` },
+
+    // (Stage-8 hint now here)
+    '/locked7/number_fusion.txt': { type:'file', content:
+  `Remember earlier:
+  - The index you used for the word list (sum of the Stage-1 PIN digits)
+  - The weekly post-it count in sticky notes
+
+  Fuse them by concatenation: <index><count>` },
+
+    '/locked7/ledger.txt': { type:'file', content:
+  `Index from Stage-2 was 19. Sticky note count was 47. Do the fusion.` },
 
     // ----- LOCKED 8 -----
     '/locked8': { type:'dir', hidden:true, children:[
-      'number_fusion.txt','ledger.txt','ascii_abacus.txt'
+      // (Only decoy + meta for Stage 9)
+      'meta_note.txt','ascii_abacus.txt'
     ] },
 
-    '/locked8/number_fusion.txt': { type:'file', content:
-`Remember earlier:
-- The index you used for the word list (sum of the Stage-1 PIN digits)
-- The weekly post-it count in sticky notes
-
-Fuse them by concatenation: <index><count>` },
-
-    '/locked8/ledger.txt': { type:'file', content:
-`Index from Stage-2 was 19. Sticky note count was 47. Do the fusion.` },
+    // (Stage-9 meta moved here)
+    '/locked8/meta_note.txt': { type:'file', content:
+  `If you got here, you clearly get the joke.
+  The "final password" could be anything you want…
+  or maybe it’s literally: anythingyouwant` },
 
     '/locked8/ascii_abacus.txt': { type:'file', content:
-`o o o | o o o o |  <-- mathy but useless` },
+  `o o o | o o o o |  <-- mathy but useless` },
 
     // ----- LOCKED 9 -----
     '/locked9': { type:'dir', hidden:true, children:[
-      'meta_note.txt','philosophy.txt','todo_again.txt'
+      // (Finale hint placed here)
+      'ship_it_manifesto.txt','philosophy.txt','todo_again.txt'
     ] },
 
-    '/locked9/meta_note.txt': { type:'file', content:
-`If you got here, you clearly get the joke.
-The "final password" could be anything you want…
-or maybe it’s literally: anythingyouwant` },
+    '/locked9/ship_it_manifesto.txt': { type:'file', content:
+  `This is actually the last door you need to think about.
+  Tie back to:
+  - /desk/note_readme.txt (finish things)
+  - /motd.txt (stop starting too many)
+
+  Action required (one word, lowercase): ship it (…as one word).` },
 
     '/locked9/philosophy.txt': { type:'file', content:
-`Half-finished projects are Schrödinger’s apps: neither broken nor shipped.` },
+  `Half-finished projects are Schrödinger’s apps: neither broken nor shipped.` },
 
     '/locked9/todo_again.txt': { type:'file', content:
-`TODO (meta edition):
-- Consider finishing things
-- Consider considering finishing things
-- Consider shipping` },
+  `TODO (meta edition):
+  - Consider finishing things
+  - Consider considering finishing things
+  - Consider shipping` },
 
     // ----- LOCKED 10 -----
     '/locked10': { type:'dir', hidden:true, children:[
@@ -365,15 +382,15 @@ or maybe it’s literally: anythingyouwant` },
     ] },
 
     '/locked10/congratulations.txt': { type:'file', content:
-`You won. just come to me and say the answer is 42. And i owe you a coffee :)` },
+  `You won. just come to me and say the answer is 42. And i owe you a coffee :)` },
 
     '/locked10/pep_talk.txt': { type:'file', content:
-`Future-Me, no more tinkering. Deploy. Celebrate. Repeat.` },
+  `Future-Me, no more tinkering. Deploy. Celebrate. Repeat.` },
 
     '/locked10/ascii_flag.txt': { type:'file', content:
-` \\o/  victory banner ready
-  |   (waiting on the magic word)
- / \\` },
+  ` \\o/  victory banner ready
+    |   (waiting on the magic word)
+  / \\` },
   };
 
   // ---------- Visibility helpers ----------
