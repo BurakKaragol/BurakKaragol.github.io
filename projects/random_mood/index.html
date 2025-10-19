@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mood Machine</title>
+  <link rel="stylesheet" href="mood.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header class="panel header">
+      <div class="brand">
+        <span>🌈 Mood Machine</span>
+        <span class="badge" id="saveStatus" aria-live="polite">Saved</span>
+      </div>
+      <div class="meta" id="palettePreview" aria-hidden="true" title="Palette preview">
+        <div class="dot" style="--c: var(--bg1); background: var(--bg1)"></div>
+        <div class="dot" style="--c: var(--bg2); background: var(--bg2)"></div>
+        <div class="dot" style="--c: var(--accent); background: var(--accent)"></div>
+      </div>
+    </header>
+
+    <main class="panel mood-card" aria-live="polite" aria-atomic="true">
+      <div class="emoji" id="emoji" role="img" aria-label="Current mood emoji">💫</div>
+      <div class="title" id="title">Flow</div>
+      <div class="motto" id="motto">Resistance off. Flow on.</div>
+    </main>
+
+    <section class="panel controls">
+      <div class="left">
+        <button class="primary focus-ring" id="randomBtn" aria-pressed="false">✨ Random Mood (Space)</button>
+
+        <!-- Native select (erişilebilirlik & fallback). Görselde gizlenecek. -->
+        <label class="pill native-select-wrap">
+          Mood:
+          <select id="moodSelect" class="select" aria-label="Mood (native)"></select>
+        </label>
+
+        <!-- Custom dropdown (tema ile uyumlu) -->
+        <div class="selectui" id="moodSelectUI" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-owns="moodListbox" aria-label="Mood">
+          <button class="selectui-trigger focus-ring" id="moodTrigger">
+            <span id="moodCurrentEmoji">🌊</span><span id="moodCurrentText">Flow</span>
+            <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <ul class="selectui-menu" id="moodListbox" role="listbox" tabindex="-1" aria-label="Choose a mood"></ul>
+        </div>
+
+        <span class="pill" id="slugPill">mood/flow</span>
+      </div>
+
+      <div class="right">
+        <button class="secondary focus-ring" id="previewBtn" title="Open export preview">👀 Export Preview</button>
+        <button class="secondary focus-ring" id="shareBtn" title="Copy shareable URL">🔗 Copy Link</button>
+        <span class="pill" id="timePill">⏱ Ready</span>
+      </div>
+    </section>
+
+    <footer>
+      Tip: Press <b>Space</b> to shuffle. Move the mouse to subtly shift the gradient.
+    </footer>
+  </div>
+
+  <!-- Export Preview Modal -->
+  <div class="modal" id="exportModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="exportTitle">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-content panel">
+      <div class="modal-header">
+        <h2 id="exportTitle">Export Preview</h2>
+        <button class="icon-btn focus-ring" id="closeModal" aria-label="Close">✖</button>
+      </div>
+
+      <div class="modal-controls">
+        <!-- Native (fallback) – gizli -->
+        <label class="pill native-select-wrap" aria-label="Format (native)">
+            Format:
+            <select id="formatSelect" class="select"></select>
+        </label>
+
+        <!-- SelectUI – Tema ile uyumlu -->
+        <div class="selectui" id="formatSelectUI" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-owns="formatListbox" aria-label="Format">
+            <button class="selectui-trigger focus-ring" id="formatTrigger">
+            <span id="formatCurrentText">1080×1080</span>
+            <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <ul class="selectui-menu" id="formatListbox" role="listbox" tabindex="-1" aria-label="Choose a format"></ul>
+        </div>
+
+        <label class="pill" id="customDims" hidden>
+            Size:
+            <input id="customW" class="dim-input" type="number" min="256" step="1" value="1200" aria-label="Width"> ×
+            <input id="customH" class="dim-input" type="number" min="256" step="1" value="1200" aria-label="Height">
+        </label>
+
+        <label class="pill checkbox">
+            <input type="checkbox" id="optDate" checked>
+            <span>Date</span>
+        </label>
+
+        <label class="pill checkbox">
+            <input type="checkbox" id="optTime" checked>
+            <span>Time</span>
+        </label>
+      </div>
+
+      <div class="preview-wrap">
+        <canvas id="previewCanvas" width="1280" height="720" aria-label="Export preview canvas"></canvas>
+      </div>
+
+      <div class="modal-actions">
+        <button class="secondary focus-ring" id="refreshPreview">🔄 Refresh</button>
+        <button class="primary focus-ring" id="downloadBtn">⬇️ Download PNG</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="mood.js"></script>
+</body>
+</html>
