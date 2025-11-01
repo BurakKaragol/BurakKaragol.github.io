@@ -125,6 +125,27 @@ header h1 {
   pointer-events: none;
 }
 
+.format-chip {
+  position: absolute;
+  right: 10px;
+  bottom: 56px; /* sits near the value field */
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid #ffffff66;
+  border-radius: 6px;
+  background: #ffffff1a;
+  color: inherit;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.format-chip:hover {
+  background: #ffffff33;
+  border-color: #ffffffaa;
+}
+
 .insert-btn {
   position: absolute;
   top: 50%;

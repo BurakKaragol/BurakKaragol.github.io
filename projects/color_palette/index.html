@@ -9,20 +9,27 @@
 <body>
   <header>
     <h1>Color Palette</h1>
+
+    <!-- Mode popup for Generate -->
     <div id="palette-mode-popup" class="mode-popup hidden">
       <button data-mode="analogous">Analogous</button>
       <button data-mode="complementary">Complementary</button>
       <button data-mode="monochromatic">Monochromatic</button>
       <button data-mode="triadic">Triadic</button>
       <button data-mode="tetradic">Tetradic</button>
-    </div>    
+    </div>
+
     <div class="header-buttons">
       <button id="generate-btn">Generate Random Colors</button>
-      <button id="export-btn">Export Palette</button>
+      <button id="import-btn">Import</button>
+      <button id="export-btn">Export</button>
     </div>
   </header>
 
   <main id="palette-container"></main>
+
+  <!-- Hidden file input for import -->
+  <input id="import-file" type="file" accept=".json,.txt,.aco,.ase" style="display:none" />
 
   <script src="color_palette.js"></script>
 </body>
