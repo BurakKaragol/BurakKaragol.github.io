@@ -1,190 +1,264 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="tr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>3D Print Pricing</title>
+  <title>3B Baskı Fiyatlandırma</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <link rel="stylesheet" href="print_price.css" />
+  <meta name="color-scheme" content="dark light">
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">3D Print Pricing</div>
-    <nav class="tabs" id="navTabs">
-      <a href="#/quote" data-route>Quick Quote</a>
-      <a href="#/rulesets" data-route>Rulesets</a>
-      <a href="#/materials" data-route>Materials</a>
-      <a href="#/printers" data-route>Printers</a>
-      <a href="#/commercial" data-route>Commercial</a>
-      <a href="#/backups" data-route>Backups</a>
+  <noscript>Bu uygulama JavaScript gerektirir.</noscript>
+
+  <!-- Üst Sekme Çubuğu -->
+  <header class="topbar" role="navigation" aria-label="Ana menü">
+    <nav id="navTabs" class="tabs">
+      <a href="#/quote"     data-route>Hızlı Teklif</a>
+      <a href="#/jobs"      data-route>İşler</a>
+      <a href="#/materials" data-route>Malzemeler</a>
+      <a href="#/printers"  data-route>Makineler</a>
+      <a href="#/rulesets"  data-route>Kurallar</a>
+      <a href="#/commercial"data-route>Ticari</a>
+      <a href="#/settings"  data-route>Ayarlar</a>
+      <a href="#/backups"   data-route>Yedekler</a>
     </nav>
-    <div class="spacer"></div>
-    <div class="profile-chip" id="profileChip"></div>
+    <div id="profileChip" class="chip" aria-live="polite"></div>
   </header>
 
-  <main id="app"></main>
+  <!-- Ana Grid -->
+  <main id="app" class="viewport" role="main"></main>
 
-  <!-- Quick Quote -->
+  <!-- Hover İpuçları -->
+  <div id="hint" class="hint hidden" role="tooltip" aria-hidden="true"></div>
+
+  <!-- ========= ŞABLONLAR ========= -->
+
+  <!-- Hızlı Teklif -->
   <template id="tpl-quote">
-    <section class="page grid-2">
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Quick Quote</h2>
-          <div class="actions">
-            <button class="btn" id="btnSaveDraft">Save Draft</button>
-            <button class="btn secondary" id="btnDuplicate">Duplicate</button>
-            <button class="btn danger" id="btnResetEssential">Reset Inputs</button>
-          </div>
+    <section class="pane pane-form" aria-labelledby="title-quote">
+      <h2 id="title-quote">Hızlı Teklif</h2>
+
+      <div id="quoteControls" class="controls" aria-label="Hızlı işlemler">
+        <button class="btn ghost" id="btnDuplicate" type="button">Çoğalt</button>
+        <button class="btn danger ghost" id="btnResetEssential" type="button">Girdileri Sıfırla</button>
+      </div>
+
+      <!-- İşi Başlat / Taslak -->
+      <div class="start-job card" aria-label="İş başlangıcı">
+        <div class="grid2">
+          <input id="sj_name" placeholder="İş adı (isteğe bağlı)" autocomplete="off" />
+          <input id="sj_client" placeholder="Müşteri (isteğe bağlı)" autocomplete="off" />
         </div>
-
-        <div class="form">
-          <div class="row">
-            <label>Material</label>
-            <select id="qq_material"></select>
-            <a class="hint-link" data-goto="#/materials">Edit material →</a>
-          </div>
-          <div class="row">
-            <label>Printer</label>
-            <select id="qq_printer"></select>
-            <a class="hint-link" data-goto="#/printers">Edit printer →</a>
-          </div>
-          <div class="row">
-            <label>Quantity</label>
-            <input type="number" id="qq_qty" min="1" step="1" />
-          </div>
-
-          <h3 class="section-title">Slicer Data</h3>
-          <div class="row">
-            <label>Print time</label>
-            <input type="text" id="qq_tprint" placeholder="e.g., 6 or 6h 30m" />
-            <span class="unit">h</span>
-          </div>
-          <div class="row">
-            <label>Part mass</label>
-            <input type="number" id="qq_mslicer" step="0.1" />
-            <span class="unit">g</span>
-          </div>
-          <div class="row">
-            <label>Support mass</label>
-            <input type="number" id="qq_msupport" step="0.1" />
-            <span class="unit">g</span>
-          </div>
-
-          <h3 class="section-title">Work Effort</h3>
-          <div class="row">
-            <label>Setup (once/job)</label>
-            <input type="number" id="qq_tsetup" step="0.01" />
-            <span class="unit">h</span>
-          </div>
-          <div class="row">
-            <label>Post per unit</label>
-            <input type="number" id="qq_tpost" step="0.01" />
-            <span class="unit">h</span>
-          </div>
-
-          <h3 class="section-title">Commercial</h3>
-          <div class="row">
-            <label>Markup</label>
-            <input type="range" id="qq_markup" min="0" max="100" step="1" />
-            <span id="qq_markup_val" class="badge"></span>
-          </div>
-          <div class="row">
-            <small class="muted">More options in Commercial tab (discount, tax, fees, minimum, etc.).</small>
-          </div>
+        <div class="row space">
+          <button class="btn" id="btnStartJob" type="button">İşi Başlat</button>
+          <button class="btn secondary" id="btnSaveDraft" type="button">Taslak Kaydet</button>
         </div>
       </div>
 
-      <aside class="summary">
-        <div class="panel">
-          <div class="panel-header">
-            <h2>Summary</h2>
-          </div>
-          <div id="summaryBody" class="summary-body"></div>
-          <div class="summary-footer" id="summaryFooter"></div>
+      <form class="form" id="quoteForm" novalidate>
+        <h3>Temel</h3>
+        <div class="row">
+          <label for="qq_material" data-h="Teklifte kullanılacak malzeme. Birim maliyet ve fire oranı fiyatı etkiler.">Malzeme</label>
+          <select id="qq_material" aria-describedby="materialHelp"></select>
+          <a class="mini-link" href="#/materials" data-route id="materialHelp">Malzemeler</a>
         </div>
-      </aside>
-    </section>
-  </template>
+        <div class="row">
+          <label for="qq_printer" data-h="Bu işin basılacağı makine. Güç tüketimi, arıza riski ve aşınma saatlik gideri üzerinden hesaba girer.">Makine</label>
+          <select id="qq_printer" aria-describedby="printerHelp"></select>
+          <a class="mini-link" href="#/printers" data-route id="printerHelp">Makineler</a>
+        </div>
+        <div class="row">
+          <label for="qq_qty" data-h="Aynı parçadan kaç adet basılacağı. Bazı sabit maliyetler adet başına bölünür.">Adet</label>
+          <input id="qq_qty" type="number" min="1" value="1" inputmode="numeric" />
+        </div>
 
-  <!-- Rulesets -->
-  <template id="tpl-rulesets">
-    <section class="page">
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Rulesets (Versioned)</h2>
-          <div class="actions">
-            <button class="btn" id="btnNewRuleset">New Ruleset</button>
-          </div>
+        <h3>Dilimleyici Verisi</h3>
+        <div class="row">
+          <label for="qq_tprint" data-h="Baskı süresi (6 ya da 6:30 gibi). İşgal süresi amortisman, enerji ve giderlere çarpan olur.">Baskı süresi</label>
+          <input id="qq_tprint" placeholder="ör. 6 veya 6:30" autocomplete="off" />
+          <span class="suf">saat</span>
         </div>
-        <div id="rulesetList" class="table"></div>
-        <hr class="sep" />
-        <div id="rulesetEditor" class="editor hidden"></div>
+        <div class="row">
+          <label for="qq_mslicer" data-h="Parçanın net kütlesi. Malzeme maliyeti bunun üzerinden hesaplanır.">Parça kütlesi</label>
+          <input id="qq_mslicer" type="number" step="0.01" min="0" inputmode="decimal" />
+          <span class="suf">g</span>
+        </div>
+        <div class="row">
+          <label for="qq_msupport" data-h="Destek/raft/kenarlık kütlesi. Toplam etkin kütleye eklenir.">Destek kütlesi</label>
+          <input id="qq_msupport" type="number" step="0.01" min="0" value="0" inputmode="decimal" />
+          <span class="suf">g</span>
+        </div>
+
+        <h3>İş Gücü</h3>
+        <div class="row">
+          <label for="qq_tsetup" data-h="İş başına tek seferlik kurulum/ayar süresi. Adet arttıkça birim başına düşen pay azalır.">Kurulum (iş başı)</label>
+          <input id="qq_tsetup" type="number" step="0.05" min="0" value="0.25" inputmode="decimal" />
+          <span class="suf">saat</span>
+        </div>
+        <div class="row">
+          <label for="qq_tpost" data-h="Parça başı temizlik/kesim/zımpara gibi işlemlere ayrılan süre.">Post-proses (adet)</label>
+          <input id="qq_tpost" type="number" step="0.05" min="0" value="0.20" inputmode="decimal" />
+          <span class="suf">saat</span>
+        </div>
+
+        <h3>Ticari</h3>
+        <div class="row">
+          <label for="qq_markup" data-h="Bu iş özelinde kârlılık payı. Genel varsayılanı Ticari sekmesinden ayarlayabilirsiniz.">Kâr marjı</label>
+          <input id="qq_markup" type="range" min="0" max="200" value="30" />
+          <output id="qq_markup_val" for="qq_markup">30%</output>
+        </div>
+      </form>
+    </section>
+
+    <aside class="pane pane-summary" aria-labelledby="title-summary">
+      <h2 id="title-summary">Özet</h2>
+      <div id="summaryBody" class="summary" aria-live="polite"></div>
+      <div id="summaryFooter" class="summary-footer">
+        <button class="btn secondary" id="btnExportQuotePDF" type="button">PDF Olarak Dışa Aktar</button>
       </div>
+    </aside>
+  </template>
+
+  <!-- İşler -->
+  <template id="tpl-jobs">
+    <section class="pane pane-wide" aria-labelledby="title-jobs">
+      <h2 id="title-jobs">İşler</h2>
+      <div class="row space">
+        <div class="chip">Açık: <span id="jobOpenCount">0</span></div>
+        <div class="chip">Tamamlanan: <span id="jobDoneCount">0</span></div>
+        <div class="chip">Taslak: <span id="jobDraftCount">0</span></div>
+      </div>
+      <table class="grid-table" id="jobsTable" aria-label="İş listesi">
+        <thead>
+          <tr>
+            <th>Durum</th><th>Ad</th><th>Müşteri</th><th>Başlangıç</th><th>Bitiş</th><th>İlerleme</th><th>Tutar</th><th>Aksiyon</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </section>
   </template>
 
-  <!-- Materials -->
+  <!-- Malzemeler -->
   <template id="tpl-materials">
-    <section class="page">
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Materials</h2>
-          <div class="actions">
-            <button class="btn" id="btnAddMaterial">Add Material</button>
-            <button class="btn secondary" id="btnExportMaterials">Export</button>
-            <label class="file-btn"><input type="file" id="fileImportMaterials" accept="application/json" />Import</label>
+    <section class="pane pane-wide" aria-labelledby="title-materials">
+      <div class="row space">
+        <h2 id="title-materials">Malzemeler</h2>
+        <div class="row gap">
+          <button class="btn" id="btnAddMaterial" type="button">Yeni Malzeme</button>
+          <input type="file" id="fileImportMaterials" hidden accept="application/json" />
+          <button class="btn ghost" id="btnExportMaterials" type="button">Dışa Aktar</button>
+          <button class="btn ghost" type="button" onclick="document.getElementById('fileImportMaterials').click()">İçe Aktar</button>
+        </div>
+      </div>
+
+      <div class="flex">
+        <table class="grid-table flex-1" id="materialsTable" aria-label="Malzeme tablosu"></table>
+        <div class="editor card" id="materialEditor" aria-label="Malzeme düzenleyici">
+          <h3>Detaylar</h3>
+          <div class="form slim">
+            <div class="row"><label for="m_name">Ad</label><input id="m_name" /></div>
+            <div class="row"><label for="m_type">Tip</label>
+              <select id="m_type"><option>FDM</option><option>Reçine</option></select>
+            </div>
+            <div class="row"><label for="m_price">Fiyat/g</label><input id="m_price" type="number" step="0.01" min="0"></div>
+            <div class="row"><label for="m_waste">Fire %</label><input id="m_waste" type="number" step="1" min="0" max="100"></div>
+            <div class="row"><label for="m_vendor">Tedarikçi</label><input id="m_vendor"></div>
+            <div class="row"><label for="m_tags">Etiketler</label><input id="m_tags" placeholder="PLA, siyah"></div>
+            <div class="row"><label for="m_color">Renk</label><input id="m_color" type="color" value="#999999" aria-label="Malzeme rengi"></div>
+            <div class="row right"><button class="btn" id="m_save" type="button">Kaydet</button></div>
           </div>
         </div>
-        <div id="materialsTable" class="table"></div>
       </div>
     </section>
   </template>
 
-  <!-- Printers -->
+  <!-- Makineler -->
   <template id="tpl-printers">
-    <section class="page">
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Printers</h2>
-          <div class="actions">
-            <button class="btn" id="btnAddPrinter">Add Printer</button>
-            <button class="btn secondary" id="btnExportPrinters">Export</button>
-            <label class="file-btn"><input type="file" id="fileImportPrinters" accept="application/json" />Import</label>
+    <section class="pane pane-wide" aria-labelledby="title-printers">
+      <div class="row space">
+        <h2 id="title-printers">Makineler</h2>
+        <div class="row gap">
+          <button class="btn" id="btnAddPrinter" type="button">Yeni Makine</button>
+          <input type="file" id="fileImportPrinters" hidden accept="application/json" />
+          <button class="btn ghost" id="btnExportPrinters" type="button">Dışa Aktar</button>
+          <button class="btn ghost" type="button" onclick="document.getElementById('fileImportPrinters').click()">İçe Aktar</button>
+        </div>
+      </div>
+
+      <div class="flex">
+        <table class="grid-table flex-1" id="printersTable" aria-label="Makine tablosu"></table>
+        <div class="editor card" id="printerEditor" aria-label="Makine düzenleyici">
+          <h3>Detaylar</h3>
+          <div class="form slim">
+            <div class="row"><label for="p_name">Ad</label><input id="p_name"></div>
+            <div class="row"><label for="p_Pavg">Ortalama Güç</label><input id="p_Pavg" type="number" step="1" min="1"><span class="suf">W</span></div>
+            <div class="row"><label for="p_wear">Aşınma</label><input id="p_wear" type="number" step="0.01" min="0"><span class="suf">₺/saat</span></div>
+            <div class="row"><label for="p_qfail">Arıza Olasılığı</label><input id="p_qfail" type="number" step="0.01" min="0" max="0.5"><span class="suf">0–0.5</span></div>
+            <div class="row"><label for="p_active">Aktif</label><input id="p_active" type="checkbox" role="switch"></div>
+            <div class="row right"><button class="btn" id="p_save" type="button">Kaydet</button></div>
           </div>
         </div>
-        <div id="printersTable" class="table"></div>
       </div>
     </section>
   </template>
 
-  <!-- Commercial -->
+  <!-- Kurallar -->
+  <template id="tpl-rulesets">
+    <section class="pane pane-wide" aria-labelledby="title-rules">
+      <h2 id="title-rules">Kurallar (Saatlik Giderler)</h2>
+      <div id="rulesetList"></div>
+      <div id="rulesetEditor" class="card hidden" aria-live="polite"></div>
+      <button class="btn" id="btnNewRuleset" type="button">Yeni Kural Seti</button>
+    </section>
+  </template>
+
+  <!-- Ticari -->
   <template id="tpl-commercial">
-    <section class="page">
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Commercial Defaults</h2>
-        </div>
-        <div class="form" id="commercialForm"></div>
-      </div>
+    <section class="pane pane-narrow center-wrap" aria-labelledby="title-commercial">
+      <h2 id="title-commercial">Ticari Ayarlar</h2>
+      <div id="commercialForm" class="form"></div>
     </section>
   </template>
 
-  <!-- Backups -->
+  <!-- Ayarlar -->
+  <template id="tpl-settings">
+    <section class="pane pane-narrow center-wrap" aria-labelledby="title-settings">
+      <h2 id="title-settings">Ayarlar</h2>
+      <div class="form">
+        <div class="row">
+          <label for="set_logo" data-h="PDF teklif çıktılarında sol üstte görünecek logonuz. PNG önerilir.">Logo (PDF)</label>
+          <input type="file" id="set_logo" accept="image/*" />
+        </div>
+        <div class="row">
+          <label for="set_currency" data-h="Para birimi ve yerel ayar (örn: tr-TR) sayısal gösterimleri etkiler.">Para Birimi</label>
+          <select id="set_currency"><option>TRY</option><option>USD</option><option>EUR</option></select>
+        </div>
+        <div class="row">
+          <label for="set_locale">Yerel Ayar</label>
+          <input id="set_locale" placeholder="tr-TR" />
+        </div>
+        <div class="row right">
+          <button class="btn" id="set_save" type="button">Kaydet</button>
+        </div>
+      </div>
+      <p class="muted">Not: PDF dışa aktarma, yalnızca Hızlı Teklif özetinde bulunur.</p>
+    </section>
+  </template>
+
+  <!-- Yedekler -->
   <template id="tpl-backups">
-    <section class="page">
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Backups</h2>
-        </div>
-        <div class="backup-row">
-          <button class="btn" id="btnExportAll">Export All</button>
-          <label class="file-btn"><input type="file" id="fileImportAll" accept="application/json" />Import All</label>
-          <button class="btn danger" id="btnResetApp">Reset App</button>
-        </div>
-        <div class="muted">Data is stored locally in your browser (localStorage). Export regularly if critical.</div>
+    <section class="pane pane-narrow center-wrap" aria-labelledby="title-backups">
+      <h2 id="title-backups">Yedekler</h2>
+      <div class="row gap">
+        <button class="btn" id="btnExportAll" type="button">Tümünü Dışa Aktar</button>
+        <input type="file" id="fileImportAll" hidden accept="application/json" />
+        <button class="btn ghost" type="button" onclick="document.getElementById('fileImportAll').click()">İçe Aktar</button>
+        <button class="btn danger ghost" id="btnResetApp" type="button">Sıfırla</button>
       </div>
     </section>
   </template>
 
-  <script src="print_price.js"></script>
+  <script src="print_price.js" defer></script>
 </body>
 </html>
