@@ -146,6 +146,26 @@ const PROJECTS = {
       "Targets include circle/square/∞; mouse follow toggle."
     ]
   },
+  "mood_machine/": {
+    time: "2.5 days",
+    difficulty: 65,
+    tags: ["Mood", "Share", "Sensation"],
+    long: "Find your daily mood with dynamic gradients and export-ready visuals.",
+    how: [
+      "Mood generation via adjective/noun/verb mixing.",
+      "Gradient generation with color theory rules.",
+    ]
+  },
+  "print_price_calculator/": {
+    time: "2.5 days",
+    difficulty: 65,
+    tags: ["3D", "Price", "Calculator"],
+    long: "Calculate your 3D print sell prices based on your preferences.",
+    how: [
+      "Detailed cost breakdown (material, time, overhead).",
+      "Calculate based on print settings and market factors."
+    ]
+  },
   /* gets injected when unlocked */
   "terminal.html": {
     time: "—",
