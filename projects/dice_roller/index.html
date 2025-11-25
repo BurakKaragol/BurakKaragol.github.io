@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MrLule Dice Roller</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="dice.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div>
+        <h1>Dice Roller</h1>
+        <p>
+          Press <span class="kbd">Space</span> or click <strong>Roll All</strong>
+          to roll every die on the table.
+        </p>
+      </div>
+      <div class="header-actions">
+        <button id="clear-all-top-btn" class="secondary-btn">Clear</button>
+        <button id="roll-all-btn" class="primary-btn">Roll All</button>
+      </div>
+    </header>
+
+    <section class="controls">
+      <div class="control-block control-block-add">
+        <h2>Add Dice</h2>
+        <div class="add-dice-buttons">
+          <button class="add-die-btn" data-sides="4">d4</button>
+          <button class="add-die-btn" data-sides="6">d6</button>
+          <button class="add-die-btn" data-sides="8">d8</button>
+          <button class="add-die-btn" data-sides="10">d10</button>
+          <button class="add-die-btn" data-sides="12">d12</button>
+          <button class="add-die-btn" data-sides="20">d20</button>
+          <button class="add-die-btn" data-sides="100">d100</button>
+        </div>
+        <p class="hint-text">
+          Click a die type to add one. Left-click a die to reroll it, right-click to delete it.
+        </p>
+      </div>
+
+      <div class="control-block control-block-presets">
+        <div class="presets-header">
+          <h2>Presets</h2>
+          <button id="clear-all-btn" class="text-btn">Clear all</button>
+        </div>
+        <div id="preset-row" class="preset-row">
+          <!-- Preset cross-table generated via JS -->
+        </div>
+      </div>
+    </section>
+
+    <main class="dice-area">
+      <!-- Total & stats bar BEFORE the dice grid -->
+      <section class="summary">
+        <div class="summary-main">
+          <span class="summary-label">Total</span>
+          <span id="total-sum" class="summary-value">0</span>
+        </div>
+
+        <div class="summary-metrics">
+          <div class="metric-pill">
+            <span class="metric-label">Highest</span>
+            <span id="highest-value" class="metric-value">–</span>
+          </div>
+          <div class="metric-pill">
+            <span class="metric-label">Lowest</span>
+            <span id="lowest-value" class="metric-value">–</span>
+          </div>
+          <div class="metric-pill">
+            <span class="metric-label">Average</span>
+            <span id="average-value" class="metric-value">–</span>
+          </div>
+        </div>
+
+        <div id="summary-detail" class="summary-detail">No dice yet.</div>
+      </section>
+
+      <div id="dice-grid" class="dice-grid">
+        <!-- Dice cards injected here -->
+      </div>
+    </main>
+  </div>
+
+  <script src="dice.js"></script>
+</body>
+</html>
