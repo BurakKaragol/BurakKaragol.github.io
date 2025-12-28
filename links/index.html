@@ -1,18 +1,170 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Burak Karagöl - Links</title>
-    <link rel="stylesheet" href="link_styles.css">
-    <script defer src="link_main.js"></script>
+    <title>Links | Burak Karagol</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- PAGE SPECIFIC OVERRIDES --- */
+        
+        /* 1. Hide unnecessary main site elements */
+        .dock-left, .dock-center, .desktop-controls, .mobile-toggle { display: none !important; }
+        
+        /* 2. THE DOCK (HEADER/FOOTER BAR) */
+        .dock {
+            position: fixed;
+            left: 0;
+            width: 100%;      /* Expand to full width */
+            max-width: none;  /* Remove strict width limits */
+            transform: none;  /* Remove centering transform */
+            border-radius: 0; /* Remove rounded corners */
+            border: none;
+            box-shadow: none;
+            background: var(--bg-dock);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            
+            display: flex;
+            justify-content: center; /* Center the content */
+            padding: 15px 20px;
+            z-index: 1000;
+        }
+
+        /* 3. THE SWITCH BUTTON (EXPANDED) */
+        .dock-right {
+            width: 100%;
+            max-width: 600px; /* Match the links container width */
+            display: flex;
+            justify-content: center;
+        }
+
+        .switch-container {
+            width: 100%; /* Fill the available space */
+            display: flex;
+            justify-content: space-between; /* Text Left, Icon Right */
+            padding: 14px 30px;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        /* Make the switch hover even clearer */
+        .switch-container:hover {
+            transform: scale(1.02); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        /* --- RESPONSIVE LOGIC (DESKTOP VS MOBILE) --- */
+
+        /* DESKTOP (Width > 600px): Sit at TOP */
+        @media (min-width: 601px) {
+            .dock {
+                top: 0;
+                bottom: auto;
+                border-bottom: 1px solid var(--border-dock);
+            }
+            .links-container {
+                padding-top: 120px; /* Space for top bar */
+            }
+        }
+
+        /* MOBILE (Width <= 600px): Sit at BOTTOM */
+        @media (max-width: 600px) {
+            .dock {
+                top: auto;
+                bottom: 0; /* Stick to bottom */
+                border-top: 1px solid var(--border-dock);
+                padding-bottom: max(20px, env(safe-area-inset-bottom)); /* iOS Safe Area */
+            }
+            
+            /* Add padding to bottom of main content so button doesn't cover links */
+            .links-container {
+                padding-top: 60px;
+                padding-bottom: 100px; 
+            }
+            
+            /* Make the switch look like a "Submit" button on mobile */
+            .switch-container {
+                border-radius: 12px;
+                justify-content: center; /* Center text on mobile */
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Burak Karagöl</h1>
-        <div class="links" id="linksContainer"></div>
-        <footer class="footer">Visit my portfolio: <a href="https://burakkaragol.github.io/" target="_blank">burakkaragol.github.io</a></footer>
-    </div>
+
+<body data-mode="professional" data-theme="light" data-lang="en">
+
+    <header class="dock">
+        <div class="dock-right">
+            <button class="switch-container" id="modeSwitch">
+                <span class="switch-text" id="switchLabel">Get to know me</span>
+                <span class="switch-icon">⇄</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="links-container">
+        
+        <div class="links-header-group">
+            <div class="links-avatar">
+                <img src="../assets/img/photo.png" alt="Professional" class="pro-img">
+                <img src="../assets/img/avatar.png" alt="Personal" class="pers-img">
+            </div>
+            <h1 class="links-name">Burak Karagol</h1>
+            <p class="links-bio" id="heroSub">Mechatronics Engineer & Developer</p>
+        </div>
+
+        <div class="links-group pro-links-group">
+            <a href="../index.html?mode=professional" class="link-btn">
+                <span>🏠 Portfolio Website</span>
+                <span class="arrow">→</span>
+            </a>
+            <a href="https://www.linkedin.com/in/burakkaragol" target="_blank" class="link-btn">
+                <span>💼 LinkedIn</span>
+                <span class="arrow">↗</span>
+            </a>
+            <a href="https://github.com/burakkaragol" target="_blank" class="link-btn">
+                <span>💻 GitHub</span>
+                <span class="arrow">↗</span>
+            </a>
+            <a href="mailto:contact@burak.com" class="link-btn">
+                <span>📧 Email Contact</span>
+                <span class="arrow">@</span>
+            </a>
+            <a href="../assets/docs/CV_BurakKaragol.pdf" download class="link-btn">
+                <span>📄 Download Resume</span>
+                <span class="arrow">↓</span>
+            </a>
+        </div>
+
+        <div class="links-group pers-links-group">
+            <a href="../index.html?mode=personal" class="link-btn">
+                <span class="icon">🧪</span> Enter The Lab
+            </a>
+            <a href="https://instagram.com" target="_blank" class="link-btn">
+                <span class="icon">📸</span> Instagram
+            </a>
+            <a href="https://twitter.com" target="_blank" class="link-btn">
+                <span class="icon">🐦</span> Twitter / X
+            </a>
+            <a href="https://spotify.com" target="_blank" class="link-btn">
+                <span class="icon">🎧</span> Spotify Playlist
+            </a>
+            <a href="https://discord.com" target="_blank" class="link-btn">
+                <span class="icon">👾</span> Discord Community
+            </a>
+        </div>
+
+    </main>
+
+    <script src="../assets/js/translations.js"></script>
+    <script src="../assets/js/script.js"></script>
 </body>
 </html>

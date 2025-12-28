@@ -1,960 +1,843 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Personal portfolio and resume of Burak Karagol – mechatronics engineer, game & application developer.">
-  <meta name="keywords" content="Burak Karagol,Burak Karagöl,portfolio,mechatronics engineer,game developer,Unity,Python,web projects">
-  <meta name="author" content="Burak Karagol">
-  <link rel="canonical" href="https://burakkaragol.github.io/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Burak Karagol | Mechatronics Engineer & Developer</title>
+    <meta name="title" content="Burak Karagol | Mechatronics Engineer & Developer">
+    <meta name="description" content="A dual-mode portfolio: Exploring the intersection of Mechatronics Engineering, Aviation, and Creative Development. Switch between Professional and Personal modes.">
+    <meta name="keywords" content="Burak Karagol, Mechatronics Engineer, Full Stack Developer, Turkish Airlines, 3D Printing, Portfolio, THY, Aviation">
+    <meta name="author" content="Burak Karagol">
+    <meta name="theme-color" content="#0A1118">
 
-  <!-- Open Graph / Twitter -->
-  <meta property="og:title" content="Burak Karagol - Portfolio">
-  <meta property="og:description" content="Mechatronics engineer building games, apps, and interactive web projects.">
-  <meta property="og:image" content="assets/img/preview.png">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://burakkaragol.github.io/">
+    <meta property="og:title" content="Burak Karagol | Mechatronics Engineer & Developer">
+    <meta property="og:description" content="Explore the Professional Case Studies and Creative Experiments of Burak Karagol.">
+    <meta property="og:image" content="https://burakkaragol.github.io/assets/img/social-preview.png">
 
-  <!-- Favicon -->
-  <link rel="icon" href="assets/img/preview.png" type="image/png">
-  <meta name="theme-color" content="#0f1418">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://burakkaragol.github.io/">
+    <meta property="twitter:title" content="Burak Karagol | Mechatronics Engineer & Developer">
+    <meta property="twitter:description" content="Explore the Professional Case Studies and Creative Experiments of Burak Karagol.">
+    <meta property="twitter:image" content="https://burakkaragol.github.io/assets/img/social-preview.png">
 
-  <!-- Preconnects for faster icon/font loads -->
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preconnect" href="https://kit.fontawesome.com" crossorigin>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-brands/css/uicons-brands.css'>
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
 
-  <!-- Remix Icons + FontAwesome -->
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
-  <script defer src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
-
-  <!-- Swiper CSS -->
-  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
-
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="assets/css/styles_old.css">
-
-  <title>Burak Karagol - Portfolio</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
-<body class="dark-theme">
-  <!-- Skip to content (a11y) -->
-  <a href="#main-content" class="skip-link">Skip to content</a>
 
-  <!--==================== HEADER ====================-->
-  <header class="header" id="header">
-    <nav class="nav container" role="navigation" aria-label="Primary">
-      <a href="#" target="_self" class="nav__logo">
-        Burak Karagol - Portfolio
-      </a>
+<body data-mode="professional" data-theme="light" data-lang="en">
 
-      <div class="nav__menu" id="nav-menu" role="dialog" aria-modal="true" aria-label="Main menu">
-        <ul class="nav__list grid">
-          <li class="nav__item">
-            <a href="#home" class="nav__link active-link">
-              <i class="ri-home-4-line" aria-hidden="true"></i> Home
-            </a>
-          </li>
-
-          <li class="nav__item">
-            <a href="#skills" class="nav__link">
-              <i class="ri-trophy-line" aria-hidden="true"></i> Skills
-            </a>
-          </li>
-
-          <li class="nav__item">
-            <a href="#qualification" class="nav__link">
-              <i class="ri-book-open-line" aria-hidden="true"></i> Qualification
-            </a>
-          </li>
-
-          <li class="nav__item">
-            <a href="#services" class="nav__link">
-              <i class="ri-briefcase-line" aria-hidden="true"></i> Services
-            </a>
-          </li>
-
-          <li class="nav__item">
-            <a href="#projects" class="nav__link">
-              <i class="ri-image-line" aria-hidden="true"></i> Projects
-            </a>
-          </li>
-
-          <li class="nav__item">
-            <a href="#contact" class="nav__link">
-              <i class="ri-chat-3-line" aria-hidden="true"></i> Contact
-            </a>
-          </li>
-
-          <li class="nav__item">
-            <a href="./tr/index.html" class="nav__link" aria-label="Turkish version">
-              <i class="ri-translate" aria-hidden="true"></i> TR
-            </a>
-          </li>
-        </ul>
-
-        <!-- Close button -->
-        <div class="nav__close" id="nav-close" role="button" aria-label="Close menu" tabindex="0">
-          <i class="ri-close-line" aria-hidden="true"></i>
-        </div>
-      </div>
-
-      <div class="nav__buttons">
-        <!-- Theme change button -->
-        <i class="change-theme ri-sun-line" id="theme-button" role="button" aria-label="Toggle theme" tabindex="0"></i>
-
-        <!-- Toggle button -->
-        <div class="nav__toggle" id="nav-toggle" role="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu" tabindex="0">
-          <i class="ri-menu-5-line" aria-hidden="true"></i>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <!--==================== MAIN ====================-->
-  <main class="main" id="main-content">
-    <!--==================== HOME ====================-->
-    <section class="home section" id="home">
-      <div class="home__container container grid section__border">
-        <div class="home__data grid">
-          <h1 class="home__title">
-            Hi, I'm Burak <br>
-            <span>Mechatronics Engineer </span> <br>
-            <span>From Turkey </span> <br>
-          </h1>
-
-          <div class="home__blob grid">
-            <div class="home__perfil">
-              <img src="assets/img/perfil_b1.png" alt="Portrait of Burak Karagol" width="320" height="320" loading="lazy" decoding="async">
-            </div>
-
-            <img src="assets/img/shape-wawes.svg" alt="" class="home__shape-wawes" loading="lazy" decoding="async">
-            <img src="assets/img/shape-circle.svg" alt="" class="home__shape-circle" loading="lazy" decoding="async">
-          </div>
-
-          <ul class="home__social">
-            <a href="https://www.linkedin.com/in/burak-karagol-3451b91b0/" target="_blank" class="home__social-link" aria-label="LinkedIn (opens in new tab)">
-              <i class="ri-linkedin-line" aria-hidden="true"></i>
-            </a>
-
-            <a href="https://github.com/BurakKaragol" target="_blank" class="home__social-link" aria-label="GitHub (opens in new tab)">
-              <i class="ri-github-line" aria-hidden="true"></i>
-            </a>
-
-            <a href="https://mrlulez.itch.io/" target="_blank" class="home__social-link" aria-label="itch.io (opens in new tab)">
-              <i class="fa-brands fa-itch-io" aria-hidden="true"></i>
-            </a>
-
-            <a href="https://www.instagram.com/brkkaragol/?hl=tr" target="_blank" class="home__social-link" aria-label="Instagram (opens in new tab)">
-              <i class="ri-instagram-line" aria-hidden="true"></i>
-            </a>
-
-            <a href="https://www.twitch.tv/mrlulez" target="_blank" class="home__social-link" aria-label="Twitch (opens in new tab)">
-              <i class="ri-twitch-line" aria-hidden="true"></i>
-            </a>
-
-            <a href="https://www.youtube.com/channel/UCMqP-wqi9hXqKfkzfmoqa-w" target="_blank" class="home__social-link" aria-label="YouTube (opens in new tab)">
-              <i class="ri-youtube-line" aria-hidden="true"></i>
-            </a>
-
-            <a href="https://twitter.com/buraKaragol" target="_blank" class="home__social-link" aria-label="Twitter/X (opens in new tab)">
-              <i class="ri-twitter-x-line" aria-hidden="true"></i>
-            </a>
-          </ul>
+    <header class="dock">
+        <div class="dock-left">
+            <a href="#home" class="logo" id="logoText">Burak Karagol</a>
+            <span class="divider">|</span>
+            <span class="mode-label" id="modeBadge">Professional</span>
         </div>
 
-        <!--==================== HOME INFO 1 ====================-->
-        <div class="home__info">
-          <div>
-            <h3 class="home__info-title">BIOGRAPHY</h3>
-            <p class="home__info-description">
-            &emsp;Hi, I'm Burak, <span id="age"></span> year old Mechatronics Engineer. 
-            My biggest passion in life is the constant joy of learning new disciplines.
-            I always try to learn new skills to improve myself.
-            </p>
-          </div>
+        <nav class="dock-center">
+            <a href="#home" class="nav-link" id="navHome">Home</a>
+            <a href="#history" class="nav-link" id="navHistory">History</a>
+            <a href="#skills" class="nav-link" id="navSkills">Skills</a>
+            <a href="#projects" class="nav-link" id="navProjects">Projects</a>
+            <a href="#contact" class="nav-link" id="navContact">Contact</a>
+        </nav>
 
-          <div>
-            <h3 class="home__info-title">CONTACT</h3>
-            <p class="home__info-description">
-              Istanbul/Turkey <br>
-              burak.karagol@outlook.com <br>
-            </p>
-          </div>
-
-          <div>
-            <h3 class="home__info-title">SERVICES</h3>
-            <p class="home__info-description">
-              Game Development <br>
-              Application Development <br>
-              3D Modeling / Printing <br>
-            </p>
-          </div>
-        </div>
-
-        <!--==================== HOME INFO 2 ====================-->
-        <div class="home__info">
-          <div>
-            <h3 class="home__info-title">YEARS OF EXPERIENCE</h3>
-            <p class="home__info-number">
-                <span id="years-exp" data-exp-start="2018-01-01" data-pad="2"></span>
-            </p>
-          </div>
-
-          <div>
-            <h3 class="home__info-title">COMPLETED PROJECTS</h3>
-            <p class="home__info-number">30+</p>
-          </div>
-
-          <div>
-            <h3 class="home__info-title">COMPANIES WORKED</h3>
-            <p class="home__info-number">05+</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!--==================== SKILLS ====================-->
-    <section class="skills section" id="skills">
-      <h2 class="section__title">Skills</h2>
-      <span class="section__subtitle">My skills</span>
-
-      <div class="skills__container container grid section__border">
-        <!--==================== SKILL 1 ====================-->
-        <div class="skills__content">
-          <h3 class="skills__title">
-            <i class="fa-brands fa-unity" aria-hidden="true"></i> Game Development
-          </h3>
-
-          <div class="skills__info">
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/U.svg" alt="Unity logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">Unity</h3>
-              <span class="skills__subtitle">Advanced</span>
+        <div class="dock-right">
+            <div class="desktop-controls">
+                <button class="btn-icon" id="langToggle">TR</button>
+                <button class="btn-icon" id="themeToggle">☾</button>
             </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/unreal-logo.svg" alt="Unreal Engine logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">Unreal Engine</h3>
-              <span class="skills__subtitle">Intermediate</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/godot-logo.svg" alt="Godot logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">Godot</h3>
-              <span class="skills__subtitle">Pre Intermediate</span>
-            </div>
-          </div>
-        </div>
-
-        <!--==================== SKILL 2 ====================-->
-        <div class="skills__content">
-          <h3 class="skills__title">
-            <i class="ri-pencil-ruler-line" aria-hidden="true"></i> 3D Modeling
-          </h3>
-
-          <div class="skills__info">
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/solidworks-logo-1.svg" alt="SolidWorks logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">SolidWorks</h3>
-              <span class="skills__subtitle">Advanced</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/autodesk-fusion-360-seeklogo.svg" alt="Autodesk Fusion 360 logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">Fusion 360</h3>
-              <span class="skills__subtitle">Upper Intermediate</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/blender-2.svg" alt="Blender logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">Blender</h3>
-              <span class="skills__subtitle">Intermediate</span>
-            </div>
-          </div>
-        </div>
-
-        <!--==================== SKILL 3 ====================-->
-        <div class="skills__content">
-          <h3 class="skills__title">
-            <i class="ri-code-line" aria-hidden="true"></i> Coding
-          </h3>
-
-          <div class="skills__info">
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/c-1.svg" alt="C logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">C</h3>
-              <span class="skills__subtitle">Advanced</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/c.svg" alt="C++ logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">C++</h3>
-              <span class="skills__subtitle">Advanced</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/c--4.svg" alt="C# logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">C#</h3>
-              <span class="skills__subtitle">Advanced</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/python-5.svg" alt="Python logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">Python</h3>
-              <span class="skills__subtitle">Upper Intermediate</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/java-4.svg" alt="Java logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">Java</h3>
-              <span class="skills__subtitle">Pre Intermediate</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/bash-1.svg" alt="Bash logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">Bash</h3>
-              <span class="skills__subtitle">Pre Intermediate</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/html-1.svg" alt="HTML logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">HTML</h3>
-              <span class="skills__subtitle">Pre Intermediate</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/css-3.svg" alt="CSS logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">CSS</h3>
-              <span class="skills__subtitle">Pre Intermediate</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/javascript-1.svg" alt="JavaScript logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">JavaScript</h3>
-              <span class="skills__subtitle">Pre Intermediate</span>
-            </div>
-          </div>
-        </div>
-
-        <!--==================== SKILL 4 ====================-->
-        <div class="skills__content">
-          <h3 class="skills__title">
-            <i class="ri-earth-line" aria-hidden="true"></i> Office / Adobe Programs
-          </h3>
-
-          <div class="skills__info">
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/word-1.svg" alt="Microsoft Word logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">Word</h3>
-              <span class="skills__subtitle">Upper Intermediate</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/excel-4.svg" alt="Microsoft Excel logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">Excel</h3>
-              <span class="skills__subtitle">Upper Intermediate</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/powerpoint-2.svg" alt="Microsoft PowerPoint logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">PowerPoint</h3>
-              <span class="skills__subtitle">Intermediate</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/adobe-photoshop-2.svg" alt="Adobe Photoshop logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">Photoshop</h3>
-              <span class="skills__subtitle">Upper Intermediate</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/adobe-illustrator-cc-icon.svg" alt="Adobe Illustrator logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">Illustrator</h3>
-              <span class="skills__subtitle">Intermediate</span>
-            </div>
-
-            <div class="skills__data">
-              <div class="skills__blob">
-                <img src="assets/img/after-effects-1.svg" alt="Adobe After Effects logo" loading="lazy" decoding="async">
-              </div>
-              <h3 class="skills__name">After Effects</h3>
-              <span class="skills__subtitle">Pre Intermediate</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!--==================== QUALIFICATION ====================-->
-    <section class="qualification section" id="qualification">
-      <h2 class="section__title">Qualification</h2>
-      <span class="section__subtitle">Experience & Education</span>
-
-      <div class="qualification__container container grid section__border">
-        <!--==================== QUALIFICATION 1 ====================-->
-        <div class="qualification__content">
-          <h3 class="qualification__title">
-            <i class="ri-pencil-ruler-2-line" aria-hidden="true"></i> Education
-          </h3>
-
-          <div class="qualification__info">
-            <div>
-              <h3 class="qualification__name">
-                Anadolu University <br> Computer Programming
-              </h3>
-              <span class="qualification__country">Istanbul / Turkey</span>
-              <span class="qualification__year">2023 - Ongoing</span>
-            </div>
-
-            <div>
-              <h3 class="qualification__name">
-                Marmara University <br> Mechatronics Engineering
-              </h3>
-              <span class="qualification__country">Istanbul / Turkey</span>
-              <span class="qualification__year">2017 - 2023</span>
-            </div>
-
-            <div>
-              <h3 class="qualification__name">
-                Bagcilar Anatolian Technical High School <br> Aircraft Technician
-              </h3>
-              <span class="qualification__country">Istanbul / Turkey</span>
-              <span class="qualification__year">2013 - 2017</span>
-            </div>
-
-            <div>
-              <h3 class="qualification__name">
-                Mehmet Akif Ersoy Middle School
-              </h3>
-              <span class="qualification__country">Istanbul / Turkey</span>
-              <span class="qualification__year">2009 - 2013</span>
-            </div>
-
-            <div>
-              <h3 class="qualification__name">
-                Mehmet Akif Ersoy Primary School
-              </h3>
-              <span class="qualification__country">Istanbul / Turkey</span>
-              <span class="qualification__year">2005 - 2009</span>
-            </div>
-          </div>
-        </div>
-
-        <!--==================== QUALIFICATION 2 ====================-->
-        <div class="qualification__content">
-          <h3 class="qualification__title">
-            <i class="ri-briefcase-line" aria-hidden="true"></i> Experience
-          </h3>
-
-          <div class="qualification__info">
-            <div>
-              <h3 class="qualification__name">
-                Turkish Airlines <br> Structural System Engineer
-              </h3>
-              <span class="qualification__country">Istanbul / Turkey</span>
-              <span class="qualification__year">11/2023 - Ongoing</span>
-            </div>
-
-            <div>
-              <h3 class="qualification__name">
-                Beyaz.NET <br> Intern
-              </h3>
-              <span class="qualification__country">Istanbul / Turkey</span>
-              <span class="qualification__year">4 Months</span>
-            </div>
-
-            <div>
-              <h3 class="qualification__name">
-                Rezonans Elektronik <br> Full Time
-              </h3>
-              <span class="qualification__country">Istanbul / Turkey</span>
-              <span class="qualification__year">3 Years</span>
-            </div>
-
-            <div>
-              <h3 class="qualification__name">
-                Rezonans Elektronik <br> Intern
-              </h3>
-              <span class="qualification__country">Istanbul / Turkey</span>
-              <span class="qualification__year">6 Months</span>
-            </div>
-
-            <div>
-              <h3 class="qualification__name">
-                Turkish Airlines <br> Intern
-              </h3>
-              <span class="qualification__country">Istanbul / Turkey</span>
-              <span class="qualification__year">6 Months</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <img src="assets/img/shape-circle.svg" alt="" class="qualification__img" loading="lazy" decoding="async">
-    </section>
-
-    <!--==================== SERVICES ====================-->
-    <section class="services section" id="services">
-      <h2 class="section__title">Services</h2>
-      <span class="section__subtitle">Services I can provide</span>
-
-      <div class="services__container container grid section__border">
-
-        <div class="services__card">
-          <i class="ri-gamepad-line" aria-hidden="true"></i>
-          <h2 class="services__title">Game Development</h2>
-          <p class="services__description">I can make your game ideas come to life.</p>
-          <div class="services__border"></div>
-
-          <button class="services__cta" type="button"
-                  aria-label="Contact me about Game Development"
-                  onclick="goToContact('Game Development')">
-            Contact me
-          </button>
-        </div>
-
-        <div class="services__card">
-          <i class="ri-computer-line" aria-hidden="true"></i>
-          <h2 class="services__title">Application Development</h2>
-          <p class="services__description">I can make desktop applications you want.</p>
-          <div class="services__border"></div>
-
-          <button class="services__cta" type="button"
-                  aria-label="Contact me about Game Development"
-                  onclick="goToContact('Game Development')">
-            Contact me
-          </button>
-        </div>
-
-        <div class="services__card">
-          <i class="ri-code-line" aria-hidden="true"></i>
-          <h2 class="services__title">Write Code</h2>
-          <p class="services__description">I can write custom libraries for you.</p>
-          <div class="services__border"></div>
-
-          <button class="services__cta" type="button"
-                  aria-label="Contact me about Game Development"
-                  onclick="goToContact('Game Development')">
-            Contact me
-          </button>
-        </div>
-
-        <div class="services__card">
-          <i class="fa-solid fa-cube" aria-hidden="true"></i>
-          <h2 class="services__title">3D Modeling</h2>
-          <p class="services__description">I can design/edit/create models for you.</p>
-          <div class="services__border"></div>
-
-          <button class="services__cta" type="button"
-                  aria-label="Contact me about Game Development"
-                  onclick="goToContact('Game Development')">
-            Contact me
-          </button>
-        </div>
-
-        <div class="services__card">
-          <i class="fa-solid fa-cubes" aria-hidden="true"></i>
-          <h2 class="services__title">3D Printing</h2>
-          <p class="services__description">I can produce the models you want.</p>
-          <div class="services__border"></div>
-
-          <button class="services__cta" type="button"
-                  aria-label="Contact me about Game Development"
-                  onclick="goToContact('Game Development')">
-            Contact me
-          </button>
-        </div>
-
-        <div class="services__card">
-          <i class="ri-question-line" aria-hidden="true"></i>
-          <h2 class="services__title">Help</h2>
-          <p class="services__description">I can help if you are stuck on your project.</p>
-          <div class="services__border"></div>
-
-          <button class="services__cta" type="button"
-                  aria-label="Contact me about Game Development"
-                  onclick="goToContact('Game Development')">
-            Contact me
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!--==================== PROJECTS ====================-->
-    <section class="projects section" id="projects">
-      <h2 class="section__title">Projects</h2>
-      <span class="section__subtitle">Most recent work</span>
-
-      <div class="container section__border">
-        <div class="projects__container swiper" aria-label="Project gallery">
-          <div class="swiper-wrapper">
-            <!--==================== PROJECT 1 ====================-->
-            <div class="projects__content swiper-slide">
-              <div class="projects__img-container">
-                <img src="assets/img/work-1.png" alt="Windows/Android racing game preview" class="projects__img" width="800" height="600" loading="lazy" decoding="async">
-                <div class="projects__description">
-                  <p>Developed a captivating Car Racing Game for both mobile and Android platforms within a tight timeframe of 2 weeks.</p>
-                </div>
-              </div>
-              <div>
-                <span class="projects__title">Windows / Android Game</span>
-                <h1 class="projects__subtitle"></h1>
-                <a href="#contact" class="projects__button" onclick="setSubject('car racing game')">
-                  More Info <i class="ri-arrow-right-line" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-
-            <!--==================== PROJECT 2 ====================-->
-            <div class="projects__content swiper-slide">
-              <div class="projects__img-container">
-                <img src="assets/img/work-2.png" alt="3D print price calculator Windows app" class="projects__img" width="800" height="600" loading="lazy" decoding="async">
-                <div class="projects__description">
-                  <p>Created a user-friendly Windows application for calculating final prices in the 3D printing industry.</p>
-                </div>
-              </div>
-              <div>
-                <span class="projects__title">.NET Windows App</span>
-                <h1 class="projects__subtitle"></h1>
-                <a href="#contact" class="projects__button" onclick="setSubject('3d print price calculation program')">
-                  More Info <i class="ri-arrow-right-line" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-
-            <!--==================== PROJECT 3 ====================-->
-            <div class="projects__content swiper-slide">
-              <div class="projects__img-container">
-                <img src="assets/img/work-3.png" alt="Blender modeling and render preview" class="projects__img" width="800" height="600" loading="lazy" decoding="async">
-                <div class="projects__description">
-                  <p>Implemented a 3D modeling and rendering project using Blender, a leading software in the industry.</p>
-                </div>
-              </div>
-              <div>
-                <span class="projects__title">Modeling and Render</span>
-                <h1 class="projects__subtitle"></h1>
-                <a href="#contact" class="projects__button" onclick="setSubject('photo to render work')">
-                  More Info <i class="ri-arrow-right-line" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-
-            <!--==================== PROJECT 4 ====================-->
-            <div class="projects__content swiper-slide">
-              <div class="projects__img-container">
-                <img src="assets/img/work-4.png" alt="Fusion 360 stress and safety factor simulations" class="projects__img" width="800" height="600" loading="lazy" decoding="async">
-                <div class="projects__description">
-                  <p>Conducted comprehensive stress and safety factor simulations using Fusion 360 software.</p>
-                </div>
-              </div>
-              <div>
-                <span class="projects__title">Simulations</span>
-                <h1 class="projects__subtitle"></h1>
-                <a href="#contact" class="projects__button" onclick="setSubject('safety factor / stress applications')">
-                  More Info <i class="ri-arrow-right-line" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-
-            <!--==================== PROJECT 5 ====================-->
-            <div class="projects__content swiper-slide">
-              <div class="projects__img-container">
-                <img src="assets/img/work-5.png" alt="3D printed character render" class="projects__img" width="800" height="600" loading="lazy" decoding="async">
-                <div class="projects__description">
-                  <p>Rendered a visually striking image of a 3D printed character using advanced techniques in Blender.</p>
-                </div>
-              </div>
-              <div>
-                <span class="projects__title">3D Printing</span>
-                <h1 class="projects__subtitle"></h1>
-                <a href="#contact" class="projects__button" onclick="setSubject('3d print viaualizing project')">
-                  More Info <i class="ri-arrow-right-line" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-
-            <!--==================== PROJECT 6 ====================-->
-            <div class="projects__content swiper-slide">
-              <div class="projects__img-container">
-                <img src="assets/img/work-6.png" alt="Python sorting algorithms visualizer" class="projects__img" width="800" height="600" loading="lazy" decoding="async">
-                <div class="projects__description">
-                  <p>Developed a dynamic sorting algorithms visualizer using Python and Pygame.</p>
-                </div>
-              </div>
-              <div>
-                <span class="projects__title">Application Development</span>
-                <h1 class="projects__subtitle"></h1>
-                <a href="#contact" class="projects__button" onclick="setSubject('sorting algorithms visualizer program')">
-                  More Info <i class="ri-arrow-right-line" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-
-            <!--==================== PROJECT 7 ====================-->
-            <div class="projects__content swiper-slide">
-              <div class="projects__img-container">
-                <img src="assets/img/work-7.png" alt="2D sidescroller infinite runner (Unity)" class="projects__img" width="800" height="600" loading="lazy" decoding="async">
-                <div class="projects__description">
-                  <p>Designed and developed a captivating 2D sidescroller infinite runner game using the Unity game engine.</p>
-                </div>
-              </div>
-              <div>
-                <span class="projects__title">Game Development</span>
-                <h1 class="projects__subtitle"></h1>
-                <a href="#contact" class="projects__button" onclick="setSubject('2d sidescroller infinite runner game')">
-                  More Info <i class="ri-arrow-right-line" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-
-            <!--==================== PROJECT 8 ====================-->
-            <div class="projects__content swiper-slide">
-              <div class="projects__img-container">
-                <img src="assets/img/work-8.png" alt="3D infinite runner (Unity)" class="projects__img" width="800" height="600" loading="lazy" decoding="async">
-                <div class="projects__description">
-                  <p>Created an exhilarating 3D infinite runner game using Unity game engine.</p>
-                </div>
-              </div>
-              <div>
-                <span class="projects__title">Game Development</span>
-                <h1 class="projects__subtitle"></h1>
-                <a href="#contact" class="projects__button" onclick="setSubject('3d infinite runner game')">
-                  More Info <i class="ri-arrow-right-line" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-
-            <!--==================== PROJECT 9 ====================-->
-            <div class="projects__content swiper-slide">
-              <div class="projects__img-container">
-                <img src="assets/img/work-9.png" alt="2D sidescroller infinite action (Unity)" class="projects__img" width="800" height="600" loading="lazy" decoding="async">
-                <div class="projects__description">
-                  <p>Developed a high-energy 2D sidescroller infinite action game using Unity game engine.</p>
-                </div>
-              </div>
-              <div>
-                <span class="projects__title">Game Development</span>
-                <h1 class="projects__subtitle"></h1>
-                <a href="#contact" class="projects__button" onclick="setSubject('2d sidescroller infinite action game')">
-                  More Info <i class="ri-arrow-right-line" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-
-            <!--==================== PROJECT 10 ====================-->
-            <div class="projects__content swiper-slide">
-              <div class="projects__img-container">
-                <img src="assets/img/work-10.png" alt="3D game jam project (Brackeys 2022)" class="projects__img" width="800" height="600" loading="lazy" decoding="async">
-                <div class="projects__description">
-                  <p>Developed a 3D game as part of the #BrackeysGameJam2022 game jam using Unity game engine.</p>
-                </div>
-              </div>
-              <div>
-                <span class="projects__title">Game Development</span>
-                <h1 class="projects__subtitle"></h1>
-                <a href="#contact" class="projects__button" onclick="setSubject('3d game jam game about the topic hunger')">
-                  More Info <i class="ri-arrow-right-line" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-
-            <!--==================== PROJECT 11 ====================-->
-            <div class="projects__content swiper-slide">
-              <div class="projects__img-container">
-                <img src="assets/img/work-11.png" alt="Python A* pathfinding visualizer (Pygame)" class="projects__img" width="800" height="600" loading="lazy" decoding="async">
-                <div class="projects__description">
-                  <p>Made a Path finding application using Python PYGAME library. The application uses A* algorithm for finding the path.</p>
-                </div>
-              </div>
-              <div>
-                <span class="projects__title">Application Development</span>
-                <h1 class="projects__subtitle"></h1>
-                <a href="#contact" class="projects__button" onclick="setSubject('python path finding project')">
-                  More Info <i class="ri-arrow-right-line" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Swiper Arrows -->
-          <div class="swiper-button-next" aria-label="Next project">
-            <i class="ri-arrow-right-s-line" aria-hidden="true"></i>
-          </div>
-
-          <div class="swiper-button-prev" aria-label="Previous project">
-            <i class="ri-arrow-left-s-line" aria-hidden="true"></i>
-          </div>
-
-          <!-- Swiper Pagination -->
-          <div class="swiper-pagination" aria-label="Project slides pagination"></div>
-
-          <!-- View Web Projects (keyboard accessible) -->
-          <div class="web_projects_button" data-url="projects/" role="button" tabindex="0" aria-label="View web projects">
-            <h2 class="web_projects_text">View Web Projects</h2>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!--==================== CONTACT ====================-->
-    <section class="contact section" id="contact">
-      <h2 class="section__title">Contact Me</h2>
-      <span class="section__subtitle">Get in touch</span>
-
-      <div class="contact__container container grid section__border">
-        <div class="contact__content">
-          <h3 class="contact__title">
-            <i class="ri-chat-3-line" aria-hidden="true"></i> Talk to me
-          </h3>
-
-          <div class="contact__info">
-            <div class="contact__data">
-              <span class="contact__data-title">For your questions</span>
-              <span class="contact__data-info">Contact info</span>
-            </div>
-
-            <div class="contact__data">
-              <span class="contact__data-title"><i class="ri-mail-line" aria-hidden="true"></i> Mail</span>
-              <span class="contact__data-info"></span>
-
-              <a href="mailto:burak.karagol@outlook.com?subject=Hello%20I%20have%20awesome%20project%20ideas!" class="contact__button">
-                Mail me <i class="ri-arrow-right-line" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="contact__content">
-          <h3 class="contact__title">
-            <i class="ri-send-plane-line" aria-hidden="true"></i>
-          </h3>
-
-          <form action="" class="contact__form" id="contact-form">
-            <div class="contact__form-div">
-              <label class="contact__form-tag" for="contact-name">Name</label>
-              <input type="text" name="user_name" required placeholder="Your name" class="contact__form-input" id="contact-name" autocomplete="name" autocapitalize="words">
-            </div>
-
-            <div class="contact__form-div">
-              <label class="contact__form-tag" for="contact-email">Mail</label>
-              <input type="email" name="user_email" required placeholder="you@example.com" class="contact__form-input" id="contact-email" autocomplete="email" inputmode="email">
-            </div>
-
-            <div class="contact__form-div contact__form-area">
-              <label class="contact__form-tag" for="contact-message">Message</label>
-              <textarea name="user_message" required placeholder="Your message" id="contact-message" cols="30" rows="10" class="contact__form-input" autocomplete="on" spellcheck="true"></textarea>
-            </div>
-
-            <p class="contact__message" id="contact-msg" aria-live="polite"></p>
-
-            <button type="submit" class="contact__button">
-              Submit <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
+            
+            <button class="switch-container" id="modeSwitch">
+                <span class="switch-text" id="switchLabel">Get to know me</span>
+                <span class="switch-icon">⇄</span>
             </button>
-          </form>
+            
+            <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Menu">
+                <span class="bar bar-1"></span>
+                <span class="bar bar-2"></span>
+            </button>
         </div>
-      </div>
-    </section>
-  </main>
+    </header>
 
-  <!--==================== FOOTER ====================-->
-  <footer class="footer">
-    <div class="footer__container container">
-      <h1 class="footer__title">Burak Karagol</h1>
-      <p>Mechatronics Engineer</p>
-
-      <ul class="footer__list">
-        <li class="footer__link"><a href="#home" class="footer__link">Home</a></li>
-        <li class="footer__link"><a href="#skills" class="footer__link">Skills</a></li>
-        <li class="footer__link"><a href="#qualification" class="footer__link">Qualification</a></li>
-        <li class="footer__link"><a href="#services" class="footer__link">Services</a></li>
-        <li class="footer__link"><a href="#projects" class="footer__link">Projects</a></li>
-        <li class="footer__link"><a href="#contact" class="footer__link">Contact</a></li>
-      </ul>
-
-      <ul class="footer__social">
-        <a href="https://www.linkedin.com/in/burak-karagol-3451b91b0/" target="_blank" class="footer__social-link" aria-label="LinkedIn (opens in new tab)">
-          <i class="ri-linkedin-line" aria-hidden="true"></i>
-        </a>
-        <a href="https://github.com/BurakKaragol" target="_blank" class="footer__social-link" aria-label="GitHub (opens in new tab)">
-          <i class="ri-github-line" aria-hidden="true"></i>
-        </a>
-        <a href="https://mrlulez.itch.io/" target="_blank" class="footer__social-link" aria-label="itch.io (opens in new tab)">
-          <i class="fa-brands fa-itch-io" aria-hidden="true"></i>
-        </a>
-        <a href="https://www.instagram.com/brkkaragol/?hl=tr" target="_blank" class="footer__social-link" aria-label="Instagram (opens in new tab)">
-          <i class="ri-instagram-line" aria-hidden="true"></i>
-        </a>
-        <a href="https://www.twitch.tv/mrlulez" target="_blank" class="footer__social-link" aria-label="Twitch (opens in new tab)">
-          <i class="ri-twitch-line" aria-hidden="true"></i>
-        </a>
-        <a href="https://www.youtube.com/channel/UCMqP-wqi9hXqKfkzfmoqa-w" target="_blank" class="footer__social-link" aria-label="YouTube (opens in new tab)">
-          <i class="ri-youtube-line" aria-hidden="true"></i>
-        </a>
-        <a href="https://twitter.com/buraKaragol" target="_blank" class="footer__social-link" aria-label="Twitter/X (opens in new tab)">
-          <i class="ri-twitter-x-line" aria-hidden="true"></i>
-        </a>
-      </ul>
-
-      <span class="footer__copy">
-        Made by Burak Karagol <br>
-        Thanks to Bedimcode <br>
-        All rights reserved
-      </span>
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="#home" class="mobile-link" id="mobNavHome">Home</a>
+            <a href="#history" class="mobile-link" id="mobNavHistory">History</a>
+            <a href="#skills" class="mobile-link" id="mobNavSkills">Skills</a>
+            <a href="#projects" class="mobile-link" id="mobNavProjects">Projects</a>
+            <a href="#contact" class="mobile-link" id="mobNavContact">Contact</a>
+            
+            <div class="mobile-controls">
+                <button class="mobile-ctrl-btn" id="mobLangToggle">TR</button>
+                <button class="mobile-ctrl-btn" id="mobThemeToggle">Dark Mode</button>
+            </div>
+        </nav>
     </div>
-  </footer>
 
-  <!--========== SCROLL UP ==========-->
-  <a href="#" class="scroll__up" id="scroll-up" aria-label="Scroll to top">
-    <i class="ri-arrow-up-line" aria-hidden="true"></i>
-  </a>
+    <main class="container">
+        
+        <section class="hero-section" id="home">
+            <div class="hero-col text-col">
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span id="heroStatus">Available for projects</span>
+                </div>
+                <h1 class="hero-title" id="heroTitle">Building Scalable Architecture.</h1>
+                <p class="hero-sub" id="heroSub">Full-Stack Engineer based in Istanbul.</p>
+                
+                <div class="hero-actions">
+                    <div class="action-group pro-actions">
+                        <a href="#projects" class="cta-btn primary" id="proHeroBtn">View Case Studies</a>
+                        <div class="mini-socials">
+                            <a href="https://www.linkedin.com/in/burak-karagol-3451b91b0/" target="_blank" class="mini-icon" aria-label="LinkedIn">
+                                <i class="fi fi-brands-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/BurakKaragol" target="_blank" class="mini-icon" aria-label="GitHub">
+                                <i class="fi fi-brands-github"></i>
+                            </a>
+                            <a href="mailto:burak.karagol@outlook.com" class="mini-icon" aria-label="Email">
+                                <i class="fi fi-rr-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="action-group pers-actions">
+                        <a href="#projects" class="cta-btn primary" id="persHeroBtn">Enter The Lab</a>
+                        <div class="mini-socials">
+                            <a href="https://www.instagram.com/brkkaragol/?hl=tr" target="_blank" class="mini-icon" aria-label="Instagram">
+                                <i class="fi fi-brands-instagram"></i>
+                            </a>
+                            <a href="https://www.youtube.com/channel/UCMqP-wqi9hXqKfkzfmoqa-w" target="_blank" class="mini-icon" aria-label="Youtube">
+                                <i class="fi fi-brands-youtube"></i>
+                            </a>
+                            <a href="https://github.com/BurakKaragol" target="_blank" class="mini-icon" aria-label="Github">
+                                <i class="fi fi-brands-github"></i>
+                            </a>
+                            <a href="https://www.twitch.tv/mrlulez" target="_blank" class="mini-icon" aria-label="Twitch">
+                                <i class="fi fi-brands-twitch"></i>
+                            </a>
+                            <a href="https://twitter.com/buraKaragol" target="_blank" class="mini-icon" aria-label="Twitter/X">
+                                <i class="fi fi-brands-twitter-alt"></i>
+                            </a>
+                            <a href="https://mrlulez.itch.io/" target="_blank" class="mini-icon" aria-label="ItchIO">
+                                <i class="fi fi-rr-gamepad"></i>
+                            </a>
+                            <!-- <a href="https://www.instagram.com/brkkaragol/?hl=tr" target="_blank" class="mini-icon" aria-label="Discord">
+                                <i class="fi fi-brands-discord"></i>
+                            </a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <!--=============== SCROLLREVEAL ===============-->
-  <script src="assets/js/scrollreveal.min.js"></script>
+            <div class="hero-col visual-col">
+                <div class="visual-container">
+                    <div class="hero-img pro-img">
+                        <img src="assets/img/photo.png" alt="Burak Professional" class="real-img pro-real-img">
+                    </div>
+                    <div class="hero-img pers-img">
+                        <img src="assets/img/avatar.png" alt="Burak Avatar" class="real-img pers-real-img">
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <!--=============== SWIPER JS ===============-->
-  <script src="assets/js/swiper-bundle.min.js"></script>
+        <section class="history-section" id="history">
+            <div class="timeline-wrapper pro-wrapper">
+                <div class="section-header">
+                    <h2 class="section-title" id="histTitlePro">Career Path</h2>
+                </div>
+                <div class="pro-timeline-container">
+                    <div class="timeline-item">
+                        <div class="timeline-marker work-marker"></div>
+                        <div class="timeline-date" id="hist1Date">11/2023 - Present</div>
+                        <div class="timeline-content">
+                            <div class="type-badge work">Experience</div>
+                            <h3 id="hist1Title">Structural System Engineer</h3>
+                            <h4 id="hist1Comp">Turkish Airlines</h4>
+                            <p id="hist1Desc">Structural analysis and system engineering.</p>
+                        </div>
+                    </div>
 
-  <!--=============== EMAIL JS ===============-->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+                    <div class="timeline-item education-item">
+                        <div class="timeline-marker edu-marker"></div>
+                        <div class="timeline-date" id="hist2Date">2017 - 2023</div>
+                        <div class="timeline-content">
+                            <div class="type-badge edu">Education</div>
+                            <h3 id="hist2Title">Mechatronics Engineering</h3>
+                            <h4 id="hist2Comp">Marmara University</h4>
+                            <p id="hist2Desc">Bachelor's Degree.</p>
+                        </div>
+                    </div>
 
-  <!--=============== MAIN JS ===============-->
-  <script src="assets/js/main.js"></script>
+                    <div class="timeline-item">
+                        <div class="timeline-marker work-marker"></div>
+                        <div class="timeline-date" id="hist3Date">3 Years</div>
+                        <div class="timeline-content">
+                            <div class="type-badge work">Experience</div>
+                            <h3 id="hist3Title">Full Time Engineer</h3>
+                            <h4 id="hist3Comp">Rezonans Elektronik</h4>
+                            <p id="hist3Desc">Full-time engineering role.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker work-marker"></div>
+                        <div class="timeline-date" id="hist4Date">Internships</div>
+                        <div class="timeline-content">
+                            <div class="type-badge work">Experience</div>
+                            <h3 id="hist4Title">Engineering Internships</h3>
+                            <h4 id="hist4Comp">Multiple Companies</h4>
+                            <p id="hist4Desc">Beyaz.NET (4 Mos), Rezonans (6 Mos), Turkish Airlines (6 Mos).</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item education-item">
+                        <div class="timeline-marker edu-marker"></div>
+                        <div class="timeline-date" id="hist5Date">2013 - 2017</div>
+                        <div class="timeline-content">
+                            <div class="type-badge edu">Education</div>
+                            <h3 id="hist5Title">Aircraft Technician</h3>
+                            <h4 id="hist5Comp">Bagcilar Anatolian Tech. HS</h4>
+                            <p id="hist5Desc">Specialized in Aircraft Technology.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-wrapper pers-wrapper">
+                <div class="section-header">
+                    <h2 class="section-title" id="histTitlePers">Life Milestones</h2>
+                </div>
+                <div class="pers-stream-container">
+                    <div class="memory-card">
+                        <div class="memory-icon">🍝</div>
+                        <h3 id="mem1Title">Spaghetti Chef</h3>
+                        <p id="mem1Desc">Woke up to a pile of plastic noodles.</p>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">🔥</div>
+                        <h3 id="mem2Title">Battle Scars</h3>
+                        <p id="mem2Desc">Touched the wrong end of the iron.</p>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">🐛</div>
+                        <h3 id="mem3Title">It Works Locally</h3>
+                        <p id="mem3Desc">The server disagreed with my code.</p>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">🚀</div>
+                        <h3 id="mem4Title">Gravity Glitch</h3>
+                        <p id="mem4Desc">My character walked into orbit.</p>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">✏️</div>
+                        <h3 id="mem5Title">Paper Ctrl+Z</h3>
+                        <p id="mem5Desc">Tapped the paper to undo a line.</p>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">💥</div>
+                        <h3 id="mem6Title">Magic Smoke</h3>
+                        <p id="mem6Desc">Forgot the resistor. LED exploded.</p>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">🧊</div>
+                        <h3 id="mem7Title">Blender Crash</h3>
+                        <p id="mem7Desc">Forgot to save. Lost 2 hours.</p>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">🔌</div>
+                        <h3 id="mem8Title">Cable Chaos</h3>
+                        <p id="mem8Desc">Don't look behind my desk.</p>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">🔁</div>
+                        <h3 id="mem9Title">Infinite Loop</h3>
+                        <p id="mem9Desc">I think it's still running.</p>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">🔩</div>
+                        <h3 id="mem10Title">The Extra Screw</h3>
+                        <p id="mem10Desc">Reassembled the device. Found one screw left.</p>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">🌈</div>
+                        <h3 id="mem11Title">RGB Logic</h3>
+                        <p id="mem11Desc">It doesn't run faster, but it glows.</p>
+                    </div>
+                    <div class="memory-card">
+                        <div class="memory-icon">🔨</div>
+                        <h3 id="mem12Title">Percussive Fix</h3>
+                        <p id="mem12Desc">Fixed the sensor by hitting it gently.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills-section" id="skills">
+            
+            <div class="skills-wrapper pro-skills-wrapper">
+                <div class="section-header">
+                    <h2 class="section-title" id="skillTitlePro">Technical Arsenal</h2>
+                </div>
+                
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <div class="tech-icon-box"><i class="devicon-c-plain colored"></i></div>
+                        <div class="tech-info"><h3 id="skPro1">C</h3><p id="lvlPro1">Advanced</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon-box"><i class="devicon-cplusplus-plain colored"></i></div>
+                        <div class="tech-info"><h3 id="skPro2">C++</h3><p id="lvlPro2">Advanced</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon-box"><i class="devicon-csharp-plain colored"></i></div>
+                        <div class="tech-info"><h3 id="skPro3">C#</h3><p id="lvlPro3">Advanced</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon-box"><i class="devicon-python-plain colored"></i></div>
+                        <div class="tech-info"><h3 id="skPro4">Python</h3><p id="lvlPro4">Upper Intermediate</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <div class="tech-icon-box" style="color: #D32D27;">
+                            <i class="fi fi-rr-cube"></i>
+                        </div>
+                        <div class="tech-info"><h3 id="skPro5">SolidWorks</h3><p id="lvlPro5">Advanced</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <div class="tech-icon-box" style="color: #F58220;">
+                            <i class="fi fi-rr-vector-alt"></i>
+                        </div>
+                        <div class="tech-info"><h3 id="skPro6">Fusion 360</h3><p id="lvlPro6">Upper Intermediate</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <div class="tech-icon-box" style="color: #217346;">
+                            <i class="fi fi-rr-table-pivot"></i>
+                        </div>
+                        <div class="tech-info"><h3 id="skPro7">Excel</h3><p id="lvlPro7">Upper Intermediate</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <div class="tech-icon-box" style="color: #00758F;">
+                            <i class="fi fi-rr-database"></i>
+                        </div>
+                        <div class="tech-info"><h3 id="skPro9">SQL</h3><p id="lvlPro9">Intermediate</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+
+                    <div class="tech-item">
+                        <div class="tech-icon-box"><i class="devicon-bash-plain"></i></div>
+                        <div class="tech-info"><h3 id="skPro8">Bash</h3><p id="lvlPro8">Pre Intermediate</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skills-wrapper pers-skills-wrapper">
+                <div class="section-header">
+                    <h2 class="section-title" id="skillTitlePers">Creative Toolkit</h2>
+                </div>
+                
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <div class="tech-icon-box" style="color: #000000;">
+                            <i class="fi fi-brands-unity"></i>
+                        </div>
+                        <div class="tech-info"><h3 id="skPers1">Unity</h3><p id="lvlPers1">Advanced</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <div class="tech-icon-box"><i class="devicon-unrealengine-original colored"></i></div>
+                        <div class="tech-info"><h3 id="skPers2">Unreal Engine</h3><p id="lvlPers2">Intermediate</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon-box"><i class="devicon-blender-original colored"></i></div>
+                        <div class="tech-info"><h3 id="skPers3">Blender</h3><p id="lvlPers3">Intermediate</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon-box"><i class="devicon-photoshop-plain colored"></i></div>
+                        <div class="tech-info"><h3 id="skPers4">Photoshop</h3><p id="lvlPers4">Upper Intermediate</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon-box"><i class="devicon-illustrator-plain colored"></i></div>
+                        <div class="tech-info"><h3 id="skPers5">Illustrator</h3><p id="lvlPers5">Intermediate</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon-box">
+                            <i class="devicon-aftereffects-plain colored"></i>
+                        </div>
+                        <div class="tech-info"><h3 id="skPers9">After Effects</h3><p id="lvlPers9">Pre Intermediate</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon-box"><i class="devicon-html5-plain colored"></i></div>
+                        <div class="tech-info"><h3 id="skPers6">Web Dev</h3><p id="lvlPers6">HTML/CSS/JS</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon-box"><i class="devicon-godot-plain colored"></i></div>
+                        <div class="tech-info"><h3 id="skPers7">Godot</h3><p id="lvlPers7">Pre Intermediate</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon-box"><i class="devicon-java-plain colored"></i></div>
+                        <div class="tech-info"><h3 id="skPers8">Java</h3><p id="lvlPers8">Pre Intermediate</p></div>
+                        <div class="tech-corner"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="projects-section" id="projects">
+            <div class="projects-wrapper pro-projects-wrapper">
+                <div class="section-header">
+                    <h2 class="section-title" id="projTitlePro">Engineering Projects</h2>
+                </div>
+                
+                <div class="blueprint-grid">
+                    <div class="project-card">
+                        <div class="card-header">
+                            <span class="folder-tab">ROBOTICS</span>
+                            <div class="card-icon" style="color: #0E2A47;"><i class="fi fi-rr-chip"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="proP1Title">Self-Balancing Robot</h3>
+                            <p id="proP1Desc">PID control loop with IMU sensor fusion.</p>
+                            <div class="tech-stack">
+                                <span id="proP1Tag1">C++</span>
+                                <span id="proP1Tag2">Control Theory</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-header">
+                            <span class="folder-tab">KINEMATICS</span>
+                            <div class="card-icon" style="color: #D32D27;"><i class="fi fi-rr-settings-sliders"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="proP2Title">6-DOF Robot Arm</h3>
+                            <p id="proP2Desc">Inverse Kinematics implementation.</p>
+                            <div class="tech-stack">
+                                <span id="proP2Tag1">Python</span>
+                                <span id="proP2Tag2">Robotics</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-header">
+                            <span class="folder-tab">MECHATRONICS</span>
+                            <div class="card-icon" style="color: #00758F;"><i class="fi fi-rr-vector-alt"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="proP3Title">CNC Pen Plotter</h3>
+                            <p id="proP3Desc">2-axis G-Code interpreter built from scratch.</p>
+                            <div class="tech-stack">
+                                <span id="proP3Tag1">Arduino</span>
+                                <span id="proP3Tag2">Stepper Motors</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-header">
+                            <span class="folder-tab">SOFTWARE</span>
+                            <div class="card-icon" style="color: #F58220;"><i class="fi fi-rr-cube"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="proP4Title">Physics Engine</h3>
+                            <p id="proP4Desc">2D rigid body dynamics simulation.</p>
+                            <div class="tech-stack">
+                                <span id="proP4Tag1">C++</span>
+                                <span id="proP4Tag2">Simulation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-header">
+                            <span class="folder-tab">AI / VISION</span>
+                            <div class="card-icon" style="color: #217346;"><i class="fi fi-rr-eye"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="proP5Title">Vision Sorter</h3>
+                            <p id="proP5Desc">Object sorting via color/shape recognition.</p>
+                            <div class="tech-stack">
+                                <span id="proP5Tag1">OpenCV</span>
+                                <span id="proP5Tag2">Python</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-header">
+                            <span class="folder-tab">SIMULATION</span>
+                            <div class="card-icon" style="color: #0E2A47;"><i class="fi fi-rr-plane-alt"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="proP6Title">Flight Dynamics</h3>
+                            <p id="proP6Desc">Real-time lift/drag vector calculation.</p>
+                            <div class="tech-stack">
+                                <span id="proP6Tag1">Unity</span>
+                                <span id="proP6Tag2">Physics</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-header">
+                            <span class="folder-tab">IoT / PCB</span>
+                            <div class="card-icon" style="color: #00758F;"><i class="fi fi-rr-wifi"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="proP7Title">Smart Home Hub</h3>
+                            <p id="proP7Desc">Custom PCB bridging Zigbee to MQTT.</p>
+                            <div class="tech-stack">
+                                <span id="proP7Tag1">ESP32</span>
+                                <span id="proP7Tag2">PCB Design</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-header">
+                            <span class="folder-tab">HARDWARE</span>
+                            <div class="card-icon" style="color: #D32D27;"><i class="fi fi-rr-box"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="proP8Title">CoreXY Printer</h3>
+                            <p id="proP8Desc">Designed and built a custom 3D printer.</p>
+                            <div class="tech-stack">
+                                <span id="proP8Tag1">Marlin</span>
+                                <span id="proP8Tag2">SolidWorks</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-header">
+                            <span class="folder-tab">SECURITY</span>
+                            <div class="card-icon" style="color: #217346;"><i class="fi fi-rr-lock"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="proP9Title">Biometric Lock</h3>
+                            <p id="proP9Desc">Fingerprint servo lock with RFID backup.</p>
+                            <div class="tech-stack">
+                                <span id="proP9Tag1">C</span>
+                                <span id="proP9Tag2">Embedded</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="projects-wrapper pers-projects-wrapper">
+                <div class="section-header">
+                    <h2 class="section-title" id="projTitlePers">Models & Memories</h2>
+                </div>
+                
+                <div class="lab-grid">   
+                    <div class="lab-card">
+                        <img src="assets/img/work-1.png" alt="Android Racing Game" class="lab-img">
+                        <div class="lab-overlay">
+                            <h3 id="persP1Title">Android Racing Game</h3>
+                            <p id="persP1Desc">Mobile game development with physics.</p>
+                        </div>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="assets/img/work-2.png" alt="Print Price Calc" class="lab-img">
+                        <div class="lab-overlay">
+                            <h3 id="persP2Title">Print Price Calc</h3>
+                            <p id="persP2Desc">Custom 3D printing cost estimator tool.</p>
+                        </div>
+                    </div>
+
+                    <div class="lab-card span-row-2">
+                        <img src="assets/img/work-3.png" alt="Blender ArchViz" class="lab-img">
+                        <div class="lab-overlay">
+                            <h3 id="persP3Title">Blender ArchViz</h3>
+                            <p id="persP3Desc">Photorealistic interior rendering.</p>
+                        </div>
+                    </div>
+
+                    <div class="lab-card span-col-2">
+                        <img src="assets/img/work-4.png" alt="FEA Simulation" class="lab-img">
+                        <div class="lab-overlay">
+                            <h3 id="persP4Title">FEA Simulation</h3>
+                            <p id="persP4Desc">Fusion 360 static stress analysis.</p>
+                        </div>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="assets/img/work-5.png" alt="Blender Scene" class="lab-img">
+                        <div class="lab-overlay">
+                            <h3 id="persP5Title">Blender Scene</h3>
+                            <p id="persP5Desc">3D environment modeling.</p>
+                        </div>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="assets/img/work-6.png" alt="Sorting Visualizer" class="lab-img">
+                        <div class="lab-overlay">
+                            <h3 id="persP6Title">Sorting Visualizer</h3>
+                            <p id="persP6Desc">Python algorithm demonstration.</p>
+                        </div>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="assets/img/work-7.png" alt="Pathfinding AI" class="lab-img">
+                        <div class="lab-overlay">
+                            <h3 id="persP7Title">Pathfinding AI</h3>
+                            <p id="persP7Desc">A* search algorithm visualization.</p>
+                        </div>
+                    </div>
+
+                    <div class="lab-card span-row-2">
+                        <img src="assets/img/work-8.jpg" alt="Mini-Me Figure" class="lab-img">
+                        <div class="lab-overlay">
+                            <h3 id="persP8Title">Mini-Me Figure</h3>
+                            <p id="persP8Desc">3D scanned and resin printed.</p>
+                        </div>
+                    </div>
+
+                    <div class="lab-card span-row-2">
+                        <img src="assets/img/work-9.jpg" alt="Space Shuttle" class="lab-img">
+                        <div class="lab-overlay">
+                            <h3 id="persP9Title">Space Shuttle</h3>
+                            <p id="persP9Desc">High-detail 3D print model.</p>
+                        </div>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="assets/img/work-10.jpg" alt="Space Shuttle" class="lab-img">
+                        <div class="lab-overlay">
+                            <h3 id="persP10Title">Jet Engine</h3>
+                            <p id="persP10Desc">High-detail 3D print model.</p>
+                        </div>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="assets/img/work-11.jpg" alt="Space Shuttle" class="lab-img">
+                        <div class="lab-overlay">
+                            <h3 id="persP11Title">Dragon</h3>
+                            <p id="persP11Desc">High-detail 3D print model.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="view-more-container">
+                    <a href="./projects" class="cta-btn primary" id="btnWebProjects">
+                        Browse Web Experiments <i class="fi fi-rr-globe"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section" id="contact">
+            <div class="contact-wrapper pro-contact-wrapper">
+                <div class="section-header">
+                    <h2 class="section-title" id="contTitlePro">Initiate Collaboration</h2>
+                </div>
+                <div class="pro-contact-container">
+                    <div class="contact-form-box">
+                        <form id="contactForm">
+                            <div class="input-group">
+                                <label id="lblName">Name</label>
+                                <input type="text" name="user_name" id="userName" required>
+                            </div>
+                            <div class="input-group">
+                                <label id="lblEmail">Email</label>
+                                <input type="email" name="user_email" id="userEmail" required>
+                            </div>
+                            <div class="input-group">
+                                <label id="lblMsg">Message</label>
+                                <textarea name="user_message" id="userMessage" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn" id="btnSubmit">Send</button>
+                        </form>
+                    </div>
+                    <div class="business-card">
+                        <div class="card-top">
+                            <div class="card-logo">THY / MECH</div>
+                            <div class="card-chip"></div>
+                        </div>
+                        <div class="card-details">
+                            <h3 id="cardName">Burak Karagol</h3>
+                            <p id="cardRole">Engineer</p>
+                            <div class="card-contact-line"><span>📧</span> contact@burak.com</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-wrapper pers-contact-wrapper">
+                <div class="social-grid">
+                    
+                    <a href="mailto:mail@burakkaragol.com" class="social-card email">
+                        <div class="social-icon">
+                            <i class="fi fi-rr-envelope"></i>
+                        </div>
+                        <div class="social-text">
+                            <h3>Email</h3>
+                            <p>Send me a mail</p>
+                        </div>
+                        <i class="fi fi-rr-arrow-small-right action-arrow"></i>
+                    </a>
+
+                    <a href="https://linkedin.com/in/yourprofile" target="_blank" class="social-card linkedin">
+                        <div class="social-icon">
+                            <i class="fi fi-brands-linkedin"></i>
+                        </div>
+                        <div class="social-text">
+                            <h3>LinkedIn</h3>
+                            <p>Let's connect</p>
+                        </div>
+                        <i class="fi fi-rr-arrow-small-right action-arrow"></i>
+                    </a>
+
+                    <a href="https://github.com/BurakKaragol" target="_blank" class="social-card github">
+                        <div class="social-icon">
+                            <i class="fi fi-brands-github"></i>
+                        </div>
+                        <div class="social-text">
+                            <h3>GitHub</h3>
+                            <p>Check my repos</p>
+                        </div>
+                        <i class="fi fi-rr-arrow-small-right action-arrow"></i>
+                    </a>
+
+                    <a href="https://mrlulez.itch.io/" target="_blank" class="social-card itch">
+                        <div class="social-icon">
+                            <i class="fi fi-rr-gamepad"></i>
+                        </div>
+                        <div class="social-text">
+                            <h3>Itch.io</h3>
+                            <p>Play my games</p>
+                        </div>
+                        <i class="fi fi-rr-arrow-small-right action-arrow"></i>
+                    </a>
+
+                    <a href="https://www.youtube.com/channel/UCMqP-wqi9hXqKfkzfmoqa-w" target="_blank" class="social-card youtube">
+                        <div class="social-icon">
+                            <i class="fi fi-brands-youtube"></i>
+                        </div>
+                        <div class="social-text">
+                            <h3>YouTube</h3>
+                            <p>Watch my videos</p>
+                        </div>
+                        <i class="fi fi-rr-arrow-small-right action-arrow"></i>
+                    </a>
+
+                    <a href="https://www.twitch.tv/mrlulez" target="_blank" class="social-card twitch">
+                        <div class="social-icon">
+                            <i class="fi fi-brands-twitch"></i>
+                        </div>
+                        <div class="social-text">
+                            <h3>Twitch</h3>
+                            <p>Live streams</p>
+                        </div>
+                        <i class="fi fi-rr-arrow-small-right action-arrow"></i>
+                    </a>
+
+                    <a href="https://www.instagram.com/brkkaragol/?hl=tr" target="_blank" class="social-card instagram">
+                        <div class="social-icon">
+                            <i class="fi fi-brands-instagram"></i>
+                        </div>
+                        <div class="social-text">
+                            <h3>Instagram</h3>
+                            <p>Follow me</p>
+                        </div>
+                        <i class="fi fi-rr-arrow-small-right action-arrow"></i>
+                    </a>
+
+                    <a href="https://twitter.com/buraKaragol" target="_blank" class="social-card twitter">
+                        <div class="social-icon">
+                            <i class="fi fi-brands-twitter-alt"></i>
+                        </div>
+                        <div class="social-text">
+                            <h3>Twitter / X</h3>
+                            <p>Retweets & thoughts</p>
+                        </div>
+                        <i class="fi fi-rr-arrow-small-right action-arrow"></i>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-links-wrapper">
+            
+            <a href="https://linkedin.com/in/yourprofile" target="_blank" class="f-link">
+                <i class="fi fi-brands-linkedin"></i> LinkedIn
+            </a>
+            <a href="mailto:mail@burakkaragol.com" class="f-link">
+                <i class="fi fi-rr-envelope"></i> Email
+            </a>
+            <a href="https://github.com/BurakKaragol" target="_blank" class="f-link">
+                <i class="fi fi-brands-github"></i> GitHub
+            </a>
+
+            <a href="https://www.instagram.com/brkkaragol/?hl=tr" target="_blank" class="f-link">
+                <i class="fi fi-brands-instagram"></i> Instagram
+            </a>
+            <a href="https://twitter.com/buraKaragol" target="_blank" class="f-link">
+                <i class="fi fi-brands-twitter-alt"></i> Twitter
+            </a>
+            <a href="https://www.youtube.com/channel/UCMqP-wqi9hXqKfkzfmoqa-w" target="_blank" class="f-link">
+                <i class="fi fi-brands-youtube"></i> YouTube
+            </a>
+            <a href="https://www.twitch.tv/mrlulez" target="_blank" class="f-link">
+                <i class="fi fi-brands-twitch"></i> Twitch
+            </a>
+            <a href="https://mrlulez.itch.io/" target="_blank" class="f-link">
+                <i class="fi fi-rr-gamepad"></i> Itch.io
+            </a>
+
+        </div>
+        
+        <div class="footer-content">
+            <p id="footerMsg">Engineered in Istanbul.</p>
+            <p style="opacity: 0.5; font-size: 0.75rem; margin-top: 5px;">© 2025 Burak Karagol</p>
+        </div>
+    </footer>
+
+    <button id="backToTop" aria-label="Back to Top">↑</button>
+
+    <script src="assets/js/translations.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
