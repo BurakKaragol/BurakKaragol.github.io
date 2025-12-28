@@ -1,288 +1,212 @@
-// 1. SELECT DOM ELEMENTS
-const body = document.body;
-const langToggle = document.getElementById('langToggle');
-const themeToggle = document.getElementById('themeToggle');
-const modeSwitch = document.getElementById('modeSwitch');
-
-// Mobile Elements
-const mobileBtn = document.getElementById('mobileMenuBtn');
-const mobileMenu = document.getElementById('mobileMenu');
-const mobLangToggle = document.getElementById('mobLangToggle');
-const mobThemeToggle = document.getElementById('mobThemeToggle');
-const mobileLinks = document.querySelectorAll('.mobile-link');
-
-// Discord Logic
-const discordCard = document.getElementById('discordCard');
-const discordUser = document.getElementById('discordUser');
-const tooltip = document.getElementById('copyTooltip');
-
-// Back to Top
-const backToTopBtn = document.getElementById('backToTop');
-
-// Email Form
-const contactForm = document.getElementById('contactForm');
-const submitBtn = document.getElementById('btnSubmit');
-
-// 2. STATE MANAGEMENT (SMART DETECT WITH URL PARAMS)
-function getInitialState() {
-    
-    // A. CHECK URL PARAMETERS (Highest Priority)
-    // Allows custom links like: website.com?mode=personal&lang=tr
-    const params = new URLSearchParams(window.location.search);
-    const urlMode = params.get('mode'); // 'professional' or 'personal'
-    const urlLang = params.get('lang'); // 'en' or 'tr'
-
-    // If URL params exist, we prioritize them over everything else
-    if (urlMode || urlLang) {
-        // Get existing saved settings to fill in the gaps (e.g. if URL only has mode)
-        const saved = localStorage.getItem('burakSiteState');
-        const parsedSaved = saved ? JSON.parse(saved) : {};
-        const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        // Validate Mode
-        let finalMode = parsedSaved.mode || 'professional';
-        if (urlMode === 'personal' || urlMode === 'professional') {
-            finalMode = urlMode;
-        }
-
-        // Validate Lang
-        let finalLang = parsedSaved.lang || 'en';
-        if (urlLang === 'tr' || urlLang === 'en') {
-            finalLang = urlLang;
-        }
-
-        return {
-            isDark: parsedSaved.hasOwnProperty('isDark') ? parsedSaved.isDark : systemDark,
-            lang: finalLang,
-            mode: finalMode
-        };
-    }
-
-    // B. Check LocalStorage (Did user visit before?)
-    const savedState = localStorage.getItem('burakSiteState');
-    if (savedState) {
-        return JSON.parse(savedState);
-    }
-
-    // C. If new, Check System Preferences
-    const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const userLang = navigator.language || navigator.userLanguage;
-    const systemLang = userLang.startsWith('tr') ? 'tr' : 'en';
-
-    // D. Default Fallback
-    return {
-        isDark: systemDark,  // Auto-match OS theme
-        lang: systemLang,    // Auto-match browser language
-        mode: 'professional' // Default starting mode
-    };
-}
-
-// Initialize State
-let state = getInitialState();
-
-// 3. MAIN REFRESH FUNCTION
-function refreshView() {
-    // Apply to DOM
-    body.setAttribute('data-mode', state.mode);
-    body.setAttribute('data-lang', state.lang);
-    body.setAttribute('data-theme', state.isDark ? 'dark' : 'light');
-
-    // Update Text Content
-    if (typeof updateTextContent === "function") {
-        updateTextContent(state.lang, state.mode);
-    }
-
-    // Update Button Text
-    const langLabel = state.lang === 'en' ? 'TR' : 'EN';
-    const themeLabel = state.isDark ? '☀' : '☾';
-    
-    // Desktop Toggles
-    if(langToggle) langToggle.innerText = langLabel;
-    if(themeToggle) themeToggle.innerText = themeLabel;
-    
-    // Mobile Toggles
-    if(mobLangToggle) mobLangToggle.innerText = langLabel;
-    if(mobThemeToggle) mobThemeToggle.innerText = state.isDark ? 'Light Mode' : 'Dark Mode';
-
-    // SAVE STATE TO BROWSER MEMORY
-    localStorage.setItem('burakSiteState', JSON.stringify(state));
-}
-
-// 4. EVENT LISTENERS
-
-// Theme Toggles
-const toggleTheme = () => {
-    state.isDark = !state.isDark;
-    refreshView();
-};
-if(themeToggle) themeToggle.addEventListener('click', toggleTheme);
-if(mobThemeToggle) mobThemeToggle.addEventListener('click', toggleTheme);
-
-// Language Toggles
-const toggleLang = () => {
-    state.lang = state.lang === 'en' ? 'tr' : 'en';
-    refreshView();
-};
-if(langToggle) langToggle.addEventListener('click', toggleLang);
-if(mobLangToggle) mobLangToggle.addEventListener('click', toggleLang);
-
-// Mode Switch (Professional <-> Personal)
-if(modeSwitch) {
-    modeSwitch.addEventListener('click', () => {
-        state.mode = state.mode === 'professional' ? 'personal' : 'professional';
-        refreshView();
-    });
-}
-
-// Mobile Menu Logic
-if(mobileBtn) {
-    mobileBtn.addEventListener('click', () => {
-        mobileBtn.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        
-        // Lock Scroll when menu is open
-        if (mobileMenu.classList.contains('active')) {
-            body.style.overflow = 'hidden';
-        } else {
-            body.style.overflow = 'auto';
-        }
-    });
-}
-
-// Close mobile menu when clicking a link
-mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        mobileBtn.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        body.style.overflow = 'auto';
-    });
-});
-
-// 5. DISCORD COPY LOGIC
-if (discordCard) {
-    discordCard.addEventListener('click', () => {
-        if(navigator.clipboard) {
-            navigator.clipboard.writeText(discordUser.innerText).then(() => {
-                const originalText = tooltip.innerText;
-                tooltip.innerText = "Copied!";
-                discordCard.style.background = "#43b581"; 
-                
-                setTimeout(() => {
-                    tooltip.innerText = originalText;
-                    discordCard.style.background = ""; 
-                }, 2000);
-            });
-        }
-    });
-}
-
-// 6. BACK TO TOP LOGIC
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-        backToTopBtn.classList.add('show');
-    } else {
-        backToTopBtn.classList.remove('show');
-    }
-});
-
-if(backToTopBtn) {
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-}
-
 /* =========================================
-   URL PARAMETER HANDLING
-   (Paste this at the end of main.js)
+   MAIN.JS - COMPLETE LOGIC
    ========================================= */
+
 document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const targetMode = params.get('mode');   // 'personal' or 'professional'
-    const targetTheme = params.get('theme'); // 'dark' or 'light'
+
+    // --- 1. SELECT DOM ELEMENTS ---
+    const body = document.body;
     
-    // 1. Handle Mode from URL
-    if (targetMode && (targetMode === 'personal' || targetMode === 'professional')) {
-        // Set Body Attribute
-        document.body.setAttribute('data-mode', targetMode);
-        
-        // Update Switch Button UI
-        const switchBtn = document.getElementById('modeSwitchBtn');
-        const icon = switchBtn.querySelector('.switch-icon');
-        const label = document.getElementById('switchLabel');
-        
-        if (targetMode === 'personal') {
-            // If Personal, button should offer to go back to Business
-            if(icon) icon.className = 'fi fi-rr-briefcase switch-icon';
-        } else {
-            // If Professional, button should offer Creative
-            if(icon) icon.className = 'fi fi-rr-refresh switch-icon';
+    // Header / Dock Controls
+    const themeToggle = document.getElementById('themeToggle');
+    const modeSwitchBtn = document.getElementById('modeSwitchBtn');
+    const switchLabel = document.getElementById('switchLabel');
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    // Contact / Socials
+    const contactForm = document.getElementById('contactForm'); // Ensure your <form> has id="contactForm"
+    const submitBtn = document.getElementById('btnSubmit');
+    const discordCard = document.querySelector('.social-card.discord'); // Selects the Discord card class
+    
+    // Back to Top
+    const backToTop = document.getElementById('backToTop');
+
+
+    // --- 2. INITIALIZE STATE (URL > LocalStorage > Default) ---
+    const params = new URLSearchParams(window.location.search);
+    
+    // Priority: 1. URL Parameter, 2. LocalStorage, 3. Default
+    let currentMode = params.get('mode') || localStorage.getItem('mode') || 'professional';
+    let currentTheme = params.get('theme') || localStorage.getItem('theme') || 'light';
+    let currentLang = localStorage.getItem('lang') || 'en'; // Default language
+
+    // Security/Validation check
+    if (!['professional', 'personal'].includes(currentMode)) currentMode = 'professional';
+    if (!['light', 'dark'].includes(currentTheme)) currentTheme = 'light';
+
+
+    // --- 3. UI UPDATE FUNCTION ---
+    function updateUI() {
+        // 1. Set Body Attributes (Triggers CSS)
+        body.setAttribute('data-mode', currentMode);
+        body.setAttribute('data-theme', currentTheme);
+
+        // 2. Update Theme Icon
+        if (themeToggle) {
+            const themeIcon = themeToggle.querySelector('i');
+            if (currentTheme === 'dark') {
+                themeIcon.className = 'fi fi-rr-sun';
+            } else {
+                themeIcon.className = 'fi fi-rr-moon-stars';
+            }
         }
-        
-        // Trigger Text Translations
+
+        // 3. Update Mode Button (Label & Icon)
+        if (modeSwitchBtn) {
+            const switchIcon = modeSwitchBtn.querySelector('.switch-icon');
+            if (currentMode === 'professional') {
+                if(switchIcon) switchIcon.className = 'fi fi-rr-refresh switch-icon';
+                // Fallback text if translation script is missing
+                if(switchLabel) switchLabel.innerText = "See my creative side";
+            } else {
+                if(switchIcon) switchIcon.className = 'fi fi-rr-briefcase switch-icon';
+                if(switchLabel) switchLabel.innerText = "Back to business";
+            }
+        }
+
+        // 4. Trigger Text Translations (if translations.js is loaded)
         if (typeof updateTextContent === 'function') {
-            // Default to English ('en') if not set, or grab from localStorage
-            const currentLang = localStorage.getItem('lang') || 'en'; 
-            updateTextContent(currentLang, targetMode);
+            updateTextContent(currentLang, currentMode);
         }
+        
+        // 5. Save State
+        localStorage.setItem('mode', currentMode);
+        localStorage.setItem('theme', currentTheme);
+        localStorage.setItem('lang', currentLang);
     }
 
-    // 2. Handle Theme from URL
-    if (targetTheme && (targetTheme === 'dark' || targetTheme === 'light')) {
-        // Set Body Attribute
-        document.body.setAttribute('data-theme', targetTheme);
-        
-        // Update Toggle Icon
-        const themeBtn = document.getElementById('themeToggle');
-        const themeIcon = themeBtn.querySelector('i');
-        
-        if (targetTheme === 'dark') {
-            themeIcon.className = 'fi fi-rr-sun';
-        } else {
-            themeIcon.className = 'fi fi-rr-moon-stars';
-        }
-    }
-});
+    // Apply immediately on load
+    updateUI();
 
-// 7. EMAILJS INTEGRATION
-// Initialize (Replace with your actual Public Key)
-(function() {
-    if(typeof emailjs !== "undefined") {
-        emailjs.init("3Xlz6Ok2ZRJTuktB2");
-    } else {
-        console.warn("EmailJS not loaded");
-    }
-})();
 
-if (contactForm) {
-    contactForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        
-        const originalBtnText = submitBtn.innerText;
-        submitBtn.innerText = "Sending...";
-        submitBtn.disabled = true;
-        
-        emailjs.sendForm('service_sohc712', 'template_dtve7zq', this)
-            .then(function() {
-                alert('Message Sent Successfully! ✅');
-                submitBtn.innerText = originalBtnText;
-                submitBtn.disabled = false;
-                contactForm.reset();
-            }, function(error) {
-                console.error('EmailJS Error:', error);
-                alert('Failed to send message. Please try again later.');
-                submitBtn.innerText = originalBtnText;
-                submitBtn.disabled = false;
+    // --- 4. EVENT LISTENERS ---
+
+    // Toggle Theme
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            updateUI();
+        });
+    }
+
+    // Toggle Mode (Professional <-> Personal)
+    if (modeSwitchBtn) {
+        modeSwitchBtn.addEventListener('click', () => {
+            // Animation for icon
+            const icon = modeSwitchBtn.querySelector('.switch-icon');
+            if(icon) {
+                icon.style.transform = 'rotate(360deg)';
+                setTimeout(() => icon.style.transform = 'rotate(0deg)', 400);
+            }
+
+            // Switch Logic
+            currentMode = currentMode === 'professional' ? 'personal' : 'professional';
+            
+            // Fade Transition
+            body.style.opacity = '0';
+            setTimeout(() => {
+                updateUI();
+                body.style.opacity = '1';
+                window.scrollTo(0, 0);
+            }, 300);
+        });
+    }
+
+    // Mobile Menu Toggle
+    if (mobileToggle && mobileMenu) {
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+            
+            // Lock/Unlock Scroll
+            body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                mobileToggle.classList.remove('active');
+                body.style.overflow = 'auto';
             });
-    });
-}
+        });
+    }
 
-// 8. INITIALIZE VIEW
-refreshView();
+    // Discord Copy Logic (Replaces inline onclick)
+    if (discordCard) {
+        discordCard.addEventListener('click', () => {
+            const userId = document.getElementById('discordUser') ? document.getElementById('discordUser').innerText : 'burak#1234';
+            
+            navigator.clipboard.writeText(userId).then(() => {
+                const originalBg = discordCard.style.background;
+                const originalBorder = discordCard.style.borderColor;
+                
+                // Visual Feedback
+                discordCard.style.background = "#43b581";
+                discordCard.style.borderColor = "#43b581";
+                
+                // Optional: Show tooltip if you have one, or just alert/change text
+                alert('Discord ID copied: ' + userId);
 
-// Clean URL (remove query params) after loading state so the address bar looks nice
-if (window.location.search) {
-    window.history.replaceState({}, document.title, window.location.pathname);
-}
+                // Reset after 1 second
+                setTimeout(() => {
+                    discordCard.style.background = originalBg;
+                    discordCard.style.borderColor = originalBorder;
+                }, 1000);
+            });
+        });
+    }
+
+    // Back to Top Button
+    if (backToTop) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // --- 5. EMAILJS INTEGRATION ---
+    // Make sure to add <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script> in your HTML head
+    if (typeof emailjs !== "undefined") {
+        emailjs.init("3Xlz6Ok2ZRJTuktB2"); // Your Public Key
+    }
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.innerText = "Sending...";
+            submitBtn.disabled = true;
+            
+            // Replace with your Service ID and Template ID
+            emailjs.sendForm('service_sohc712', 'template_dtve7zq', this)
+                .then(function() {
+                    alert('Message Sent Successfully! ✅');
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.disabled = false;
+                    contactForm.reset();
+                }, function(error) {
+                    console.error('EmailJS Error:', error);
+                    alert('Failed to send message. Please try again later.');
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.disabled = false;
+                });
+        });
+    }
+
+    // --- 6. CLEAN URL (Optional) ---
+    // Removes ?mode=... from the URL bar so it looks clean after loading
+    if (window.location.search) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+});
