@@ -194,6 +194,58 @@ if(backToTopBtn) {
     });
 }
 
+/* =========================================
+   URL PARAMETER HANDLING
+   (Paste this at the end of main.js)
+   ========================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const targetMode = params.get('mode');   // 'personal' or 'professional'
+    const targetTheme = params.get('theme'); // 'dark' or 'light'
+    
+    // 1. Handle Mode from URL
+    if (targetMode && (targetMode === 'personal' || targetMode === 'professional')) {
+        // Set Body Attribute
+        document.body.setAttribute('data-mode', targetMode);
+        
+        // Update Switch Button UI
+        const switchBtn = document.getElementById('modeSwitchBtn');
+        const icon = switchBtn.querySelector('.switch-icon');
+        const label = document.getElementById('switchLabel');
+        
+        if (targetMode === 'personal') {
+            // If Personal, button should offer to go back to Business
+            if(icon) icon.className = 'fi fi-rr-briefcase switch-icon';
+        } else {
+            // If Professional, button should offer Creative
+            if(icon) icon.className = 'fi fi-rr-refresh switch-icon';
+        }
+        
+        // Trigger Text Translations
+        if (typeof updateTextContent === 'function') {
+            // Default to English ('en') if not set, or grab from localStorage
+            const currentLang = localStorage.getItem('lang') || 'en'; 
+            updateTextContent(currentLang, targetMode);
+        }
+    }
+
+    // 2. Handle Theme from URL
+    if (targetTheme && (targetTheme === 'dark' || targetTheme === 'light')) {
+        // Set Body Attribute
+        document.body.setAttribute('data-theme', targetTheme);
+        
+        // Update Toggle Icon
+        const themeBtn = document.getElementById('themeToggle');
+        const themeIcon = themeBtn.querySelector('i');
+        
+        if (targetTheme === 'dark') {
+            themeIcon.className = 'fi fi-rr-sun';
+        } else {
+            themeIcon.className = 'fi fi-rr-moon-stars';
+        }
+    }
+});
+
 // 7. EMAILJS INTEGRATION
 // Initialize (Replace with your actual Public Key)
 (function() {

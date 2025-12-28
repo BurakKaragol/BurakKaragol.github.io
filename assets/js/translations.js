@@ -120,7 +120,7 @@ const translations = {
             navHome: "Start", navHistory: "My Story", navSkills: "Toolkit", navProjects: "Memories", navContact: "Say Hi",
             mobNavHome: "Start", mobNavHistory: "My Story", mobNavSkills: "Toolkit", mobNavProjects: "Memories", mobNavContact: "Say Hi",
             
-            heroStatus: "Tinkering with atoms & bits...",
+            heroStatus: "Working on new projects...",
             heroTitle: "Assembling Models & Memories.",
             heroSub: "My personal playground where digital code meets physical reality. I share blueprints, failed prints, and the stories behind them.",
             persHeroBtn: '<i class="fi fi-rr-flask"></i> Explore the Workshop',
