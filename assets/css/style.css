@@ -407,6 +407,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
 
 .input-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
 .input-group label { font-size: 0.8rem; font-weight: 700; color: var(--c-text-muted); text-transform: uppercase; }
+.input-group textarea { resize: vertical; min-height: 100px; max-height: 400px; }
 .input-group input, .input-group textarea { background: #00000045; border: 1px solid var(--border-dock); padding: 12px; font-family: var(--font-main); font-size: 1rem; color: var(--c-text-main); border-radius: 4px; transition: all 0.3s ease; }
 .input-group input:focus { outline: none; border-color: var(--c-accent); box-shadow: 0 0 0 3px rgba(14, 42, 71, 0.1); }
 
@@ -609,79 +610,128 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
 .pers-links-group .link-btn:hover { transform: scale(1.03); background: linear-gradient(135deg, var(--c-accent), var(--c-highlight)); color: #fff; border-color: transparent; box-shadow: 0 10px 40px rgba(0,0,0,0.25); text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
 /* =========================================
-   8. UNIFIED RESPONSIVE
+   8. COMPREHENSIVE RESPONSIVE DESIGN
+   (Merged & Polished)
    ========================================= */
-@media (max-width: 900px) {
-    /* HERO */
-    .hero-section { grid-template-columns: 1fr; text-align: center; gap: 30px; }
-    [data-mode="personal"] .text-col, [data-mode="personal"] .visual-col { transform: none; }
-    .visual-col { order: -1; }
-    .status-badge { margin: 0 auto 20px auto; }
-    [data-mode="personal"] .hero-title { transform: scale(1); transform-origin: center; }
-    .hero-title { font-size: 3rem; }
-    .visual-container { height: 400px; }
-    .pro-real-img { width: 300px; height: 380px; }
-    .pers-img { width: 300px; height: 300px; }
-    .pers-real-img { height: 400px; margin-bottom: -15px; }
-    
-    /* CONTACT */
-    .pro-contact-container { grid-template-columns: 1fr; }
-    .business-card { order: -1; transform: rotate(0deg); max-width: 350px; margin: 0 auto; }
-    
-    /* PROJECTS */
-    .lab-grid { grid-template-columns: 1fr; grid-auto-rows: 250px; }
-    .span-col-2, .span-row-2 { grid-column: span 1; grid-row: span 1; }
-    
-    /* HERO ACTIONS */
-    .hero-actions { display: flex; justify-content: center; }
-    .action-group { justify-content: center; }
+
+/* --- TABLET / SMALL LAPTOP (Max Width: 1024px) --- */
+@media (max-width: 1024px) {
+    .hero-title { font-size: 3.5rem; }
+    .hero-section { gap: 40px; padding: 0 20px; }
+    .dock { width: 95%; }
 }
 
-@media (max-width: 768px) {
-    /* HEADER */
-    .dock-center, .desktop-controls { display: none; }
-    .mobile-toggle { display: flex; }
-    .dock { padding: 0 16px; }
-    .switch-container { padding: 6px 12px; font-size: 0.75rem; min-width: auto; }
+/* --- MOBILE LANDSCAPE / LARGE PHONES (Max Width: 900px) --- */
+@media (max-width: 900px) {
     
-    /* --- MOBILE SOCIAL ICONS FIX --- */
-    .mini-socials { 
-        display: flex; 
-        flex-wrap: wrap; 
-        justify-content: center; 
-        gap: 12px; 
-        margin-top: 15px; 
-        width: 100%; 
-        max-width: 320px; 
-    }
-    .pers-actions .mini-socials { 
-        display: grid; 
-        grid-template-columns: repeat(3, 1fr); /* Forces 3 icons per row */
-        gap: 15px; 
-        justify-items: center; 
-    }
-    .mini-icon { 
-        font-size: 1.4rem; 
-        padding: 8px; 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        background: rgba(0,0,0,0.05); 
-        border-radius: 8px; 
-        width: 45px; 
-        height: 45px; 
-    }
-    [data-theme="dark"] .mini-icon { background: rgba(255,255,255,0.1); }
+    /* 1. HEADER (DOCK) FIXES */
+    .dock { padding: 0 16px; }
 
-    /* HISTORY */
+    /* Left Side: Stack Name & Badge vertically */
+    .dock-left {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        justify-content: center;
+    }
+
+    .dock-left .divider { display: none; } /* Hide the '/' */
+    
+    .logo { 
+        font-size: 1rem; 
+        line-height: 1; 
+    }
+    
+    .dock-left .mode-label {
+        display: block !important;
+        font-size: 0.7rem;
+        opacity: 0.8;
+        line-height: 1;
+    }
+
+    /* Right Side: Compact Controls */
+    .dock-right { gap: 8px; }
+
+    /* IMPORTANT: Keep controls visible, just tighter */
+    .desktop-controls {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+
+    /* Hide the long text label for the mode switch */
+    #switchLabel { display: none; }
+
+    /* Turn the switch button into a circle */
+    .switch-container {
+        padding: 0;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        min-width: auto;
+    }
+
+    .switch-icon { margin: 0; font-size: 1.1rem; }
+    
+    .btn-icon { padding: 8px; font-size: 1rem; }
+
+    /* Resize Language Toggle */
+    #langToggle {
+        font-size: 0.75rem !important;
+        padding: 8px 6px;
+    }
+
+    /* Hide Desktop Nav Links (Use Hamburger instead) */
+    .dock-center { display: none; }
+    
+    /* Show Hamburger Menu */
+    .mobile-toggle { display: flex; margin-left: 8px; }
+}
+
+/* --- MOBILE PORTRAIT / TABLET PORTRAIT (Max Width: 768px) --- */
+@media (max-width: 768px) {
+    
+    /* 1. HERO SECTION ADJUSTMENTS */
+    .hero-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+        padding-top: 100px; /* Space for fixed header */
+        min-height: auto;
+        padding-bottom: 60px;
+    }
+    .visual-col { order: -1; } /* Image on top */
+    .hero-actions { justify-content: center; }
+    .action-group { justify-content: center; width: 100%; }
+    .status-badge { margin: 0 auto 20px auto; }
+    .hero-title { font-size: 2.5rem; }
+
+    /* 2. HISTORY / TIMELINE (Your Specific Fixes) */
     .pro-timeline-container::before { left: 20px; }
-    .timeline-item { flex-direction: column; align-items: flex-start; margin-left: 50px; margin-bottom: 40px; }
+    
+    .timeline-item { 
+        flex-direction: column; 
+        align-items: flex-start; 
+        margin-left: 50px; 
+        margin-bottom: 40px; 
+    }
+    
     .timeline-item:nth-child(even) { flex-direction: column; }
     .timeline-item::after { left: -30px; }
-    .timeline-date { width: 100%; text-align: left; padding: 0; margin-bottom: 5px; font-size: 0.8rem; }
+    
+    .timeline-date { 
+        width: 100%; 
+        text-align: left; 
+        padding: 0; 
+        margin-bottom: 5px; 
+        font-size: 0.8rem; 
+    }
     .timeline-content { width: 100%; padding: 0; text-align: left; }
     
-    /* Timeline Overrides for Mobile */
+    /* Timeline Education Overrides */
     .education-item .timeline-content, 
     .timeline-item:nth-child(even).education-item .timeline-content { 
         border-left: 3px solid #0056b3; 
@@ -689,27 +739,50 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
         padding-left: 20px; 
         padding-right: 0;
     }
-
-    .timeline-item:nth-child(even) .timeline-date { text-align: left; padding: 0; }
+    .timeline-item:nth-child(even) .timeline-date, 
     .timeline-item:nth-child(even) .timeline-content { text-align: left; padding: 0; }
-    .section-title { font-size: 2rem; }
     
-    /* SKILLS */
+    /* 3. SKILLS & SOCIALS */
     .tech-grid { grid-template-columns: 1fr; }
     .tech-item { padding: 20px; }
     .cloud-tag { padding: 10px 20px; font-size: 0.9rem; }
-    
-    /* FOOTER */
+
+    .mini-socials { 
+        display: flex; flex-wrap: wrap; justify-content: center; 
+        gap: 12px; margin-top: 15px; width: 100%; max-width: 320px; 
+    }
+    .pers-actions .mini-socials { 
+        display: grid; grid-template-columns: repeat(3, 1fr); 
+        gap: 15px; justify-items: center; 
+    }
+    .mini-icon { width: 45px; height: 45px; font-size: 1.4rem; padding: 0; }
+    [data-theme="dark"] .mini-icon { background: rgba(255,255,255,0.1); }
+
+    /* 4. FOOTER ADJUSTMENTS */
+    .footer-links-wrapper { height: auto; flex-direction: column; gap: 15px; }
     .pro-links, .pers-links { flex-direction: column; gap: 10px; position: relative; }
-    .footer-links-wrapper { height: auto; }
-    [data-mode="professional"] .pers-links { display: none; }
-    [data-mode="personal"] .pro-links { display: none; }
 }
 
+/* --- SMALL MOBILE (Max Width: 600px) --- */
 @media (max-width: 600px) {
-    /* LINKS PAGE SPECIFIC */
+    /* Links Page Specific */
     .links-container { width: 92%; padding-top: 110px; }
     .links-name { font-size: 2rem; }
     .links-avatar { width: 140px; height: 140px; margin-bottom: 60px; }
     .link-btn { padding: 18px 24px; min-height: 70px; font-size: 1.1rem; }
+
+    /* FORCE PROJECT GRIDS TO 1 COLUMN */
+    .blueprint-grid, .lab-grid {
+        grid-template-columns: 1fr;
+    }
+    /* Reset spans so they don't break layout */
+    .span-col-2, .span-row-2 {
+        grid-column: auto;
+        grid-row: auto;
+    }
+    .lab-grid { grid-auto-rows: 250px; }
+    
+    /* Contact Section Stacking */
+    .pro-contact-container { grid-template-columns: 1fr; }
+    .business-card { order: -1; transform: rotate(0deg); margin: 0 auto; width: 100%; }
 }
