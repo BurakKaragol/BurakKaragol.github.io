@@ -611,7 +611,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
 
 /* =========================================
    8. COMPREHENSIVE RESPONSIVE DESIGN
-   (Merged & Polished)
+   (Updated & Polished)
    ========================================= */
 
 /* --- TABLET / SMALL LAPTOP (Max Width: 1024px) --- */
@@ -625,7 +625,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
 @media (max-width: 900px) {
     
     /* 1. HEADER (DOCK) FIXES */
-    .dock { padding: 0 16px; }
+    .dock { padding: 0 16px; height: 64px; }
 
     /* Left Side: Stack Name & Badge vertically */
     .dock-left {
@@ -638,13 +638,13 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
     .dock-left .divider { display: none; } /* Hide the '/' */
     
     .logo { 
-        font-size: 1rem; 
+        font-size: 0.95rem; 
         line-height: 1; 
     }
     
     .dock-left .mode-label {
         display: block !important;
-        font-size: 0.7rem;
+        font-size: 0.65rem;
         opacity: 0.8;
         line-height: 1;
     }
@@ -652,7 +652,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
     /* Right Side: Compact Controls */
     .dock-right { gap: 8px; }
 
-    /* IMPORTANT: Keep controls visible, just tighter */
+    /* IMPORTANT: Keep controls visible */
     .desktop-controls {
         display: flex;
         gap: 6px;
@@ -676,12 +676,15 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
 
     .switch-icon { margin: 0; font-size: 1.1rem; }
     
-    .btn-icon { padding: 8px; font-size: 1rem; }
+    .btn-icon { padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
 
     /* Resize Language Toggle */
     #langToggle {
         font-size: 0.75rem !important;
-        padding: 8px 6px;
+        font-weight: 700;
+        padding: 0;
+        width: 32px; 
+        height: 32px;
     }
 
     /* Hide Desktop Nav Links (Use Hamburger instead) */
@@ -689,12 +692,32 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
     
     /* Show Hamburger Menu */
     .mobile-toggle { display: flex; margin-left: 8px; }
+
+
+    /* 2. HERO SECTION FIX (Personal Mode Glitch Fix) */
+    /* This prevents the "swapping" animation from breaking the layout on mobile */
+    [data-mode="personal"] .text-col, 
+    [data-mode="personal"] .visual-col {
+        transform: none !important; 
+        opacity: 1 !important;
+    }
+    
+    [data-mode="personal"] .hero-col.visual-col {
+        order: -1; /* Keep image on top */
+        z-index: 1;
+    }
+    
+    .hero-col {
+        width: 100%;
+        left: auto;
+        right: auto;
+    }
 }
 
 /* --- MOBILE PORTRAIT / TABLET PORTRAIT (Max Width: 768px) --- */
 @media (max-width: 768px) {
     
-    /* 1. HERO SECTION ADJUSTMENTS */
+    /* 1. HERO SECTION LAYOUT */
     .hero-section {
         grid-template-columns: 1fr;
         text-align: center;
@@ -704,12 +727,18 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
         padding-bottom: 60px;
     }
     .visual-col { order: -1; } /* Image on top */
-    .hero-actions { justify-content: center; }
-    .action-group { justify-content: center; width: 100%; }
+    .hero-actions { justify-content: center; display: flex; }
+    .action-group { justify-content: center; width: 100%; position: relative; }
     .status-badge { margin: 0 auto 20px auto; }
     .hero-title { font-size: 2.5rem; }
 
-    /* 2. HISTORY / TIMELINE (Your Specific Fixes) */
+    /* Image Sizes */
+    .visual-container { height: 350px; }
+    .pro-real-img { width: 260px; height: 320px; }
+    .pers-img { width: 260px; height: 260px; }
+    .pers-real-img { height: 320px; margin-bottom: -15px; }
+
+    /* 2. HISTORY / TIMELINE */
     .pro-timeline-container::before { left: 20px; }
     
     .timeline-item { 
@@ -728,6 +757,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
         padding: 0; 
         margin-bottom: 5px; 
         font-size: 0.8rem; 
+        opacity: 0.7;
     }
     .timeline-content { width: 100%; padding: 0; text-align: left; }
     
@@ -758,7 +788,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
     .mini-icon { width: 45px; height: 45px; font-size: 1.4rem; padding: 0; }
     [data-theme="dark"] .mini-icon { background: rgba(255,255,255,0.1); }
 
-    /* 4. FOOTER ADJUSTMENTS */
+    /* 4. FOOTER */
     .footer-links-wrapper { height: auto; flex-direction: column; gap: 15px; }
     .pro-links, .pers-links { flex-direction: column; gap: 10px; position: relative; }
 }
@@ -785,4 +815,8 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
     /* Contact Section Stacking */
     .pro-contact-container { grid-template-columns: 1fr; }
     .business-card { order: -1; transform: rotate(0deg); margin: 0 auto; width: 100%; }
+    
+    /* Social Grid 2 cols is fine, but tight gap */
+    .social-grid { gap: 15px; }
+    .social-card { padding: 20px; }
 }
