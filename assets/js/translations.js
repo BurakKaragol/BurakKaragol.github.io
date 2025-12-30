@@ -292,7 +292,7 @@ const translations = {
             proP4Tag1: "C++", proP4Tag2: "Simülasyon",
 
             // 5. Vision
-            proP5Title: "Görüntü İşleme ile Ayıklama", proP5Desc: "Python ve OpenCV kullanarak bir konveyör bandındaki nesneleri renk/şekle göre ayıklaayan sistem.",
+            proP5Title: "Görüntü İşleme ile Ayıklama", proP5Desc: "Python ve OpenCV kullanarak bir konveyör bandındaki nesneleri renk/şekle göre ayıklayan sistem.",
             proP5Tag1: "OpenCV", proP5Tag2: "Python",
 
             // 6. Flight Dynamics
