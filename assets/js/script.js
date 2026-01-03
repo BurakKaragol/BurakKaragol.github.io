@@ -280,42 +280,39 @@ if (contactForm) {
 }
 
 /* =========================================
-   SILENT VISITOR NOTIFICATION
-   (Uses EmailJS to alert you on new visits)
+   SILENT VISITOR NOTIFICATION (Matched to Template)
    ========================================= */
 function notifyVisit() {
-    // 1. Check if we already notified for this session
-    // sessionStorage clears when the browser tab is closed.
+    // 1. Check strict session storage (Prevent spam on refresh)
     if (sessionStorage.getItem('notified_owner')) {
-        return; // Stop here, don't spam.
+        return; 
     }
 
-    // 2. Gather simple visitor data
+    // 2. Define data strictly matching your EmailJS variables
     const visitData = {
         time: new Date().toLocaleString(),
-        userAgent: navigator.userAgent, // Browser & OS info
+        userAgent: navigator.userAgent,
         language: navigator.language,
         screenWidth: window.innerWidth
     };
 
-    // 3. Send the email silently
-    // Replace 'template_xyz123' with your NEW Visitor Template ID
-    // You can use your existing Service ID ('service_sohc712')
+    // 3. Send email immediately
     if (typeof emailjs !== "undefined") {
+        // Service ID: service_sohc712 (from your previous code)
+        // Template ID: template_039ws4f (your new ID)
         emailjs.send('service_sohc712', 'template_039ws4f', visitData)
             .then(() => {
-                console.log('Owner notified of visit.');
-                // Mark this session as "notified" so we don't send again on refresh
+                console.log('New visitor notified successfully.');
+                // Mark session as notified so we don't spam you on refresh
                 sessionStorage.setItem('notified_owner', 'true');
             })
             .catch((err) => {
-                // Silently fail, don't alert the user
-                console.warn('Failed to notify owner', err);
+                console.error('EmailJS Failed:', err);
             });
     }
 }
 
-// Run the function
+// Run it
 notifyVisit();
 
 // 8. INITIALIZE VIEW
