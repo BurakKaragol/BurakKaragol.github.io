@@ -279,6 +279,45 @@ if (contactForm) {
     });
 }
 
+/* =========================================
+   SILENT VISITOR NOTIFICATION
+   (Uses EmailJS to alert you on new visits)
+   ========================================= */
+function notifyVisit() {
+    // 1. Check if we already notified for this session
+    // sessionStorage clears when the browser tab is closed.
+    if (sessionStorage.getItem('notified_owner')) {
+        return; // Stop here, don't spam.
+    }
+
+    // 2. Gather simple visitor data
+    const visitData = {
+        time: new Date().toLocaleString(),
+        userAgent: navigator.userAgent, // Browser & OS info
+        language: navigator.language,
+        screenWidth: window.innerWidth
+    };
+
+    // 3. Send the email silently
+    // Replace 'template_xyz123' with your NEW Visitor Template ID
+    // You can use your existing Service ID ('service_sohc712')
+    if (typeof emailjs !== "undefined") {
+        emailjs.send('service_sohc712', 'template_039ws4f', visitData)
+            .then(() => {
+                console.log('Owner notified of visit.');
+                // Mark this session as "notified" so we don't send again on refresh
+                sessionStorage.setItem('notified_owner', 'true');
+            })
+            .catch((err) => {
+                // Silently fail, don't alert the user
+                console.warn('Failed to notify owner', err);
+            });
+    }
+}
+
+// Run the function
+notifyVisit();
+
 // 8. INITIALIZE VIEW
 refreshView();
 
