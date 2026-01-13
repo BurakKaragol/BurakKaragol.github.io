@@ -166,6 +166,27 @@ const PROJECTS = {
       "Calculate based on print settings and market factors."
     ]
   },
+  "dice_roller/": {
+    time: "1 day",
+    difficulty: 50,
+    tags: ["RNG", "DnD", "Animation"],
+    long: "Roll classic RPG dice with presets, stats, and juicy crit animations for your sessions.",
+    how: [
+      "JavaScript-based RNG logic with modifier calculations.",
+      "CSS animations for visual feedback on Critical Hits (Nat 20) and Fails."
+    ]
+  },
+  "movie_roulette/": {
+    time: "2 days",
+    difficulty: 75,
+    tags: ["Canvas", "Game", "Local Storage"],
+    long: "A robust, physics-based decision-making tool for movie nights. Features a custom 'Item Builder' for imports and persistent history tracking.",
+    how: [
+      "Custom HTML5 Canvas physics engine for smooth ease-out spinning.",
+      "LocalStorage persistence for movie shelf, custom genres, and watched history.",
+      "Responsive vertical architecture with 'Frosted Glass' UI elements."
+    ]
+  },
   /* gets injected when unlocked */
   "terminal.html": {
     time: "—",

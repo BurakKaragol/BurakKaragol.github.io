@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Movie Night Roulette</title>
+    <link rel="stylesheet" href="wheel.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <script src="wheel.js" defer></script>
+</head>
+<body>
+
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loader-content">
+            <span class="material-icons-round spin-icon">movie</span>
+            <h3>Loading Library...</h3>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo">
+            <span class="material-icons-round">movie</span>
+            <h1>Movie Night Roulette</h1>
+        </div>
+        <div class="header-actions">
+            <button id="settingsBtn" class="icon-btn" title="Settings & Genres">
+                <span class="material-icons-round">settings</span>
+            </button>
+            <button id="importBtn" class="btn btn-secondary">
+                <span class="material-icons-round">add_circle</span> <span style="margin-left:5px">Add</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <aside class="panel left-panel">
+            <div class="panel-header column-col">
+                <div class="header-top">
+                    <div style="display:flex; align-items:center; gap:0.5rem;">
+                        <h2>On The Shelf</h2>
+                        <button id="clearListBtn" class="icon-btn" title="Clear All Items">
+                            <span class="material-icons-round">delete_sweep</span>
+                        </button>
+                    </div>
+                    <select id="genreFilter" class="genre-select">
+                        <option value="All">All Genres</option>
+                    </select>
+                </div>
+                
+                <div class="bulk-controls">
+                    <button id="selectAllBtn" class="text-btn">Select All</button>
+                    <span class="separator">•</span>
+                    <button id="deselectAllBtn" class="text-btn">None</button>
+                </div>
+
+                <small style="margin-top:0.5rem; display:block;">Wheel spins filtered items</small>
+            </div>
+            
+            <div id="movieListContainer" class="movie-grid"></div>
+            
+            <div class="empty-state" id="leftEmptyState">
+                No movies yet.<br>
+                <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; align-items: center;">
+                    <button id="importBtnEmpty" class="btn btn-primary">
+                        <span class="material-icons-round">add</span> Add Manually
+                    </button>
+                    <span style="font-size: 0.8rem; opacity: 0.5;">— OR —</span>
+                    <button id="loadSamplesBtn" class="btn btn-outline">
+                        <span class="material-icons-round">casino</span> Load 10 Random
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <section class="panel center-panel">
+            <div class="wheel-wrapper">
+                <div class="pointer"></div>
+                <canvas id="wheel" width="600" height="600"></canvas>
+            </div>
+            <button id="spinBtn" class="big-spin-btn">SPIN THE WHEEL</button>
+        </section>
+
+        <aside class="panel right-panel">
+            <div id="resultSection" class="result-box hidden">
+                <div class="label">The Winner Is</div>
+                <h2 id="winnerName" class="winner-title">...</h2>
+                <div id="winnerGenre" class="winner-genre-tag">Genre</div>
+                <div class="action-buttons">
+                    <button id="keepBtn" class="btn btn-outline">
+                        <span class="material-icons-round">replay</span> Keep & Reroll
+                    </button>
+                    <button id="watchedBtn" class="btn btn-primary">
+                        <span class="material-icons-round">check_circle</span> Mark Watched
+                    </button>
+                </div>
+            </div>
+            <div class="history-section">
+                <div class="panel-header">
+                    <h2>Watched History</h2>
+                    <button id="clearHistoryBtn" class="icon-btn" title="Clear History">
+                        <span class="material-icons-round">delete_sweep</span>
+                    </button>
+                </div>
+                <ul id="watchedList" class="watched-list"></ul>
+            </div>
+        </aside>
+    </main>
+
+    <div class="modal-overlay" id="importModal">
+        <div class="modal modal-xl">
+            <div class="modal-header">
+                <h2>Add New Movies</h2>
+                <button id="closeModalCross" class="icon-btn"><span class="material-icons-round">close</span></button>
+            </div>
+            <div class="import-builder">
+                <div class="builder-input">
+                    <div class="input-group">
+                        <label>Movie Title</label>
+                        <input type="text" id="newMovieTitle" placeholder="e.g. Inception" autocomplete="off">
+                    </div>
+                    <div class="genre-selector">
+                        <label>Select Genres</label>
+                        <div id="genreChipsContainer" class="chips-container"></div>
+                    </div>
+                </div>
+                <div class="builder-action">
+                    <button id="addToStagingBtn" class="add-arrow-btn" title="Add to List">
+                        <span class="material-icons-round">arrow_forward</span>
+                        <span>ADD</span>
+                    </button>
+                </div>
+                <div class="builder-staging">
+                    <h3>Review List (<span id="stagingCount">0</span>)</h3>
+                    <div id="stagingList" class="staging-list">
+                        <div class="empty-staging">List is empty.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="cancelImportBtn" class="btn btn-text">Cancel</button>
+                <button id="saveImportBtn" class="btn btn-primary">Save to Shelf</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Manage Genres</h2>
+                <button id="closeSettingsCross" class="icon-btn"><span class="material-icons-round">close</span></button>
+            </div>
+            <div style="padding: 1.5rem;">
+                <p style="color:var(--text-muted); margin-bottom:1rem; font-size:0.9rem;">Add custom genres here.</p>
+                <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
+                    <input type="text" id="newGenreInput" placeholder="New Genre Name..." style="flex:1; padding:0.5rem; background:var(--input-bg); border:1px solid var(--border); color:white; border-radius:4px;">
+                    <button id="addNewGenreBtn" class="btn btn-primary">Add</button>
+                </div>
+                <div id="settingsGenreList" class="settings-genre-list"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
