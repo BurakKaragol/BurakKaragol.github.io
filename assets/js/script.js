@@ -280,32 +280,37 @@ if (contactForm) {
 }
 
 /* =========================================
-   HELPER: DETECT DEVICE TYPE
+   HELPER: DETECT DEVICE & SCREEN
    ========================================= */
 function getDeviceDetails() {
     const ua = navigator.userAgent;
+    const width = window.innerWidth;
     let device = "Desktop (Generic)";
     let os = "Unknown OS";
 
-    // 1. Detect Mobile vs Tablet vs Desktop
-    if (/Mobi|Android/i.test(ua)) {
-        device = "Mobile Phone";
-    } else if (/iPad|Tablet/i.test(ua)) {
-        device = "Tablet";
+    // --- STEP 1: RESOLUTION CHECK (The Truth Serum) ---
+    // Even if UA says "Mac", a 390px width means it's a phone.
+    let formFactor = "Desktop";
+    if (width < 768) {
+        formFactor = "Phone";
+    } else if (width >= 768 && width < 1024) {
+        formFactor = "Tablet";
     }
 
-    // 2. Detect Specific Brand/OS
+    // --- STEP 2: OS DETECTION ---
     if (/iPhone/.test(ua)) {
         device = "iPhone";
         os = "iOS";
-    } else if (/iPad/.test(ua)) {
+    } else if (/iPad/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+        // This specific check catches iPads that pretend to be Macs
         device = "iPad";
         os = "iOS";
+        formFactor = "Tablet";
     } else if (/Android/.test(ua)) {
-        // Try to extract model code (e.g., SM-G960U)
         const match = ua.match(/Android\s([0-9.]+);.*;\s([a-zA-Z0-9\s-]+)\sBuild/);
         device = match && match[2] ? `Android (${match[2]})` : "Android Device";
         os = match && match[1] ? `Android ${match[1]}` : "Android";
+        if (formFactor === "Desktop") formFactor = "Phone"; // Correction for Androids
     } else if (/Windows/.test(ua)) {
         device = "PC / Laptop";
         os = "Windows";
@@ -317,32 +322,30 @@ function getDeviceDetails() {
         os = "Linux";
     }
 
-    return { type: device, os: os };
+    // Combine them: "iPhone (Phone)" or "iPad (Tablet)"
+    return { 
+        full_name: `${device} [${formFactor}]`, 
+        os: os,
+        width: width 
+    };
 }
 
 /* =========================================
-   SILENT VISITOR NOTIFICATION (Ultimate Version)
+   SILENT VISITOR NOTIFICATION (Final Version)
    ========================================= */
 async function notifyVisit() {
-    if (sessionStorage.getItem('notified_owner')) {
-        return; 
-    }
+    if (sessionStorage.getItem('notified_owner')) return; 
 
-    // 1. Get detailed device info
+    // 1. Get Device Logic
     const devInfo = getDeviceDetails();
 
-    // 2. Init Location Data
-    let geoInfo = {
-        ip: "Unknown",
-        location: "Unknown",
-        isp: "Unknown"
-    };
+    // 2. Init Location
+    let geoInfo = { ip: "Unknown", location: "Unknown", isp: "Unknown" };
 
-    // 3. Fetch Location (IP API)
+    // 3. Fetch Location
     try {
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
-        
         if (data.ip) {
             geoInfo = {
                 ip: data.ip,
@@ -350,36 +353,32 @@ async function notifyVisit() {
                 isp: data.org 
             };
         }
-    } catch (error) {
-        console.warn('Location fetch failed');
-    }
+    } catch (e) { console.warn('Geo fetch failed'); }
 
-    // 4. Compile Final Data
+    // 4. Compile Data
     const visitData = {
         time: new Date().toLocaleString(),
         
-        // Location
+        // DEVICE SPECIFICS (Refined)
+        device_type: devInfo.full_name, // e.g., "iPhone [Phone]" or "Mac [Desktop]"
+        os_system: devInfo.os,
+        screen_width: devInfo.width + "px", // Explicit width e.g., "390px"
+
+        // LOCATION
         ip_address: geoInfo.ip,
         geo_location: geoInfo.location,
-        isp_provider: geoInfo.isp, // Shows "Turk Telekom", "Comcast", etc.
+        isp_provider: geoInfo.isp,
 
-        // Device & OS (New!)
-        device_type: devInfo.type, // e.g., "iPhone", "Android (SM-G980F)"
-        os_system: devInfo.os,     // e.g., "iOS", "Windows"
-
-        // Source
-        referrer: document.referrer || "Direct Link", 
-        landing_page: window.location.href,
-        
-        // Tech Specs
-        screen_res: `${window.screen.width}x${window.screen.height}`
+        // SOURCE
+        referrer: document.referrer || "Direct / Bookmark", 
+        landing_page: window.location.href
     };
 
     // 5. Send
     if (typeof emailjs !== "undefined") {
         emailjs.send('service_sohc712', 'template_039ws4f', visitData)
             .then(() => {
-                console.log('Visitor logged.');
+                console.log('Visitor Logged');
                 sessionStorage.setItem('notified_owner', 'true');
             });
     }
