@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graham Scan - Professional</title>
+    <link rel="stylesheet" href="graham.css">
+</head>
+<body>
+
+    <div class="ui-container">
+        <div class="header">
+            <h1>Graham Scan Visualization</h1>
+            <span id="status-badge" class="status-badge">Ready</span>
+        </div>
+        
+        <div class="controls">
+            <button id="btn-gen">Generate</button>
+            <button id="btn-run">Run</button>
+            <button id="btn-reset">Reset</button>
+            
+            <div class="slider-group">
+                <label>Animation Speed</label>
+                <input type="range" id="speed-range" min="1" max="100" value="40">
+            </div>
+        </div>
+    </div>
+
+    <canvas id="main-canvas"></canvas>
+
+    <script src="graham.js"></script>
+</body>
+</html>

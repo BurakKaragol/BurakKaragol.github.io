@@ -280,39 +280,112 @@ if (contactForm) {
 }
 
 /* =========================================
-   SILENT VISITOR NOTIFICATION (Matched to Template)
+   HELPER: DETECT DEVICE TYPE
    ========================================= */
-function notifyVisit() {
-    // 1. Check strict session storage (Prevent spam on refresh)
+function getDeviceDetails() {
+    const ua = navigator.userAgent;
+    let device = "Desktop (Generic)";
+    let os = "Unknown OS";
+
+    // 1. Detect Mobile vs Tablet vs Desktop
+    if (/Mobi|Android/i.test(ua)) {
+        device = "Mobile Phone";
+    } else if (/iPad|Tablet/i.test(ua)) {
+        device = "Tablet";
+    }
+
+    // 2. Detect Specific Brand/OS
+    if (/iPhone/.test(ua)) {
+        device = "iPhone";
+        os = "iOS";
+    } else if (/iPad/.test(ua)) {
+        device = "iPad";
+        os = "iOS";
+    } else if (/Android/.test(ua)) {
+        // Try to extract model code (e.g., SM-G960U)
+        const match = ua.match(/Android\s([0-9.]+);.*;\s([a-zA-Z0-9\s-]+)\sBuild/);
+        device = match && match[2] ? `Android (${match[2]})` : "Android Device";
+        os = match && match[1] ? `Android ${match[1]}` : "Android";
+    } else if (/Windows/.test(ua)) {
+        device = "PC / Laptop";
+        os = "Windows";
+    } else if (/Mac/.test(ua)) {
+        device = "Mac / MacBook";
+        os = "macOS";
+    } else if (/Linux/.test(ua)) {
+        device = "Linux Machine";
+        os = "Linux";
+    }
+
+    return { type: device, os: os };
+}
+
+/* =========================================
+   SILENT VISITOR NOTIFICATION (Ultimate Version)
+   ========================================= */
+async function notifyVisit() {
     if (sessionStorage.getItem('notified_owner')) {
         return; 
     }
 
-    // 2. Define data strictly matching your EmailJS variables
-    const visitData = {
-        time: new Date().toLocaleString(),
-        userAgent: navigator.userAgent,
-        language: navigator.language,
-        screenWidth: window.innerWidth
+    // 1. Get detailed device info
+    const devInfo = getDeviceDetails();
+
+    // 2. Init Location Data
+    let geoInfo = {
+        ip: "Unknown",
+        location: "Unknown",
+        isp: "Unknown"
     };
 
-    // 3. Send email immediately
+    // 3. Fetch Location (IP API)
+    try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        
+        if (data.ip) {
+            geoInfo = {
+                ip: data.ip,
+                location: `${data.city}, ${data.country_name}`, 
+                isp: data.org 
+            };
+        }
+    } catch (error) {
+        console.warn('Location fetch failed');
+    }
+
+    // 4. Compile Final Data
+    const visitData = {
+        time: new Date().toLocaleString(),
+        
+        // Location
+        ip_address: geoInfo.ip,
+        geo_location: geoInfo.location,
+        isp_provider: geoInfo.isp, // Shows "Turk Telekom", "Comcast", etc.
+
+        // Device & OS (New!)
+        device_type: devInfo.type, // e.g., "iPhone", "Android (SM-G980F)"
+        os_system: devInfo.os,     // e.g., "iOS", "Windows"
+
+        // Source
+        referrer: document.referrer || "Direct Link", 
+        landing_page: window.location.href,
+        
+        // Tech Specs
+        screen_res: `${window.screen.width}x${window.screen.height}`
+    };
+
+    // 5. Send
     if (typeof emailjs !== "undefined") {
-        // Service ID: service_sohc712 (from your previous code)
-        // Template ID: template_039ws4f (your new ID)
         emailjs.send('service_sohc712', 'template_039ws4f', visitData)
             .then(() => {
-                console.log('New visitor notified successfully.');
-                // Mark session as notified so we don't spam you on refresh
+                console.log('Visitor logged.');
                 sessionStorage.setItem('notified_owner', 'true');
-            })
-            .catch((err) => {
-                console.error('EmailJS Failed:', err);
             });
     }
 }
 
-// Run it
+// Run
 notifyVisit();
 
 // 8. INITIALIZE VIEW

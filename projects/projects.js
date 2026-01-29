@@ -187,6 +187,17 @@ const PROJECTS = {
       "Responsive vertical architecture with 'Frosted Glass' UI elements."
     ]
   },
+  "graham_scan/": {
+    time: "3 days",
+    difficulty: 85,
+    tags: ["Algorithms", "Canvas API", "Geometry"],
+    long: "An interactive visualization of the Graham Scan algorithm for finding Convex Hulls. Reimagined with a clean, architectural blueprint aesthetic to make complex geometry intuitive.",
+    how: [
+      "Implemented vector mathematics (cross-products, polar sorting) to drive the core geometric logic.",
+      "Built a custom animation engine with linear interpolation (lerping) for smooth line anchoring and backtracking transitions.",
+      "Designed a state-based rendering system to visually distinguish between stack operations, discarded points, and validity checks."
+    ]
+  },
   /* gets injected when unlocked */
   "terminal.html": {
     time: "—",
