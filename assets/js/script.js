@@ -384,6 +384,43 @@ async function notifyVisit() {
     }
 }
 
+/* =========================================
+   PRIVACY OVERLAY LOGIC
+   ========================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Select Elements
+    const privacyLink = document.querySelector('a[href="#privacy"]'); // Ensure your footer link matches this
+    const overlay = document.getElementById('privacy-overlay');
+    const closeBtn = document.getElementById('close-privacy-btn');
+
+    // 2. Open Function
+    if (privacyLink) {
+        privacyLink.addEventListener('click', (e) => {
+            e.preventDefault(); // Stop it from jumping to top of page
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Disable background scrolling
+        });
+    }
+
+    // 3. Close Function (X Button)
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        });
+    }
+
+    // 4. Close Function (Click Outside Box)
+    if (overlay) {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+});
+
 // Run
 notifyVisit();
 
