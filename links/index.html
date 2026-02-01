@@ -1,38 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Links | Burak Karagol</title>
-    
+
     <link rel="stylesheet" href="../assets/css/style.css">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel='stylesheet'
+        href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-brands/css/uicons-brands.css'>
+
     <style>
         /* --- PAGE SPECIFIC OVERRIDES --- */
-        
+
         /* 1. Hide unnecessary main site elements */
-        .dock-left, .dock-center, .desktop-controls, .mobile-toggle { display: none !important; }
-        
+        .dock-left,
+        .dock-center,
+        .desktop-controls,
+        .mobile-toggle {
+            display: none !important;
+        }
+
         /* 2. THE DOCK (HEADER/FOOTER BAR) */
         .dock {
             position: fixed;
             left: 0;
-            width: 100%;      /* Expand to full width */
-            max-width: none;  /* Remove strict width limits */
-            transform: none;  /* Remove centering transform */
-            border-radius: 0; /* Remove rounded corners */
+            width: 100%;
+            /* Expand to full width */
+            max-width: none;
+            /* Remove strict width limits */
+            transform: none;
+            /* Remove centering transform */
+            border-radius: 0;
+            /* Remove rounded corners */
             border: none;
             box-shadow: none;
             background: var(--bg-dock);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            
+
             display: flex;
-            justify-content: center; /* Center the content */
+            justify-content: center;
+            /* Center the content */
             padding: 15px 20px;
             z-index: 1000;
         }
@@ -40,24 +56,29 @@
         /* 3. THE SWITCH BUTTON (EXPANDED) */
         .dock-right {
             width: 100%;
-            max-width: 600px; /* Match the links container width */
+            max-width: 600px;
+            /* Match the links container width */
             display: flex;
             justify-content: center;
         }
 
         .switch-container {
-            width: 100%; /* Fill the available space */
+            width: 100%;
+            /* Fill the available space */
             display: flex;
-            justify-content: space-between; /* Text Left, Icon Right */
+            justify-content: center;
+            gap: 10px;
             padding: 14px 30px;
             font-size: 1rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-radius: var(--dock-radius);
+            transition: border-radius 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         /* Make the switch hover even clearer */
         .switch-container:hover {
-            transform: scale(1.02); 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         /* --- RESPONSIVE LOGIC (DESKTOP VS MOBILE) --- */
@@ -69,8 +90,10 @@
                 bottom: auto;
                 border-bottom: 1px solid var(--border-dock);
             }
+
             .links-container {
-                padding-top: 120px; /* Space for top bar */
+                padding-top: 120px;
+                /* Space for top bar */
             }
         }
 
@@ -78,21 +101,24 @@
         @media (max-width: 600px) {
             .dock {
                 top: auto;
-                bottom: 0; /* Stick to bottom */
+                bottom: 0;
+                /* Stick to bottom */
                 border-top: 1px solid var(--border-dock);
-                padding-bottom: max(20px, env(safe-area-inset-bottom)); /* iOS Safe Area */
+                padding-bottom: max(20px, env(safe-area-inset-bottom));
+                /* iOS Safe Area */
             }
-            
+
             /* Add padding to bottom of main content so button doesn't cover links */
             .links-container {
                 padding-top: 60px;
-                padding-bottom: 100px; 
+                padding-bottom: 100px;
             }
-            
+
             /* Make the switch look like a "Submit" button on mobile */
             .switch-container {
-                border-radius: 12px;
-                justify-content: center; /* Center text on mobile */
+                /* border-radius: 12px; REMOVED to inherit dynamic var(--dock-radius) */
+                justify-content: center;
+                /* Center text on mobile */
                 gap: 10px;
             }
         }
@@ -111,7 +137,7 @@
     </header>
 
     <main class="links-container">
-        
+
         <div class="links-header-group">
             <div class="links-avatar">
                 <img src="../assets/img/photo.png" alt="Professional" class="pro-img">
@@ -123,42 +149,44 @@
 
         <div class="links-group pro-links-group">
             <a href="../index.html?mode=professional" class="link-btn">
-                <span>🏠 Portfolio Website</span>
+                <span><i class="fi fi-rr-home"></i> Portfolio Website</span>
                 <span class="arrow">→</span>
             </a>
-            <a href="https://www.linkedin.com/in/burakkaragol" target="_blank" class="link-btn">
-                <span>💼 LinkedIn</span>
+            <a href="https://www.linkedin.com/in/burak-karagol-3451b91b0/" target="_blank" class="link-btn">
+                <span><i class="fi fi-brands-linkedin"></i> LinkedIn</span>
                 <span class="arrow">↗</span>
             </a>
-            <a href="https://github.com/burakkaragol" target="_blank" class="link-btn">
-                <span>💻 GitHub</span>
+            <a href="https://github.com/BurakKaragol" target="_blank" class="link-btn">
+                <span><i class="fi fi-brands-github"></i> GitHub</span>
                 <span class="arrow">↗</span>
             </a>
-            <a href="mailto:contact@burak.com" class="link-btn">
-                <span>📧 Email Contact</span>
+            <a href="mailto:burak.karagol@outlook.com" class="link-btn">
+                <span><i class="fi fi-rr-envelope"></i> Email Contact</span>
                 <span class="arrow">@</span>
-            </a>
-            <a href="../assets/docs/CV_BurakKaragol.pdf" download class="link-btn">
-                <span>📄 Download Resume</span>
-                <span class="arrow">↓</span>
             </a>
         </div>
 
         <div class="links-group pers-links-group">
             <a href="../index.html?mode=personal" class="link-btn">
-                <span class="icon">🧪</span> Enter The Lab
+                <span class="icon"><i class="fi fi-rr-flask"></i></span> Enter The Lab
             </a>
-            <a href="https://instagram.com" target="_blank" class="link-btn">
-                <span class="icon">📸</span> Instagram
+            <a href="https://www.instagram.com/brkkaragol/?hl=tr" target="_blank" class="link-btn">
+                <span class="icon"><i class="fi fi-brands-instagram"></i></span> Instagram
             </a>
-            <a href="https://twitter.com" target="_blank" class="link-btn">
-                <span class="icon">🐦</span> Twitter / X
+            <a href="https://twitter.com/buraKaragol" target="_blank" class="link-btn">
+                <span class="icon"><i class="fi fi-brands-twitter-alt"></i></span> Twitter / X
             </a>
-            <a href="https://spotify.com" target="_blank" class="link-btn">
-                <span class="icon">🎧</span> Spotify Playlist
+            <a href="https://www.youtube.com/channel/UCMqP-wqi9hXqKfkzfmoqa-w" target="_blank" class="link-btn">
+                <span class="icon"><i class="fi fi-brands-youtube"></i></span> YouTube
             </a>
-            <a href="https://discord.com" target="_blank" class="link-btn">
-                <span class="icon">👾</span> Discord Community
+            <a href="https://www.twitch.tv/mrlulez" target="_blank" class="link-btn">
+                <span class="icon"><i class="fi fi-brands-twitch"></i></span> Twitch
+            </a>
+            <a href="https://mrlulez.itch.io/" target="_blank" class="link-btn">
+                <span class="icon"><i class="fi fi-rr-gamepad"></i></span> Itch.io
+            </a>
+            <a href="https://github.com/BurakKaragol" target="_blank" class="link-btn">
+                <span class="icon"><i class="fi fi-brands-github"></i></span> GitHub
             </a>
         </div>
 
@@ -167,4 +195,5 @@
     <script src="../assets/js/translations.js"></script>
     <script src="../assets/js/script.js"></script>
 </body>
+
 </html>

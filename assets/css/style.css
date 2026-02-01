@@ -605,7 +605,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
 .pro-links-group .link-btn { background: var(--bg-dock); border: 1px solid rgba(0,0,0,0.1); border-left: 6px solid var(--c-accent); border-radius: 6px; color: var(--c-text-main); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
 [data-theme="dark"] .pro-links-group .link-btn { border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); }
 .pro-links-group .link-btn:hover { transform: translateY(-2px) scale(1.01); background: var(--c-accent); color: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
-.pers-links-group .link-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 60px; color: var(--c-text-main); justify-content: center; backdrop-filter: blur(10px); }
+.pers-links-group .link-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 60px; color: var(--c-text-main); justify-content: center; backdrop-filter: blur(10px); gap: 12px; }
 [data-theme="light"][data-mode="personal"] .pers-links-group .link-btn { background: rgba(255,255,255,0.8); border-color: rgba(0,0,0,0.1); }
 .pers-links-group .link-btn:hover { transform: scale(1.03); background: linear-gradient(135deg, var(--c-accent), var(--c-highlight)); color: #fff; border-color: transparent; box-shadow: 0 10px 40px rgba(0,0,0,0.25); text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
