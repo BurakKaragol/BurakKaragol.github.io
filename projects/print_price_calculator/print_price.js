@@ -1,7 +1,7 @@
-/* Print Price Calculator - Final Logic v6 */
+/* Print Price Calculator - Final Logic v7 */
 
 // ================= CONSTANTS & STATE =================
-const STORAGE_KEY = 'pp_calculator_v6';
+const STORAGE_KEY = 'pp_calculator_v7';
 
 const DEFAULT_STATE = {
   materials: [
@@ -51,12 +51,16 @@ const els = {
   chkCustomerMode: document.getElementById('chkCustomerMode'),
 
   resultPanel: document.getElementById('resultPanel'),
+  lblTotalMobile: document.getElementById('lblTotalMobile'),
 
   // Pickers
   pickerOverlay: document.getElementById('pickerOverlay'),
   pickerTitle: document.getElementById('pickerTitle'),
   pickerColumns: document.getElementById('pickerColumns'),
   btnPickerDone: document.getElementById('btnPickerDone'),
+  btnPickerKeyboard: document.getElementById('btnPickerKeyboard'),
+  pickerManualInput: document.getElementById('pickerManualInput'),
+  inpManual: document.getElementById('inpManual'),
 
   // Result Labels
   lblTotalPrice: document.getElementById('lblTotalPrice'),
@@ -206,18 +210,21 @@ function attachEventListeners() {
   els.btnCancelPrint.addEventListener('click', closeModal);
   els.btnSaveSettings.addEventListener('click', saveSettings);
 
-  // Mobile Sheet
+  // Mobile Sheet Interaction
   if (window.innerWidth <= 768) {
+    const header = els.resultPanel.querySelector('.result-panel-header');
+    const btnToggle = els.resultPanel.querySelector('.btn-toggle-sheet');
+
     const toggleSheet = (e) => {
-      if (e.target.closest('button')) return;
+      e.stopPropagation(); // prevent bubbling issues
       els.resultPanel.classList.toggle('expanded');
+
+      // Icon rotation
+      const isExpanded = els.resultPanel.classList.contains('expanded');
+      if (btnToggle) btnToggle.style.transform = isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
     };
-    els.resultPanel.querySelector('.mobile-drag-handle').addEventListener('click', toggleSheet);
-    els.resultPanel.addEventListener('click', (e) => {
-      if (e.clientY > window.innerHeight - 100 && !els.resultPanel.classList.contains('expanded')) {
-        els.resultPanel.classList.add('expanded');
-      }
-    });
+
+    if (header) header.addEventListener('click', toggleSheet);
   }
 }
 
@@ -230,12 +237,25 @@ function initMobileUx() {
   }
 }
 
-// Picker logic
+// Picker State
 let currentPickerType = null;
+let isManualMode = false;
+
 function openPicker(type) {
   currentPickerType = type;
+  isManualMode = false;
+
   els.pickerOverlay.classList.remove('hidden');
+  els.pickerColumns.classList.remove('hidden');
+  els.pickerManualInput.classList.add('hidden');
+
   els.pickerColumns.innerHTML = '';
+
+  // Reset buttons
+  if (els.btnPickerKeyboard) {
+    els.btnPickerKeyboard.textContent = '⌨️';
+    els.btnPickerKeyboard.onclick = toggleManualMode;
+  }
 
   if (type === 'time') {
     els.pickerTitle.textContent = 'Baskı Süresi';
@@ -247,52 +267,96 @@ function openPicker(type) {
   else if (type === 'weight') {
     els.pickerTitle.textContent = 'Ağırlık (g)';
     let val = parseInt(els.inpWeight.value) || 0;
-    createColumn('w_100', 0, 9, Math.floor(val / 100) % 10);
-    createColumn('w_10', 0, 9, Math.floor(val / 10) % 10);
-    createColumn('w_1', 0, 9, val % 10);
+
+    // Single Column 0-1000
+    createColumn('weight', 0, 1000, val);
   }
+
   els.btnPickerDone.onclick = () => closePicker(true);
+}
+
+function toggleManualMode() {
+  isManualMode = !isManualMode;
+
+  if (isManualMode) {
+    els.pickerColumns.classList.add('hidden');
+    els.pickerManualInput.classList.remove('hidden');
+    els.btnPickerKeyboard.textContent = '🔄'; // Switch back icon
+
+    // Pre-fill value
+    if (currentPickerType === 'weight') els.inpManual.value = parseInt(els.inpWeight.value) || 0;
+    else els.inpManual.value = '';
+
+    setTimeout(() => els.inpManual.focus(), 100);
+  } else {
+    els.pickerColumns.classList.remove('hidden');
+    els.pickerManualInput.classList.add('hidden');
+    els.btnPickerKeyboard.textContent = '⌨️';
+  }
 }
 
 function createColumn(id, min, max, initial) {
   const col = document.createElement('div');
   col.className = 'picker-column';
+
+  // Fragment for performance
+  const frag = document.createDocumentFragment();
+  // Add extra padding items at top? CSS handles with padding on column
+
   for (let i = min; i <= max; i++) {
     const item = document.createElement('div');
     item.className = 'picker-item';
-    item.textContent = i.toString().padStart(2, '0');
+    // Bold handled in CSS
+    item.textContent = i.toString().padStart(id === 'minutes' ? 2 : 1, '0');
     item.dataset.val = i;
-    col.appendChild(item);
+
+    // Click to select
+    item.onclick = function () {
+      col.scrollTop = (i - min) * 50; // 50px item height
+    };
+
+    frag.appendChild(item);
   }
+  col.appendChild(frag);
   els.pickerColumns.appendChild(col);
+
+  // Scroll to position
   setTimeout(() => {
-    // Simple pixel precision offset
-    col.scrollTop = (initial - min) * 44;
+    col.scrollTop = (initial - min) * 50;
   }, 10);
 
-  // Highlight logic (center)
+  // Highlight logic
   let isScrolling;
   col.addEventListener('scroll', () => {
     clearTimeout(isScrolling);
     isScrolling = setTimeout(() => {
-      const idx = Math.round(col.scrollTop / 44);
-      // Could add visual class .selected here
+      const idx = Math.round(col.scrollTop / 50);
+      const items = col.querySelectorAll('.picker-item');
+      items.forEach(it => it.classList.remove('selected'));
+      if (items[idx]) items[idx].classList.add('selected');
     }, 50);
   });
 }
 
 function closePicker(save) {
   if (save) {
-    const cols = els.pickerColumns.querySelectorAll('.picker-column');
-    const vals = Array.from(cols).map(c => {
-      // Calculate index from scroll
-      const index = Math.round(c.scrollTop / 44);
-      const items = c.querySelectorAll('.picker-item');
-      return items[index] ? parseInt(items[index].dataset.val) : 0;
-    });
+    if (isManualMode) {
+      const val = els.inpManual.value;
+      if (currentPickerType === 'weight') els.inpWeight.value = val;
+      // Manual time not supported fully here for simplicity, focusing on weight
+    } else {
+      const cols = els.pickerColumns.querySelectorAll('.picker-column');
+      const vals = Array.from(cols).map(c => {
+        const index = Math.round(c.scrollTop / 50); // 50px height
+        const items = c.querySelectorAll('.picker-item');
+        return items[index] ? parseInt(items[index].dataset.val) : 0;
+      });
 
-    if (currentPickerType === 'time') els.inpTime.value = `${vals[0]}:${vals[1].toString().padStart(2, '0')}`;
-    else if (currentPickerType === 'weight') els.inpWeight.value = vals[0] * 100 + vals[1] * 10 + vals[2];
+      if (currentPickerType === 'time') els.inpTime.value = `${vals[0]}:${vals[1].toString().padStart(2, '0')}`;
+      else if (currentPickerType === 'weight') {
+        els.inpWeight.value = vals[0];
+      }
+    }
     recalc();
   }
   els.pickerOverlay.classList.add('hidden');
@@ -378,6 +442,8 @@ function recalc() {
 
   els.lblTotalPrice.textContent = fmt(totalPrice);
   els.lblUnitPrice.textContent = qty > 1 ? `Birim: ${fmt(unitPrice)}` : `Birim Fiyat`;
+
+  if (els.lblTotalMobile) els.lblTotalMobile.textContent = fmt(totalPrice);
 
   // Breakdown Values for Chart
   let totalMat = materialCostBase * riskMultiplier * qty;

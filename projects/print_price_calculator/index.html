@@ -19,20 +19,14 @@
     <header class="app-header">
       <div class="logo">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path
-            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+          <path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
         <span>PrintCalc <span style="color:var(--accent); font-size:0.8em;">Pro</span></span>
       </div>
       <div class="header-actions">
         <!-- Settings Button -->
         <button class="btn icon-only" id="btnOpenSettings" title="Ayarlar">
-          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
         </button>
         <!-- Customer Mode Toggle -->
         <label class="toggle-switch" title="Müşteri Modu (Kâr detayını gizle)">
@@ -46,10 +40,10 @@
     <main class="calculator-grid">
       <!-- INPUT SECTION -->
       <section class="input-panel">
-
+        
         <div class="panel-group">
           <h3>Baskı Parametreleri</h3>
-
+          
           <div class="form-row">
             <div class="form-group flex-grow full-width-mobile">
               <label for="selMaterial">Malzeme</label>
@@ -57,28 +51,22 @@
                 <select id="selMaterial"></select>
                 <div class="action-buttons">
                   <button class="btn icon-only secondary" id="btnEditMaterials" title="Malzemeleri Yönet">
-                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                    </svg>
+                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                   </button>
                   <button class="btn icon-only secondary" id="btnAddMaterialQuick" title="Hızlı Ekle">+</button>
                 </div>
               </div>
             </div>
-
+            
             <div class="form-group flex-grow full-width-mobile">
               <label for="selPrinter">Yazıcı</label>
               <div class="input-with-action">
                 <select id="selPrinter"></select>
                 <div class="action-buttons">
-                  <button class="btn icon-only secondary" id="btnEditPrinters" title="Yazıcıları Yönet">
-                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                    </svg>
-                  </button>
-                  <button class="btn icon-only secondary" id="btnAddPrinterQuick" title="Hızlı Ekle">+</button>
+                   <button class="btn icon-only secondary" id="btnEditPrinters" title="Yazıcıları Yönet">
+                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                   </button>
+                   <button class="btn icon-only secondary" id="btnAddPrinterQuick" title="Hızlı Ekle">+</button>
                 </div>
               </div>
             </div>
@@ -92,7 +80,7 @@
                 <span class="unit">g</span>
               </div>
             </div>
-
+            
             <div class="form-group half">
               <label for="inpTime">Baskı Süresi</label>
               <div class="input-wrapper">
@@ -112,31 +100,31 @@
               <div class="form-group half">
                 <label for="inpMarkup">Kâr Marjı (%)</label>
                 <div class="input-wrapper">
-                  <input type="number" id="inpMarkup" value="30">
-                  <span class="unit">%</span>
+                    <input type="number" id="inpMarkup" value="30">
+                    <span class="unit">%</span>
                 </div>
               </div>
               <div class="form-group half">
                 <label for="inpLabor">İşçilik (Saat)</label>
                 <div class="input-wrapper">
-                  <input type="number" id="inpLabor" value="0.25" step="0.05">
-                  <span class="unit">sa</span>
+                    <input type="number" id="inpLabor" value="0.25" step="0.05">
+                    <span class="unit">sa</span>
                 </div>
               </div>
             </div>
-            <div class="form-row">
-              <div class="form-group half">
-                <label for="inpQty">Adet</label>
-                <input type="number" id="inpQty" value="1" min="1">
-              </div>
-              <div class="form-group half">
-                <label for="inpFailed">Fire Riski (%)</label>
-                <div class="input-wrapper">
-                  <input type="number" id="inpFailed" value="8">
-                  <span class="unit">%</span>
-                </div>
-              </div>
-            </div>
+             <div class="form-row">
+               <div class="form-group half">
+                 <label for="inpQty">Adet</label>
+                 <input type="number" id="inpQty" value="1" min="1">
+               </div>
+               <div class="form-group half">
+                 <label for="inpFailed">Fire Riski (%)</label>
+                 <div class="input-wrapper">
+                    <input type="number" id="inpFailed" value="8">
+                    <span class="unit">%</span>
+                 </div>
+               </div>
+             </div>
           </div>
         </div>
 
@@ -144,65 +132,67 @@
 
       <!-- RESULT SECTION -->
       <section class="result-panel" id="resultPanel">
-        <div class="mobile-drag-handle"></div>
-        <div class="result-card">
-
-          <div class="top-row">
-            <div class="result-header">TOPLAM MALİYET</div>
-          </div>
-
-          <div class="result-price-big" id="lblTotalPrice">₺0.00</div>
-          <div class="result-unit-price" id="lblUnitPrice">Birim: ₺0.00</div>
-
-          <div class="divider"></div>
-
-          <div class="cost-breakdown">
-            <!-- Items generated by JS -->
-            <div class="breakdown-item">
-              <div class="bd-label-row">
-                <span class="label">Malzeme</span>
-                <span class="value" id="valMaterial">₺0.00</span>
-              </div>
-              <div class="breakdown-bar-bg">
-                <div class="bar-fill" id="barMaterial" style="width:0%"></div>
-              </div>
-            </div>
-
-            <div class="breakdown-item">
-              <div class="bd-label-row">
-                <span class="label">Enerji & Makine</span>
-                <span class="value" id="valMachine">₺0.00</span>
-              </div>
-              <div class="breakdown-bar-bg">
-                <div class="bar-fill" id="barMachine" style="width:0%"></div>
-              </div>
-            </div>
-
-            <div class="breakdown-item">
-              <div class="bd-label-row">
-                <span class="label">İşçilik</span>
-                <span class="value" id="valLabor">₺0.00</span>
-              </div>
-              <div class="breakdown-bar-bg">
-                <div class="bar-fill" id="barLabor" style="width:0%"></div>
-              </div>
-            </div>
-
-            <div class="breakdown-item highlight">
-              <div class="bd-label-row">
-                <span class="label">Kâr</span>
-                <span class="value" id="valProfit">₺0.00</span>
-              </div>
-              <div class="breakdown-bar-bg">
-                <div class="bar-fill profit" id="barProfit" style="width:0%"></div>
-              </div>
-            </div>
-          </div>
-
+        <!-- Compact Header for Mobile interaction -->
+        <div class="result-panel-header">
+           <div class="result-mini-summary">
+               Toplam: <span id="lblTotalMobile">₺0.00</span>
+           </div>
+           <button class="btn-toggle-sheet">
+               <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+           </button>
+           <div class="mobile-drag-handle"></div>
         </div>
 
-        <div class="result-actions">
-          <button class="btn secondary" id="btnReset">Sıfırla</button>
+        <div class="result-content-body">
+            <div class="result-card">
+                <div class="top-row">
+                    <div class="result-header">TOPLAM MALİYET</div>
+                </div>
+              
+              <div class="result-price-big" id="lblTotalPrice">₺0.00</div>
+              <div class="result-unit-price" id="lblUnitPrice">Birim: ₺0.00</div>
+              
+              <div class="divider"></div>
+    
+              <div class="cost-breakdown">
+                <!-- Items generated by JS -->
+                <div class="breakdown-item">
+                  <div class="bd-label-row">
+                      <span class="label">Malzeme</span>
+                      <span class="value" id="valMaterial">₺0.00</span>
+                  </div>
+                  <div class="breakdown-bar-bg"><div class="bar-fill" id="barMaterial" style="width:0%"></div></div>
+                </div>
+    
+                <div class="breakdown-item">
+                  <div class="bd-label-row">
+                      <span class="label">Enerji & Makine</span>
+                      <span class="value" id="valMachine">₺0.00</span>
+                  </div>
+                  <div class="breakdown-bar-bg"><div class="bar-fill" id="barMachine" style="width:0%"></div></div>
+                </div>
+    
+                <div class="breakdown-item">
+                  <div class="bd-label-row">
+                      <span class="label">İşçilik</span>
+                      <span class="value" id="valLabor">₺0.00</span>
+                  </div>
+                  <div class="breakdown-bar-bg"><div class="bar-fill" id="barLabor" style="width:0%"></div></div>
+                </div>
+                 
+                 <div class="breakdown-item highlight">
+                  <div class="bd-label-row">
+                      <span class="label">Kâr</span>
+                      <span class="value" id="valProfit">₺0.00</span>
+                  </div>
+                  <div class="breakdown-bar-bg"><div class="bar-fill profit" id="barProfit" style="width:0%"></div></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="result-actions">
+               <button class="btn secondary" id="btnReset">Sıfırla</button>
+            </div>
         </div>
 
       </section>
@@ -212,110 +202,97 @@
   <!-- MODALS -->
   <div id="modalOverlay" class="modal-overlay hidden">
     <div class="modal-container">
+        
+        <!-- Material Modal -->
+        <div id="modalMaterials" class="modal-content hidden">
+            <div class="modal-header"><h2>Malzeme Yönetimi</h2><button class="btn-close" onclick="closeModal()">✕</button></div>
+            <div class="modal-body">
+                 <div class="modal-list scrollable" id="listMaterials"></div>
+                 <div class="modal-form">
+                     <h3>Düzenle / Ekle</h3>
+                     <input type="hidden" id="editMatId">
+                     <div class="form-row"><input id="editMatName" placeholder="Ad" class="full-width"></div>
+                     <div class="form-row">
+                         <div class="input-group"><label>Fiyat (₺/kg)</label><input type="number" id="editMatPrice"></div>
+                         <div class="input-group"><label>Renk</label><input type="color" id="editMatColor"></div>
+                     </div>
+                      <div class="form-row">
+                         <div class="input-group"><label>Tip</label><select id="editMatType"><option>FDM</option><option>Reçine</option></select></div>
+                         <div class="input-group"><label>Marka</label><input id="editMatVendor"></div>
+                     </div>
+                     <div class="form-actions"><button class="btn secondary" id="btnCancelMat">İptal</button><button class="btn primary" id="btnSaveMat">Kaydet</button></div>
+                 </div>
+            </div>
+        </div>
 
-      <!-- Material Modal -->
-      <div id="modalMaterials" class="modal-content hidden">
-        <div class="modal-header">
-          <h2>Malzeme Yönetimi</h2><button class="btn-close" onclick="closeModal()">✕</button>
+        <!-- Printer Modal -->
+        <div id="modalPrinters" class="modal-content hidden">
+            <div class="modal-header"><h2>Yazıcı Yönetimi</h2><button class="btn-close" onclick="closeModal()">✕</button></div>
+            <div class="modal-body">
+                 <div class="modal-list scrollable" id="listPrinters"></div>
+                 <div class="modal-form">
+                     <h3>Düzenle / Ekle</h3>
+                     <input type="hidden" id="editPrintId">
+                     <div class="form-row"><input id="editPrintName" placeholder="Yazıcı Adı (Ör: Bambu P1S)" class="full-width"></div>
+                     <div class="form-row">
+                         <div class="input-group"><label>Güç (W)</label><input type="number" id="editPrintPower" placeholder="150"></div>
+                         <div class="input-group"><label>Satın Alma Fiyatı (₺)</label><input type="number" id="editPrintPrice" placeholder="25000"></div>
+                     </div>
+                     <div class="form-row">
+                         <div class="input-group"><label>Ömür (Saat)</label><input type="number" id="editPrintLifespan" placeholder="5000"></div>
+                         <div class="input-group"><label>Bakım (₺/Saat)</label><input type="number" id="editPrintMaint" placeholder="5"></div>
+                     </div>
+                     <p class="hint-text">* Amortisman hesaplamak için fiyat ve ömür giriniz.</p>
+                     <div class="form-actions"><button class="btn secondary" id="btnCancelPrint">İptal</button><button class="btn primary" id="btnSavePrint">Kaydet</button></div>
+                 </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <div class="modal-list scrollable" id="listMaterials"></div>
-          <div class="modal-form">
-            <h3>Düzenle / Ekle</h3>
-            <input type="hidden" id="editMatId">
-            <div class="form-row"><input id="editMatName" placeholder="Ad" class="full-width"></div>
-            <div class="form-row">
-              <div class="input-group"><label>Fiyat (₺/kg)</label><input type="number" id="editMatPrice"></div>
-              <div class="input-group"><label>Renk</label><input type="color" id="editMatColor"></div>
+        
+        <!-- Settings Modal -->
+        <div id="modalSettings" class="modal-content hidden">
+            <div class="modal-header"><h2>Genel Ayarlar</h2><button class="btn-close" onclick="closeModal()">✕</button></div>
+            <div class="modal-body">
+                 <div class="modal-form">
+                     <div class="form-row">
+                         <div class="input-group"><label>Elektrik Birim Fiyatı (₺/kWh)</label><input type="number" id="setElecPrice" step="0.1"></div>
+                     </div>
+                     <div class="divider"></div>
+                     <h3>Uzun Baskı Risk Çarpanı</h3>
+                     <p class="hint-text">Belirli bir saati geçen baskılarda, risk faktörünü artırarak fiyatı günceller.</p>
+                     <div class="form-row">
+                         <div class="input-group"><label>Eşik Süre (Saat)</label><input type="number" id="setRiskThreshold" placeholder="12"></div>
+                         <div class="input-group"><label>Çarpan (Ör: 1.2 = %20 Zam)</label><input type="number" id="setRiskMultiplier" placeholder="1.2" step="0.1"></div>
+                     </div>
+                     <div class="form-actions"><button class="btn secondary" onclick="closeModal()">İptal</button><button class="btn primary" id="btnSaveSettings">Kaydet</button></div>
+                 </div>
             </div>
-            <div class="form-row">
-              <div class="input-group"><label>Tip</label><select id="editMatType">
-                  <option>FDM</option>
-                  <option>Reçine</option>
-                </select></div>
-              <div class="input-group"><label>Marka</label><input id="editMatVendor"></div>
-            </div>
-            <div class="form-actions"><button class="btn secondary" id="btnCancelMat">İptal</button><button
-                class="btn primary" id="btnSaveMat">Kaydet</button></div>
-          </div>
         </div>
-      </div>
-
-      <!-- Printer Modal -->
-      <div id="modalPrinters" class="modal-content hidden">
-        <div class="modal-header">
-          <h2>Yazıcı Yönetimi</h2><button class="btn-close" onclick="closeModal()">✕</button>
-        </div>
-        <div class="modal-body">
-          <div class="modal-list scrollable" id="listPrinters"></div>
-          <div class="modal-form">
-            <h3>Düzenle / Ekle</h3>
-            <input type="hidden" id="editPrintId">
-            <div class="form-row"><input id="editPrintName" placeholder="Yazıcı Adı (Ör: Bambu P1S)" class="full-width">
-            </div>
-            <div class="form-row">
-              <div class="input-group"><label>Güç (W)</label><input type="number" id="editPrintPower" placeholder="150">
-              </div>
-              <div class="input-group"><label>Satın Alma Fiyatı (₺)</label><input type="number" id="editPrintPrice"
-                  placeholder="25000"></div>
-            </div>
-            <div class="form-row">
-              <div class="input-group"><label>Ömür (Saat)</label><input type="number" id="editPrintLifespan"
-                  placeholder="5000"></div>
-              <div class="input-group"><label>Bakım (₺/Saat)</label><input type="number" id="editPrintMaint"
-                  placeholder="5"></div>
-            </div>
-            <p class="hint-text">* Amortisman hesaplamak için fiyat ve ömür giriniz.</p>
-            <div class="form-actions"><button class="btn secondary" id="btnCancelPrint">İptal</button><button
-                class="btn primary" id="btnSavePrint">Kaydet</button></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Settings Modal -->
-      <div id="modalSettings" class="modal-content hidden">
-        <div class="modal-header">
-          <h2>Genel Ayarlar</h2><button class="btn-close" onclick="closeModal()">✕</button>
-        </div>
-        <div class="modal-body">
-          <div class="modal-form">
-            <div class="form-row">
-              <div class="input-group"><label>Elektrik Birim Fiyatı (₺/kWh)</label><input type="number"
-                  id="setElecPrice" step="0.1"></div>
-            </div>
-            <div class="divider"></div>
-            <h3>Uzun Baskı Risk Çarpanı</h3>
-            <p class="hint-text">Belirli bir saati geçen baskılarda, risk faktörünü artırarak fiyatı günceller.</p>
-            <div class="form-row">
-              <div class="input-group"><label>Eşik Süre (Saat)</label><input type="number" id="setRiskThreshold"
-                  placeholder="12"></div>
-              <div class="input-group"><label>Çarpan (Ör: 1.2 = %20 Zam)</label><input type="number"
-                  id="setRiskMultiplier" placeholder="1.2" step="0.1"></div>
-            </div>
-            <div class="form-actions"><button class="btn secondary" onclick="closeModal()">İptal</button><button
-                class="btn primary" id="btnSaveSettings">Kaydet</button></div>
-          </div>
-        </div>
-      </div>
 
     </div>
   </div>
 
   <!-- DRUM PICKER OVERLAY -->
   <div id="pickerOverlay" class="picker-overlay hidden">
-    <div class="picker-container">
-      <div class="picker-header">
-        <span id="pickerTitle">Seçim</span>
-        <button class="btn-text" id="btnPickerDone">Bitti</button>
+      <div class="picker-container">
+          <div class="picker-header">
+              <button class="btn-text" id="btnPickerKeyboard" title="Manuel Giriş">⌨️</button>
+              <span id="pickerTitle">Seçim</span>
+              <button class="btn-text" id="btnPickerDone">Bitti</button>
+          </div>
+          <div class="picker-body">
+              <!-- Wheel View -->
+              <div class="picker-highlight"></div>
+              <div id="pickerColumns" class="picker-columns"></div>
+              
+              <!-- Manual Input View -->
+              <div id="pickerManualInput" class="picker-manual-input hidden">
+                  <input type="number" id="inpManual" placeholder="0">
+                  <div style="font-size:0.9rem; color: #94a3b8;">Değeri giriniz</div>
+              </div>
+          </div>
       </div>
-      <div class="picker-body">
-        <div class="picker-highlight"></div>
-        <div id="pickerColumns" class="picker-columns"></div>
-      </div>
-    </div>
   </div>
 
-  <script src="print_price.js" defer></script>
+<script src="print_price.js" defer></script>
 </body>
-
 </html>
