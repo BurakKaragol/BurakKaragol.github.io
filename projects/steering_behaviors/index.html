@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steering Behaviors | Burak Karagol</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./steering_behaviors.css">
+</head>
+
+<body>
+
+    <canvas id="simulationCanvas"></canvas>
+
+    <div class="controls-panel">
+        <h2>Flock Controls</h2>
+
+        <div class="control-group">
+            <label>Boid Count <span id="countVal" class="value-display">200</span></label>
+            <input type="range" id="countSlider" min="0" max="500" step="10" value="200">
+        </div>
+
+        <div class="control-group">
+            <label>Separation <span id="sepVal" class="value-display">1.5</span></label>
+            <input type="range" id="sepSlider" min="0" max="3" step="0.1" value="1.5">
+        </div>
+
+        <div class="control-group">
+            <label>Alignment <span id="aliVal" class="value-display">1.0</span></label>
+            <input type="range" id="aliSlider" min="0" max="3" step="0.1" value="1.0">
+        </div>
+
+        <div class="control-group">
+            <label>Cohesion <span id="cohVal" class="value-display">1.0</span></label>
+            <input type="range" id="cohSlider" min="0" max="3" step="0.1" value="1.0">
+        </div>
+
+        <div class="control-group">
+            <label>Max Speed <span id="speedVal" class="value-display">4</span></label>
+            <input type="range" id="speedSlider" min="2" max="10" step="0.1" value="4">
+        </div>
+
+        <div class="control-group">
+            <label>Perception <span id="percVal" class="value-display">50</span></label>
+            <input type="range" id="percSlider" min="10" max="150" step="5" value="50">
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--panel-border); margin: 15px 0;">
+
+        <div class="control-group">
+            <label>Boid Color</label>
+            <input type="color" id="boidColor" value="#58a6ff"
+                style="width: 100%; height: 35px; border: none; cursor: pointer; background: transparent;">
+        </div>
+
+        <div class="control-group">
+            <label>Predator Color</label>
+            <input type="color" id="predatorColor" value="#ff4d4d"
+                style="width: 100%; height: 35px; border: none; cursor: pointer; background: transparent;">
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--panel-border); margin: 15px 0;">
+        <h3 style="font-size: 0.85rem; margin-bottom: 12px; color: var(--text-color); font-weight: 600;">Debug
+            Visualization</h3>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="showPercChk">
+            <label for="showPercChk">Perception Radius</label>
+        </div>
+        <div class="checkbox-group">
+            <input type="checkbox" id="showAliChk">
+            <label for="showAliChk" style="color: #4CAF50;">Alignment Force</label>
+        </div>
+        <div class="checkbox-group">
+            <input type="checkbox" id="showCohChk">
+            <label for="showCohChk" style="color: #2196F3;">Cohesion Force</label>
+        </div>
+        <div class="checkbox-group">
+            <input type="checkbox" id="showSepChk">
+            <label for="showSepChk" style="color: #f44336;">Separation Force</label>
+        </div>
+
+        <div class="button-group">
+            <button id="resetBtn">Reset Flock</button>
+            <button id="backBtn" onclick="window.history.back()">Back</button>
+        </div>
+
+        <div style="margin-top: 15px; font-size: 0.8em; opacity: 0.7;">
+            <p><strong>Click</strong> to spawn predators.</p>
+        </div>
+    </div>
+
+    <script src="./steering_behaviors.js"></script>
+</body>
+
+</html>

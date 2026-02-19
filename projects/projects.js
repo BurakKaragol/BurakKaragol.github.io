@@ -1,23 +1,23 @@
 /* ===== Helpers ===== */
-const $  = (s, r=document)=>r.querySelector(s);
-const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
 /* ===== Help tooltip (fixed) ===== */
 const helpIcon = $('#helpIcon');
-const helpTip  = $('#helpTooltip');
+const helpTip = $('#helpTooltip');
 
-function positionHelp(){
+function positionHelp() {
   const rect = helpIcon.getBoundingClientRect();
   const margin = 10;
   helpTip.style.left = Math.max(10, Math.min(rect.left, window.innerWidth - helpTip.offsetWidth - 10)) + 'px';
-  helpTip.style.top  = (rect.bottom + margin) + 'px';
+  helpTip.style.top = (rect.bottom + margin) + 'px';
 }
-function showHelp(){ positionHelp(); helpTip.hidden = false; }
-function hideHelp(){ helpTip.hidden = true; }
-['mouseenter','focus'].forEach(ev=> helpIcon.addEventListener(ev, showHelp));
-['mouseleave','blur'].forEach(ev=> helpIcon.addEventListener(ev, hideHelp));
-window.addEventListener('scroll', ()=> !helpTip.hidden && positionHelp());
-window.addEventListener('resize', ()=> !helpTip.hidden && positionHelp());
+function showHelp() { positionHelp(); helpTip.hidden = false; }
+function hideHelp() { helpTip.hidden = true; }
+['mouseenter', 'focus'].forEach(ev => helpIcon.addEventListener(ev, showHelp));
+['mouseleave', 'blur'].forEach(ev => helpIcon.addEventListener(ev, hideHelp));
+window.addEventListener('scroll', () => !helpTip.hidden && positionHelp());
+window.addEventListener('resize', () => !helpTip.hidden && positionHelp());
 
 /* ===== Project metadata ===== */
 /* difficulty: 0..100 (we’ll render %), time: human string */
@@ -198,6 +198,28 @@ const PROJECTS = {
       "Designed a state-based rendering system to visually distinguish between stack operations, discarded points, and validity checks."
     ]
   },
+  "steering_behaviors/": {
+    time: "2 days",
+    difficulty: 60,
+    tags: ["Simulation", "Canvas", "AI"],
+    long: "Simulates flocking behavior using alignment, cohesion, and separation rules. Includes predator evasion and perception visualization.",
+    how: [
+      "Boids algorithm implementation (Reynolds).",
+      "Canvas API for high-performance rendering.",
+      "Interactive parameter tuning and predator interactions."
+    ]
+  },
+  "wfc/": {
+    time: "2 days",
+    difficulty: 80,
+    tags: ["Algorithm", "Generative", "Puzzle"],
+    long: "A visualization of the Wave Function Collapse algorithm, generating complex circuit-like patterns from simple adjacency rules.",
+    how: [
+      "Constraint solving (entropy reduction).",
+      "Procedural tile generation on Canvas.",
+      "Backtracking (or restart) on contradiction."
+    ]
+  },
   /* gets injected when unlocked */
   "terminal.html": {
     time: "—",
@@ -215,18 +237,18 @@ const PROJECTS = {
 /* ===== Grid interactions ===== */
 const grid = $('#projectsGrid');
 const modal = $('#modal'),
-      dlgTitle = $('#dlgTitle'),
-      dlgDesc  = $('#dlgDesc'),
-      dlgHero  = $('#dlgHero'),
-      dlgMeta  = $('#dlgMeta'),
-      dlgOpen  = $('#dlgOpen'),
-      dlgTime  = $('#dlgTime'),
-      dlgDiffBar   = $('#dlgDiffBar'),
-      dlgDiffLabel = $('#dlgDiffLabel'),
-      dlgLong  = $('#dlgLong'),
-      dlgHow   = $('#dlgHow');
+  dlgTitle = $('#dlgTitle'),
+  dlgDesc = $('#dlgDesc'),
+  dlgHero = $('#dlgHero'),
+  dlgMeta = $('#dlgMeta'),
+  dlgOpen = $('#dlgOpen'),
+  dlgTime = $('#dlgTime'),
+  dlgDiffBar = $('#dlgDiffBar'),
+  dlgDiffLabel = $('#dlgDiffLabel'),
+  dlgLong = $('#dlgLong'),
+  dlgHow = $('#dlgHow');
 
-grid.addEventListener('click', (e)=>{
+grid.addEventListener('click', (e) => {
   const card = e.target.closest('.card');
   if (!card) return;
 
@@ -238,37 +260,37 @@ grid.addEventListener('click', (e)=>{
   if (url) location.href = url;
 });
 
-function fillTags(tags=[]) {
+function fillTags(tags = []) {
   dlgMeta.innerHTML = '';
-  tags.forEach(t=>{
-    const span=document.createElement('span');
-    span.className='tag';
-    span.textContent=t;
+  tags.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'tag';
+    span.textContent = t;
     dlgMeta.appendChild(span);
   });
 }
 
-function setDifficulty(pct){
-  const p = Math.max(0, Math.min(100, +pct||0));
+function setDifficulty(pct) {
+  const p = Math.max(0, Math.min(100, +pct || 0));
   dlgDiffBar.style.width = p + '%';
   // hue from green (90) to red (0)
-  const hue = Math.round(90 - 0.9*p);
-  dlgDiffBar.style.background = `linear-gradient(90deg, hsl(${hue} 85% 55%), hsl(${Math.max(hue-15,0)} 80% 52%))`;
+  const hue = Math.round(90 - 0.9 * p);
+  dlgDiffBar.style.background = `linear-gradient(90deg, hsl(${hue} 85% 55%), hsl(${Math.max(hue - 15, 0)} 80% 52%))`;
   dlgDiffLabel.textContent = p <= 20 ? 'Very easy'
-                    : p <= 40 ? 'Easy'
-                    : p <= 60 ? 'Medium'
-                    : p <= 80 ? 'Hard'
-                              : 'Very hard';
+    : p <= 40 ? 'Easy'
+      : p <= 60 ? 'Medium'
+        : p <= 80 ? 'Hard'
+          : 'Very hard';
 }
 
-function openDetails(card){
+function openDetails(card) {
   const title = $('.title', card).textContent.trim();
-  const desc  = $('.desc', card).textContent.trim();
-  const url   = card.getAttribute('data-url') || $('.btn.primary', card)?.getAttribute('href') || '#';
+  const desc = $('.desc', card).textContent.trim();
+  const url = card.getAttribute('data-url') || $('.btn.primary', card)?.getAttribute('href') || '#';
   const bgImg = $('.thumb', card).style.backgroundImage;
 
   // metadata lookup
-  const meta = PROJECTS[url] || PROJECTS[url.replace('./','')] || PROJECTS[url.replace(/\/$/,'/')] || {
+  const meta = PROJECTS[url] || PROJECTS[url.replace('./', '')] || PROJECTS[url.replace(/\/$/, '/')] || {
     time: '—',
     difficulty: 40,
     tags: [],
@@ -278,7 +300,7 @@ function openDetails(card){
 
   // Fill modal
   dlgTitle.textContent = title;
-  dlgDesc.textContent  = desc;
+  dlgDesc.textContent = desc;
   dlgHero.style.background = bgImg || "linear-gradient(180deg,#0e141a,#0b1014)";
   dlgHero.style.backgroundSize = 'cover';
   dlgHero.style.backgroundPosition = 'center';
@@ -290,20 +312,20 @@ function openDetails(card){
 
   dlgLong.textContent = meta.long || '';
   dlgHow.innerHTML = '';
-  (meta.how || []).forEach(li=>{
-    const el=document.createElement('li'); el.textContent=li; dlgHow.appendChild(el);
+  (meta.how || []).forEach(li => {
+    const el = document.createElement('li'); el.textContent = li; dlgHow.appendChild(el);
   });
 
   modal.classList.add('open');
-  modal.setAttribute('aria-hidden','false');
+  modal.setAttribute('aria-hidden', 'false');
 }
 
-modal.addEventListener('click', (e)=>{ if (e.target.hasAttribute('data-close')) closeModal(); });
-function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+modal.addEventListener('click', (e) => { if (e.target.hasAttribute('data-close')) closeModal(); });
+function closeModal() { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); }
 
 /* ===== Secret 12-key puzzle ===== */
 const SECRET_STORAGE_KEY = 'secret_project_unlocked_opt1_details_v1';
-const ARROWS = ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'];
+const ARROWS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 const SEQ_LENGTH = 12;
 
 const head = $('#secretHead');  // boxed 4
@@ -312,7 +334,7 @@ const wrap = $('#secretWrap');
 
 // Build first 4 slots
 const headSlots = [];
-for (let i=0;i<4;i++){
+for (let i = 0; i < 4; i++) {
   const slot = document.createElement('div');
   slot.className = 'slot';
   const icon = document.createElement('span');
@@ -323,61 +345,61 @@ for (let i=0;i<4;i++){
 }
 
 // Random pattern
-function genPattern(n=SEQ_LENGTH){
-  return Array.from({length:n}, ()=> ARROWS[Math.floor(Math.random()*ARROWS.length)]);
+function genPattern(n = SEQ_LENGTH) {
+  return Array.from({ length: n }, () => ARROWS[Math.floor(Math.random() * ARROWS.length)]);
 }
 const pattern = genPattern();
 
 // Optional: store SHA-256 of the pattern string
-(async function storeHash(){
-  const txt = pattern.map(k=>k.replace('Arrow','')).join(',');
+(async function storeHash() {
+  const txt = pattern.map(k => k.replace('Arrow', '')).join(',');
   const enc = new TextEncoder().encode(txt);
   const buf = await crypto.subtle.digest('SHA-256', enc);
-  const hex = [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+  const hex = [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
   // console.log('pattern hash:', hex);
 })();
 
-function arrowSpan(key, wrong=false){
+function arrowSpan(key, wrong = false) {
   const s = document.createElement('span');
-  s.className = `icon key-${key.replace('Arrow','').toLowerCase()} show${wrong?' wrong':''}`;
+  s.className = `icon key-${key.replace('Arrow', '').toLowerCase()} show${wrong ? ' wrong' : ''}`;
   return s;
 }
 
 let progress = 0;
 let resetTimer = null;
 
-function resetPuzzle(){
+function resetPuzzle() {
   clearTimeout(resetTimer);
   progress = 0;
-  headSlots.forEach(icon=>{ icon.className = 'icon'; icon.removeAttribute('style'); });
+  headSlots.forEach(icon => { icon.className = 'icon'; icon.removeAttribute('style'); });
   tail.innerHTML = '';
 }
 
-function flashError(){
+function flashError() {
   wrap.classList.remove('shake'); void wrap.offsetWidth; wrap.classList.add('shake');
 }
 
-function revealAt(ix, key, wrong){
-  if (ix < 4){
+function revealAt(ix, key, wrong) {
+  if (ix < 4) {
     const el = headSlots[ix];
-    el.className = `icon key-${key.replace('Arrow','').toLowerCase()} show${wrong?' wrong':''}`;
+    el.className = `icon key-${key.replace('Arrow', '').toLowerCase()} show${wrong ? ' wrong' : ''}`;
     el.removeAttribute('style');
   } else {
     tail.appendChild(arrowSpan(key, wrong));
   }
 }
 
-function onComplete(){
-  try{ localStorage.setItem(SECRET_STORAGE_KEY,'1'); }catch{}
+function onComplete() {
+  try { localStorage.setItem(SECRET_STORAGE_KEY, '1'); } catch { }
   injectSecretCard();
 }
 
-window.addEventListener('keydown', (e)=>{
+window.addEventListener('keydown', (e) => {
   if (!ARROWS.includes(e.key)) return;
   e.preventDefault();
 
   const expected = pattern[progress];
-  if (e.key === expected){
+  if (e.key === expected) {
     revealAt(progress, e.key, false);
     progress++;
     if (progress === SEQ_LENGTH) onComplete();
@@ -390,7 +412,7 @@ window.addEventListener('keydown', (e)=>{
 });
 
 // Inject hidden project on success (or if previously unlocked)
-function injectSecretCard(){
+function injectSecretCard() {
   if (grid.querySelector('[data-secret="1"]')) return;
 
   const card = document.createElement('article');
@@ -432,5 +454,5 @@ function injectSecretCard(){
   grid.appendChild(card);
 }
 
-try{ if (localStorage.getItem(SECRET_STORAGE_KEY)==='1') injectSecretCard(); }catch{}
+try { if (localStorage.getItem(SECRET_STORAGE_KEY) === '1') injectSecretCard(); } catch { }
 resetPuzzle();

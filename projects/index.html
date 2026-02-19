@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Projects</title>
 
   <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="../assets/css/styles.css"/>
-  <link rel="stylesheet" href="projects.css"/>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="stylesheet" href="projects.css" />
 </head>
+
 <body class="dark-theme">
 
   <!-- Subtle, huge background shapes -->
@@ -37,10 +39,10 @@
   <!-- Fixed-position tooltip (hover) -->
   <div id="helpTooltip" class="help-tooltip" role="tooltip" hidden>
     👋 Welcome!<br>
-      This page is a collection of my interactive and experimental projects.<br>
-      Hover over any card to see more details, and click to dive in.<br>
-      Many of these projects were built through a mix of AI collaboration and pure creative flow.<br>
-      What matters most is the final experience — so explore, experiment, and most importantly, have fun! 🎨✨
+    This page is a collection of my interactive and experimental projects.<br>
+    Hover over any card to see more details, and click to dive in.<br>
+    Many of these projects were built through a mix of AI collaboration and pure creative flow.<br>
+    What matters most is the final experience — so explore, experiment, and most importantly, have fun! 🎨✨
   </div>
 
   <!-- Projects Grid (4 per row on desktop) -->
@@ -62,7 +64,8 @@
         </article>
 
         <article class="card" data-url="sorting_algorithm_visualizer/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/sorting_algorithm_visualizer.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/sorting_algorithm_visualizer.png')">
+          </div>
           <div class="body">
             <h3 class="title">Data Sorting Visualizer</h3>
             <p class="desc">Bubble, Merge, Quick Sort visualizations.</p>
@@ -74,7 +77,8 @@
         </article>
 
         <article class="card" data-url="path_finding_visualizer/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/path_finding_algorithm_visualizer.png')"></div>
+          <div class="thumb"
+            style="background-image:url('../assets/img/projects/path_finding_algorithm_visualizer.png')"></div>
           <div class="body">
             <h3 class="title">Pathfinding Viz</h3>
             <p class="desc">A*, Dijkstra, DFS, BFS on grids.</p>
@@ -255,6 +259,37 @@
           </div>
         </article>
 
+        <article class="card" data-url="steering_behaviors/">
+          <div class="thumb"
+            style="background-image:url('../assets/img/projects/steering_behaviors.png'), linear-gradient(135deg, #0f2027, #203a43, #2c5364)">
+          </div>
+          <div class="body">
+            <h3 class="title">Steering Behaviors</h3>
+            <p class="desc">Interactive flocking simulation (Boids).</p>
+            <div class="actions">
+              <a class="btn primary" href="steering_behaviors/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="wfc/">
+          <div class="thumb"
+            style="background-image:linear-gradient(135deg, #0d1117, #1f2937), radial-gradient(circle, #00f0ff 0%, transparent 10%)">
+            <div
+              style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;color:#00f0ff;opacity:0.3;">
+              ◈</div>
+          </div>
+          <div class="body">
+            <h3 class="title">Wave Function Collapse</h3>
+            <p class="desc">Procedural map generation visualization.</p>
+            <div class="actions">
+              <a class="btn primary" href="wfc/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
         <!-- Secret card gets injected here on unlock -->
 
       </div>
@@ -310,4 +345,5 @@
 
   <script src="projects.js"></script>
 </body>
+
 </html>

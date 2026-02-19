@@ -1,264 +1,321 @@
 <!doctype html>
 <html lang="tr">
+
 <head>
   <meta charset="utf-8" />
-  <title>3B Baskı Fiyatlandırma</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>3D Baskı Hesaplayıcı</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="print_price.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#1e293b">
 </head>
+
 <body>
-  <noscript>Bu uygulama JavaScript gerektirir.</noscript>
 
-  <!-- Üst Sekme Çubuğu -->
-  <header class="topbar" role="navigation" aria-label="Ana menü">
-    <nav id="navTabs" class="tabs">
-      <a href="#/quote"     data-route>Hızlı Teklif</a>
-      <a href="#/jobs"      data-route>İşler</a>
-      <a href="#/materials" data-route>Malzemeler</a>
-      <a href="#/printers"  data-route>Makineler</a>
-      <a href="#/rulesets"  data-route>Kurallar</a>
-      <a href="#/commercial"data-route>Ticari</a>
-      <a href="#/settings"  data-route>Ayarlar</a>
-      <a href="#/backups"   data-route>Yedekler</a>
-    </nav>
-    <div id="profileChip" class="chip" aria-live="polite"></div>
-  </header>
-
-  <!-- Ana Grid -->
-  <main id="app" class="viewport" role="main"></main>
-
-  <!-- Hover İpuçları -->
-  <div id="hint" class="hint hidden" role="tooltip" aria-hidden="true"></div>
-
-  <!-- ========= ŞABLONLAR ========= -->
-
-  <!-- Hızlı Teklif -->
-  <template id="tpl-quote">
-    <section class="pane pane-form" aria-labelledby="title-quote">
-      <h2 id="title-quote">Hızlı Teklif</h2>
-
-      <div id="quoteControls" class="controls" aria-label="Hızlı işlemler">
-        <button class="btn ghost" id="btnDuplicate" type="button">Çoğalt</button>
-        <button class="btn danger ghost" id="btnResetEssential" type="button">Girdileri Sıfırla</button>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="logo">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path
+            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <span>PrintCalc <span style="color:var(--accent); font-size:0.8em;">Pro</span></span>
       </div>
-
-      <!-- İşi Başlat / Taslak -->
-      <div class="start-job card" aria-label="İş başlangıcı">
-        <div class="grid2">
-          <input id="sj_name" placeholder="İş adı (isteğe bağlı)" autocomplete="off" />
-          <input id="sj_client" placeholder="Müşteri (isteğe bağlı)" autocomplete="off" />
-        </div>
-        <div class="row space">
-          <button class="btn" id="btnStartJob" type="button">İşi Başlat</button>
-          <button class="btn secondary" id="btnSaveDraft" type="button">Taslak Kaydet</button>
-        </div>
+      <div class="header-actions">
+        <!-- Settings Button -->
+        <button class="btn icon-only" id="btnOpenSettings" title="Ayarlar">
+          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </button>
+        <!-- Customer Mode Toggle -->
+        <label class="toggle-switch" title="Müşteri Modu (Kâr detayını gizle)">
+          <input type="checkbox" id="chkCustomerMode">
+          <span class="slider round"></span>
+          <span class="label-text">Müşteri</span>
+        </label>
       </div>
+    </header>
 
-      <form class="form" id="quoteForm" novalidate>
-        <h3>Temel</h3>
-        <div class="row">
-          <label for="qq_material" data-h="Teklifte kullanılacak malzeme. Birim maliyet ve fire oranı fiyatı etkiler.">Malzeme</label>
-          <select id="qq_material" aria-describedby="materialHelp"></select>
-          <a class="mini-link" href="#/materials" data-route id="materialHelp">Malzemeler</a>
-        </div>
-        <div class="row">
-          <label for="qq_printer" data-h="Bu işin basılacağı makine. Güç tüketimi, arıza riski ve aşınma saatlik gideri üzerinden hesaba girer.">Makine</label>
-          <select id="qq_printer" aria-describedby="printerHelp"></select>
-          <a class="mini-link" href="#/printers" data-route id="printerHelp">Makineler</a>
-        </div>
-        <div class="row">
-          <label for="qq_qty" data-h="Aynı parçadan kaç adet basılacağı. Bazı sabit maliyetler adet başına bölünür.">Adet</label>
-          <input id="qq_qty" type="number" min="1" value="1" inputmode="numeric" />
-        </div>
+    <main class="calculator-grid">
+      <!-- INPUT SECTION -->
+      <section class="input-panel">
 
-        <h3>Dilimleyici Verisi</h3>
-        <div class="row">
-          <label for="qq_tprint" data-h="Baskı süresi (6 ya da 6:30 gibi). İşgal süresi amortisman, enerji ve giderlere çarpan olur.">Baskı süresi</label>
-          <input id="qq_tprint" placeholder="ör. 6 veya 6:30" autocomplete="off" />
-          <span class="suf">saat</span>
-        </div>
-        <div class="row">
-          <label for="qq_mslicer" data-h="Parçanın net kütlesi. Malzeme maliyeti bunun üzerinden hesaplanır.">Parça kütlesi</label>
-          <input id="qq_mslicer" type="number" step="0.01" min="0" inputmode="decimal" />
-          <span class="suf">g</span>
-        </div>
-        <div class="row">
-          <label for="qq_msupport" data-h="Destek/raft/kenarlık kütlesi. Toplam etkin kütleye eklenir.">Destek kütlesi</label>
-          <input id="qq_msupport" type="number" step="0.01" min="0" value="0" inputmode="decimal" />
-          <span class="suf">g</span>
-        </div>
+        <div class="panel-group">
+          <h3>Baskı Parametreleri</h3>
 
-        <h3>İş Gücü</h3>
-        <div class="row">
-          <label for="qq_tsetup" data-h="İş başına tek seferlik kurulum/ayar süresi. Adet arttıkça birim başına düşen pay azalır.">Kurulum (iş başı)</label>
-          <input id="qq_tsetup" type="number" step="0.05" min="0" value="0.25" inputmode="decimal" />
-          <span class="suf">saat</span>
-        </div>
-        <div class="row">
-          <label for="qq_tpost" data-h="Parça başı temizlik/kesim/zımpara gibi işlemlere ayrılan süre.">Post-proses (adet)</label>
-          <input id="qq_tpost" type="number" step="0.05" min="0" value="0.20" inputmode="decimal" />
-          <span class="suf">saat</span>
-        </div>
-
-        <h3>Ticari</h3>
-        <div class="row">
-          <label for="qq_markup" data-h="Bu iş özelinde kârlılık payı. Genel varsayılanı Ticari sekmesinden ayarlayabilirsiniz.">Kâr marjı</label>
-          <input id="qq_markup" type="range" min="0" max="200" value="30" />
-          <output id="qq_markup_val" for="qq_markup">30%</output>
-        </div>
-      </form>
-    </section>
-
-    <aside class="pane pane-summary" aria-labelledby="title-summary">
-      <h2 id="title-summary">Özet</h2>
-      <div id="summaryBody" class="summary" aria-live="polite"></div>
-      <div id="summaryFooter" class="summary-footer">
-        <button class="btn secondary" id="btnExportQuotePDF" type="button">PDF Olarak Dışa Aktar</button>
-      </div>
-    </aside>
-  </template>
-
-  <!-- İşler -->
-  <template id="tpl-jobs">
-    <section class="pane pane-wide" aria-labelledby="title-jobs">
-      <h2 id="title-jobs">İşler</h2>
-      <div class="row space">
-        <div class="chip">Açık: <span id="jobOpenCount">0</span></div>
-        <div class="chip">Tamamlanan: <span id="jobDoneCount">0</span></div>
-        <div class="chip">Taslak: <span id="jobDraftCount">0</span></div>
-      </div>
-      <table class="grid-table" id="jobsTable" aria-label="İş listesi">
-        <thead>
-          <tr>
-            <th>Durum</th><th>Ad</th><th>Müşteri</th><th>Başlangıç</th><th>Bitiş</th><th>İlerleme</th><th>Tutar</th><th>Aksiyon</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </section>
-  </template>
-
-  <!-- Malzemeler -->
-  <template id="tpl-materials">
-    <section class="pane pane-wide" aria-labelledby="title-materials">
-      <div class="row space">
-        <h2 id="title-materials">Malzemeler</h2>
-        <div class="row gap">
-          <button class="btn" id="btnAddMaterial" type="button">Yeni Malzeme</button>
-          <input type="file" id="fileImportMaterials" hidden accept="application/json" />
-          <button class="btn ghost" id="btnExportMaterials" type="button">Dışa Aktar</button>
-          <button class="btn ghost" type="button" onclick="document.getElementById('fileImportMaterials').click()">İçe Aktar</button>
-        </div>
-      </div>
-
-      <div class="flex">
-        <table class="grid-table flex-1" id="materialsTable" aria-label="Malzeme tablosu"></table>
-        <div class="editor card" id="materialEditor" aria-label="Malzeme düzenleyici">
-          <h3>Detaylar</h3>
-          <div class="form slim">
-            <div class="row"><label for="m_name">Ad</label><input id="m_name" /></div>
-            <div class="row"><label for="m_type">Tip</label>
-              <select id="m_type"><option>FDM</option><option>Reçine</option></select>
+          <div class="form-row">
+            <div class="form-group flex-grow full-width-mobile">
+              <label for="selMaterial">Malzeme</label>
+              <div class="input-with-action">
+                <select id="selMaterial"></select>
+                <div class="action-buttons">
+                  <button class="btn icon-only secondary" id="btnEditMaterials" title="Malzemeleri Yönet">
+                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                  </button>
+                  <button class="btn icon-only secondary" id="btnAddMaterialQuick" title="Hızlı Ekle">+</button>
+                </div>
+              </div>
             </div>
-            <div class="row"><label for="m_price">Fiyat/g</label><input id="m_price" type="number" step="0.01" min="0"></div>
-            <div class="row"><label for="m_waste">Fire %</label><input id="m_waste" type="number" step="1" min="0" max="100"></div>
-            <div class="row"><label for="m_vendor">Tedarikçi</label><input id="m_vendor"></div>
-            <div class="row"><label for="m_tags">Etiketler</label><input id="m_tags" placeholder="PLA, siyah"></div>
-            <div class="row"><label for="m_color">Renk</label><input id="m_color" type="color" value="#999999" aria-label="Malzeme rengi"></div>
-            <div class="row right"><button class="btn" id="m_save" type="button">Kaydet</button></div>
+
+            <div class="form-group flex-grow full-width-mobile">
+              <label for="selPrinter">Yazıcı</label>
+              <div class="input-with-action">
+                <select id="selPrinter"></select>
+                <div class="action-buttons">
+                  <button class="btn icon-only secondary" id="btnEditPrinters" title="Yazıcıları Yönet">
+                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                  </button>
+                  <button class="btn icon-only secondary" id="btnAddPrinterQuick" title="Hızlı Ekle">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group half">
+              <label for="inpWeight">Ağırlık (g)</label>
+              <div class="input-wrapper">
+                <input type="number" id="inpWeight" placeholder="0" min="0" step="0.1" inputmode="decimal">
+                <span class="unit">g</span>
+              </div>
+            </div>
+
+            <div class="form-group half">
+              <label for="inpTime">Baskı Süresi</label>
+              <div class="input-wrapper">
+                <input type="text" id="inpTime" placeholder="Sa:Dk (ör: 4:30)" class="time-input" readonly>
+                <span class="unit-icon">⏱️</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-group">
+          <div class="group-header expanded" id="toggleDetails">
+            <h3>Diğer Giderler</h3>
+          </div>
+          <div class="group-content" id="detailsContent">
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="inpMarkup">Kâr Marjı (%)</label>
+                <div class="input-wrapper">
+                  <input type="number" id="inpMarkup" value="30">
+                  <span class="unit">%</span>
+                </div>
+              </div>
+              <div class="form-group half">
+                <label for="inpLabor">İşçilik (Saat)</label>
+                <div class="input-wrapper">
+                  <input type="number" id="inpLabor" value="0.25" step="0.05">
+                  <span class="unit">sa</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="inpQty">Adet</label>
+                <input type="number" id="inpQty" value="1" min="1">
+              </div>
+              <div class="form-group half">
+                <label for="inpFailed">Fire Riski (%)</label>
+                <div class="input-wrapper">
+                  <input type="number" id="inpFailed" value="8">
+                  <span class="unit">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- RESULT SECTION -->
+      <section class="result-panel" id="resultPanel">
+        <div class="mobile-drag-handle"></div>
+        <div class="result-card">
+
+          <div class="top-row">
+            <div class="result-header">TOPLAM MALİYET</div>
+          </div>
+
+          <div class="result-price-big" id="lblTotalPrice">₺0.00</div>
+          <div class="result-unit-price" id="lblUnitPrice">Birim: ₺0.00</div>
+
+          <div class="divider"></div>
+
+          <div class="cost-breakdown">
+            <!-- Items generated by JS -->
+            <div class="breakdown-item">
+              <div class="bd-label-row">
+                <span class="label">Malzeme</span>
+                <span class="value" id="valMaterial">₺0.00</span>
+              </div>
+              <div class="breakdown-bar-bg">
+                <div class="bar-fill" id="barMaterial" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="breakdown-item">
+              <div class="bd-label-row">
+                <span class="label">Enerji & Makine</span>
+                <span class="value" id="valMachine">₺0.00</span>
+              </div>
+              <div class="breakdown-bar-bg">
+                <div class="bar-fill" id="barMachine" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="breakdown-item">
+              <div class="bd-label-row">
+                <span class="label">İşçilik</span>
+                <span class="value" id="valLabor">₺0.00</span>
+              </div>
+              <div class="breakdown-bar-bg">
+                <div class="bar-fill" id="barLabor" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="breakdown-item highlight">
+              <div class="bd-label-row">
+                <span class="label">Kâr</span>
+                <span class="value" id="valProfit">₺0.00</span>
+              </div>
+              <div class="breakdown-bar-bg">
+                <div class="bar-fill profit" id="barProfit" style="width:0%"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="result-actions">
+          <button class="btn secondary" id="btnReset">Sıfırla</button>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- MODALS -->
+  <div id="modalOverlay" class="modal-overlay hidden">
+    <div class="modal-container">
+
+      <!-- Material Modal -->
+      <div id="modalMaterials" class="modal-content hidden">
+        <div class="modal-header">
+          <h2>Malzeme Yönetimi</h2><button class="btn-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-list scrollable" id="listMaterials"></div>
+          <div class="modal-form">
+            <h3>Düzenle / Ekle</h3>
+            <input type="hidden" id="editMatId">
+            <div class="form-row"><input id="editMatName" placeholder="Ad" class="full-width"></div>
+            <div class="form-row">
+              <div class="input-group"><label>Fiyat (₺/kg)</label><input type="number" id="editMatPrice"></div>
+              <div class="input-group"><label>Renk</label><input type="color" id="editMatColor"></div>
+            </div>
+            <div class="form-row">
+              <div class="input-group"><label>Tip</label><select id="editMatType">
+                  <option>FDM</option>
+                  <option>Reçine</option>
+                </select></div>
+              <div class="input-group"><label>Marka</label><input id="editMatVendor"></div>
+            </div>
+            <div class="form-actions"><button class="btn secondary" id="btnCancelMat">İptal</button><button
+                class="btn primary" id="btnSaveMat">Kaydet</button></div>
           </div>
         </div>
       </div>
-    </section>
-  </template>
 
-  <!-- Makineler -->
-  <template id="tpl-printers">
-    <section class="pane pane-wide" aria-labelledby="title-printers">
-      <div class="row space">
-        <h2 id="title-printers">Makineler</h2>
-        <div class="row gap">
-          <button class="btn" id="btnAddPrinter" type="button">Yeni Makine</button>
-          <input type="file" id="fileImportPrinters" hidden accept="application/json" />
-          <button class="btn ghost" id="btnExportPrinters" type="button">Dışa Aktar</button>
-          <button class="btn ghost" type="button" onclick="document.getElementById('fileImportPrinters').click()">İçe Aktar</button>
+      <!-- Printer Modal -->
+      <div id="modalPrinters" class="modal-content hidden">
+        <div class="modal-header">
+          <h2>Yazıcı Yönetimi</h2><button class="btn-close" onclick="closeModal()">✕</button>
         </div>
-      </div>
-
-      <div class="flex">
-        <table class="grid-table flex-1" id="printersTable" aria-label="Makine tablosu"></table>
-        <div class="editor card" id="printerEditor" aria-label="Makine düzenleyici">
-          <h3>Detaylar</h3>
-          <div class="form slim">
-            <div class="row"><label for="p_name">Ad</label><input id="p_name"></div>
-            <div class="row"><label for="p_Pavg">Ortalama Güç</label><input id="p_Pavg" type="number" step="1" min="1"><span class="suf">W</span></div>
-            <div class="row"><label for="p_wear">Aşınma</label><input id="p_wear" type="number" step="0.01" min="0"><span class="suf">₺/saat</span></div>
-            <div class="row"><label for="p_qfail">Arıza Olasılığı</label><input id="p_qfail" type="number" step="0.01" min="0" max="0.5"><span class="suf">0–0.5</span></div>
-            <div class="row"><label for="p_active">Aktif</label><input id="p_active" type="checkbox" role="switch"></div>
-            <div class="row right"><button class="btn" id="p_save" type="button">Kaydet</button></div>
+        <div class="modal-body">
+          <div class="modal-list scrollable" id="listPrinters"></div>
+          <div class="modal-form">
+            <h3>Düzenle / Ekle</h3>
+            <input type="hidden" id="editPrintId">
+            <div class="form-row"><input id="editPrintName" placeholder="Yazıcı Adı (Ör: Bambu P1S)" class="full-width">
+            </div>
+            <div class="form-row">
+              <div class="input-group"><label>Güç (W)</label><input type="number" id="editPrintPower" placeholder="150">
+              </div>
+              <div class="input-group"><label>Satın Alma Fiyatı (₺)</label><input type="number" id="editPrintPrice"
+                  placeholder="25000"></div>
+            </div>
+            <div class="form-row">
+              <div class="input-group"><label>Ömür (Saat)</label><input type="number" id="editPrintLifespan"
+                  placeholder="5000"></div>
+              <div class="input-group"><label>Bakım (₺/Saat)</label><input type="number" id="editPrintMaint"
+                  placeholder="5"></div>
+            </div>
+            <p class="hint-text">* Amortisman hesaplamak için fiyat ve ömür giriniz.</p>
+            <div class="form-actions"><button class="btn secondary" id="btnCancelPrint">İptal</button><button
+                class="btn primary" id="btnSavePrint">Kaydet</button></div>
           </div>
         </div>
       </div>
-    </section>
-  </template>
 
-  <!-- Kurallar -->
-  <template id="tpl-rulesets">
-    <section class="pane pane-wide" aria-labelledby="title-rules">
-      <h2 id="title-rules">Kurallar (Saatlik Giderler)</h2>
-      <div id="rulesetList"></div>
-      <div id="rulesetEditor" class="card hidden" aria-live="polite"></div>
-      <button class="btn" id="btnNewRuleset" type="button">Yeni Kural Seti</button>
-    </section>
-  </template>
-
-  <!-- Ticari -->
-  <template id="tpl-commercial">
-    <section class="pane pane-narrow center-wrap" aria-labelledby="title-commercial">
-      <h2 id="title-commercial">Ticari Ayarlar</h2>
-      <div id="commercialForm" class="form"></div>
-    </section>
-  </template>
-
-  <!-- Ayarlar -->
-  <template id="tpl-settings">
-    <section class="pane pane-narrow center-wrap" aria-labelledby="title-settings">
-      <h2 id="title-settings">Ayarlar</h2>
-      <div class="form">
-        <div class="row">
-          <label for="set_logo" data-h="PDF teklif çıktılarında sol üstte görünecek logonuz. PNG önerilir.">Logo (PDF)</label>
-          <input type="file" id="set_logo" accept="image/*" />
+      <!-- Settings Modal -->
+      <div id="modalSettings" class="modal-content hidden">
+        <div class="modal-header">
+          <h2>Genel Ayarlar</h2><button class="btn-close" onclick="closeModal()">✕</button>
         </div>
-        <div class="row">
-          <label for="set_currency" data-h="Para birimi ve yerel ayar (örn: tr-TR) sayısal gösterimleri etkiler.">Para Birimi</label>
-          <select id="set_currency"><option>TRY</option><option>USD</option><option>EUR</option></select>
-        </div>
-        <div class="row">
-          <label for="set_locale">Yerel Ayar</label>
-          <input id="set_locale" placeholder="tr-TR" />
-        </div>
-        <div class="row right">
-          <button class="btn" id="set_save" type="button">Kaydet</button>
+        <div class="modal-body">
+          <div class="modal-form">
+            <div class="form-row">
+              <div class="input-group"><label>Elektrik Birim Fiyatı (₺/kWh)</label><input type="number"
+                  id="setElecPrice" step="0.1"></div>
+            </div>
+            <div class="divider"></div>
+            <h3>Uzun Baskı Risk Çarpanı</h3>
+            <p class="hint-text">Belirli bir saati geçen baskılarda, risk faktörünü artırarak fiyatı günceller.</p>
+            <div class="form-row">
+              <div class="input-group"><label>Eşik Süre (Saat)</label><input type="number" id="setRiskThreshold"
+                  placeholder="12"></div>
+              <div class="input-group"><label>Çarpan (Ör: 1.2 = %20 Zam)</label><input type="number"
+                  id="setRiskMultiplier" placeholder="1.2" step="0.1"></div>
+            </div>
+            <div class="form-actions"><button class="btn secondary" onclick="closeModal()">İptal</button><button
+                class="btn primary" id="btnSaveSettings">Kaydet</button></div>
+          </div>
         </div>
       </div>
-      <p class="muted">Not: PDF dışa aktarma, yalnızca Hızlı Teklif özetinde bulunur.</p>
-    </section>
-  </template>
 
-  <!-- Yedekler -->
-  <template id="tpl-backups">
-    <section class="pane pane-narrow center-wrap" aria-labelledby="title-backups">
-      <h2 id="title-backups">Yedekler</h2>
-      <div class="row gap">
-        <button class="btn" id="btnExportAll" type="button">Tümünü Dışa Aktar</button>
-        <input type="file" id="fileImportAll" hidden accept="application/json" />
-        <button class="btn ghost" type="button" onclick="document.getElementById('fileImportAll').click()">İçe Aktar</button>
-        <button class="btn danger ghost" id="btnResetApp" type="button">Sıfırla</button>
+    </div>
+  </div>
+
+  <!-- DRUM PICKER OVERLAY -->
+  <div id="pickerOverlay" class="picker-overlay hidden">
+    <div class="picker-container">
+      <div class="picker-header">
+        <span id="pickerTitle">Seçim</span>
+        <button class="btn-text" id="btnPickerDone">Bitti</button>
       </div>
-    </section>
-  </template>
+      <div class="picker-body">
+        <div class="picker-highlight"></div>
+        <div id="pickerColumns" class="picker-columns"></div>
+      </div>
+    </div>
+  </div>
 
   <script src="print_price.js" defer></script>
 </body>
+
 </html>
