@@ -4,44 +4,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wave Function Collapse | Burak Karagol</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
-
+    <title>Interactive Cute WFC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./wfc.css">
 </head>
 
 <body>
+    <div class="app-wrap">
+        <aside class="sidebar glass">
+            <div class="brand">
+                <div class="logo-box"></div>
+                <h1>WFC Explorer</h1>
+            </div>
+            <p class="subtitle">Interactive Grid UI</p>
 
-    <canvas id="wfcCanvas"></canvas>
+            <div class="panel">
+                <div class="control">
+                    <label>Tileset</label>
+                    <select id="sTileset" class="dropdown">
+                        <option value="topdown">Cute Top-Down Paths</option>
+                        <option value="sidescroller">Side-Scroller Gravity</option>
+                    </select>
+                </div>
+                <div class="control">
+                    <label>Grid Size <span id="lblSize" class="badge">6</span></label>
+                    <input type="range" id="sSize" min="4" max="15" value="6">
+                </div>
+                <div class="control">
+                    <label>Prop Speed <span id="lblSpeed" class="badge">5</span></label>
+                    <input type="range" id="sSpeed" min="1" max="10" value="5">
+                </div>
+            </div>
 
-    <div class="controls-panel">
-        <h2>Cyber/Grid</h2>
+            <div class="actions">
+                <button id="btnAutoStart" class="btn primary">Auto Run Toggle</button>
+                <button id="btnStep" class="btn secondary">Propagate Step</button>
+                <button id="btnClear" class="btn danger">Clear Canvas</button>
+                <button id="backBtn" onclick="window.history.back()" class="btn outline mt-auto">Back</button>
+            </div>
 
-        <div class="control-group">
-            <label>Grid Size <span id="dimVal" class="value-display">20</span></label>
-            <input type="range" id="dimSlider" min="5" max="50" step="1" value="20">
-        </div>
+            <div id="statusLabel" class="status-indicator ready">READY</div>
+        </aside>
 
-        <div class="control-group">
-            <label>Speed <span id="speedVal" class="value-display">Max</span></label>
-            <input type="range" id="speedSlider" min="1" max="60" step="1" value="60">
-        </div>
+        <main class="canvas-wrap">
+            <canvas id="wfcCanvas"></canvas>
+        </main>
 
-        <div class="button-group">
-            <button id="startBtn">Generate</button>
-            <button id="resetBtn">Clear</button>
-        </div>
+        <aside class="sidebar right-sidebar glass">
+            <h2>Algorithm Output</h2>
 
-        <div class="button-group">
-            <button id="backBtn" onclick="window.history.back()" style="border-color: #666;">Back</button>
-        </div>
+            <div class="flowchart">
+                <div id="step-idle" class="flow-step active">
+                    <div class="step-icon">1</div>
+                    <div class="step-content">
+                        <h3>Idle / Ready</h3>
+                        <p>Waiting for interaction.</p>
+                    </div>
+                </div>
 
-        <div id="status" class="status">READY</div>
+                <div class="flow-arrow">↓</div>
+
+                <div id="step-entropy" class="flow-step">
+                    <div class="step-icon">2</div>
+                    <div class="step-content">
+                        <h3>Find Min Entropy</h3>
+                        <p>Select the cell with the fewest possible tiles.</p>
+                    </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <div id="step-collapse" class="flow-step">
+                    <div class="step-icon">3</div>
+                    <div class="step-content">
+                        <h3>Collapse Cell</h3>
+                        <p>Randomly choose one of the available tiles.</p>
+                    </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <div id="step-propagate" class="flow-step">
+                    <div class="step-icon">4</div>
+                    <div class="step-content">
+                        <h3>Propagate Rules</h3>
+                        <p>Update neighbors recursively to remove impossible tiles.</p>
+                    </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <div id="step-check" class="flow-step">
+                    <div class="step-icon">5</div>
+                    <div class="step-content">
+                        <h3>Check State</h3>
+                        <p>Grid complete? Contradiction? Loop back.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
     </div>
-
     <script src="./wfc.js"></script>
 </body>
 

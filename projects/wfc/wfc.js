@@ -1,23 +1,34 @@
 const canvas = document.getElementById('wfcCanvas');
 const ctx = canvas.getContext('2d');
 
-let DIM = 20;
+let DIM = 6;
+let tileWidth, tileHeight;
 let tiles = [];
 let grid = [];
-let tileWidth, tileHeight;
-let isLooping = false;
+let propagationQueue = [];
+
+// App State
+let isAutoRunning = false;
 let isComplete = false;
+let animationSpeed = 5;
 
-// Config
-const STATUS = document.getElementById('status');
+const statusLabel = document.getElementById('statusLabel');
 
-// --- Tile Definition ---
-// EDGES: [UP, RIGHT, DOWN, LEFT]
-// 0: Empty, 1: Pipe
+// Flowchart helper
+function setActiveFlowStep(stepId) {
+    document.querySelectorAll('.flow-step').forEach(el => el.classList.remove('active'));
+    if (stepId) {
+        const el = document.getElementById(stepId);
+        if (el) el.classList.add('active');
+    }
+}
+
+// --- Tile Creation (Cute Pastel Style) ---
 class Tile {
     constructor(img, edges) {
         this.img = img;
-        this.edges = edges;
+        this.edges = edges; // [UP, RIGHT, DOWN, LEFT]
+
         this.up = edges[0];
         this.right = edges[1];
         this.down = edges[2];
@@ -25,60 +36,78 @@ class Tile {
     }
 
     rotate(num) {
-        const newImg = rotateImage(this.img, num);
+        const c = document.createElement('canvas');
+        c.width = this.img.width;
+        c.height = this.img.height;
+        const x = c.getContext('2d');
+        x.translate(c.width / 2, c.height / 2);
+        x.rotate(num * 90 * Math.PI / 180);
+        x.translate(-c.width / 2, -c.height / 2);
+        x.drawImage(this.img, 0, 0);
+
         const newEdges = [];
         const len = this.edges.length;
         for (let i = 0; i < len; i++) {
             newEdges[i] = this.edges[(i - num + len) % len];
         }
-        return new Tile(newImg, newEdges);
+        return new Tile(c, newEdges);
     }
 }
 
-// Procedurally generate tile images
-function createTileImages() {
-    const s = 40; // Source size
+function createCuteTiles() {
+    const s = 100; // high res for crispness
     const gen = (drawFn) => {
         const c = document.createElement('canvas');
         c.width = s; c.height = s;
         const x = c.getContext('2d');
-        x.lineWidth = 4;
-        x.strokeStyle = '#00f0ff';
-        x.lineCap = 'butt'; // Butt cap for clean joins
-        x.shadowBlur = 4;
-        x.shadowColor = '#00f0ff';
+
+        // Base Grass
+        x.fillStyle = '#bbf7d0'; // Pastel green
+        x.fillRect(0, 0, s, s);
+
+        // Path settings
+        x.lineWidth = 36;
+        x.strokeStyle = '#fed7aa'; // Pastel peach/dirt
+        x.lineCap = 'round';
+        x.lineJoin = 'round';
+
         drawFn(x, s);
+
+        // Add subtle cute details (dots for flowers)
+        x.fillStyle = '#fca5a5'; // pink flower
+        x.beginPath(); x.arc(s * 0.2, s * 0.2, 4, 0, Math.PI * 2); x.fill();
+        x.fillStyle = '#fde047'; // yellow flower
+        x.beginPath(); x.arc(s * 0.8, s * 0.8, 5, 0, Math.PI * 2); x.fill();
+
         return c;
     }
 
-    const blank = gen((x, s) => { });
+    const blank = gen(() => { });
+
     const up = gen((x, s) => {
         x.beginPath(); x.moveTo(s / 2, s / 2); x.lineTo(s / 2, 0); x.stroke();
-        // Dot center
-        x.beginPath(); x.arc(s / 2, s / 2, 2, 0, Math.PI * 2); x.fillStyle = '#00f0ff'; x.fill();
+        x.beginPath(); x.arc(s / 2, s / 2, 18, 0, Math.PI * 2); x.fillStyle = '#fed7aa'; x.fill();
     });
-    // Line (Up-Down)
+
     const line = gen((x, s) => {
         x.beginPath(); x.moveTo(s / 2, 0); x.lineTo(s / 2, s); x.stroke();
     });
-    // Corner (Up-Right)
+
     const corner = gen((x, s) => {
         x.beginPath(); x.moveTo(s / 2, 0); x.lineTo(s / 2, s / 2); x.lineTo(s, s / 2); x.stroke();
-        x.beginPath(); x.arc(s / 2, s / 2, 2, 0, Math.PI * 2); x.fillStyle = '#00f0ff'; x.fill();
     });
-    // T (Up-Right-Down)
+
     const tjoin = gen((x, s) => {
         x.beginPath(); x.moveTo(s / 2, 0); x.lineTo(s / 2, s); x.stroke();
         x.beginPath(); x.moveTo(s / 2, s / 2); x.lineTo(s, s / 2); x.stroke();
-        x.beginPath(); x.arc(s / 2, s / 2, 2, 0, Math.PI * 2); x.fillStyle = '#00f0ff'; x.fill();
     });
-    // Cross (All)
+
     const cross = gen((x, s) => {
         x.beginPath(); x.moveTo(s / 2, 0); x.lineTo(s / 2, s); x.stroke();
         x.beginPath(); x.moveTo(0, s / 2); x.lineTo(s, s / 2); x.stroke();
-        x.beginPath(); x.arc(s / 2, s / 2, 3, 0, Math.PI * 2); x.fillStyle = '#fff'; x.fill();
     });
 
+    // Connectors: 0=Grass, 1=Path
     return [
         new Tile(blank, [0, 0, 0, 0]),
         new Tile(up, [1, 0, 0, 0]),
@@ -87,217 +116,548 @@ function createTileImages() {
         new Tile(tjoin, [1, 1, 1, 0]),
         new Tile(cross, [1, 1, 1, 1])
     ];
-
 }
 
-function rotateImage(img, num) {
-    const c = document.createElement('canvas');
-    c.width = img.width;
-    c.height = img.height;
-    const ctx = c.getContext('2d');
-    ctx.translate(c.width / 2, c.height / 2);
-    ctx.rotate(num * 90 * Math.PI / 180);
-    ctx.translate(-c.width / 2, -c.height / 2);
-    ctx.drawImage(img, 0, 0);
-    return c;
+// --- Side Scroller Tiles (Gravity Based) ---
+// Connector Edge Meanings:
+// 0: Sky (empty air)
+// 1: Grassy Top Surface Horizontal
+// 2: Dirt Body
+// 3: Water Surface Horizontal
+// 4: Deep Water
+// 5: Cliff L Vertical (Grass L, Sky R)
+// 6: Cliff R Vertical (Sky L, Grass R)
+// 7: Underwater L Vertical (Grass/Dirt L, Water R)
+// 8: Underwater R Vertical (Water L, Grass/Dirt R)
+// 9: Inner Corner L (Dirt Bottom/Left, Sky Top Right)
+// 10: Inner Corner R (Dirt Bottom/Right, Sky Top Left)
+function createPlatformerTiles() {
+    const s = 100;
+    const gen = (drawFn) => {
+        const c = document.createElement('canvas');
+        c.width = s; c.height = s;
+        const x = c.getContext('2d');
+        drawFn(x, s);
+        return c;
+    };
+
+    const skyColor = '#bae6fd'; // pastel sky
+    const dirtColor = '#78350f'; // dirt brown
+    const grassColor = '#22c55e'; // vivid green
+    const waterSurfColor = '#38bdf8'; // light blue
+    const waterDeepColor = '#0284c7'; // deep blue
+
+    const drawSky = (x, s) => {
+        x.fillStyle = skyColor; x.fillRect(0, 0, s, s);
+        x.fillStyle = 'rgba(255,255,255,0.3)';
+        x.beginPath(); x.arc(s * 0.2, s * 0.2, 10, 0, Math.PI * 2); x.fill();
+        x.beginPath(); x.arc(s * 0.35, s * 0.2, 12, 0, Math.PI * 2); x.fill();
+    };
+
+    const drawDirt = (x, s) => {
+        x.fillStyle = dirtColor; x.fillRect(0, 0, s, s);
+        x.fillStyle = '#451a03'; // dark specs
+        x.fillRect(s * 0.2, s * 0.4, 15, 10);
+        x.fillRect(s * 0.7, s * 0.8, 20, 15);
+        x.fillRect(s * 0.8, s * 0.2, 12, 12);
+    };
+
+    const drawGrass = (x, s) => {
+        drawDirt(x, s);
+        x.fillStyle = skyColor; x.fillRect(0, 0, s, s / 3);
+        x.fillStyle = grassColor; x.fillRect(0, s / 3, s, s / 5);
+        x.beginPath(); x.moveTo(0, s / 3);
+        x.lineTo(s * 0.2, s / 3 - 8); x.lineTo(s * 0.4, s / 3);
+        x.lineTo(s * 0.6, s / 3 - 12); x.lineTo(s * 0.8, s / 3 - 4);
+        x.lineTo(s, s / 3); x.fillStyle = grassColor; x.fill();
+    };
+
+    // 1. Sky
+    const t01 = gen(drawSky);
+
+    // 2. Surface Grass
+    const t02 = gen(drawGrass);
+
+    // 3. Deep Dirt
+    const t03 = gen(drawDirt);
+
+    // 4. Water Surf
+    const t04 = gen((x, s) => {
+        x.fillStyle = skyColor; x.fillRect(0, 0, s, s / 3);
+        x.fillStyle = waterSurfColor; x.fillRect(0, s / 3, s, s * 2 / 3);
+        x.fillStyle = 'rgba(255,255,255,0.4)';
+        x.fillRect(s * 0.2, s / 3 + 10, 20, 3);
+        x.fillRect(s * 0.6, s / 3 + 20, 15, 3);
+    });
+
+    // 5. Water Deep
+    const t05 = gen((x, s) => {
+        x.fillStyle = waterDeepColor; x.fillRect(0, 0, s, s);
+        x.fillStyle = 'rgba(255,255,255,0.2)';
+        x.beginPath(); x.arc(s * 0.3, s * 0.5, 4, 0, Math.PI * 2); x.fill();
+        x.beginPath(); x.arc(s * 0.7, s * 0.8, 6, 0, Math.PI * 2); x.fill();
+    });
+
+    // 6. Cliff L (Grass L, Sky R)
+    const t06 = gen((x, s) => {
+        drawSky(x, s);
+        x.fillStyle = dirtColor; x.fillRect(0, s / 3, s / 2, s * 2 / 3);
+        x.fillStyle = grassColor; x.fillRect(0, s / 3, s / 2, s / 5);
+        x.fillRect(s / 2 - 5, s / 3, 5, s / 5 + 10);
+    });
+
+    // 7. Cliff Body L (Dirt L, Sky R)
+    const t07 = gen((x, s) => {
+        drawSky(x, s);
+        x.fillStyle = dirtColor; x.fillRect(0, 0, s / 2, s);
+    });
+
+    // 8. Cliff R (Sky L, Grass R)
+    const t08 = gen((x, s) => {
+        drawSky(x, s);
+        x.fillStyle = dirtColor; x.fillRect(s / 2, s / 3, s / 2, s * 2 / 3);
+        x.fillStyle = grassColor; x.fillRect(s / 2, s / 3, s / 2, s / 5);
+        x.fillRect(s / 2, s / 3, 5, s / 5 + 10);
+    });
+
+    // 9. Cliff Body R (Sky L, Dirt R)
+    const t09 = gen((x, s) => {
+        drawSky(x, s);
+        x.fillStyle = dirtColor; x.fillRect(s / 2, 0, s / 2, s);
+    });
+
+    // 10. Shore L (Grass L, Water Surf R)
+    const t10 = gen((x, s) => {
+        x.fillStyle = skyColor; x.fillRect(0, 0, s, s / 3);
+        x.fillStyle = dirtColor; x.fillRect(0, s / 3, s / 2, s * 2 / 3);
+        x.fillStyle = grassColor; x.fillRect(0, s / 3, s / 2, s / 5);
+        x.fillStyle = waterSurfColor; x.fillRect(s / 2, s / 3, s / 2, s * 2 / 3);
+    });
+
+    // 11. Underwater L (Dirt L, Water Deep R)
+    const t11 = gen((x, s) => {
+        x.fillStyle = waterDeepColor; x.fillRect(s / 2, 0, s / 2, s);
+        x.fillStyle = dirtColor; x.fillRect(0, 0, s / 2, s);
+    });
+
+    // 12. Shore R (Water Surf L, Grass R)
+    const t12 = gen((x, s) => {
+        x.fillStyle = skyColor; x.fillRect(0, 0, s, s / 3);
+        x.fillStyle = waterSurfColor; x.fillRect(0, s / 3, s / 2, s * 2 / 3);
+        x.fillStyle = dirtColor; x.fillRect(s / 2, s / 3, s / 2, s * 2 / 3);
+        x.fillStyle = grassColor; x.fillRect(s / 2, s / 3, s / 2, s / 5);
+    });
+
+    // 13. Underwater R (Water Deep L, Dirt R)
+    const t13 = gen((x, s) => {
+        x.fillStyle = waterDeepColor; x.fillRect(0, 0, s / 2, s);
+        x.fillStyle = dirtColor; x.fillRect(s / 2, 0, s / 2, s);
+    });
+
+    // 14. Inner Corner L (Bottom of Cliff L connecting to Surface Grass)
+    // Sky is top right. Wall is left. Ground is bottom right.
+    const t14 = gen((x, s) => {
+        drawSky(x, s);
+        x.fillStyle = dirtColor;
+        x.fillRect(0, 0, s / 2, s); // left wall block
+        x.fillRect(s / 2, s / 3, s / 2, s * 2 / 3); // floor right block
+        x.fillStyle = grassColor;
+        // Inner elbow patch
+        x.beginPath(); x.moveTo(s / 2, 0); x.lineTo(s * 0.6, 0);
+        x.lineTo(s * 0.6, s / 3); x.lineTo(s, s / 3); x.lineTo(s, s / 3 + s / 5);
+        x.lineTo(s / 2, s / 3 + s / 5); x.fill();
+        x.fillRect(s / 2 - 5, 0, 5, s / 3 + s / 5); // vertical trim
+    });
+
+    // 15. Inner Corner R (Bottom of Cliff R connecting to Surface Grass)
+    // Sky is top left. Wall is right. Ground is bottom left.
+    const t15 = gen((x, s) => {
+        drawSky(x, s);
+        x.fillStyle = dirtColor;
+        x.fillRect(s / 2, 0, s / 2, s); // right wall block
+        x.fillRect(0, s / 3, s / 2, s * 2 / 3); // floor left block
+        x.fillStyle = grassColor;
+        // Inner elbow patch
+        x.beginPath(); x.moveTo(s / 2, 0); x.lineTo(s * 0.4, 0);
+        x.lineTo(s * 0.4, s / 3); x.lineTo(0, s / 3); x.lineTo(0, s / 3 + s / 5);
+        x.lineTo(s / 2, s / 3 + s / 5); x.fill();
+        x.fillRect(s / 2, 0, 5, s / 3 + s / 5); // vertical trim
+    });
+
+    // EDGES: UP, RIGHT, DOWN, LEFT
+    return [
+        new Tile(t01, [0, 0, 0, 0]),
+        new Tile(t02, [0, 1, 2, 1]),
+        new Tile(t03, [2, 2, 2, 2]),
+        new Tile(t04, [0, 3, 4, 3]),
+        new Tile(t05, [4, 4, 4, 4]),
+
+        new Tile(t06, [0, 0, 5, 1]),   // Top of Left Cliff
+        new Tile(t07, [5, 0, 5, 2]),   // Body of Left Cliff
+        new Tile(t14, [5, 1, 2, 2]),   // Bottom of Left Cliff (Inner Corner)
+
+        new Tile(t08, [0, 1, 6, 0]),   // Top of Right Cliff
+        new Tile(t09, [6, 2, 6, 0]),   // Body of Right Cliff
+        new Tile(t15, [6, 2, 2, 1]),   // Bottom of Right Cliff (Inner Corner)
+
+        new Tile(t10, [0, 3, 7, 1]),
+        new Tile(t11, [7, 4, 7, 2]),
+
+        new Tile(t12, [0, 1, 8, 3]),
+        new Tile(t13, [8, 2, 8, 4])
+    ];
 }
 
-// --- Cell Class ---
-class Cell {
-    constructor(val) {
-        this.collapsed = false;
-        this.options = new Array(val).fill(0).map((_, i) => i); // Indices of all possible tiles
+function loadTileset(type) {
+    tiles = [];
+    if (type === 'topdown') {
+        const bt = createCuteTiles();
+        tiles.push(bt[0]); // blank
+        for (let i = 0; i < 4; i++) tiles.push(bt[1].rotate(i)); // up
+        tiles.push(bt[2]); tiles.push(bt[2].rotate(1)); // line vertical & horizontal
+        for (let i = 0; i < 4; i++) tiles.push(bt[3].rotate(i)); // corner
+        for (let i = 0; i < 4; i++) tiles.push(bt[4].rotate(i)); // tjoin
+        tiles.push(bt[5]); // cross
+    } else if (type === 'sidescroller') {
+        // No rotations used, strictly 3 tiles with exact gravity definitions.
+        tiles = createPlatformerTiles();
     }
 }
 
-// --- Logic ---
-function initTiles() {
-    tiles = [];
-    const baseTiles = createTileImages();
-    // Rotate and push unique
-    // Blank (0 rotation needed really, but loop logic handles it)
-    tiles.push(baseTiles[0]);
-
-    // Up (needs 4 rotations)
-    for (let i = 0; i < 4; i++) tiles.push(baseTiles[1].rotate(i));
-
-    // Line (needs 2 rotations: Vertical, Horizontal)
-    tiles.push(baseTiles[2]);
-    tiles.push(baseTiles[2].rotate(1));
-
-    // Corner (needs 4 rotations)
-    for (let i = 0; i < 4; i++) tiles.push(baseTiles[3].rotate(i));
-
-    // T (needs 4 rotations)
-    for (let i = 0; i < 4; i++) tiles.push(baseTiles[4].rotate(i));
-
-    // Cross (1 rotation)
-    tiles.push(baseTiles[5]);
-
-    console.log(`Generated ${tiles.length} unique tiles`);
+// --- Grid Logic ---
+class Cell {
+    constructor(numTiles) {
+        this.collapsed = false;
+        this.options = Array.from({ length: numTiles }, (_, i) => i);
+        this.animating = 0; // frames remaining for flash
+        this.animColor = '#3b82f6';
+    }
 }
 
-function start() {
-    DIM = parseInt(document.getElementById('dimSlider').value);
+function resetGrid() {
+    DIM = parseInt(document.getElementById('sSize').value);
 
-    // Resize canvas to fit window but keep aspect ratio or simple square
-    const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
-    canvas.width = size;
-    canvas.height = size;
+    const wrap = document.querySelector('.canvas-wrap');
+    const maxSize = Math.min(wrap.clientWidth - 40, wrap.clientHeight - 40);
+
+    // Snap to exact multiple for crisp rendering
+    canvas.width = Math.floor(maxSize / DIM) * DIM;
+    canvas.height = canvas.width;
+
     tileWidth = canvas.width / DIM;
     tileHeight = canvas.height / DIM;
 
-    // Grid
     grid = [];
     for (let i = 0; i < DIM * DIM; i++) {
-        grid[i] = new Cell(tiles.length);
+        grid.push(new Cell(tiles.length));
     }
 
-    isLooping = true;
+    propagationQueue = [];
+    isAutoRunning = false;
     isComplete = false;
-    STATUS.innerText = "GENERATING...";
-    STATUS.className = "status running";
 
-    loop();
+    updateStatus("READY", "ready");
+    setActiveFlowStep('step-idle');
 }
 
-function loop() {
-    if (!isLooping) return;
+let mx = -1, my = -1;
+let hoveredCellIdx = -1;
+let hoveredOptionIdx = -1;
 
-    // Draw
-    draw();
+canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mx = e.clientX - rect.left;
+    my = e.clientY - rect.top;
 
-    // Pick cell with least entropy
-    let gridCopy = grid.slice();
-    gridCopy = gridCopy.filter(a => !a.collapsed);
+    const cx = Math.floor(mx / tileWidth);
+    const cy = Math.floor(my / tileHeight);
 
-    if (gridCopy.length === 0) {
-        isLooping = false;
-        isComplete = true;
-        STATUS.innerText = "COMPLETE";
-        STATUS.className = "status done";
-        draw(); // Final draw
-        return;
+    if (cx >= 0 && cx < DIM && cy >= 0 && cy < DIM) {
+        hoveredCellIdx = cx + cy * DIM;
+
+        let cell = grid[hoveredCellIdx];
+        if (!cell.collapsed) {
+            const cols = Math.ceil(Math.sqrt(tiles.length));
+            const iconSize = (tileWidth - 10) / cols;
+
+            const localX = mx - cx * tileWidth - 5;
+            const localY = my - cy * tileHeight - 5;
+
+            const ocol = Math.floor(localX / iconSize);
+            const orow = Math.floor(localY / iconSize);
+            const optIdx = ocol + orow * cols;
+
+            if (cell.options.includes(optIdx)) {
+                hoveredOptionIdx = optIdx;
+            } else {
+                hoveredOptionIdx = -1;
+            }
+        } else {
+            hoveredOptionIdx = -1;
+        }
+    } else {
+        hoveredCellIdx = -1;
+        hoveredOptionIdx = -1;
     }
+});
 
-    gridCopy.sort((a, b) => a.options.length - b.options.length);
-    const len = gridCopy[0].options.length;
+canvas.addEventListener('mouseleave', () => {
+    hoveredCellIdx = -1;
+    hoveredOptionIdx = -1;
+});
 
-    // Found empty possibilities? Stuck.
-    if (len === 0) {
-        isLooping = false;
-        STATUS.innerText = "FAILED (Contradiction)";
-        STATUS.className = "status fail";
-        return;
+canvas.addEventListener('mousedown', () => {
+    if (hoveredCellIdx !== -1 && hoveredOptionIdx !== -1 && !isAutoRunning && !isComplete) {
+        let cell = grid[hoveredCellIdx];
+        if (!cell.collapsed) {
+            cell.options = [hoveredOptionIdx];
+            cell.collapsed = true;
+            cell.animating = 45; // Flash duration
+            cell.animColor = '#d946ef'; // pink highlight for user click
+
+            propagationQueue.push(hoveredCellIdx);
+            updateStatus("PROPAGATING...", "working");
+            setActiveFlowStep('step-collapse');
+        }
     }
+});
 
-    const stopIndex = gridCopy.findIndex(a => a.options.length > len);
+function propagateStep() {
+    if (propagationQueue.length === 0) return false;
 
-    // Random pick among lowest entropy
-    const target = gridCopy[Math.floor(Math.random() * (stopIndex > -1 ? stopIndex : gridCopy.length))];
-    target.collapsed = true;
-    const pick = target.options[Math.floor(Math.random() * target.options.length)];
-    target.options = [pick];
+    setActiveFlowStep('step-propagate');
 
-    // Propagation
-    const stack = [grid.indexOf(target)];
+    let currentIdx = propagationQueue.shift();
+    let currentCell = grid[currentIdx];
+    let currentOptions = currentCell.options;
 
-    while (stack.length > 0) {
-        let currentIdx = stack.pop();
-        let currentCell = grid[currentIdx];
-        let currentOptions = currentCell.options;
+    const x = currentIdx % DIM;
+    const y = Math.floor(currentIdx / DIM);
 
-        const x = currentIdx % DIM;
-        const y = Math.floor(currentIdx / DIM);
+    const neighbors = [
+        { dx: 0, dy: -1, dir: 0, opp: 2 }, // Up
+        { dx: 1, dy: 0, dir: 1, opp: 3 }, // Right
+        { dx: 0, dy: 1, dir: 2, opp: 0 }, // Down
+        { dx: -1, dy: 0, dir: 3, opp: 1 }  // Left
+    ];
 
-        // Neighbors: Up, Right, Down, Left
-        const neighbors = [
-            { dx: 0, dy: -1, dir: 0, opp: 2 }, // Up
-            { dx: 1, dy: 0, dir: 1, opp: 3 }, // Right
-            { dx: 0, dy: 1, dir: 2, opp: 0 }, // Down
-            { dx: -1, dy: 0, dir: 3, opp: 1 }  // Left
-        ];
+    for (let n of neighbors) {
+        let nx = x + n.dx;
+        let ny = y + n.dy;
 
-        for (let n of neighbors) {
-            let nx = x + n.dx;
-            let ny = y + n.dy;
+        if (nx >= 0 && nx < DIM && ny >= 0 && ny < DIM) {
+            let neighborIdx = nx + ny * DIM;
+            let neighbor = grid[neighborIdx];
 
-            if (nx >= 0 && nx < DIM && ny >= 0 && ny < DIM) {
-                let neighborIdx = nx + ny * DIM;
-                let neighbor = grid[neighborIdx];
+            if (!neighbor.collapsed) {
+                let originalLen = neighbor.options.length;
 
-                if (!neighbor.collapsed) {
-                    let originalLen = neighbor.options.length;
+                neighbor.options = neighbor.options.filter(nOpt => {
+                    let nEdge = tiles[nOpt].edges[n.opp];
+                    return currentOptions.some(cOpt => tiles[cOpt].edges[n.dir] === nEdge);
+                });
 
-                    neighbor.options = neighbor.options.filter(nOpt => {
-                        let nTile = tiles[nOpt];
-                        let nEdge = nTile.edges[n.opp]; // Connector looking back at current
+                if (neighbor.options.length === 0) {
+                    updateStatus("CONTRADICTION", "failed");
+                    isAutoRunning = false;
+                    propagationQueue = [];
 
-                        // Check if ANY current available tile has a matching edge
-                        return currentOptions.some(cOpt => {
-                            let cTile = tiles[cOpt];
-                            let cEdge = cTile.edges[n.dir]; // Connector looking at neighbor
-                            return cEdge === nEdge;
-                        });
-                    });
+                    // Mark contradiction clearly
+                    neighbor.animating = 100;
+                    neighbor.animColor = '#ef4444'; // red
+                    return false;
+                }
 
-                    if (neighbor.options.length === 0) {
-                        // Contradiction
-                        isLooping = false;
-                        STATUS.innerText = "FAILED (Contradiction)";
-                        STATUS.className = "status fail";
-                        return;
+                if (neighbor.options.length < originalLen) {
+                    neighbor.animating = 30; // Flash for update
+                    neighbor.animColor = '#3b82f6'; // blue
+
+                    if (neighbor.options.length === 1 && !neighbor.collapsed) {
+                        neighbor.collapsed = true;
+                        neighbor.animColor = '#10b981'; // green for auto-collapse
+                        neighbor.animating = 45;
                     }
 
-                    if (neighbor.options.length < originalLen) {
-                        stack.push(neighborIdx);
+                    if (!propagationQueue.includes(neighborIdx)) {
+                        propagationQueue.push(neighborIdx);
                     }
                 }
             }
         }
     }
 
-    // Speed control
-    const fps = parseInt(document.getElementById('speedSlider').value);
-    if (fps >= 60) requestAnimationFrame(loop);
-    else setTimeout(loop, 1000 / fps);
+    return true;
 }
 
-function draw() {
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+function checkComplete() {
+    setActiveFlowStep('step-check');
 
-    const w = tileWidth;
-    const h = tileHeight;
+    if (grid.every(c => c.collapsed || c.options.length === 0)) {
+        isComplete = true;
+        isAutoRunning = false;
 
-    for (let i = 0; i < grid.length; i++) {
-        let cell = grid[i];
-        let x = (i % DIM) * w;
-        let y = Math.floor(i / DIM) * h;
-
-        if (cell.collapsed) {
-            let index = cell.options[0];
-            ctx.drawImage(tiles[index].img, x, y, w, h);
-        } else {
-            // Draw entropy shade or grid outline
-            ctx.strokeStyle = '#222';
-            ctx.strokeRect(x, y, w, h);
-
-            // Opacity based on remaining options
-            ctx.fillStyle = `rgba(0, 240, 255, ${1 - (cell.options.length / tiles.length)})`;
-            ctx.fillRect(x + w * 0.4, y + h * 0.4, w * 0.2, h * 0.2);
-        }
+        let hasFail = grid.some(c => c.options.length === 0);
+        if (hasFail) updateStatus("FAILED", "failed");
+        else updateStatus("COMPLETE", "done");
+    } else if (propagationQueue.length === 0 && !isAutoRunning) {
+        updateStatus("READY", "ready");
+        setTimeout(() => setActiveFlowStep('step-idle'), 500);
     }
 }
 
+function autoPick() {
+    setActiveFlowStep('step-entropy');
 
-// Init
-initTiles();
-document.getElementById('startBtn').onclick = start;
-document.getElementById('resetBtn').onclick = () => { isLooping = false; start(); };
-document.getElementById('dimSlider').oninput = function () { document.getElementById('dimVal').innerText = this.value; };
-document.getElementById('speedSlider').oninput = function () { document.getElementById('speedVal').innerText = this.value; };
-window.addEventListener('resize', () => { if (isLooping && !isComplete) start(); }); // Mobile rotation
+    let uncollapsed = grid.map((c, i) => ({ c, i })).filter(o => !o.c.collapsed);
+    if (uncollapsed.length === 0) return;
 
-// Auto start
-setTimeout(start, 500);
+    uncollapsed.sort((a, b) => a.c.options.length - b.c.options.length);
+    let minLen = uncollapsed[0].c.options.length;
+    let minCells = uncollapsed.filter(o => o.c.options.length === minLen);
+
+    let target = minCells[Math.floor(Math.random() * minCells.length)];
+    let pick = target.c.options[Math.floor(Math.random() * target.c.options.length)];
+
+    target.c.options = [pick];
+    target.c.collapsed = true;
+    target.c.animating = 45;
+    target.c.animColor = '#10b981'; // green for ai pick
+
+    propagationQueue.push(target.i);
+    updateStatus("AUTO RUNNING...", "working");
+
+    setTimeout(() => setActiveFlowStep('step-collapse'), 200);
+}
+
+let lastTime = 0;
+function drawLoop(timestamp) {
+    if (!lastTime) lastTime = timestamp;
+    const dt = timestamp - lastTime;
+
+    animationSpeed = parseInt(document.getElementById('sSpeed').value);
+
+    if (isAutoRunning && propagationQueue.length === 0 && !isComplete) {
+        autoPick();
+    }
+
+    // Time-based step logic
+    // Speed 1: ~500ms per step
+    // Speed 5: ~100ms per step
+    // Speed 10: instant (process multiple per frame)
+
+    let timePerStep = (11 - animationSpeed) * 50;
+
+    if (animationSpeed >= 10) {
+        // process 10 steps per frame
+        for (let i = 0; i < 10; i++) {
+            if (propagationQueue.length > 0) propagateStep();
+        }
+        lastTime = timestamp;
+    } else {
+        if (dt > timePerStep && propagationQueue.length > 0) {
+            let steps = Math.floor(dt / timePerStep);
+            for (let i = 0; i < steps; i++) {
+                if (propagationQueue.length > 0) propagateStep();
+            }
+            lastTime = timestamp;
+        }
+    }
+
+    if (propagationQueue.length === 0 && !isComplete && !isAutoRunning) {
+        checkComplete();
+    }
+
+    // --- Rendering ---
+    ctx.fillStyle = '#0a0a0b';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const iconCols = Math.ceil(Math.sqrt(tiles.length));
+    const iconSize = (tileWidth - 10) / iconCols;
+
+    for (let i = 0; i < grid.length; i++) {
+        let cell = grid[i];
+        let x = (i % DIM) * tileWidth;
+        let y = Math.floor(i / DIM) * tileHeight;
+
+        if (cell.collapsed) {
+            ctx.drawImage(tiles[cell.options[0]].img, x, y, tileWidth, tileHeight);
+        } else {
+            // Uncollapsed Cell Background
+            ctx.fillStyle = '#18181b';
+            ctx.fillRect(x, y, tileWidth, tileHeight);
+
+            ctx.strokeStyle = '#27272a';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(x, y, tileWidth, tileHeight);
+
+            // Draw mini options
+            for (let o = 0; o < cell.options.length; o++) {
+                let optIdx = cell.options[o];
+                let ox = x + 5 + (optIdx % iconCols) * iconSize;
+                let oy = y + 5 + Math.floor(optIdx / iconCols) * iconSize;
+
+                ctx.globalAlpha = 0.4;
+                ctx.drawImage(tiles[optIdx].img, ox, oy, iconSize - 2, iconSize - 2);
+                ctx.globalAlpha = 1.0;
+
+                // Highlight hovered
+                if (i === hoveredCellIdx && optIdx === hoveredOptionIdx && !isAutoRunning) {
+                    ctx.strokeStyle = '#d946ef';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(ox, oy, iconSize - 2, iconSize - 2);
+
+                    // Show full opacity
+                    ctx.drawImage(tiles[optIdx].img, ox, oy, iconSize - 2, iconSize - 2);
+                }
+            }
+
+            // Cell overall highlight
+            if (i === hoveredCellIdx && hoveredOptionIdx === -1 && !isAutoRunning) {
+                ctx.fillStyle = 'rgba(255,255,255,0.05)';
+                ctx.fillRect(x, y, tileWidth, tileHeight);
+            }
+        }
+
+        // --- Animation Overlays ---
+        if (cell.animating > 0) {
+            ctx.fillStyle = cell.animColor;
+            ctx.globalAlpha = cell.animating / 45; // fade out
+            ctx.fillRect(x, y, tileWidth, tileHeight);
+            ctx.globalAlpha = 1.0;
+
+            ctx.strokeStyle = cell.animColor;
+            ctx.lineWidth = 3;
+            ctx.strokeRect(x + 1.5, y + 1.5, tileWidth - 3, tileHeight - 3);
+
+            cell.animating -= 1;
+        }
+    }
+
+    requestAnimationFrame(drawLoop);
+}
+
+function updateStatus(text, type) {
+    statusLabel.innerText = text;
+    statusLabel.className = `status-indicator ${type}`;
+}
+
+document.getElementById('sTileset').onchange = (e) => {
+    loadTileset(e.target.value);
+    resetGrid();
+};
+document.getElementById('sSize').oninput = e => { document.getElementById('lblSize').innerText = e.target.value; resetGrid(); };
+document.getElementById('sSpeed').oninput = e => { document.getElementById('lblSpeed').innerText = e.target.value; };
+
+document.getElementById('btnAutoStart').onclick = () => { isAutoRunning = !isAutoRunning; checkComplete(); };
+document.getElementById('btnStep').onclick = () => {
+    if (propagationQueue.length > 0) propagateStep();
+    else autoPick();
+};
+document.getElementById('btnClear').onclick = resetGrid;
+
+window.addEventListener('resize', () => { setTimeout(resetGrid, 100); });
+
+// Start
+loadTileset(document.getElementById('sTileset').value || 'topdown');
+resetGrid();
+requestAnimationFrame(drawLoop);

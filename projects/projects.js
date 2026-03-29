@@ -212,12 +212,13 @@ const PROJECTS = {
   "wfc/": {
     time: "2 days",
     difficulty: 80,
-    tags: ["Algorithm", "Generative", "Puzzle"],
-    long: "A visualization of the Wave Function Collapse algorithm, generating complex circuit-like patterns from simple adjacency rules.",
+    tags: ["Algorithm", "Procedural", "Interactive"],
+    long: "A sleek, interactive visualization of the Wave Function Collapse algorithm featuring multiple rulesets (Top-Down Paths and Side-Scroller Gravity) with a real-time algorithmic flowchart.",
     how: [
-      "Constraint solving (entropy reduction).",
-      "Procedural tile generation on Canvas.",
-      "Backtracking (or restart) on contradiction."
+      "Constraint solving with auto-collapse optimizations.",
+      "Procedural HTML5 Canvas tile generation (Sky, Dirt, Water).",
+      "Slow-motion animated propagation visualization.",
+      "Glassmorphism UI with real-time state flowchart."
     ]
   },
   /* gets injected when unlocked */
