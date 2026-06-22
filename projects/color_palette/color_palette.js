@@ -993,8 +993,9 @@ Slate: #1E293B
     if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); doImport(); }
   });
 
-  const overlay_modal = overlay.firstChild;
-  overlay_modal.append(header, body, footer);
+  footer.append(cancel, apply);
+  modal.append(header, body, footer);
+  overlay.appendChild(modal);
   overlay.addEventListener("click", e => { if (e.target === overlay) document.body.removeChild(overlay); });
   document.body.appendChild(overlay);
 }
