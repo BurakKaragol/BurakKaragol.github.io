@@ -86,15 +86,20 @@
    ========================================= */
 * {
     box-sizing: border-box; margin: 0; padding: 0;
+}
+
+/* Base theme transitions on major containers instead of universal selector */
+body, .dock, .project-card, .lab-card, .tech-item, .memory-card, .contact-form-box, .business-card, .social-card, .main-footer, .f-link, .cta-btn, .switch-container, .btn-icon, .mobile-ctrl-btn {
     transition: background-color var(--speed) var(--ease), 
                 color var(--speed) var(--ease), 
-                border var(--speed) var(--ease), 
+                border-color var(--speed) var(--ease), 
                 box-shadow var(--speed) var(--ease), 
                 border-radius var(--speed) var(--ease), 
-                opacity var(--speed) var(--ease),
-                transform 0.3s ease;
-    
-    /* App-like feel */
+                opacity var(--speed) var(--ease);
+}
+
+/* Non-selectable UI controls */
+button, .btn-icon, .switch-container, .mobile-toggle, .folder-tab, .mini-icon, #backToTop, .status-badge {
     -webkit-user-select: none; user-select: none;
 }
 
@@ -408,8 +413,29 @@ button { cursor: pointer; font-family: inherit; border: none; background: transp
 .input-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
 .input-group label { font-size: 0.8rem; font-weight: 700; color: var(--c-text-muted); text-transform: uppercase; }
 .input-group textarea { resize: vertical; min-height: 100px; max-height: 400px; }
-.input-group input, .input-group textarea { background: #00000045; border: 1px solid var(--border-dock); padding: 12px; font-family: var(--font-main); font-size: 1rem; color: var(--c-text-main); border-radius: 4px; transition: all 0.3s ease; }
-.input-group input:focus { outline: none; border-color: var(--c-accent); box-shadow: 0 0 0 3px rgba(14, 42, 71, 0.1); }
+.input-group input, .input-group textarea { 
+    background: #ffffff; 
+    border: 1px solid var(--border-dock); 
+    padding: 12px; 
+    font-family: var(--font-main); 
+    font-size: 1rem; 
+    color: var(--c-text-main); 
+    border-radius: 6px; 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease; 
+}
+[data-theme="dark"] .input-group input, [data-theme="dark"] .input-group textarea {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #F8FAFC;
+}
+.input-group input:focus, .input-group textarea:focus { 
+    outline: none; 
+    border-color: var(--c-accent); 
+    box-shadow: 0 0 0 3px rgba(14, 42, 71, 0.15); 
+}
+[data-theme="dark"] .input-group input:focus, [data-theme="dark"] .input-group textarea:focus {
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+}
 
 .submit-btn { width: 100%; padding: 14px; background-color: var(--c-accent); color: #fff; font-weight: 600; border-radius: 4px; text-transform: uppercase; transition: all 0.3s ease; }
 
