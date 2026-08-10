@@ -221,6 +221,18 @@ const PROJECTS = {
       "Glassmorphism UI with real-time state flowchart."
     ]
   },
+  "effect_rectangle/": {
+    time: "2 days",
+    difficulty: 75,
+    tags: ["AR", "MediaPipe", "WebCodecs", "Canvas"],
+    long: "A smart AR camera sandbox that tracks your fingers to form a dynamic frame. Apply instant vintage, thermal, and neon filters inside the tracked frame and export the session directly to MP4.",
+    how: [
+      "MediaPipe Hands API for real-time 21-point skeletal hand tracking.",
+      "Dynamic polygon framing based on index and thumb coordinate vectors.",
+      "High-performance client-side MP4 muxing using WebCodecs VideoEncoder and mp4-muxer.",
+      "Custom multi-hand pinch gestures to cycle through visual filters."
+    ]
+  },
   /* gets injected when unlocked */
   "terminal.html": {
     time: "—",

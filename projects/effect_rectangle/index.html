@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Effect Rectangle - Camera Recorder</title>
+
+    <!-- FontAwesome for icons -->
+    <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="./effect_rectangle.css">
+
+    <!-- CDNs for MediaPipe & Mp4Muxer -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mp4-muxer/build/mp4-muxer.js" crossorigin="anonymous"></script>
+</head>
+<body class="dark-theme">
+
+    <!-- Navigation Header -->
+    <header class="app-header">
+        <a href="../index.html" class="back-link">
+            <i class="fa-solid fa-arrow-left-long"></i>
+            <span>Back to Projects</span>
+        </a>
+        <h1 class="app-title">Effect Rectangle</h1>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="app-container">
+        <div id="loading" class="loading-overlay">
+            <div class="spinner"></div>
+            <p>Initializing Camera & AI Hand Model...</p>
+            <span class="loading-subtext">Please grant camera permissions when prompted</span>
+        </div>
+
+        <div class="workspace">
+            <!-- Video & Canvas Section -->
+            <div class="canvas-wrapper">
+                <video id="videoElement" autoplay playsinline></video>
+                <canvas id="canvasElement"></canvas>
+                
+                <!-- On-screen gesture gesture/state indicators -->
+                <div id="gestureIndicator" class="gesture-indicator">
+                    <span class="pulse-dot"></span>
+                    <span id="activeEffectLabel">Effect: Normal</span>
+                </div>
+            </div>
+
+            <!-- Dashboard HUD Panel -->
+            <aside class="control-panel">
+                <div class="panel-section">
+                    <h3><i class="fa-solid fa-sliders"></i> Capture Settings</h3>
+                    <div class="options-group">
+                        <label class="option-toggle">
+                            <input type="checkbox" id="chkFrame" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Render Frame Outline</span>
+                        </label>
+                        <label class="option-toggle">
+                            <input type="checkbox" id="chkEffect" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Render Visual Effects</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Visual Filter</h3>
+                    <div class="filter-selector-grid" id="filterSelectorGrid">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                    <p class="panel-tip"><i class="fa-solid fa-circle-info"></i> Gesture Tip: Touch index and thumb on <strong>both hands</strong> to cycle effects!</p>
+                </div>
+
+                <div class="panel-section recording-sec">
+                    <h3><i class="fa-solid fa-video"></i> Session Recording</h3>
+                    
+                    <div class="rec-status-bar">
+                        <span id="recEngine" class="rec-engine">WebCodecs (MP4)</span>
+                        <span id="recTimer" class="rec-timer">00:00</span>
+                    </div>
+
+                    <button id="recordBtn" class="rec-button">
+                        <span class="rec-icon"></span>
+                        <span id="recordBtnText">Record Session</span>
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script src="./effect_rectangle.js"></script>
+</body>
+</html>
