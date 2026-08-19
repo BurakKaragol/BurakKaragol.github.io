@@ -7,7 +7,7 @@
     <meta name="description" content="Randomized game design prompt generator combining genres, settings, mechanics, and unique twists." />
     <meta name="keywords" content="Game Design, Game Idea, Randomizer, Game Dev, Creativity, Prompts" />
     <meta name="author" content="Burak Karagol" />
-    <meta name="theme-color" content="#0A1118" />
+    <meta name="theme-color" content="#0b1120" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://burakkaragol.github.io/projects/game_idea_generator/" />
@@ -29,36 +29,68 @@
     <!-- FontAwesome for icons -->
     <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="./game_idea.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body class="dark-theme">
 
     <main id="app-main">
-        <!--==================== GAME IDEA GENERATOR ====================-->
-        <section class="game-idea section" id="game-idea">
-            <h1 class="section__title">Game Idea Generator</h1>
-            <span class="section__subtitle">Get a unique game idea</span>
+        <section class="game-idea" id="game-idea">
+            <div class="game-idea__container" id="game-idea-container">
+                <header class="game-idea__header">
+                    <h1 class="section__title">Game Idea Generator</h1>
+                    <p class="section__subtitle">Get a unique game idea for your next project</p>
+                </header>
 
-            <div class="game-idea__container container" id="game-idea-container">
                 <div class="game-idea__box">
                     <!-- Static Titles, Dynamic Content -->
                     <div class="game-idea__section">
-                        <strong class="section-title">Genre <i id="genre-lock" class="fa-solid fa-lock-open lock-icon"></i></strong>
-                        <p><i id="genre-icon" class="fa-solid fa-question-circle"></i> <span id="genre-text">???</span></p>
+                        <div class="section-header">
+                            <strong class="section-title">Genre</strong>
+                            <i id="genre-lock" class="fa-solid fa-lock-open lock-icon" title="Lock/Unlock Genre"></i>
+                        </div>
+                        <p class="section-content">
+                            <i id="genre-icon" class="fa-solid fa-question-circle"></i>
+                            <span id="genre-text">Click generate to roll</span>
+                        </p>
                     </div>
+
                     <div class="game-idea__section">
-                        <strong class="section-title">Setting <i id="setting-lock" class="fa-solid fa-lock-open lock-icon"></i></strong>
-                        <p><i id="setting-icon" class="fa-solid fa-question-circle"></i> <span id="setting-text">???</span></p>
+                        <div class="section-header">
+                            <strong class="section-title">Setting</strong>
+                            <i id="setting-lock" class="fa-solid fa-lock-open lock-icon" title="Lock/Unlock Setting"></i>
+                        </div>
+                        <p class="section-content">
+                            <i id="setting-icon" class="fa-solid fa-question-circle"></i>
+                            <span id="setting-text">Click generate to roll</span>
+                        </p>
                     </div>
+
                     <div class="game-idea__section">
-                        <strong class="section-title">Mechanic <i id="mechanic-lock" class="fa-solid fa-lock-open lock-icon"></i></strong>
-                        <p><i id="mechanic-icon" class="fa-solid fa-question-circle"></i> <span id="mechanic-text">???</span></p>
+                        <div class="section-header">
+                            <strong class="section-title">Mechanic</strong>
+                            <i id="mechanic-lock" class="fa-solid fa-lock-open lock-icon" title="Lock/Unlock Mechanic"></i>
+                        </div>
+                        <p class="section-content">
+                            <i id="mechanic-icon" class="fa-solid fa-question-circle"></i>
+                            <span id="mechanic-text">Click generate to roll</span>
+                        </p>
                     </div>
+
                     <div class="game-idea__section">
-                        <strong class="section-title">Twist <i id="twist-lock" class="fa-solid fa-lock-open lock-icon"></i></strong>
-                        <p><i id="twist-icon" class="fa-solid fa-question-circle"></i> <span id="twist-text">???</span></p>
+                        <div class="section-header">
+                            <strong class="section-title">Twist</strong>
+                            <i id="twist-lock" class="fa-solid fa-lock-open lock-icon" title="Lock/Unlock Twist"></i>
+                        </div>
+                        <p class="section-content">
+                            <i id="twist-icon" class="fa-solid fa-question-circle"></i>
+                            <span id="twist-text">Click generate to roll</span>
+                        </p>
                     </div>
 
                     <button id="generate-idea-btn" class="game-idea__button">
