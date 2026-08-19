@@ -99,4 +99,49 @@ input[type="color"] {
     background-color: #333;
     opacity: 1; /* pop back to full when hovered */
 }
+
+/* Accessible Screen-Reader Only Utility */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Accessible Focus Rings */
+button:focus-visible,
+input[type="range"]:focus-visible,
+input[type="color"]:focus-visible,
+#togglePanel:focus-visible,
+#resetButton:focus-visible {
+    outline: 2px solid #3da9fc;
+    outline-offset: 2px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  #controls {
+    max-width: calc(100vw - 20px);
+    max-height: 80vh;
+    padding: 8px;
+  }
+  input[type="range"] {
+    width: 100%;
+    max-width: 160px;
+  }
+  #togglePanel {
+    left: auto;
+    right: 10px;
+    top: 10px;
+  }
+  #togglePanel.minimized {
+    left: auto;
+    right: 10px;
+  }
+}
   

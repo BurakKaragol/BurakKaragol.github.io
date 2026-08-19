@@ -9,6 +9,7 @@ let pixelColors = [];
 let isRunning = false;
 let circlesPerFrame = 1;
 let growthSpeed = 0.5;
+let rafId = null;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -271,13 +272,17 @@ function isNearOtherCircle(x, y) {
 
 // Start the packing loop
 function startPacking() {
+    if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+    }
     circles = [];
     animate();
 }
 
 // Main animation loop
 function animate(time) {
-    requestAnimationFrame(animate);
+    rafId = requestAnimationFrame(animate);
 
     if (isRunning) {
         for (let i = 0; i < circlesPerFrame; i++) {

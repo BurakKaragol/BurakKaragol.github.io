@@ -4,7 +4,28 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Projects</title>
+  <title>Projects | Burak Karagol</title>
+  <meta name="description" content="Explore interactive experiments, algorithms, canvas graphics, and creative engineering projects by Burak Karagol." />
+  <meta name="keywords" content="Burak Karagol, Projects, Algorithms, Interactive, Canvas, WebGL, Experiments" />
+  <meta name="author" content="Burak Karagol" />
+  <meta name="theme-color" content="#0A1118" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://burakkaragol.github.io/projects/" />
+  <meta property="og:title" content="Projects | Burak Karagol" />
+  <meta property="og:description" content="Explore interactive experiments, algorithms, canvas graphics, and creative engineering projects by Burak Karagol." />
+  <meta property="og:image" content="https://burakkaragol.github.io/assets/img/social-preview.webp" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://burakkaragol.github.io/projects/" />
+  <meta name="twitter:title" content="Projects | Burak Karagol" />
+  <meta name="twitter:description" content="Explore interactive experiments, algorithms, canvas graphics, and creative engineering projects by Burak Karagol." />
+  <meta name="twitter:image" content="https://burakkaragol.github.io/assets/img/social-preview.webp" />
+
+  <link rel="icon" type="image/x-icon" href="../assets/img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png" />
 
   <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
 
@@ -16,10 +37,10 @@
 
   <!-- Subtle, huge background shapes -->
   <div class="projects__background">
-    <img src="../assets/img/shape-wawes.svg" alt="" class="bg-shape s1">
-    <img src="../assets/img/shape-circle.svg" alt="" class="bg-shape s2">
-    <img src="../assets/img/shape-wawes.svg" alt="" class="bg-shape s3">
-    <img src="../assets/img/shape-circle.svg" alt="" class="bg-shape s4">
+    <img src="../assets/img/shape-wawes.svg" alt="" class="bg-shape s1" width="1440" height="320" aria-hidden="true" loading="lazy" decoding="async">
+    <img src="../assets/img/shape-circle.svg" alt="" class="bg-shape s2" width="500" height="500" aria-hidden="true" loading="lazy" decoding="async">
+    <img src="../assets/img/shape-wawes.svg" alt="" class="bg-shape s3" width="1440" height="320" aria-hidden="true" loading="lazy" decoding="async">
+    <img src="../assets/img/shape-circle.svg" alt="" class="bg-shape s4" width="500" height="500" aria-hidden="true" loading="lazy" decoding="async">
   </div>
 
   <!-- Header -->
@@ -46,13 +67,14 @@
   </div>
 
   <!-- Projects Grid (4 per row on desktop) -->
-  <section class="projects section">
+  <main class="projects section">
     <div class="projects__container container">
+      <h2 class="visually-hidden">Project Gallery</h2>
       <div class="projects__grid" id="projectsGrid">
 
         <!-- ==== All project cards ==== -->
         <article class="card" data-url="game_idea_generator/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/game_idea_generator.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/game_idea_generator.webp')"></div>
           <div class="body">
             <h3 class="title">Game Idea Generator</h3>
             <p class="desc">Generate random mechanics and constraints.</p>
@@ -64,7 +86,7 @@
         </article>
 
         <article class="card" data-url="sorting_algorithm_visualizer/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/sorting_algorithm_visualizer.png')">
+          <div class="thumb" style="background-image:url('../assets/img/projects/sorting_algorithm_visualizer.webp')">
           </div>
           <div class="body">
             <h3 class="title">Data Sorting Visualizer</h3>
@@ -78,7 +100,7 @@
 
         <article class="card" data-url="path_finding_visualizer/">
           <div class="thumb"
-            style="background-image:url('../assets/img/projects/path_finding_algorithm_visualizer.png')"></div>
+            style="background-image:url('../assets/img/projects/path_finding_algorithm_visualizer.webp')"></div>
           <div class="body">
             <h3 class="title">Pathfinding Viz</h3>
             <p class="desc">A*, Dijkstra, DFS, BFS on grids.</p>
@@ -90,7 +112,7 @@
         </article>
 
         <article class="card" data-url="animating_dots/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/animating_dots.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/animating_dots.webp')"></div>
           <div class="body">
             <h3 class="title">Animating Dots</h3>
             <p class="desc">Floating dots and mouse gravity.</p>
@@ -102,7 +124,7 @@
         </article>
 
         <article class="card" data-url="circle_packing/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/circle_packing.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/circle_packing.webp')"></div>
           <div class="body">
             <h3 class="title">Circle Packing</h3>
             <p class="desc">Generate art with colorful circle packing.</p>
@@ -114,7 +136,7 @@
         </article>
 
         <article class="card" data-url="meshing_dots/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/meshing_dots.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/meshing_dots.webp')"></div>
           <div class="body">
             <h3 class="title">Meshing Dots</h3>
             <p class="desc">Interactive triangular mesh animations.</p>
@@ -126,7 +148,7 @@
         </article>
 
         <article class="card" data-url="draw_tinker/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/draw_tinker.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/draw_tinker.webp')"></div>
           <div class="body">
             <h3 class="title">Draw & Tinker</h3>
             <p class="desc">Interactive drawing and merging shapes.</p>
@@ -138,7 +160,7 @@
         </article>
 
         <article class="card" data-url="qr_code/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/qr_code.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/qr_code.webp')"></div>
           <div class="body">
             <h3 class="title">QR Generator</h3>
             <p class="desc">Generate QR codes with options.</p>
@@ -150,7 +172,7 @@
         </article>
 
         <article class="card" data-url="color_palette/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/color_palette.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/color_palette.webp')"></div>
           <div class="body">
             <h3 class="title">Color Palette</h3>
             <p class="desc">Generate harmonious palettes.</p>
@@ -162,7 +184,7 @@
         </article>
 
         <article class="card" data-url="maze_generator/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/maze_generator.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/maze_generator.webp')"></div>
           <div class="body">
             <h3 class="title">Maze Generator</h3>
             <p class="desc">Generate and solve mazes quickly.</p>
@@ -174,7 +196,7 @@
         </article>
 
         <article class="card" data-url="pomodoro/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/pomodoro.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/pomodoro.webp')"></div>
           <div class="body">
             <h3 class="title">Pomodoro Focus</h3>
             <p class="desc">Minimal Pomodoro with tasks & stats.</p>
@@ -186,7 +208,7 @@
         </article>
 
         <article class="card" data-url="pid_controller/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/pid_controller.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/pid_controller.webp')"></div>
           <div class="body">
             <h3 class="title">PID Mouse Follower</h3>
             <p class="desc">2D PID visualizer with patterns.</p>
@@ -198,7 +220,7 @@
         </article>
 
         <article class="card" data-url="mood_machine/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/mood_machine.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/mood_machine.webp')"></div>
           <div class="body">
             <h3 class="title">Mood Machine</h3>
             <p class="desc">Generate daily moods with dynamic gradients and export-ready visuals.</p>
@@ -210,10 +232,10 @@
         </article>
 
         <article class="card" data-url="print_price_calculator/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/print_price_calculator.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/print_price_calculator.webp')"></div>
           <div class="body">
             <h3 class="title">Print Price Calculator</h3>
-            <p class="desc">Calculate you 3D print sell prices based on you preferences.</p>
+            <p class="desc">Calculate your 3D print sell prices based on your preferences.</p>
             <div class="actions">
               <a class="btn primary" href="print_price_calculator/">Open</a>
               <button class="btn" data-details>Details</button>
@@ -222,7 +244,7 @@
         </article>
 
         <article class="card" data-url="dice_roller/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/dice_roller.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/dice_roller.webp')"></div>
           <div class="body">
             <h3 class="title">DnD Dice Roller</h3>
             <p class="desc">
@@ -236,7 +258,7 @@
         </article>
 
         <article class="card" data-url="movie_roulette/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/movie_roulette.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/movie_roulette.webp')"></div>
           <div class="body">
             <h3 class="title">Movie Night Roulette</h3>
             <p class="desc">A physics-based decision wheel for your movie nights.</p>
@@ -248,7 +270,7 @@
         </article>
 
         <article class="card" data-url="graham_scan/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/graham_scan.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/graham_scan.webp')"></div>
           <div class="body">
             <h3 class="title">Graham Scan Visualizer</h3>
             <p class="desc">A blueprint-style visualization of the convex hull algorithm.</p>
@@ -260,7 +282,7 @@
         </article>
 
         <article class="card" data-url="steering_behaviors/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/steering_behaviors.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/steering_behaviors.webp')"></div>
           <div class="body">
             <h3 class="title">Steering Behaviors</h3>
             <p class="desc">Interactive flocking simulation (Boids).</p>
@@ -272,7 +294,7 @@
         </article>
 
         <article class="card" data-url="wfc/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/wfc.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/wfc.webp')"></div>
           <div class="body">
             <h3 class="title">Wave Function Collapse</h3>
             <p class="desc">Interactive procedural map generation with Gravity mechanics.</p>
@@ -284,7 +306,7 @@
         </article>
 
         <article class="card" data-url="effect_rectangle/">
-          <div class="thumb" style="background-image:url('../assets/img/projects/effect_rectangle.png')"></div>
+          <div class="thumb" style="background-image:url('../assets/img/projects/effect_rectangle.webp')"></div>
           <div class="body">
             <h3 class="title">Effect Rectangle</h3>
             <p class="desc">Interactive AR finger frame with real-time video effects and MP4 recording.</p>
@@ -295,11 +317,35 @@
           </div>
         </article>
 
+        <article class="card" data-url="bezier_curve_generator/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/bezier_curve_generator.webp')"></div>
+          <div class="body">
+            <h3 class="title">Bezier Curve Generator</h3>
+            <p class="desc">Interactive visualization of De Casteljau's algorithm with dynamic control points and step-by-step lerping construction.</p>
+            <div class="actions">
+              <a class="btn primary" href="bezier_curve_generator/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="emotion_wheel/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/emotion_wheel.webp')"></div>
+          <div class="body">
+            <h3 class="title">Emotion Wheel</h3>
+            <p class="desc">Interactive emotion taxonomy wheel in Turkish and English.</p>
+            <div class="actions">
+              <a class="btn primary" href="emotion_wheel/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
         <!-- Secret card gets injected here on unlock -->
 
       </div>
     </div>
-  </section>
+  </main>
 
   <!-- Details Modal -->
   <div class="modal" id="modal" aria-hidden="true">

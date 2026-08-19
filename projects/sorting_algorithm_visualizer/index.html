@@ -3,7 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorting Algorithms Visualizer</title>
+    <title>Sorting Algorithms Visualizer | Burak Karagol</title>
+    <meta name="description" content="Visual comparison of sorting algorithms including Bubble Sort, Merge Sort, and Quick Sort with custom array controls." />
+    <meta name="keywords" content="Sorting Algorithms, Visualization, Bubble Sort, Quick Sort, Merge Sort, JavaScript" />
+    <meta name="author" content="Burak Karagol" />
+    <meta name="theme-color" content="#0A1118" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://burakkaragol.github.io/projects/sorting_algorithm_visualizer/" />
+    <meta property="og:title" content="Sorting Algorithms Visualizer | Burak Karagol" />
+    <meta property="og:description" content="Visual comparison of sorting algorithms including Bubble Sort, Merge Sort, and Quick Sort with custom array controls." />
+    <meta property="og:image" content="https://burakkaragol.github.io/assets/img/projects/sorting_algorithm_visualizer.webp" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://burakkaragol.github.io/projects/sorting_algorithm_visualizer/" />
+    <meta name="twitter:title" content="Sorting Algorithms Visualizer | Burak Karagol" />
+    <meta name="twitter:description" content="Visual comparison of sorting algorithms including Bubble Sort, Merge Sort, and Quick Sort with custom array controls." />
+    <meta name="twitter:image" content="https://burakkaragol.github.io/assets/img/projects/sorting_algorithm_visualizer.webp" />
+
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
+
     <link rel="stylesheet" href="sorting_algorithm.css">
 </head>
 <body>
@@ -11,48 +33,50 @@
         <h1>Sorting Algorithms Visualizer</h1>
     </header>
     
-    <section id="controls">
-        <label for="colorMode">Color Mode:</label>
-        <select id="colorMode">
-            <option value="height">Gradient Color</option>
-            <option value="monochrome">Single Color</option>
-            <option value="monochrome-gradient">Single Color Range</option>
-        </select>
+    <main id="app-main">
+        <section id="controls">
+            <label for="colorMode">Color Mode:</label>
+            <select id="colorMode">
+                <option value="height">Gradient Color</option>
+                <option value="monochrome">Single Color</option>
+                <option value="monochrome-gradient">Single Color Range</option>
+            </select>
 
-        <label for="colorPicker">Single Color:</label>
-        <input type="color" id="colorPicker" value="#00FFFF">
+            <label for="colorPicker">Single Color:</label>
+            <input type="color" id="colorPicker" value="#00FFFF">
 
-        <label for="gradientStart">Gradient</label>
-        <input type="color" id="gradientStart" value="#0000FF">
-        <input type="color" id="gradientEnd" value="#FF0000">
+            <label for="gradientStart">Gradient</label>
+            <input type="color" id="gradientStart" value="#0000FF">
+            <input type="color" id="gradientEnd" value="#FF0000">
 
-        <label for="algorithm">Algorithm:</label>
-        <select id="algorithm">
-            <option value="bubble">Bubble Sort</option>
-            <option value="selection">Selection Sort</option>
-            <option value="insertion">Insertion Sort</option>
-            <option value="merge">Merge Sort</option>
-            <option value="quick">Quick Sort</option>
-        </select>
+            <label for="algorithm">Algorithm:</label>
+            <select id="algorithm">
+                <option value="bubble">Bubble Sort</option>
+                <option value="selection">Selection Sort</option>
+                <option value="insertion">Insertion Sort</option>
+                <option value="merge">Merge Sort</option>
+                <option value="quick">Quick Sort</option>
+            </select>
 
-        <label for="sortOrder">Sort Order:</label>
-        <select id="sortOrder">
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-        </select>
+            <label for="sortOrder">Sort Order:</label>
+            <select id="sortOrder">
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+            </select>
 
-        <label for="size">Array Size:</label>
-        <input type="range" id="size" min="5" max="100" value="50">
+            <label for="size">Array Size:</label>
+            <input type="range" id="size" min="5" max="100" value="50">
 
-        <label for="speed">Speed:</label>
-        <input type="range" id="speed" min="1" max="90" value="45">
+            <label for="speed">Speed:</label>
+            <input type="range" id="speed" min="1" max="90" value="45">
 
-        <button id="start">Start</button>
-        <button id="stop">Stop</button>
-        <button id="shuffle">Shuffle</button>
-    </section>
+            <button id="start">Start</button>
+            <button id="stop">Stop</button>
+            <button id="shuffle">Shuffle</button>
+        </section>
 
-    <section id="visualizer"></section>
+        <section id="visualizer"></section>
+    </main>
 
     <script src="sorting_algorithm.js"></script>
 </body>

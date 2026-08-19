@@ -122,7 +122,6 @@ h1 {
     border-radius: 8px;
     font-family: inherit;
     font-size: 0.9rem;
-    outline: none;
     cursor: pointer;
     transition: border-color 0.2s;
     appearance: none;
@@ -394,3 +393,57 @@ canvas {
 .flow-step.active .step-content h3 {
     color: #d946ef;
 }
+
+/* Accessible Focus Rings */
+button:focus-visible,
+.btn:focus-visible,
+.dropdown:focus-visible,
+select:focus-visible,
+input[type="range"]:focus-visible,
+input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--primary, #8b5cf6);
+    outline-offset: 2px;
+}
+
+/* Mobile & Tablet Responsiveness */
+@media (max-width: 1024px) {
+    body {
+        height: auto;
+        overflow-y: auto;
+    }
+    .app-wrap {
+        flex-direction: column;
+        height: auto;
+        align-items: center;
+    }
+    .sidebar {
+        width: 100%;
+        max-width: 600px;
+        margin: 10px 0;
+        padding: 1.5rem;
+        border-right: none;
+        border-bottom: 1px solid var(--glass-border);
+    }
+    .right-sidebar {
+        width: 100%;
+        max-width: 600px;
+        margin: 10px 0;
+        padding: 1.5rem;
+        border-left: none;
+        border-top: 1px solid var(--glass-border);
+    }
+    .canvas-wrap {
+        width: 100%;
+        padding: 1.5rem;
+    }
+    canvas {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar, .right-sidebar {
+        padding: 12px;
+    }
+}

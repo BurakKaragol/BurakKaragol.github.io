@@ -76,7 +76,6 @@ button.confirmable.confirming {
   padding: 3px 5px;
   border-radius: 2px;
   border: none;
-  outline: none;
 }
 
 #multiColorLabel {
@@ -105,7 +104,6 @@ button.confirmable.confirming {
   width: 60px;
   height: 28px;
   background-color: #222;
-  outline: none;
   cursor: pointer;
 }
 
@@ -113,4 +111,53 @@ button.confirmable.confirming {
 #propertiesPanel.hidden,
 .hidden {
   display: none;
+}
+
+/* Accessible Screen-Reader Only Utility */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Accessible Focus Rings */
+button:focus-visible,
+input[type="number"]:focus-visible,
+input[type="color"]:focus-visible {
+  outline: 2px solid var(--accent, #3da9fc);
+  outline-offset: 2px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .controls {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    gap: 4px;
+  }
+  button {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+  #propertiesPanel {
+    top: auto;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: calc(100vw - 20px);
+  }
+  #defaultsPanel {
+    left: 10px;
+    right: 10px;
+    top: 50px;
+    width: auto;
+    max-width: 280px;
+  }
 }

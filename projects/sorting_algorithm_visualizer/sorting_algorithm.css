@@ -76,7 +76,6 @@ input[type="range"] {
     height: 5px;
     background: #666;
     border-radius: 5px;
-    outline: none;
     transition: background 0.2s;
 }
 input[type="range"]:hover {
@@ -123,4 +122,34 @@ input[type="color"] {
     margin: 2px;
     transition: height 0.2s ease, background-color 0.2s ease;
     border-radius: 5px;
+}
+
+/* Accessible Focus Rings */
+button:focus-visible,
+select:focus-visible,
+input[type="range"]:focus-visible,
+input[type="color"]:focus-visible {
+    outline: 2px solid #3da9fc;
+    outline-offset: 2px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.3rem;
+  }
+  #controls {
+    padding: 12px;
+    gap: 8px;
+  }
+  #visualizer {
+    height: 260px;
+    margin-top: 10px;
+    padding: 6px;
+  }
+  .bar {
+    width: auto;
+    flex: 1;
+    margin: 1px;
+  }
 }

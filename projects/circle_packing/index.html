@@ -3,53 +3,77 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Circle Packing Art</title>
+    <title>Circle Packing Art | Burak Karagol</title>
+    <meta name="description" content="Generative circle packing artwork generated from image luminance and color sampling on HTML5 canvas." />
+    <meta name="keywords" content="Circle Packing, Generative Art, Canvas, Creative Coding, JavaScript" />
+    <meta name="author" content="Burak Karagol" />
+    <meta name="theme-color" content="#0A1118" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://burakkaragol.github.io/projects/circle_packing/" />
+    <meta property="og:title" content="Circle Packing Art | Burak Karagol" />
+    <meta property="og:description" content="Generative circle packing artwork generated from image luminance and color sampling on HTML5 canvas." />
+    <meta property="og:image" content="https://burakkaragol.github.io/assets/img/projects/circle_packing.webp" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://burakkaragol.github.io/projects/circle_packing/" />
+    <meta name="twitter:title" content="Circle Packing Art | Burak Karagol" />
+    <meta name="twitter:description" content="Generative circle packing artwork generated from image luminance and color sampling on HTML5 canvas." />
+    <meta name="twitter:image" content="https://burakkaragol.github.io/assets/img/projects/circle_packing.webp" />
+
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
+
     <link rel="stylesheet" href="circle.css" />
 </head>
 <body>
-    <div id="ui">
-        <h1>Circle Packing with Image Colors</h1>
-        <input type="file" id="imageInput" accept="image/png, image/jpeg" />
-        <br /><br />
-        
-        <button id="startStopBtn" disabled>Start</button>
-        <button id="resetBtn">Reset</button>
-        <button id="downloadBtn">Download</button>
-        
-        <div>
-            <label for="circleRate">Circles per frame: <span id="circleRateLabel">50</span></label>
-            <input type="range" id="circleRate" min="1" max="100" value="50" />
-        </div>
-        
-        <div>
-            <label for="speedRate">Growth speed: <span id="speedRateLabel">1</span></label>
-            <input type="range" id="speedRate" min="0.1" max="3" step="0.1" value="1" />
-        </div>
+    <main id="app-main">
+        <div id="ui">
+            <h1>Circle Packing with Image Colors</h1>
+            <input type="file" id="imageInput" accept="image/png, image/jpeg" />
+            <br /><br />
+            
+            <button id="startStopBtn" disabled>Start</button>
+            <button id="resetBtn">Reset</button>
+            <button id="downloadBtn">Download</button>
+            
+            <div>
+                <label for="circleRate">Circles per frame: <span id="circleRateLabel">50</span></label>
+                <input type="range" id="circleRate" min="1" max="100" value="50" />
+            </div>
+            
+            <div>
+                <label for="speedRate">Growth speed: <span id="speedRateLabel">1</span></label>
+                <input type="range" id="speedRate" min="0.1" max="3" step="0.1" value="1" />
+            </div>
 
-        <div>
-            <label for="maxRadius">Max Radius: <span id="maxRadiusLabel">10</span></label>
-            <input type="range" id="maxRadius" min="5" max="50" value="10" />
-        </div>
+            <div>
+                <label for="maxRadius">Max Radius: <span id="maxRadiusLabel">10</span></label>
+                <input type="range" id="maxRadius" min="5" max="50" value="10" />
+            </div>
 
-        <br />
+            <br />
 
-        <div>
-            <label for="strokeToggle">
-                <input type="checkbox" id="strokeToggle" />
-                Outline Mode
-            </label>
-        </div>
+            <div>
+                <label for="strokeToggle">
+                    <input type="checkbox" id="strokeToggle" />
+                    Outline Mode
+                </label>
+            </div>
 
-        <button id="previewBtn">Hold to Preview</button>
-        <div>
-            <label for="bgToggle">
-                <input type="checkbox" id="bgToggle" />
-                Show Image in Backgroundgit
-            </label>
+            <button id="previewBtn">Hold to Preview</button>
+            <div>
+                <label for="bgToggle">
+                    <input type="checkbox" id="bgToggle" />
+                    Show Image in Background
+                </label>
+            </div>
         </div>
-    </div>
-      
-    <canvas id="circleCanvas"></canvas>
+          
+        <canvas id="circleCanvas"></canvas>
+    </main>
 
     <script src="circle.js"></script>
 </body>

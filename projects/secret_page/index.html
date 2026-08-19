@@ -3,17 +3,42 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Secret Console Quest</title>
+  <title>Secret Console Quest | Burak Karagol</title>
+  <meta name="description" content="Interactive retro Unix terminal puzzle with encrypted quests, virtual filesystem, and SHA-256 verification." />
+  <meta name="keywords" content="Terminal, Secret Quest, Easter Egg, Puzzle, CLI, Retro Terminal" />
+  <meta name="author" content="Burak Karagol" />
+  <meta name="theme-color" content="#0A1118" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://burakkaragol.github.io/projects/secret_page/" />
+  <meta property="og:title" content="Secret Console Quest | Burak Karagol" />
+  <meta property="og:description" content="Interactive retro Unix terminal puzzle with encrypted quests, virtual filesystem, and SHA-256 verification." />
+  <meta property="og:image" content="https://burakkaragol.github.io/assets/img/social-preview.webp" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://burakkaragol.github.io/projects/secret_page/" />
+  <meta name="twitter:title" content="Secret Console Quest | Burak Karagol" />
+  <meta name="twitter:description" content="Interactive retro Unix terminal puzzle with encrypted quests, virtual filesystem, and SHA-256 verification." />
+  <meta name="twitter:image" content="https://burakkaragol.github.io/assets/img/social-preview.webp" />
+
+  <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
+
   <link rel="stylesheet" href="secret.css" />
 </head>
 <body>
-  <div class="term" role="application" aria-label="Secret console">
-    <div id="screen" aria-live="polite"></div>
-    <div class="prompt-row">
-      <div class="prompt mono">&gt;&gt;</div>
-      <input id="cmd" autocomplete="off" spellcheck="false" placeholder="type a command — help" />
+  <main id="app-main">
+    <h1 class="visually-hidden">Secret Console Quest</h1>
+    <div class="term" role="application" aria-label="Secret console">
+      <div id="screen" aria-live="polite"></div>
+      <div class="prompt-row">
+        <div class="prompt mono">&gt;&gt;</div>
+        <input id="cmd" autocomplete="off" spellcheck="false" placeholder="type a command — help" />
+      </div>
     </div>
-  </div>
+  </main>
 
   <script src="secret.js"></script>
 </body>

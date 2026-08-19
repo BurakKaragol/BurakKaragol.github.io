@@ -3,48 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Idea Generator</title>
+    <title>Game Idea Generator | Burak Karagol</title>
+    <meta name="description" content="Randomized game design prompt generator combining genres, settings, mechanics, and unique twists." />
+    <meta name="keywords" content="Game Design, Game Idea, Randomizer, Game Dev, Creativity, Prompts" />
+    <meta name="author" content="Burak Karagol" />
+    <meta name="theme-color" content="#0A1118" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://burakkaragol.github.io/projects/game_idea_generator/" />
+    <meta property="og:title" content="Game Idea Generator | Burak Karagol" />
+    <meta property="og:description" content="Randomized game design prompt generator combining genres, settings, mechanics, and unique twists." />
+    <meta property="og:image" content="https://burakkaragol.github.io/assets/img/projects/game_idea_generator.webp" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://burakkaragol.github.io/projects/game_idea_generator/" />
+    <meta name="twitter:title" content="Game Idea Generator | Burak Karagol" />
+    <meta name="twitter:description" content="Randomized game design prompt generator combining genres, settings, mechanics, and unique twists." />
+    <meta name="twitter:image" content="https://burakkaragol.github.io/assets/img/projects/game_idea_generator.webp" />
+
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
 
     <!-- FontAwesome for icons -->
     <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
 
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="./game_idea.css">
-    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body class="dark-theme">
 
-    <!--==================== GAME IDEA GENERATOR ====================-->
-    <section class="game-idea section" id="game-idea">
-        <h2 class="section__title">Game Idea Generator</h2>
-        <span class="section__subtitle">Get a unique game idea</span>
+    <main id="app-main">
+        <!--==================== GAME IDEA GENERATOR ====================-->
+        <section class="game-idea section" id="game-idea">
+            <h1 class="section__title">Game Idea Generator</h1>
+            <span class="section__subtitle">Get a unique game idea</span>
 
-        <div class="game-idea__container container" id="game-idea-container">
-            <div class="game-idea__box">
-                <!-- Static Titles, Dynamic Content -->
-                <div class="game-idea__section">
-                    <strong class="section-title">Genre <i id="genre-lock" class="fa-solid fa-lock-open lock-icon"></i></strong>
-                    <p><i id="genre-icon" class="fa-solid fa-question-circle"></i> <span id="genre-text">???</span></p>
-                </div>
-                <div class="game-idea__section">
-                    <strong class="section-title">Setting <i id="setting-lock" class="fa-solid fa-lock-open lock-icon"></i></strong>
-                    <p><i id="setting-icon" class="fa-solid fa-question-circle"></i> <span id="setting-text">???</span></p>
-                </div>
-                <div class="game-idea__section">
-                    <strong class="section-title">Mechanic <i id="mechanic-lock" class="fa-solid fa-lock-open lock-icon"></i></strong>
-                    <p><i id="mechanic-icon" class="fa-solid fa-question-circle"></i> <span id="mechanic-text">???</span></p>
-                </div>
-                <div class="game-idea__section">
-                    <strong class="section-title">Twist <i id="twist-lock" class="fa-solid fa-lock-open lock-icon"></i></strong>
-                    <p><i id="twist-icon" class="fa-solid fa-question-circle"></i> <span id="twist-text">???</span></p>
-                </div>
+            <div class="game-idea__container container" id="game-idea-container">
+                <div class="game-idea__box">
+                    <!-- Static Titles, Dynamic Content -->
+                    <div class="game-idea__section">
+                        <strong class="section-title">Genre <i id="genre-lock" class="fa-solid fa-lock-open lock-icon"></i></strong>
+                        <p><i id="genre-icon" class="fa-solid fa-question-circle"></i> <span id="genre-text">???</span></p>
+                    </div>
+                    <div class="game-idea__section">
+                        <strong class="section-title">Setting <i id="setting-lock" class="fa-solid fa-lock-open lock-icon"></i></strong>
+                        <p><i id="setting-icon" class="fa-solid fa-question-circle"></i> <span id="setting-text">???</span></p>
+                    </div>
+                    <div class="game-idea__section">
+                        <strong class="section-title">Mechanic <i id="mechanic-lock" class="fa-solid fa-lock-open lock-icon"></i></strong>
+                        <p><i id="mechanic-icon" class="fa-solid fa-question-circle"></i> <span id="mechanic-text">???</span></p>
+                    </div>
+                    <div class="game-idea__section">
+                        <strong class="section-title">Twist <i id="twist-lock" class="fa-solid fa-lock-open lock-icon"></i></strong>
+                        <p><i id="twist-icon" class="fa-solid fa-question-circle"></i> <span id="twist-text">???</span></p>
+                    </div>
 
-                <button id="generate-idea-btn" class="game-idea__button">
-                    <i class="fa-solid fa-dice"></i> Generate Idea
-                </button>
+                    <button id="generate-idea-btn" class="game-idea__button">
+                        <i class="fa-solid fa-dice"></i> Generate Idea
+                    </button>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Link to external JS -->
     <script src="./game_idea.js"></script>

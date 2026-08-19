@@ -275,7 +275,7 @@ async function merge(left, mid, right) {
 function startMergeSort() {
     if (isSorting) return;
     isSorting = true;
-    mergeSort().then(resetSortingState).then(finishAnimation());
+    mergeSort().then(resetSortingState);
 }
 
 // Quick Sort

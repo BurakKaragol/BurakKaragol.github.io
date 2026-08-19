@@ -5,6 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steering Behaviors | Burak Karagol</title>
+    <meta name="description" content="Craig Reynolds Boids autonomous agent flocking simulation with separation, alignment, cohesion, and predator evasion." />
+    <meta name="keywords" content="Steering Behaviors, Boids, Flocking Simulation, Craig Reynolds, Autonomous Agents, Canvas" />
+    <meta name="author" content="Burak Karagol" />
+    <meta name="theme-color" content="#0A1118" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://burakkaragol.github.io/projects/steering_behaviors/" />
+    <meta property="og:title" content="Steering Behaviors | Burak Karagol" />
+    <meta property="og:description" content="Craig Reynolds Boids autonomous agent flocking simulation with separation, alignment, cohesion, and predator evasion." />
+    <meta property="og:image" content="https://burakkaragol.github.io/assets/img/projects/steering_behaviors.webp" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://burakkaragol.github.io/projects/steering_behaviors/" />
+    <meta name="twitter:title" content="Steering Behaviors | Burak Karagol" />
+    <meta name="twitter:description" content="Craig Reynolds Boids autonomous agent flocking simulation with separation, alignment, cohesion, and predator evasion." />
+    <meta name="twitter:image" content="https://burakkaragol.github.io/assets/img/projects/steering_behaviors.webp" />
+
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,11 +35,11 @@
 </head>
 
 <body>
+    <main id="app-main">
+        <canvas id="simulationCanvas"></canvas>
 
-    <canvas id="simulationCanvas"></canvas>
-
-    <div class="controls-panel">
-        <h2>Flock Controls</h2>
+        <div class="controls-panel">
+            <h1 class="panel-title" style="font-size:1.25rem;margin-top:0;margin-bottom:15px;color:var(--text-color);font-weight:600;">Flock Controls</h1>
 
         <div class="control-group">
             <label>Boid Count <span id="countVal" class="value-display">200</span></label>
@@ -65,8 +86,8 @@
         </div>
 
         <hr style="border: 0; border-top: 1px solid var(--panel-border); margin: 15px 0;">
-        <h3 style="font-size: 0.85rem; margin-bottom: 12px; color: var(--text-color); font-weight: 600;">Debug
-            Visualization</h3>
+        <h2 style="font-size: 0.85rem; margin-bottom: 12px; color: var(--text-color); font-weight: 600;">Debug
+            Visualization</h2>
 
         <div class="checkbox-group">
             <input type="checkbox" id="showPercChk">
@@ -94,6 +115,7 @@
             <p><strong>Click</strong> to spawn predators.</p>
         </div>
     </div>
+    </main>
 
     <script src="./steering_behaviors.js"></script>
 </body>

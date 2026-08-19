@@ -17,7 +17,7 @@ const ROOTS = [
     children: [
       { label: 'Eğlenceli',       children: ['Uyarılmış', 'Yüzsüz'] },
       { label: 'Memnun',          children: ['Özgür', 'Neşe Dolu'] },
-      { label: 'İlgili',          children: ['Meraklı', 'Meraklı'] },
+      { label: 'İlgili',          children: ['Meraklı', 'Sorgulayıcı'] },
       { label: 'Gurur Duymak',    children: ['Başarılı', 'Kendınden Emin'] },
       { label: 'Kabul Edilmiş',   children: ['Saygın', 'Değerli'] },
       { label: 'Güçlü',           children: ['Cesur', 'Yaratıcı'] },
@@ -117,7 +117,7 @@ const ROOTS = [
 /* ---------- TR→EN dictionary aligned to your labels ---------- */
 const TR2EN = {
   'Mutlu':'Happy','Üzgün':'Sad','Korkunç':'Fearful','Sinirli':'Angry','İğrenmiş':'Disgusted','Kötü':'Bad','Şaşırmış':'Surprised',
-  'Eğlenceli':'Playful','Uyarılmış':'Aroused','Yüzsüz':'Cheeky','Memnun':'Content','Özgür':'Free','Neşe Dolu':'Joyful','İlgili':'Interested','Meraklı':'Curious',
+  'Eğlenceli':'Playful','Uyarılmış':'Aroused','Yüzsüz':'Cheeky','Memnun':'Content','Özgür':'Free','Neşe Dolu':'Joyful','İlgili':'Interested','Meraklı':'Curious','Sorgulayıcı':'Inquisitive',
   'Gurur Duymak':'Proud','Başarılı':'Successful','Kendınden Emin':'Confident','Kabul Edilmiş':'Accepted','Saygın':'Respected','Değerli':'Valuable',
   'Güçlü':'Powerful','Cesur':'Brave','Yaratıcı':'Creative','Barışçıl':'Peaceful','Sevgi Dolu':'Loving','Müteşekkir':'Grateful','Güvenen':'Trusting',
   'Hassas':'Sensitive','Samimi':'Sincere','İyimser':'Optimistic','Umutlu':'Hopeful','Esinlenilmiş':'Inspired',

@@ -130,7 +130,7 @@ h1 {
 }
 
 /* Responsive Adjustments */
-@media screen and (max-width: 1024px) {
+@media (max-width: 1024px) {
     #controls {
         width: 100%;
         padding: 10px;
@@ -155,4 +155,14 @@ h1 {
         width: 25px;
         height: 25px;
     }
+}
+
+/* Accessible Focus Rings */
+button:focus-visible,
+.control-btn:focus-visible,
+.mode-btn:focus-visible,
+select:focus-visible,
+input:focus-visible {
+    outline: 2px solid #3da9fc;
+    outline-offset: 2px;
 }

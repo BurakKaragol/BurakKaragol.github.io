@@ -675,8 +675,15 @@ downloadBtn.addEventListener('click', downloadFromPreview);
 
 /* ================= Init ================= */
 (function init(){
+  const params = new URLSearchParams(window.location.search);
+  const paramMoodId = params.get('m');
   const last = tryLocalGet(LSK);
-  if(last && MOODS.find(m=>m.id===last)) currentMood = MOODS.find(m=>m.id===last);
+
+  if (paramMoodId && MOODS.find(m => m.id === paramMoodId)) {
+    currentMood = MOODS.find(m => m.id === paramMoodId);
+  } else if (last && MOODS.find(m => m.id === last)) {
+    currentMood = MOODS.find(m => m.id === last);
+  }
 
   populateMoodControls();
   populateFormatControls();

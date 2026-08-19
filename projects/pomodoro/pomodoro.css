@@ -276,6 +276,19 @@ body.break.long  .state-badge{ color:#03240b; background:linear-gradient(90deg,#
 /* Container prevents reveal animation from peeking */
 .continue-cta{ margin-top:18px; overflow:hidden }
 
+/* Accessible Screen-Reader Only Utility */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 /* Base look aligned with buttons */
 .btn-continue{
   position:relative;
@@ -285,7 +298,7 @@ body.break.long  .state-badge{ color:#03240b; background:linear-gradient(90deg,#
   font-weight:800;
   letter-spacing:.02em;
   border-radius:14px;
-  background: var(--btn-primary-bg, #2b86ff);
+  background: var(--btn-primary-bg, #1d6de3);
   color: var(--btn-primary-fg, #ffffff);
   border:1px solid var(--btn-primary-border, #4896ff);
   box-shadow: 0 6px 22px rgba(0,0,0,.22), inset 0 0 0 2px rgba(255,255,255,.06);
@@ -331,7 +344,6 @@ body.break.long  .state-badge{ color:#03240b; background:linear-gradient(90deg,#
   pointer-events:none;
 }
 .btn-continue:hover::after{ 
-  transform: scaleX(1.2) translateY(-1px);
   transform: translateX(120%);
 }
 
@@ -442,4 +454,15 @@ body.break .dock:not(.force-gray){
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce){
   *{ animation:none!important; transition:none!important }
+}
+
+/* Accessible Focus Rings */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+.dock-btn:focus-visible,
+.btn-continue:focus-visible,
+.switch input:focus-visible + .slider {
+  outline: 2px solid var(--primary, #3b82f6);
+  outline-offset: 2px;
 }

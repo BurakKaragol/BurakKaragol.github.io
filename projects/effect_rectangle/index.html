@@ -3,7 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Effect Rectangle - Camera Recorder</title>
+    <title>AR Effect Rectangle - Camera Recorder | Burak Karagol</title>
+    <meta name="description" content="Augmented reality camera framing sandbox using Google MediaPipe hands and WebCodecs MP4 recording." />
+    <meta name="keywords" content="Augmented Reality, MediaPipe, WebCodecs, MP4, Computer Vision, Camera Filters" />
+    <meta name="author" content="Burak Karagol" />
+    <meta name="theme-color" content="#0A1118" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://burakkaragol.github.io/projects/effect_rectangle/" />
+    <meta property="og:title" content="AR Effect Rectangle | Burak Karagol" />
+    <meta property="og:description" content="Augmented reality camera framing sandbox using Google MediaPipe hands and WebCodecs MP4 recording." />
+    <meta property="og:image" content="https://burakkaragol.github.io/assets/img/projects/effect_rectangle.webp" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://burakkaragol.github.io/projects/effect_rectangle/" />
+    <meta name="twitter:title" content="AR Effect Rectangle | Burak Karagol" />
+    <meta name="twitter:description" content="Augmented reality camera framing sandbox using Google MediaPipe hands and WebCodecs MP4 recording." />
+    <meta name="twitter:image" content="https://burakkaragol.github.io/assets/img/projects/effect_rectangle.webp" />
+
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
 
     <!-- FontAwesome for icons -->
     <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
@@ -12,7 +33,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
 
     <!-- CSS Links -->
-    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="./effect_rectangle.css">
 
     <!-- CDNs for MediaPipe & Mp4Muxer -->
@@ -55,7 +76,7 @@
             <!-- Dashboard HUD Panel -->
             <aside class="control-panel">
                 <div class="panel-section">
-                    <h3><i class="fa-solid fa-sliders"></i> Capture Settings</h3>
+                    <h2><i class="fa-solid fa-sliders"></i> Capture Settings</h2>
                     <div class="options-group">
                         <label class="option-toggle">
                             <input type="checkbox" id="chkFrame" checked>
@@ -71,7 +92,7 @@
                 </div>
 
                 <div class="panel-section">
-                    <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Visual Filter</h3>
+                    <h2><i class="fa-solid fa-wand-magic-sparkles"></i> Visual Filter</h2>
                     <div class="filter-selector-grid" id="filterSelectorGrid">
                         <!-- Populated dynamically via JS -->
                     </div>
@@ -79,7 +100,7 @@
                 </div>
 
                 <div class="panel-section recording-sec">
-                    <h3><i class="fa-solid fa-video"></i> Session Recording</h3>
+                    <h2><i class="fa-solid fa-video"></i> Session Recording</h2>
                     
                     <div class="rec-status-bar">
                         <span id="recEngine" class="rec-engine">WebCodecs (MP4)</span>

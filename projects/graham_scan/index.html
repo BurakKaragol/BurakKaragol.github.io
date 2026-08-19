@@ -3,30 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graham Scan - Professional</title>
+    <title>Graham Scan Visualization | Burak Karagol</title>
+    <meta name="description" content="Interactive 2D convex hull algorithm visualization using the Graham Scan method with step-by-step backtracking." />
+    <meta name="keywords" content="Graham Scan, Convex Hull, Computational Geometry, Algorithms, Canvas, Visualization" />
+    <meta name="author" content="Burak Karagol" />
+    <meta name="theme-color" content="#0A1118" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://burakkaragol.github.io/projects/graham_scan/" />
+    <meta property="og:title" content="Graham Scan Visualization | Burak Karagol" />
+    <meta property="og:description" content="Interactive 2D convex hull algorithm visualization using the Graham Scan method with step-by-step backtracking." />
+    <meta property="og:image" content="https://burakkaragol.github.io/assets/img/projects/graham_scan.webp" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://burakkaragol.github.io/projects/graham_scan/" />
+    <meta name="twitter:title" content="Graham Scan Visualization | Burak Karagol" />
+    <meta name="twitter:description" content="Interactive 2D convex hull algorithm visualization using the Graham Scan method with step-by-step backtracking." />
+    <meta name="twitter:image" content="https://burakkaragol.github.io/assets/img/projects/graham_scan.webp" />
+
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
+
     <link rel="stylesheet" href="graham.css">
 </head>
 <body>
-
-    <div class="ui-container">
-        <div class="header">
-            <h1>Graham Scan Visualization</h1>
-            <span id="status-badge" class="status-badge">Ready</span>
-        </div>
-        
-        <div class="controls">
-            <button id="btn-gen">Generate</button>
-            <button id="btn-run">Run</button>
-            <button id="btn-reset">Reset</button>
+    <main id="app-main">
+        <div class="ui-container">
+            <div class="header">
+                <h1>Graham Scan Visualization</h1>
+                <span id="status-badge" class="status-badge">Ready</span>
+            </div>
             
-            <div class="slider-group">
-                <label>Animation Speed</label>
-                <input type="range" id="speed-range" min="1" max="100" value="40">
+            <div class="controls">
+                <button id="btn-gen">Generate</button>
+                <button id="btn-run">Run</button>
+                <button id="btn-reset">Reset</button>
+                
+                <div class="slider-group">
+                    <label>Animation Speed</label>
+                    <input type="range" id="speed-range" min="1" max="100" value="40">
+                </div>
             </div>
         </div>
-    </div>
 
-    <canvas id="main-canvas"></canvas>
+        <canvas id="main-canvas"></canvas>
+    </main>
 
     <script src="graham.js"></script>
 </body>

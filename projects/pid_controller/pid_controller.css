@@ -237,3 +237,13 @@ button:hover {
 .muted {
   color: var(--muted);
 }
+
+/* Accessible Focus Rings */
+button:focus-visible,
+.btn:focus-visible,
+input[type="range"]:focus-visible,
+input[type="number"]:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--accent, #38bdf8);
+    outline-offset: 2px;
+}

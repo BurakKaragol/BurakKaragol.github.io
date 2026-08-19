@@ -54,7 +54,6 @@ body {
   background-color: #2a2a2a;
   color: #ffffff;
   border: 1px solid #444;
-  outline: none;
 }
 
 #control-panel input[type="color"] {
@@ -64,7 +63,6 @@ body {
   border-radius: 8px;
   background-color: #2a2a2a;
   border: 1px solid #444;
-  outline: none;
   cursor: pointer;
 }
 
@@ -106,14 +104,18 @@ body {
   background-color: white;
 }
 
-#qr-canvas-container.blur {
-  filter: blur(8px);
-  opacity: 0.3;
+#qr-canvas-container {
   transition: filter 0.4s ease, opacity 0.4s ease;
 }
 
-#qr-canvas-container {
-  transition: filter 0.4s ease, opacity 0.4s ease;
+#qr-canvas-container.blur {
+  filter: blur(8px);
+  opacity: 0.3;
+}
+
+#qr-canvas-container:not(.blur) {
+  filter: blur(0px);
+  opacity: 1;
 }
 
 #qr-canvas-container canvas {
@@ -131,7 +133,6 @@ body {
   background-color: #2a2a2a;
   color: #ffffff;
   border: 1px solid #444;
-  outline: none;
   resize: vertical;
 }
 
@@ -159,17 +160,6 @@ body {
   height: auto !important;
 }
 
-#qr-canvas-container {
-  filter: blur(8px);
-  opacity: 0.3;
-  transition: filter 0.6s ease, opacity 0.6s ease;
-}
-
-#qr-canvas-container:not(.blur) {
-  filter: blur(0px);
-  opacity: 1;
-}
-
 #qr-progress-bar-wrapper {
   position: absolute;
   bottom: 0;
@@ -187,4 +177,40 @@ body {
   width: 0%;
   background: #4e8cff;
   transition: width 0s;
+}
+
+/* Accessible Focus Rings */
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--accent, #3da9fc);
+    outline-offset: 2px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  body {
+    height: auto;
+    overflow-y: auto;
+    min-height: 100vh;
+  }
+  #container {
+    flex-direction: column-reverse;
+    height: auto;
+  }
+  #control-panel {
+    width: 100%;
+    border-right: none;
+    border-top: 1px solid #333;
+    padding: 16px;
+  }
+  #preview-panel {
+    min-height: 280px;
+    padding: 20px;
+  }
+  #qr-canvas {
+    max-width: 240px;
+    max-height: 240px;
+  }
 }

@@ -358,7 +358,11 @@ function render() {
 /* ================= LOOP ================= */
 let last=performance.now();
 function frame(now){
-  const dt=(now-last)*0.001; last=now; acc+=dt;
+  let dt = (now - last) * 0.001;
+  last = now;
+  dt = Math.min(dt, 0.1);
+  acc += dt;
+  acc = Math.min(acc, 0.1);
   const t = now/1000;
   if(activePattern) updatePatternTarget(t);
 

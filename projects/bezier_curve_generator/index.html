@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bezier Curve Generator - De Casteljau Algorithm | Burak Karagol</title>
+    <meta name="description" content="Interactive visualization of De Casteljau algorithm for evaluating Bezier curves with dynamic degree and MathJax formulas.">
+    <meta name="keywords" content="Bezier Curve, De Casteljau, Canvas, Math, Algorithm, Geometry">
+    <meta name="author" content="Burak Karagol">
+    <meta name="theme-color" content="#0A1118">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://burakkaragol.github.io/projects/bezier_curve_generator/">
+    <meta property="og:title" content="Bezier Curve Generator | Burak Karagol">
+    <meta property="og:description" content="Interactive visualization of De Casteljau algorithm for evaluating Bezier curves with dynamic degree and MathJax formulas.">
+    <meta property="og:image" content="https://burakkaragol.github.io/assets/img/projects/bezier_curve_generator.webp">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://burakkaragol.github.io/projects/bezier_curve_generator/">
+    <meta name="twitter:title" content="Bezier Curve Generator | Burak Karagol">
+    <meta name="twitter:description" content="Interactive visualization of De Casteljau algorithm for evaluating Bezier curves with dynamic degree and MathJax formulas.">
+    <meta name="twitter:image" content="https://burakkaragol.github.io/assets/img/projects/bezier_curve_generator.webp">
+
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+
+    <!-- FontAwesome for icons -->
+    <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="./bezier_curve.css">
+</head>
+<body class="dark-theme">
+
+    <!-- Navigation Header -->
+    <header class="app-header">
+        <a href="../index.html" class="back-link">
+            <i class="fa-solid fa-arrow-left-long"></i>
+            <span>Back to Projects</span>
+        </a>
+        <h1 class="app-title">Bezier Curve Generator</h1>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="app-container">
+        <div class="workspace">
+            <!-- Canvas Drawing Area -->
+            <div class="canvas-wrapper">
+                <canvas id="canvasElement"></canvas>
+                
+                <!-- On-canvas math HUD overlay -->
+                <div class="hud-overlay" id="hudOverlay">
+                    <div class="hud-metric">
+                        <span class="label">Degree:</span>
+                        <span id="hudDegree" class="value">Order: 3 (Cubic)</span>
+                    </div>
+                    <div class="hud-metric">
+                        <span class="label">Parameter t:</span>
+                        <span id="hudT" class="value">0.500</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard HUD Panel -->
+            <aside class="control-panel">
+                <!-- Preset Curves Section -->
+                <div class="panel-section">
+                    <h2><i class="fa-solid fa-shapes"></i> Presets</h2>
+                    <div class="presets-grid" id="presetsGrid">
+                        <button class="preset-btn active" data-preset="cubic">Cubic Bezier</button>
+                        <button class="preset-btn" data-preset="quartic">Quartic</button>
+                        <button class="preset-btn" data-preset="loop">Loops</button>
+                        <button class="preset-btn" data-preset="flower">Petals</button>
+                        <button class="preset-btn" data-preset="empty">Clear Slate</button>
+                    </div>
+                </div>
+
+                <!-- Simulation Controls Section -->
+                <div class="panel-section">
+                    <h2><i class="fa-solid fa-play"></i> Animation Controls</h2>
+                    <div class="control-group">
+                        <div class="slider-row">
+                            <label for="tSlider">Parameter t</label>
+                            <span id="tValDisplay" class="monospaced-val">0.50</span>
+                        </div>
+                        <input type="range" id="tSlider" min="0" max="1" step="0.001" value="0.5">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="slider-row">
+                            <label for="speedSlider">Animation Speed</label>
+                            <span id="speedDisplay" class="monospaced-val">1.0x</span>
+                        </div>
+                        <input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1.0">
+                    </div>
+
+                    <div class="options-group" style="margin-top: 4px;">
+                        <label class="option-toggle">
+                            <input type="checkbox" id="chkRepeat" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Repeat Animation</span>
+                        </label>
+                    </div>
+
+                    <div class="button-row">
+                        <button id="playBtn" class="btn primary"><i class="fa-solid fa-play"></i> Play</button>
+                        <button id="resetBtn" class="btn"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                    </div>
+                </div>
+
+                <!-- Display Layer Options -->
+                <div class="panel-section">
+                    <h2><i class="fa-solid fa-eye"></i> Show Elements</h2>
+                    <div class="options-group">
+                        <label class="option-toggle">
+                            <input type="checkbox" id="chkPolygon" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Control Polygon</span>
+                        </label>
+                        <label class="option-toggle">
+                            <input type="checkbox" id="chkLines" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Interpolation Lines</span>
+                        </label>
+                        <label class="option-toggle">
+                            <input type="checkbox" id="chkPoints" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Interpolation Nodes</span>
+                        </label>
+                        <label class="option-toggle">
+                            <input type="checkbox" id="chkCurve" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Traced Curve</span>
+                        </label>
+                    </div>
+
+                    <div class="control-group" style="margin-top: 8px;">
+                        <div class="slider-row">
+                            <label for="opacitySlider">Helper Opacity</label>
+                            <span id="opacityDisplay" class="monospaced-val">60%</span>
+                        </div>
+                        <input type="range" id="opacitySlider" min="0" max="1" step="0.05" value="0.6">
+                    </div>
+                </div>
+
+                <!-- Mathematical Context Panel -->
+                <div class="panel-section math-section">
+                    <h2><i class="fa-solid fa-calculator"></i> Equation</h2>
+                    <div class="formula-box" id="formulaBox">
+                        \[B(t) = (1-t)^3 P_0 + 3(1-t)^2 t P_1 + 3(1-t) t^2 P_2 + t^3 P_3\]
+                    </div>
+                </div>
+                
+                <!-- Interactive Instruction Note -->
+                <div class="instruction-box">
+                    <p><i class="fa-solid fa-info-circle"></i> <strong>How to interact:</strong></p>
+                    <ul>
+                        <li>Double-click canvas to add points</li>
+                        <li>Drag nodes to reshape the curve</li>
+                        <li>Right-click a node to remove it</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- MathJax for rendering LaTeX equation -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+    <!-- Core logic JS script -->
+    <script src="./bezier_curve.js"></script>
+</body>
+</html>

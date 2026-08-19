@@ -7,16 +7,6 @@ body {
     color: #fff;
 }
 
-#ui {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 10;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 10px 15px;
-    border-radius: 8px;
-}
-
 #imageInput {
     margin-top: 10px;
 }
@@ -25,17 +15,9 @@ canvas {
     display: block;
 }
 
-#ui div {
-    margin-top: 10px;
-}
-
-#ui button {
-    margin-right: 5px;
-    margin-top: 5px;
-}
-
 :root {
     --accent: #00bcd4;
+    --primary: #38bdf8;
     --bg-dark: #1e1e1e;
     --bg-light: #2c2c2c;
     --text: #ffffff;
@@ -70,6 +52,11 @@ canvas {
     margin-top: 10px;
 }
 
+#ui button {
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
 label {
     font-size: 14px;
     display: block;
@@ -82,7 +69,6 @@ input[type="range"] {
     background: var(--bg-dark);
     height: 6px;
     border-radius: 5px;
-    outline: none;
     cursor: pointer;
 }
 
@@ -118,4 +104,32 @@ button {
 
 button:hover {
     background: #0097a7;
+}
+
+/* Accessible Focus Rings */
+#ui button:focus-visible,
+button:focus-visible,
+input[type="range"]:focus-visible,
+input[type="file"]:focus-visible,
+input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--primary, #38bdf8);
+    outline-offset: 2px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  [id="ui"] {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-width: calc(100vw - 20px);
+    padding: 12px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  [id="ui"] h1 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
 }

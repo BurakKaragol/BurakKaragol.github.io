@@ -137,7 +137,7 @@ button:active{ transform: translateY(0); filter: brightness(.98); }
 }
 .select{
   background: transparent; color: var(--text);
-  border: none; outline: none; font-weight: 600; margin-left: 6px;
+  border: none; font-weight: 600; margin-left: 6px;
 }
 
 /* Native select’ı erişilebilirlik için bırakıyoruz; görselde gizli */
@@ -194,10 +194,16 @@ footer{ opacity:.8; font-size:12px; text-align:center; padding-bottom: 2vh; }
 @keyframes float{ from{transform:translateY(0)} to{transform:translateY(-20%)} }
 
 /* Focus ring */
-.focus-ring:focus-visible{
-  outline: 3px solid var(--ring);
-  outline-offset: 3px;
-  border-radius:12px;
+:focus-visible,
+button:focus-visible,
+.select:focus-visible,
+.selectui-trigger:focus-visible,
+.focus-ring:focus-visible,
+.btn:focus-visible,
+.icon-btn:focus-visible,
+.chip:focus-visible {
+  outline: 2px solid var(--ring, #38bdf8);
+  outline-offset: 2px;
 }
 
 /* ----- Modal ----- */
@@ -221,3 +227,38 @@ footer{ opacity:.8; font-size:12px; text-align:center; padding-bottom: 2vh; }
   box-shadow: 0 10px 30px rgba(0,0,0,.25);
 }
 .modal-actions{ display:flex; justify-content:flex-end; gap:10px; }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+    height: auto;
+  }
+  .wrap {
+    margin: 2vh auto 2vh;
+    width: 95vw;
+  }
+  .mood-card {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "emoji"
+      "title"
+      "motto";
+    text-align: center;
+    justify-items: center;
+    gap: 12px;
+  }
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .left, .right {
+    justify-content: center;
+    width: 100%;
+  }
+  .modal-content {
+    width: 98vw;
+    padding: 10px;
+  }
+}
+

@@ -141,39 +141,28 @@ function updatePoints() {
     const gravityStrength = 10;
 
     for (let point of points) {
+        // Wind
         point.vx += windX * 0.01;
         point.vy -= windY * 0.01;
+
+        // Gravity / Repulsion
+        const dx = mouse.x - point.x;
+        const dy = mouse.y - point.y;
+        const distSq = dx * dx + dy * dy;
+
+        if ((mouse.leftHeld || mouse.rightHeld) && distSq < 100000000) {
+            const force = gravityStrength / (distSq + 10); // Avoid division by zero
+            const direction = mouse.leftHeld ? 1 : -1;
+
+            point.vx += direction * dx * force;
+            point.vy += direction * dy * force;
+        }
 
         point.x += point.vx * speed;
         point.y += point.vy * speed;
 
         if (point.x < 0 || point.x > width) point.vx *= -1;
         if (point.y < 0 || point.y > height) point.vy *= -1;
-    }
-
-    for (let point of points) {
-    // Wind
-    point.vx += windX * 0.01;
-    point.vy -= windY * 0.01;
-
-    // Gravity / Repulsion
-    const dx = mouse.x - point.x;
-    const dy = mouse.y - point.y;
-    const distSq = dx * dx + dy * dy;
-
-    if ((mouse.leftHeld || mouse.rightHeld) && distSq < 100000000) {
-        const force = gravityStrength / (distSq + 10); // Avoid division by zero
-        const direction = mouse.leftHeld ? 1 : -1;
-
-        point.vx += direction * dx * force;
-        point.vy += direction * dy * force;
-    }
-
-    point.x += point.vx * speed;
-    point.y += point.vy * speed;
-
-    if (point.x < 0 || point.x > width) point.vx *= -1;
-    if (point.y < 0 || point.y > height) point.vy *= -1;
     }
 }
 

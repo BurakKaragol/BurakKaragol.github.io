@@ -110,3 +110,61 @@ text.label.dim  { opacity: 0.88; }
   cursor:pointer;
 }
 .btnLang:hover{ filter:brightness(1.05) }
+
+/* Accessible Screen-Reader Only Utility */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Accessible Focus Rings */
+button:focus-visible,
+.btnBack:focus-visible,
+.btnLang:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent, #58a6ff);
+  outline-offset: 2px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .app {
+    width: 96vw;
+    border-radius: 14px;
+  }
+  header {
+    inset: 8px 8px auto 8px;
+    padding: 6px 8px;
+    gap: 6px;
+  }
+  header .crumbs {
+    font-size: 11px;
+  }
+  header .hint {
+    display: none;
+  }
+  .legend {
+    inset: auto 8px 8px 8px;
+    padding: 4px 6px;
+    gap: 4px;
+    font-size: 10px;
+  }
+  .chip {
+    padding: 2px 6px;
+  }
+  .btnBack {
+    inset: auto auto 8px 8px;
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  .label {
+    font-size: 11px;
+  }
+}

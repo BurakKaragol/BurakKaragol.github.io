@@ -219,6 +219,7 @@ body {
   gap: 12px;
 }
 
+.panel-section h2,
 .panel-section h3 {
   font-family: var(--font-title);
   font-size: 16px;
@@ -429,4 +430,15 @@ body {
 .flash-active {
   opacity: 0.8;
   transition: none;
+}
+
+/* Accessible Focus Rings */
+a:focus-visible,
+button:focus-visible,
+.rec-button:focus-visible,
+.filter-btn:focus-visible,
+input[type="checkbox"]:focus-visible,
+.option-toggle input:focus-visible + .toggle-slider {
+    outline: 2px solid var(--accent, #6366f1);
+    outline-offset: 2px;
 }

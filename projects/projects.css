@@ -145,7 +145,19 @@ html,body{
   background:#203449;
   box-shadow:0 10px 20px rgba(0,0,0,.4), 0 0 0 1px rgba(61,169,252,.22) inset;
 }
-.btn:focus{outline:2px solid var(--accent);outline-offset:2px}
+.btn:focus-visible,
+.btn:focus,
+.card:focus-visible,
+.help-icon:focus-visible,
+.nav-link:focus-visible,
+.dlg__close:focus-visible,
+.key-slot:focus-visible,
+input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent, #3da9fc);
+  outline-offset: 2px;
+}
 
 /* ===================== MODAL ===================== */
 .modal{position:fixed;inset:0;display:none}

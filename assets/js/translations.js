@@ -107,6 +107,9 @@ const translations = {
             lblName: "Your Name / Company",
             lblEmail: "Business Email",
             lblMsg: "How can I help you?",
+            userName: "Your name or company name",
+            userEmail: "your.email@company.com",
+            userMessage: "Write your message or inquiry here...",
             btnSubmit: "Send Message",
             cardName: "Burak Karagol",
             cardRole: "Mechatronics Engineer"
@@ -316,6 +319,9 @@ const translations = {
             lblName: "İsim / Şirket",
             lblEmail: "Kurumsal E-posta",
             lblMsg: "Size nasıl yardımcı olabilirim?",
+            userName: "Adınız veya şirket adınız",
+            userEmail: "eposta@sirketiniz.com",
+            userMessage: "Mesajınızı veya sorunuzu buraya yazın...",
             btnSubmit: "Mesajı Gönder",
             cardName: "Burak Karagöl",
             cardRole: "Mekatronik Mühendisi"
@@ -426,8 +432,12 @@ function updateTextContent(lang, mode) {
     for (const key in currentData) {
         const element = document.getElementById(key);
         if (element) {
-            // Using innerHTML allows icons to render
-            element.innerHTML = currentData[key];
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                element.placeholder = currentData[key];
+            } else {
+                // Using innerHTML allows icons to render
+                element.innerHTML = currentData[key];
+            }
         }
     }
 }

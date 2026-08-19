@@ -96,3 +96,40 @@
 .lock-icon:hover {
     color: var(--first-color);
 }
+
+/* Accessible Focus Rings */
+button:focus-visible,
+.game-idea__button:focus-visible,
+.lock-btn:focus-visible,
+.lock-icon:focus-visible {
+    outline: 2px solid var(--first-color, #38bdf8);
+    outline-offset: 2px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .game-idea {
+    padding: 1.5rem 10px;
+  }
+  .game-idea__box {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+  .game-idea__section {
+    font-size: 1.1rem;
+    min-height: 90px;
+    padding: 0.75rem;
+    margin: 0.75rem 0;
+  }
+  .game-idea__section p {
+    font-size: 1rem;
+  }
+  .game-idea__button {
+    height: 60px;
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+  }
+  .section-title {
+    font-size: 1.3rem;
+  }
+}

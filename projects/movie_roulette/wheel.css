@@ -65,6 +65,7 @@ body {
 }
 .loading-overlay.fade-out { opacity: 0; pointer-events: none; }
 .loader-content { text-align: center; width: 300px; }
+.loader-content .loading-title,
 .loader-content h3 { margin: 1rem 0; font-weight: 600; color: var(--text-main); letter-spacing: 1px; }
 .spin-icon { font-size: 3rem; color: var(--primary); animation: spin 2s infinite linear; }
 .progress-bar-track { width: 100%; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; position: relative; }
@@ -93,7 +94,7 @@ header {
 
 .genre-select {
     background: var(--input-bg); color: var(--text-main); border: 1px solid var(--border);
-    padding: 0.3rem 0.5rem; border-radius: 4px; font-size: 0.85rem; outline: none; cursor: pointer; max-width: 120px;
+    padding: 0.3rem 0.5rem; border-radius: 4px; font-size: 0.85rem; cursor: pointer; max-width: 120px;
 }
 
 /* Bulk Controls */
@@ -226,4 +227,16 @@ canvas { width: 100%; height: 100%; filter: drop-shadow(0 0 15px rgba(0,0,0,0.5)
     .builder-action { width: 100%; height: 60px; border: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .add-arrow-btn { flex-direction: row; }
     .add-arrow-btn .material-icons-round { transform: rotate(90deg); }
+}
+
+/* Accessible Focus Rings */
+button:focus-visible,
+.btn:focus-visible,
+.big-spin-btn:focus-visible,
+.movie-btn:focus-visible,
+.genre-select:focus-visible,
+.genre-chip:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--primary, #3b82f6);
+    outline-offset: 2px;
 }

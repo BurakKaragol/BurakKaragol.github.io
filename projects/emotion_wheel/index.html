@@ -3,29 +3,54 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>İnteraktif Duygu Çarkı</title>
+  <title>İnteraktif Duygu Çarkı | Burak Karagol</title>
+  <meta name="description" content="Interactive SVG polar emotion wheel visualizing Plutchik and Willcox emotion taxonomy in Turkish and English." />
+  <meta name="keywords" content="Emotion Wheel, Duygu Çarkı, Plutchik, Psychology, SVG, Interactive" />
+  <meta name="author" content="Burak Karagol" />
+  <meta name="theme-color" content="#0A1118" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://burakkaragol.github.io/projects/emotion_wheel/" />
+  <meta property="og:title" content="İnteraktif Duygu Çarkı | Burak Karagol" />
+  <meta property="og:description" content="Interactive SVG polar emotion wheel visualizing Plutchik and Willcox emotion taxonomy in Turkish and English." />
+  <meta property="og:image" content="https://burakkaragol.github.io/assets/img/projects/emotion_wheel.webp" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://burakkaragol.github.io/projects/emotion_wheel/" />
+  <meta name="twitter:title" content="İnteraktif Duygu Çarkı | Burak Karagol" />
+  <meta name="twitter:description" content="Interactive SVG polar emotion wheel visualizing Plutchik and Willcox emotion taxonomy in Turkish and English." />
+  <meta name="twitter:image" content="https://burakkaragol.github.io/assets/img/projects/emotion_wheel.webp" />
+
+  <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
+
   <link rel="stylesheet" href="emotion.css" />
 </head>
 <body>
-  <div class="app" id="app">
-    <header>
-      <div class="crumbs" id="crumbs"><b>Hepsi</b></div>
-      <div class="hint">İpucu: <kbd>Esc</kbd> geri</div>
-      <button id="btnLang" class="btnLang" title="TR / EN">TR</button>
-      <button id="btnRestart" class="btnLang" title="Sıfırla">↺</button>
-      <button id="btnMode" class="btnLang" title="Tümü / Step">Tümü</button>
-    </header>
+  <main id="app-main">
+    <h1 class="visually-hidden">İnteraktif Duygu Çarkı</h1>
+    <div class="app" id="app">
+      <header>
+        <div class="crumbs" id="crumbs"><b>Hepsi</b></div>
+        <div class="hint">İpucu: <kbd>Esc</kbd> geri</div>
+        <button id="btnLang" class="btnLang" title="TR / EN">TR</button>
+        <button id="btnRestart" class="btnLang" title="Sıfırla">↺</button>
+        <button id="btnMode" class="btnLang" title="Tümü / Step">Tümü</button>
+      </header>
 
-    <svg id="wheel" viewBox="-550 -550 1100 1100" aria-label="İnteraktif Duygu Çarkı">
-      <g id="g-ring-1" class="ring"></g>
-      <g id="g-ring-2" class="ring"></g>
-      <g id="g-ring-3" class="ring"></g>
-      <text class="centerTitle" x="0" y="0" id="centerTitle">Duygu Çarkı</text>
-    </svg>
+      <svg id="wheel" viewBox="-550 -550 1100 1100" aria-label="İnteraktif Duygu Çarkı">
+        <g id="g-ring-1" class="ring"></g>
+        <g id="g-ring-2" class="ring"></g>
+        <g id="g-ring-3" class="ring"></g>
+        <text class="centerTitle" x="0" y="0" id="centerTitle">Duygu Çarkı</text>
+      </svg>
 
-    <button class="btnBack" id="btnBack" title="Geri Dön (Esc)">⟵ Geri</button>
-    <div class="legend" id="legend"></div>
-  </div>
+      <button class="btnBack" id="btnBack" title="Geri Dön (Esc)">⟵ Geri</button>
+      <div class="legend" id="legend"></div>
+    </div>
+  </main>
 
   <script src="emotion.js" defer></script>
 </body>

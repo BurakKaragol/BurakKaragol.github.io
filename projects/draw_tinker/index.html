@@ -3,43 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Draw & Tinker</title>
+  <title>Draw & Tinker | Burak Karagol</title>
+  <meta name="description" content="Interactive vector drawing tool with node merging, grid snapping, and shape manipulation." />
+  <meta name="keywords" content="Drawing, Canvas, Vector, Shapes, Interactive, JavaScript" />
+  <meta name="author" content="Burak Karagol" />
+  <meta name="theme-color" content="#0A1118" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://burakkaragol.github.io/projects/draw_tinker/" />
+  <meta property="og:title" content="Draw & Tinker | Burak Karagol" />
+  <meta property="og:description" content="Interactive vector drawing tool with node merging, grid snapping, and shape manipulation." />
+  <meta property="og:image" content="https://burakkaragol.github.io/assets/img/projects/draw_tinker.webp" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://burakkaragol.github.io/projects/draw_tinker/" />
+  <meta name="twitter:title" content="Draw & Tinker | Burak Karagol" />
+  <meta name="twitter:description" content="Interactive vector drawing tool with node merging, grid snapping, and shape manipulation." />
+  <meta name="twitter:image" content="https://burakkaragol.github.io/assets/img/projects/draw_tinker.webp" />
+
+  <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
+
   <link rel="stylesheet" href="draw.css" />
 </head>
 <body>
+  <main id="app-main">
+    <h1 class="visually-hidden">Draw & Tinker</h1>
+    <canvas id="drawCanvas"></canvas>
 
-  <canvas id="drawCanvas"></canvas>
+    <div class="controls">
+      <button class="modeBtn active" data-mode="select">Select</button>
+      <button class="modeBtn" data-mode="point">Point</button>
+      <button class="modeBtn" data-mode="line">Line</button>
+    
+      <button id="toggleGrid" class="toggleBtn active">Grid</button>
+      <button id="toggleSnap" class="toggleBtn">Snap</button>
+    
+      <button id="openDefaults">Defaults</button>
+      <button id="clearAll" class="confirmable">Clear Everything</button>
+    </div>
+    
 
-  <div class="controls">
-    <button class="modeBtn active" data-mode="select">Select</button>
-    <button class="modeBtn" data-mode="point">Point</button>
-    <button class="modeBtn" data-mode="line">Line</button>
-  
-    <button id="toggleGrid" class="toggleBtn active">Grid</button>
-    <button id="toggleSnap" class="toggleBtn">Snap</button>
-  
-    <button id="openDefaults">Defaults</button>
-    <button id="clearAll" class="confirmable">Clear Everything</button>
-  </div>
-  
+    <div id="propertiesPanel" class="panel hidden">
+      <label id="labelX">X: <input type="number" id="propX" /></label>
+      <label id="labelY">Y: <input type="number" id="propY" /></label>
+      <label id="labelColor">Color: <input type="color" id="propColor" /></label>
+    
+      <!-- 👇 New Multi-Select Color Control -->
+      <label id="multiColorLabel" class="hidden">Set All Color: 
+        <input type="color" id="multiColorInput" />
+      </label>
+    </div>
+    
 
-  <div id="propertiesPanel" class="panel hidden">
-    <label id="labelX">X: <input type="number" id="propX" /></label>
-    <label id="labelY">Y: <input type="number" id="propY" /></label>
-    <label id="labelColor">Color: <input type="color" id="propColor" /></label>
-  
-    <!-- 👇 New Multi-Select Color Control -->
-    <label id="multiColorLabel" class="hidden">Set All Color: 
-      <input type="color" id="multiColorInput" />
-    </label>
-  </div>
-  
-
-  <div id="defaultsPanel" class="panel hidden">
-    <h3>Default Colors</h3>
-    <label>Point Color: <input type="color" id="defaultPointColor" /></label>
-    <label>Line Color: <input type="color" id="defaultLineColor" /></label>
-  </div>  
+    <div id="defaultsPanel" class="panel hidden">
+      <h2 style="font-size:14px;margin:0 0 4px 0;font-weight:600;">Default Colors</h2>
+      <label>Point Color: <input type="color" id="defaultPointColor" /></label>
+      <label>Line Color: <input type="color" id="defaultLineColor" /></label>
+    </div>  
+  </main>
 
   <script type="module" src="draw.js"></script>
 </body>

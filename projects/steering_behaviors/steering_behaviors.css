@@ -148,3 +148,25 @@ button:hover {
     border-color: #f44336;
     box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
 }
+
+/* Accessible Focus Rings */
+button:focus-visible,
+input[type="range"]:focus-visible,
+input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--accent-color, #58a6ff);
+    outline-offset: 2px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .controls-panel {
+    top: auto;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    width: auto;
+    max-width: calc(100vw - 20px);
+    max-height: 45vh;
+    padding: 12px;
+  }
+}

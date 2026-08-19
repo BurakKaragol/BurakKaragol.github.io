@@ -485,8 +485,13 @@
         if (mv==='left') game.tryMove(0,-1);
         if (mv==='right') game.tryMove(0,+1);
       };
-      btn.addEventListener('click', go);
       btn.addEventListener('pointerdown', (e) => { e.preventDefault(); go(); });
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          go();
+        }
+      });
     });
 
     // Focus canvas on click/tap

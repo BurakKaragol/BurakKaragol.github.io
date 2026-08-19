@@ -714,3 +714,14 @@ button {
     font-size: 0.75rem;
   }
 }
+
+/* Accessible Focus Rings */
+button:focus-visible,
+.primary-btn:focus-visible,
+.secondary-btn:focus-visible,
+.add-die-btn:focus-visible,
+.preset-btn:focus-visible,
+.text-btn:focus-visible {
+  outline: 2px solid var(--accent, #3da9fc);
+  outline-offset: 2px;
+}

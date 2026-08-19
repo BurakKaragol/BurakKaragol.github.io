@@ -166,10 +166,12 @@ if (discordCard) {
 
 // 6. BACK TO TOP LOGIC
 window.addEventListener('scroll', () => {
+    const btn = typeof backToTopBtn !== 'undefined' ? backToTopBtn : (typeof document !== 'undefined' && document.getElementById ? document.getElementById('backToTop') : null);
+    if (!btn) return;
     if (window.scrollY > 300) {
-        backToTopBtn.classList.add('show');
+        btn.classList.add('show');
     } else {
-        backToTopBtn.classList.remove('show');
+        btn.classList.remove('show');
     }
 });
 
@@ -362,8 +364,3 @@ notifyVisit();
 
 // 8. INITIALIZE VIEW
 refreshView();
-
-// Clean URL (remove query params) after loading state so the address bar looks nice
-if (window.location.search) {
-    window.history.replaceState({}, document.title, window.location.pathname);
-}

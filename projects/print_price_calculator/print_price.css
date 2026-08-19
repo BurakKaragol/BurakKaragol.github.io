@@ -116,6 +116,7 @@ body {
   cursor: pointer;
 }
 
+.group-header h2,
 .group-header h3 {
   margin: 0;
   font-size: 1rem;
@@ -167,9 +168,14 @@ input, select {
 }
 
 input:focus, select:focus {
-  outline: none;
   border-color: var(--accent);
   background: #1e293b;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--accent, #2563eb);
+  outline-offset: 2px;
 }
 
 /* Dropdown overflow fix */
@@ -686,4 +692,15 @@ input:checked + .slider:before { transform: translateX(18px); }
     margin-bottom: 12px;
     border-radius: 12px;
     padding: 12px;
+}
+
+/* Accessible Focus Rings */
+button:focus-visible,
+.btn:focus-visible,
+.toggle-switch input:focus-visible + .slider,
+.picker-item:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--accent, #2563eb);
+    outline-offset: 2px;
 }

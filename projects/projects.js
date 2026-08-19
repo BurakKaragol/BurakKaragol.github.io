@@ -7,12 +7,13 @@ const helpIcon = $('#helpIcon');
 const helpTip = $('#helpTooltip');
 
 function positionHelp() {
+  if (!helpIcon || !helpTip) return;
   const rect = helpIcon.getBoundingClientRect();
   const margin = 10;
   helpTip.style.left = Math.max(10, Math.min(rect.left, window.innerWidth - helpTip.offsetWidth - 10)) + 'px';
   helpTip.style.top = (rect.bottom + margin) + 'px';
 }
-function showHelp() { positionHelp(); helpTip.hidden = false; }
+function showHelp() { helpTip.hidden = false; positionHelp(); }
 function hideHelp() { helpTip.hidden = true; }
 ['mouseenter', 'focus'].forEach(ev => helpIcon.addEventListener(ev, showHelp));
 ['mouseleave', 'blur'].forEach(ev => helpIcon.addEventListener(ev, hideHelp));
@@ -233,7 +234,41 @@ const PROJECTS = {
       "Custom multi-hand pinch gestures to cycle through visual filters."
     ]
   },
+  "bezier_curve_generator/": {
+    time: "1 day",
+    difficulty: 60,
+    tags: ["Math", "Geometry", "Canvas", "Animation"],
+    long: "An interactive math playground visualizing De Casteljau's algorithm for evaluating Bezier curves. Dynamically add, delete, and drag control points to see the step-by-step linear interpolations construct the curve.",
+    how: [
+      "Recursive De Casteljau linear interpolator supporting arbitrary control points.",
+      "Real-time interactive canvas coordinate mapping with mouse drag physics.",
+      "Parameter scrubbing and automatic playback controls.",
+      "Color-coded skeletal line renders demonstrating intermediate interpolation levels."
+    ]
+  },
+  "emotion_wheel/": {
+    time: "2 days",
+    difficulty: 60,
+    tags: ["SVG", "Psychology", "Interactive"],
+    long: "An interactive polar taxonomy wheel visualizing human emotions across multiple nested rings with bilingual support (TR/EN).",
+    how: [
+      "Polar coordinate trigonometric layout for SVG arc and wedge generation.",
+      "Multi-level hierarchical categorization (Primary, Secondary, Tertiary).",
+      "Real-time filtering, ring highlight, and bilingual language switching."
+    ]
+  },
   /* gets injected when unlocked */
+  "secret_page/": {
+    time: "—",
+    difficulty: 70,
+    tags: ["Console", "Puzzle", "SHA-256"],
+    long: "Hidden console mini-game. Use commands to uncover clues and validate answers (hashed).",
+    how: [
+      "Answers stored as SHA-256 in code.",
+      "Client hashes your guess and compares locally.",
+      "Story beats unlock additional commands."
+    ]
+  },
   "terminal.html": {
     time: "—",
     difficulty: 70,
@@ -408,8 +443,9 @@ function onComplete() {
 }
 
 window.addEventListener('keydown', (e) => {
+  const activeTag = document.activeElement?.tagName?.toLowerCase();
+  if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') return;
   if (!ARROWS.includes(e.key)) return;
-  e.preventDefault();
 
   const expected = pattern[progress];
   if (e.key === expected) {
