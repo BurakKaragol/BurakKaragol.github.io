@@ -80,6 +80,11 @@ function refreshView() {
         updateTextContent(state.lang, state.mode);
     }
 
+    // Update Gallery Toggle Text
+    if (typeof updateGalleryToggleText === "function") {
+        updateGalleryToggleText();
+    }
+
     // Update Button Text
     const langLabel = state.lang === 'en' ? 'TR' : 'EN';
     const themeLabel = state.isDark ? '☀' : '☾';
@@ -358,6 +363,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+/* =========================================
+   9. LAB GALLERY COLLAPSIBLE TOGGLE LOGIC
+   ========================================= */
+const btnToggleLabGallery = document.getElementById('btnToggleLabGallery');
+const labGalleryContainer = document.getElementById('labGalleryContainer');
+const lblToggleLabGallery = document.getElementById('lblToggleLabGallery');
+const icnToggleLabGallery = document.getElementById('icnToggleLabGallery');
+
+function updateGalleryToggleText() {
+    if (!lblToggleLabGallery) return;
+    const isExpanded = labGalleryContainer && labGalleryContainer.classList.contains('expanded');
+    const currentTrans = (typeof translations !== 'undefined' && translations[state.lang]) ? translations[state.lang].personal : null;
+    
+    if (isExpanded) {
+        lblToggleLabGallery.innerText = (currentTrans && currentTrans.btnShowLess) ? currentTrans.btnShowLess : 'Show Less';
+        if (icnToggleLabGallery) icnToggleLabGallery.className = 'fi fi-rr-angle-small-up';
+    } else {
+        lblToggleLabGallery.innerText = (currentTrans && currentTrans.btnShowMore) ? currentTrans.btnShowMore : 'Show More';
+        if (icnToggleLabGallery) icnToggleLabGallery.className = 'fi fi-rr-angle-small-down';
+    }
+}
+
+if (btnToggleLabGallery && labGalleryContainer) {
+    btnToggleLabGallery.addEventListener('click', () => {
+        const isExpanded = labGalleryContainer.classList.contains('expanded');
+        if (isExpanded) {
+            labGalleryContainer.classList.remove('expanded');
+            labGalleryContainer.classList.add('collapsed');
+            updateGalleryToggleText();
+            const sectionHeader = document.getElementById('projTitlePers');
+            if (sectionHeader) {
+                const rect = sectionHeader.getBoundingClientRect();
+                if (rect.top < 0) {
+                    sectionHeader.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        } else {
+            labGalleryContainer.classList.remove('collapsed');
+            labGalleryContainer.classList.add('expanded');
+            updateGalleryToggleText();
+        }
+    });
+}
 
 // Run
 notifyVisit();

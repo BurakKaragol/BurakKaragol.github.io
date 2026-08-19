@@ -203,6 +203,8 @@ const translations = {
             persP11Title: "Dragon", 
             persP11Desc: "High-detail 3D print model.",
 
+            btnShowMore: "Show More",
+            btnShowLess: "Show Less",
             btnWebProjects: 'Browse Web Experiments <i class="fi fi-rr-globe"></i>',
 
             // SECTION: CONTACT
@@ -415,6 +417,8 @@ const translations = {
             persP11Title: "Ejderha", 
             persP11Desc: "Yüksek detaylı 3D baskı modeli.",
 
+            btnShowMore: "Daha Fazla Göster",
+            btnShowLess: "Daha Az Göster",
             btnWebProjects: 'Web Projelerini Keşfet <i class="fi fi-rr-globe"></i>',
 
             // SECTION: CONTACT
