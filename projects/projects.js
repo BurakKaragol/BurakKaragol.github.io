@@ -545,3 +545,91 @@ function injectSecretCard() {
 
 try { if (localStorage.getItem(SECRET_STORAGE_KEY) === '1') injectSecretCard(); } catch { }
 resetPuzzle();
+
+/* ===== Category Filter & Live Search ===== */
+let activeCategory = 'all';
+let searchQuery = '';
+
+const filterChips = $$('.filter-chip');
+const searchInput = $('#projectSearch');
+const searchClearBtn = $('#searchClear');
+const countAllSpan = $('#countAll');
+
+function applyFilters() {
+  const cards = $$('.projects__grid .card');
+  let visibleCount = 0;
+  const q = searchQuery.toLowerCase().trim();
+
+  cards.forEach(card => {
+    const categories = (card.getAttribute('data-category') || '').toLowerCase().split(/\s+/);
+    const title = (card.querySelector('.title')?.textContent || '').toLowerCase();
+    const desc = (card.querySelector('.desc')?.textContent || '').toLowerCase();
+    const url = (card.getAttribute('data-url') || '').toLowerCase();
+
+    const matchesCategory = activeCategory === 'all' || categories.includes(activeCategory);
+    const matchesSearch = !q || title.includes(q) || desc.includes(q) || url.includes(q);
+
+    if (matchesCategory && matchesSearch) {
+      card.classList.remove('hidden-by-filter');
+      visibleCount++;
+    } else {
+      card.classList.add('hidden-by-filter');
+    }
+  });
+
+  // Handle No Results Message
+  let noResults = $('#noResultsMsg');
+  if (visibleCount === 0) {
+    if (!noResults) {
+      noResults = document.createElement('div');
+      noResults.id = 'noResultsMsg';
+      noResults.className = 'no-results-msg';
+      noResults.innerHTML = '<i class="fa-solid fa-ghost" style="font-size:2rem;margin-bottom:12px;opacity:0.6;display:block;"></i>No matching experiments found.<br><small style="opacity:0.7">Try another keyword or category filter.</small>';
+      grid.appendChild(noResults);
+    }
+    noResults.hidden = false;
+  } else if (noResults) {
+    noResults.hidden = true;
+  }
+}
+
+filterChips.forEach(chip => {
+  chip.addEventListener('click', () => {
+    filterChips.forEach(c => {
+      c.classList.remove('active');
+      c.setAttribute('aria-selected', 'false');
+    });
+    chip.classList.add('active');
+    chip.setAttribute('aria-selected', 'true');
+    activeCategory = chip.getAttribute('data-filter') || 'all';
+    applyFilters();
+  });
+});
+
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => {
+    searchQuery = e.target.value;
+    if (searchClearBtn) searchClearBtn.hidden = !searchQuery;
+    applyFilters();
+  });
+}
+
+if (searchClearBtn) {
+  searchClearBtn.addEventListener('click', () => {
+    if (searchInput) searchInput.value = '';
+    searchQuery = '';
+    searchClearBtn.hidden = true;
+    applyFilters();
+    searchInput?.focus();
+  });
+}
+
+// Update initial card counts
+function updateCounts() {
+  const totalCards = $$('.projects__grid .card').length;
+  if (countAllSpan) countAllSpan.textContent = `(${totalCards})`;
+}
+
+updateCounts();
+applyFilters();
+

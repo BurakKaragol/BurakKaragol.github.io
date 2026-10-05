@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Airfoil & Flowfield Visualizer | Burak Karagol</title>
+  <meta name="description" content="Interactive 2D aerodynamic wind tunnel and multi-element NACA airfoil simulator with real-time streamlines, vortex shedding, and force vectors.">
+  <meta name="author" content="Burak Karagol">
+  <meta name="theme-color" content="#0A1118">
+
+  <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="airfoil.css">
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Top Bar -->
+    <header class="top-nav">
+      <div class="nav-left">
+        <a href="../index.html" class="nav-btn" aria-label="Back to Projects">
+          <i class="fa-solid fa-arrow-left"></i> <span>Projects</span>
+        </a>
+        <div class="nav-title-group">
+          <h1 class="nav-title">Airfoil & Flowfield Visualizer</h1>
+          <span class="badge-aero">2D CFD & NACA TUNNEL</span>
+        </div>
+      </div>
+
+      <div class="nav-center-telemetry">
+        <div class="telem-item">
+          <span class="telem-lbl">CL</span>
+          <span class="telem-val" id="valCL">0.82</span>
+        </div>
+        <div class="telem-item">
+          <span class="telem-lbl">CD</span>
+          <span class="telem-val" id="valCD">0.018</span>
+        </div>
+        <div class="telem-item highlight">
+          <span class="telem-lbl">L / D</span>
+          <span class="telem-val" id="valLD">45.6</span>
+        </div>
+        <div class="telem-item">
+          <span class="telem-lbl">AOA (α)</span>
+          <span class="telem-val" id="valAoaTop">5.0°</span>
+        </div>
+        <div class="telem-item" id="stallAlert" hidden>
+          <span class="badge-stall"><i class="fa-solid fa-triangle-exclamation"></i> STALL</span>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <button id="btnPlayPause" class="action-btn" title="Pause/Play Simulation">
+          <i class="fa-solid fa-pause"></i>
+        </button>
+        <button id="btnSnapshot" class="action-btn" title="Download Screenshot">
+          <i class="fa-solid fa-camera"></i>
+        </button>
+        <button id="btnReset" class="action-btn" title="Reset Defaults">
+          <i class="fa-solid fa-rotate-left"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="workspace">
+      <!-- Canvas Simulation Viewport -->
+      <div class="canvas-viewport" id="viewport">
+        <canvas id="simCanvas"></canvas>
+
+        <!-- Dynamic Overlay HUD -->
+        <div class="canvas-hud">
+          <!-- Flow Mode Switcher Pills -->
+          <div class="view-mode-bar">
+            <button class="mode-pill active" data-flow="streamlines"><i class="fa-solid fa-water"></i> Streamlines</button>
+            <button class="mode-pill" data-flow="particles"><i class="fa-solid fa-braille"></i> Smoke Particles</button>
+            <button class="mode-pill" data-flow="pressure"><i class="fa-solid fa-gauge-high"></i> Pressure (Cp)</button>
+            <button class="mode-pill" data-flow="velocity"><i class="fa-solid fa-wind"></i> Velocity Field</button>
+          </div>
+
+          <!-- Colorbar Legend (Visible in Pressure / Velocity mode) -->
+          <div class="colorbar-card" id="colorbarCard" hidden>
+            <div class="cb-title" id="cbTitle">Pressure Coefficient (Cp)</div>
+            <div class="cb-gradient" id="cbGradient"></div>
+            <div class="cb-labels">
+              <span id="cbMin">-2.0 (Suction)</span>
+              <span>0.0</span>
+              <span id="cbMax">+1.0 (Stag.)</span>
+            </div>
+          </div>
+
+          <!-- Mini Polar Curve Card -->
+          <div class="polar-card">
+            <div class="polar-header">
+              <span>CL vs α Polar</span>
+              <span class="polar-status" id="polarStatus">Linear Range</span>
+            </div>
+            <canvas id="polarCanvas" width="160" height="90"></canvas>
+          </div>
+
+          <!-- Canvas Hint -->
+          <div class="canvas-hint">
+            <i class="fa-solid fa-hand-pointer"></i> Drag on canvas to pitch airfoil (α) • Scroll to zoom
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls Sidebar -->
+      <aside class="controls-panel">
+        <div class="panel-scroll">
+          
+          <!-- Presets -->
+          <div class="ctrl-group">
+            <label class="group-title"><i class="fa-solid fa-bookmark"></i> Flight Presets</label>
+            <div class="presets-grid">
+              <button class="preset-btn active" data-preset="cruise">✈️ Cruise (2412)</button>
+              <button class="preset-btn" data-preset="takeoff">🛫 High-Lift Takeoff</button>
+              <button class="preset-btn" data-preset="stall">🌪️ Deep Stall</button>
+              <button class="preset-btn" data-preset="aerobatic">🛩️ Symmetric (0012)</button>
+              <button class="preset-btn" data-preset="glider">🦅 Glider (6412)</button>
+              <button class="preset-btn" data-preset="supersonic">🚀 Thin Wedge (0006)</button>
+            </div>
+          </div>
+
+          <!-- Profile Geometry -->
+          <div class="ctrl-group">
+            <div class="group-header">
+              <label class="group-title"><i class="fa-solid fa-pen-ruler"></i> NACA 4-Digit Profile</label>
+              <div class="naca-input-wrap">
+                <span>NACA</span>
+                <input type="text" id="nacaInput" maxlength="4" value="2412" title="Enter 4-digit NACA">
+              </div>
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-info">
+                <span>Max Camber (m)</span>
+                <span class="val" id="valCamber">2 %</span>
+              </div>
+              <input type="range" id="sliderCamber" min="0" max="9" step="0.5" value="2">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-info">
+                <span>Camber Position (p)</span>
+                <span class="val" id="valCamberPos">40 %</span>
+              </div>
+              <input type="range" id="sliderCamberPos" min="10" max="90" step="5" value="40">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-info">
+                <span>Max Thickness (t)</span>
+                <span class="val" id="valThickness">12 %</span>
+              </div>
+              <input type="range" id="sliderThickness" min="4" max="30" step="1" value="12">
+            </div>
+          </div>
+
+          <!-- High-Lift Kinematics -->
+          <div class="ctrl-group">
+            <label class="group-title"><i class="fa-solid fa-sliders"></i> High-Lift Devices</label>
+            
+            <div class="slider-row">
+              <div class="slider-info">
+                <span>Flap Deflection (δ_f)</span>
+                <span class="val" id="valFlap">0°</span>
+              </div>
+              <input type="range" id="sliderFlap" min="0" max="40" step="1" value="0">
+            </div>
+
+            <div class="toggle-row">
+              <span>Leading-Edge Slat</span>
+              <label class="switch-toggle">
+                <input type="checkbox" id="chkSlat">
+                <span class="slider-round"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Flow Conditions -->
+          <div class="ctrl-group">
+            <label class="group-title"><i class="fa-solid fa-wind"></i> Flight Conditions</label>
+
+            <div class="slider-row">
+              <div class="slider-info">
+                <span>Angle of Attack (α)</span>
+                <span class="val highlight" id="valAoa">5.0°</span>
+              </div>
+              <input type="range" id="sliderAoa" min="-15" max="25" step="0.5" value="5">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-info">
+                <span>Airspeed (V_∞)</span>
+                <span class="val" id="valSpeed">60 m/s</span>
+              </div>
+              <input type="range" id="sliderSpeed" min="15" max="150" step="5" value="60">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-info">
+                <span>Air Density (ρ)</span>
+                <span class="val" id="valDensity">1.225 kg/m³</span>
+              </div>
+              <input type="range" id="sliderDensity" min="0.4" max="1.4" step="0.05" value="1.225">
+            </div>
+          </div>
+
+          <!-- Visual Toggles -->
+          <div class="ctrl-group">
+            <label class="group-title"><i class="fa-solid fa-eye"></i> Visual Overlays</label>
+            
+            <div class="toggle-grid">
+              <label class="chk-label">
+                <input type="checkbox" id="chkVectors" checked>
+                <span>Aero Vectors (L, D, R)</span>
+              </label>
+              <label class="chk-label">
+                <input type="checkbox" id="chkCamberLine" checked>
+                <span>Camber Line</span>
+              </label>
+              <label class="chk-label">
+                <input type="checkbox" id="chkChordLine" checked>
+                <span>Chord & CP Marker</span>
+              </label>
+              <label class="chk-label">
+                <input type="checkbox" id="chkVortices" checked>
+                <span>Wake Vortex Shedding</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Force Breakdown Table -->
+          <div class="ctrl-group aero-breakdown">
+            <label class="group-title"><i class="fa-solid fa-calculator"></i> Aerodynamic Balance</label>
+            <div class="breakdown-grid">
+              <div class="bd-cell">
+                <span class="bd-lbl">Lift Force (L)</span>
+                <span class="bd-val" id="forceLift">2,160 N</span>
+              </div>
+              <div class="bd-cell">
+                <span class="bd-lbl">Drag Force (D)</span>
+                <span class="bd-val" id="forceDrag">47.4 N</span>
+              </div>
+              <div class="bd-cell">
+                <span class="bd-lbl">Dynamic Pressure (q)</span>
+                <span class="bd-val" id="dynPressure">2,205 Pa</span>
+              </div>
+              <div class="bd-cell">
+                <span class="bd-lbl">Pitching Moment (Cm)</span>
+                <span class="bd-val" id="forceCm">-0.050</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="airfoil.js"></script>
+</body>
+
+</html>
