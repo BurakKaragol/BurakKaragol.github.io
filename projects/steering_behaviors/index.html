@@ -1,123 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steering Behaviors | Burak Karagol</title>
-    <meta name="description" content="Craig Reynolds Boids autonomous agent flocking simulation with separation, alignment, cohesion, and predator evasion." />
-    <meta name="keywords" content="Steering Behaviors, Boids, Flocking Simulation, Craig Reynolds, Autonomous Agents, Canvas" />
-    <meta name="author" content="Burak Karagol" />
-    <meta name="theme-color" content="#0A1118" />
+    <title>Steering & Eco-Evolution Sandbox | Burak Karagol</title>
+    <meta name="description" content="Next-generation autonomous agency sandbox featuring Spatial Hash Grid (3,000+ boids at 60 FPS), Genetic Natural Selection Evolution, Perlin Noise Flow Fields, Spline Path Following, and Procedural Web Audio Synth." />
+    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://burakkaragol.github.io/projects/steering_behaviors/" />
-    <meta property="og:title" content="Steering Behaviors | Burak Karagol" />
-    <meta property="og:description" content="Craig Reynolds Boids autonomous agent flocking simulation with separation, alignment, cohesion, and predator evasion." />
-    <meta property="og:image" content="https://burakkaragol.github.io/assets/img/projects/steering_behaviors.webp" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://burakkaragol.github.io/projects/steering_behaviors/" />
-    <meta name="twitter:title" content="Steering Behaviors | Burak Karagol" />
-    <meta name="twitter:description" content="Craig Reynolds Boids autonomous agent flocking simulation with separation, alignment, cohesion, and predator evasion." />
-    <meta name="twitter:image" content="https://burakkaragol.github.io/assets/img/projects/steering_behaviors.webp" />
-
-    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
-
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="./steering_behaviors.css">
 </head>
+<body class="dark-theme">
 
-<body>
-    <main id="app-main">
+    <!-- Navigation Header -->
+    <header class="app-header">
+        <a href="../index.html" class="back-link">
+            <i class="fa-solid fa-arrow-left-long"></i>
+            <span>Back to Projects</span>
+        </a>
+        <h1 class="app-title">Steering & Evolution Sandbox</h1>
+        <div class="header-actions">
+            <button id="audioToggleBtn" class="btn header-audio-btn" title="Toggle Procedural Web Audio Synth">
+                <i class="fa-solid fa-volume-xmark" id="audioIcon"></i>
+                <span id="audioLabel">Audio: Off</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Sandbox Workspace -->
+    <main class="app-container">
+        <!-- Fullscreen Canvas -->
         <canvas id="simulationCanvas"></canvas>
 
-        <div class="controls-panel">
-            <h1 class="panel-title" style="font-size:1.25rem;margin-top:0;margin-bottom:15px;color:var(--text-color);font-weight:600;">Flock Controls</h1>
-
-        <div class="control-group">
-            <label>Boid Count <span id="countVal" class="value-display">200</span></label>
-            <input type="range" id="countSlider" min="0" max="500" step="10" value="200">
+        <!-- Dynamic Overlay: Path Drawing Prompt -->
+        <div id="pathDrawingPrompt" class="path-prompt hidden">
+            <i class="fa-solid fa-pen-nib"></i> Click & Drag on the canvas to draw a path
         </div>
 
-        <div class="control-group">
-            <label>Separation <span id="sepVal" class="value-display">1.5</span></label>
-            <input type="range" id="sepSlider" min="0" max="3" step="0.1" value="1.5">
-        </div>
+        <!-- Glassmorphism Controls Panel -->
+        <aside class="control-panel">
+            <!-- Sandbox Simulation Modes -->
+            <div class="panel-section">
+                <h3><i class="fa-solid fa-compass"></i> Sandbox Mode</h3>
+                <select id="sandboxMode" class="form-select">
+                    <option value="flocking" selected>Flock & Hunt (Boids)</option>
+                    <option value="evolution">Ecosystem Evolution (Genetic AI)</option>
+                    <option value="flowfield">Perlin Flow Field (Turbulence)</option>
+                    <option value="path">Spline Path Following (Draw Path)</option>
+                    <option value="seek">Seek Mouse (Attractor)</option>
+                    <option value="arrive">Arrive Mouse (Smooth Halt)</option>
+                    <option value="flee">Flee Mouse (Repeller)</option>
+                    <option value="wander">Organic Wander</option>
+                </select>
+            </div>
 
-        <div class="control-group">
-            <label>Alignment <span id="aliVal" class="value-display">1.0</span></label>
-            <input type="range" id="aliSlider" min="0" max="3" step="0.1" value="1.0">
-        </div>
+            <!-- Ecosystem Evolution Live Analytics Card (Shown in evolution mode) -->
+            <div id="evolutionStatsSection" class="panel-section evolution-card hidden">
+                <div class="evolution-header">
+                    <h3><i class="fa-solid fa-dna"></i> Natural Selection Stats</h3>
+                    <span id="genBadge" class="gen-badge">Gen 1</span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-label">Pop / Food</span>
+                        <span id="ecoPopDisplay" class="stat-value">100 / 60</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Avg Speed DNA</span>
+                        <span id="ecoSpeedDisplay" class="stat-value">4.00</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Avg Vision DNA</span>
+                        <span id="ecoVisionDisplay" class="stat-value">50px</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Avg Fear DNA</span>
+                        <span id="ecoFearDisplay" class="stat-value">1.50x</span>
+                    </div>
+                </div>
+            </div>
 
-        <div class="control-group">
-            <label>Cohesion <span id="cohVal" class="value-display">1.0</span></label>
-            <input type="range" id="cohSlider" min="0" max="3" step="0.1" value="1.0">
-        </div>
+            <!-- Path Following Options (Shown in Path mode) -->
+            <div id="pathControlsSection" class="panel-section hidden">
+                <h3><i class="fa-solid fa-route"></i> Path Controls</h3>
+                <div class="button-row">
+                    <button id="drawPathBtn" class="btn primary"><i class="fa-solid fa-pencil"></i> Redraw Path</button>
+                    <button id="clearPathBtn" class="btn"><i class="fa-solid fa-eraser"></i> Clear</button>
+                </div>
+                <div class="control-group" style="margin-top: 8px;">
+                    <div class="slider-row">
+                        <label for="pathRadiusSlider">Path Corridor Radius</label>
+                        <span id="pathRadiusVal" class="monospaced-val">25px</span>
+                    </div>
+                    <input type="range" id="pathRadiusSlider" min="10" max="60" step="5" value="25">
+                </div>
+            </div>
 
-        <div class="control-group">
-            <label>Max Speed <span id="speedVal" class="value-display">4</span></label>
-            <input type="range" id="speedSlider" min="2" max="10" step="0.1" value="4">
-        </div>
+            <!-- Interactive Click Interaction Mode -->
+            <div class="panel-section">
+                <h3><i class="fa-solid fa-hand-pointer"></i> Click Interaction</h3>
+                <select id="clickMode" class="form-select">
+                    <option value="predator" selected>Spawn Predator (Hunter)</option>
+                    <option value="obstacle">Place Avoidance Obstacle</option>
+                    <option value="food">Plant Food Nutrients</option>
+                </select>
+            </div>
 
-        <div class="control-group">
-            <label>Perception <span id="percVal" class="value-display">50</span></label>
-            <input type="range" id="percSlider" min="10" max="150" step="5" value="50">
-        </div>
+            <!-- Simulation Parameters Sliders -->
+            <div class="panel-section">
+                <h3><i class="fa-solid fa-sliders"></i> Physics Settings</h3>
+                
+                <div class="control-group">
+                    <div class="slider-row">
+                        <label for="countSlider">Agent Count (Spatial Grid)</label>
+                        <span id="countVal" class="monospaced-val">400</span>
+                    </div>
+                    <input type="range" id="countSlider" min="10" max="3000" step="50" value="400">
+                </div>
 
-        <hr style="border: 0; border-top: 1px solid var(--panel-border); margin: 15px 0;">
+                <div class="control-group">
+                    <div class="slider-row">
+                        <label for="speedSlider">Max Speed</label>
+                        <span id="speedVal" class="monospaced-val">4.0</span>
+                    </div>
+                    <input type="range" id="speedSlider" min="1.5" max="10" step="0.5" value="4.0">
+                </div>
 
-        <div class="control-group">
-            <label>Boid Color</label>
-            <input type="color" id="boidColor" value="#58a6ff"
-                style="width: 100%; height: 35px; border: none; cursor: pointer; background: transparent;">
-        </div>
+                <div class="control-group">
+                    <div class="slider-row">
+                        <label for="percSlider">Perception Radius</label>
+                        <span id="percVal" class="monospaced-val">50px</span>
+                    </div>
+                    <input type="range" id="percSlider" min="15" max="120" step="5" value="50">
+                </div>
 
-        <div class="control-group">
-            <label>Predator Color</label>
-            <input type="color" id="predatorColor" value="#ff4d4d"
-                style="width: 100%; height: 35px; border: none; cursor: pointer; background: transparent;">
-        </div>
+                <div id="flowStrengthGroup" class="control-group hidden">
+                    <div class="slider-row">
+                        <label for="flowStrengthSlider">Flow Field Speed</label>
+                        <span id="flowStrengthVal" class="monospaced-val">1.0x</span>
+                    </div>
+                    <input type="range" id="flowStrengthSlider" min="0.2" max="3.0" step="0.1" value="1.0">
+                </div>
+            </div>
 
-        <hr style="border: 0; border-top: 1px solid var(--panel-border); margin: 15px 0;">
-        <h2 style="font-size: 0.85rem; margin-bottom: 12px; color: var(--text-color); font-weight: 600;">Debug
-            Visualization</h2>
+            <!-- Debug Visualizations -->
+            <div class="panel-section">
+                <h3><i class="fa-solid fa-layer-group"></i> Debug Overlays</h3>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="showPercChk">
+                    <label for="showPercChk">Perception Bounds</label>
+                </div>
 
-        <div class="checkbox-group">
-            <input type="checkbox" id="showPercChk">
-            <label for="showPercChk">Perception Radius</label>
-        </div>
-        <div class="checkbox-group">
-            <input type="checkbox" id="showAliChk">
-            <label for="showAliChk" style="color: #4CAF50;">Alignment Force</label>
-        </div>
-        <div class="checkbox-group">
-            <input type="checkbox" id="showCohChk">
-            <label for="showCohChk" style="color: #2196F3;">Cohesion Force</label>
-        </div>
-        <div class="checkbox-group">
-            <input type="checkbox" id="showSepChk">
-            <label for="showSepChk" style="color: #f44336;">Separation Force</label>
-        </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="showVisionConeChk">
+                    <label for="showVisionConeChk">Predator Vision Cones</label>
+                </div>
 
-        <div class="button-group">
-            <button id="resetBtn">Reset Flock</button>
-            <button id="backBtn" onclick="window.history.back()">Back</button>
-        </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="showFlowFieldChk">
+                    <label for="showFlowFieldChk" style="color: #00ffc4;">Perlin Vector Streamlines</label>
+                </div>
 
-        <div style="margin-top: 15px; font-size: 0.8em; opacity: 0.7;">
-            <p><strong>Click</strong> to spawn predators.</p>
-        </div>
-    </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="showGridChk">
+                    <label for="showGridChk" style="color: #94a3b8;">Spatial Hash Grid Cells</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="showVectorsChk">
+                    <label for="showVectorsChk" style="color: #4CAF50;">Force Vectors (Ali/Coh/Sep)</label>
+                </div>
+            </div>
+
+            <!-- Customization Colors -->
+            <div class="panel-section">
+                <h3><i class="fa-solid fa-palette"></i> Colors</h3>
+                <div class="color-pickers-row">
+                    <div class="control-group" style="flex:1;">
+                        <label style="font-size:11px; margin-bottom:4px;">Boids</label>
+                        <input type="color" id="boidColor" value="#3da9fc" class="color-picker-input">
+                    </div>
+                    <div class="control-group" style="flex:1;">
+                        <label style="font-size:11px; margin-bottom:4px;">Predators</label>
+                        <input type="color" id="predatorColor" value="#ff3b30" class="color-picker-input">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandbox Control Actions -->
+            <div class="panel-section">
+                <button id="resetBtn" class="btn primary"><i class="fa-solid fa-rotate-left"></i> Reset Sandbox</button>
+                <div class="button-row">
+                    <button id="clearPredatorsBtn" class="btn"><i class="fa-solid fa-skull"></i> Clear Predators</button>
+                    <button id="clearObstaclesBtn" class="btn"><i class="fa-solid fa-trash-can"></i> Clear Obstacles</button>
+                </div>
+            </div>
+            
+            <div class="panel-info">
+                <p><i class="fa-solid fa-bolt"></i> <strong>Spatial Hash Grid Active:</strong> Running at $O(N)$ neighborhood lookups supporting thousands of agents smoothly at 60 FPS.</p>
+            </div>
+        </aside>
     </main>
 
+    <!-- Core Simulation Engine -->
     <script src="./steering_behaviors.js"></script>
 </body>
-
 </html>

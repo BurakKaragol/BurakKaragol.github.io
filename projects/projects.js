@@ -23,6 +23,19 @@ window.addEventListener('resize', () => !helpTip.hidden && positionHelp());
 /* ===== Project metadata ===== */
 /* difficulty: 0..100 (we’ll render %), time: human string */
 const PROJECTS = {
+  "airfoil_visualizer/": {
+    time: "3 days",
+    difficulty: 90,
+    tags: ["Aerodynamics", "CFD", "Physics", "Canvas", "Aviation"],
+    long: "An interactive 2D aerodynamic wind tunnel and multi-element wing profile simulator featuring analytical NACA equations, morphing flaps & slats, force vectors, and real-time CFD flowfield overlays.",
+    how: [
+      "Analytical NACA 4-digit geometry generator with cosine point clustering.",
+      "Multi-element kinematics engine for trailing-edge flaps (plain, slotted, Fowler) and leading-edge slats.",
+      "2D potential flow CFD solver with vortex panel circulation and Kirchhoff boundary layer stall separation.",
+      "Dynamic force vector balance computing Lift, Drag, Weight, Thrust, Resultant, and Center of Pressure (CP).",
+      "Interactive scalar field shaders rendering Velocity, Pressure (Cp), and Vorticity/Drag wake turbulence."
+    ]
+  },
   "game_idea_generator/": {
     time: "1 day",
     difficulty: 35,
@@ -201,13 +214,15 @@ const PROJECTS = {
   },
   "steering_behaviors/": {
     time: "2 days",
-    difficulty: 60,
-    tags: ["Simulation", "Canvas", "AI"],
-    long: "Simulates flocking behavior using alignment, cohesion, and separation rules. Includes predator evasion and perception visualization.",
+    difficulty: 80,
+    tags: ["Simulation", "Genetics", "SpatialHash", "WebAudio"],
+    long: "A next-generation autonomous agency sandbox combining Craig Reynolds' steering behaviors with Spatial Hash Partitioning (simulating 3,000+ boids at 60 FPS), Genetic Natural Selection Evolution with DNA traits, Perlin Noise flow fields, Spline path-following, and dynamic Web Audio synthesis.",
     how: [
-      "Boids algorithm implementation (Reynolds).",
-      "Canvas API for high-performance rendering.",
-      "Interactive parameter tuning and predator interactions."
+      "Spatial Hash Grid (Bin-Lattice) optimization reducing neighbor lookups from O(N²) to O(N).",
+      "Genetic Ecosystem engine with DNA inheritance (speed, vision, fear), energy metabolism, and mitosis.",
+      "Self-contained 3D Perlin Noise vector field for atmospheric turbulence currents.",
+      "Craig Reynolds' Spline Path Following using vector normal projections and look-ahead targets.",
+      "Procedural Web Audio synthesizer generating dynamic ambient harmonic resonance and tension chords."
     ]
   },
   "wfc/": {
@@ -255,6 +270,31 @@ const PROJECTS = {
       "Polar coordinate trigonometric layout for SVG arc and wedge generation.",
       "Multi-level hierarchical categorization (Primary, Secondary, Tertiary).",
       "Real-time filtering, ring highlight, and bilingual language switching."
+    ]
+  },
+  "cistercian_numerals/": {
+    time: "1 day",
+    difficulty: 40,
+    tags: ["Algorithm", "History", "Canvas", "Interactive"],
+    long: "An interactive visualizer for Cistercian numerals, a 13th-century cipher system invented by monks to write any integer from 1 to 9999 as a single elegant glyph.",
+    how: [
+      "Geometric quadrant rendering engine mapping units, tens, hundreds, and thousands.",
+      "Real-time text parser supporting single digits, composite numbers, and multi-glyph lists.",
+      "Customizable canvas settings for stroke width, size, and styling colors.",
+      "High-fidelity vector exports allowing instant downloads as SVG or PNG images."
+    ]
+  },
+  "procedural_animation/": {
+    time: "2.5 days",
+    difficulty: 85,
+    tags: ["Animation", "FABRIK", "Kinematics", "Canvas", "WebAudio"],
+    long: "A procedural animation and creature kinematics sandbox implementing 2D chain physics, spine distance constraints, angle clamping limits, parametric skinning, and multi-legged FABRIK walking gaits across 6 unique creatures and 4 dynamic biomes.",
+    how: [
+      "Spine distance constraint relaxation and relative angular clamping (θ_max) to prevent body collapsing.",
+      "Parametric tangent and normal vector calculation for smooth organic Catmull-Rom contour skinning.",
+      "FABRIK (Forward And Backward Reaching Inverse Kinematics) leg solver with bend polarity constraints.",
+      "Adaptive gait engine with velocity lead prediction and 3D parabolic foot swing trajectories.",
+      "Self-contained procedural Web Audio synthesizer for ambient biomes and dynamic footstep/water sound effects."
     ]
   },
   /* gets injected when unlocked */

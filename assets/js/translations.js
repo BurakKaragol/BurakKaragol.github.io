@@ -15,7 +15,8 @@ const translations = {
             heroStatus: "Open to collaborations",
             heroTitle: "Building Machines & Stories.",
             heroSub: "Mechatronics Engineer specialized in Aviation & Digital Solutions.",
-            proHeroBtn: '<i class="fi fi-rr-briefcase"></i> View Case Studies',
+            linksHeroSub: "Mechatronics Engineer & Developer",
+            proHeroBtn: '<i class="fa-solid fa-briefcase"></i> View Case Studies',
             footerMsg: "Engineered in Istanbul.",
             
             // SECTION: HISTORY (Professional)
@@ -126,7 +127,8 @@ const translations = {
             heroStatus: "Working on new projects...",
             heroTitle: "Assembling Models & Memories.",
             heroSub: "My personal playground where digital code meets physical reality. I share blueprints, failed prints, and the stories behind them.",
-            persHeroBtn: '<i class="fi fi-rr-flask"></i> Explore the Workshop',
+            linksHeroSub: "Creative Developer & 3D Maker",
+            persHeroBtn: '<i class="fa-solid fa-flask"></i> Explore the Workshop',
             footerMsg: "Built with logic and lots of coffee.",
 
             // SECTION: HISTORY (The 12 Realistic Memories)
@@ -205,7 +207,7 @@ const translations = {
 
             btnShowMore: "Show More",
             btnShowLess: "Show Less",
-            btnWebProjects: 'Browse Web Experiments <i class="fi fi-rr-globe"></i>',
+            btnWebProjects: 'Browse Web Experiments <i class="fa-solid fa-globe"></i>',
 
             // SECTION: CONTACT
             contTitlePers: "Say Hi",
@@ -229,7 +231,8 @@ const translations = {
             heroStatus: "İşbirliklerine açık",
             heroTitle: "Makineler ve Hikayeler İnşa Ediyorum.",
             heroSub: "Havacılık ve Dijital Çözümler üzerine uzmanlaşmış Mekatronik Mühendisi.",
-            proHeroBtn: '<i class="fi fi-rr-briefcase"></i> Projeleri İncele',
+            linksHeroSub: "Mekatronik Mühendisi & Geliştirici",
+            proHeroBtn: '<i class="fa-solid fa-briefcase"></i> Projeleri İncele',
             footerMsg: "İstanbul'da tasarlandı.",
             
             // SECTION: HISTORY
@@ -340,7 +343,8 @@ const translations = {
             heroStatus: "Yeni projeler üzerinde çalışıyor...",
             heroTitle: "Modelleri ve Anıları Birleştiriyorum.",
             heroSub: "Dijital kodların fiziksel gerçekliğe dönüştüğü oyun alanım. Yarım kalan prototipler ve arkasındaki hikayeler.",
-            persHeroBtn: '<i class="fi fi-rr-flask"></i> Atölyeyi Keşfet',
+            linksHeroSub: "Yaratıcı Geliştirici & 3D Maker",
+            persHeroBtn: '<i class="fa-solid fa-flask"></i> Atölyeyi Keşfet',
             footerMsg: "Mantık ve bol bol kahve ile inşa edilmiştir.",
 
             // SECTION: HISTORY
@@ -419,7 +423,7 @@ const translations = {
 
             btnShowMore: "Daha Fazla Göster",
             btnShowLess: "Daha Az Göster",
-            btnWebProjects: 'Web Projelerini Keşfet <i class="fi fi-rr-globe"></i>',
+            btnWebProjects: 'Web Projelerini Keşfet <i class="fa-solid fa-globe"></i>',
 
             // SECTION: CONTACT
             contTitlePers: "Selam Ver",

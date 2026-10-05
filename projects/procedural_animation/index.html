@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procedural Animation & Kinematics | Burak Karagol</title>
+    <meta name="description" content="Interactive 2D procedural animation sandbox featuring distance constraints, spine angle limits, parametric body contouring, and multi-legged FABRIK inverse kinematics." />
+    <meta name="keywords" content="Procedural Animation, FABRIK, Inverse Kinematics, 2D Animation, Canvas, Spine Constraints, Biomechanics, Web Audio" />
+    <meta name="author" content="Burak Karagol" />
+    <meta name="theme-color" content="#0A1118" />
+
+    <!-- FontAwesome for UI icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="./procedural_animation.css">
+</head>
+<body class="dark-theme">
+
+    <!-- Header Bar -->
+    <header class="app-header">
+        <a href="../index.html" class="back-link">
+            <i class="fa-solid fa-arrow-left-long"></i>
+            <span>Back to Projects</span>
+        </a>
+        <div class="header-center">
+            <h1 class="app-title">Procedural Kinematics & Fauna</h1>
+            <div class="biome-picker" id="biomePicker">
+                <button class="biome-btn active" data-biome="ocean" title="Aquatic Depths">
+                    <i class="fa-solid fa-water"></i> <span>Ocean</span>
+                </button>
+                <button class="biome-btn" data-biome="terrarium" title="Mossy Terrarium">
+                    <i class="fa-solid fa-leaf"></i> <span>Terrarium</span>
+                </button>
+                <button class="biome-btn" data-biome="desert" title="Dune Desert">
+                    <i class="fa-solid fa-sun"></i> <span>Desert</span>
+                </button>
+                <button class="biome-btn" data-biome="cyber" title="Cyber Void">
+                    <i class="fa-solid fa-microchip"></i> <span>Cyber Grid</span>
+                </button>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button id="theoryToggleBtn" class="btn header-btn" title="View Mathematical Theory">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>Math & Logic</span>
+            </button>
+            <button id="audioToggleBtn" class="btn header-audio-btn" title="Toggle Procedural Web Audio Synth">
+                <i class="fa-solid fa-volume-xmark" id="audioIcon"></i>
+                <span id="audioLabel">Audio: Off</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="app-container">
+        <!-- Interactive Canvas Area -->
+        <div class="canvas-wrapper" id="canvasWrapper">
+            <canvas id="simCanvas"></canvas>
+
+            <!-- Floating Top HUD (Live Analytics) -->
+            <div class="canvas-hud top-hud">
+                <div class="hud-pill">
+                    <span class="hud-label">Creature</span>
+                    <span class="hud-value" id="hudCreatureName">Koi Fish</span>
+                </div>
+                <div class="hud-pill">
+                    <span class="hud-label">FPS</span>
+                    <span class="hud-value" id="hudFps">60</span>
+                </div>
+                <div class="hud-pill">
+                    <span class="hud-label">Spine Joints</span>
+                    <span class="hud-value" id="hudJoints">14</span>
+                </div>
+                <div class="hud-pill" id="hudLegsPill">
+                    <span class="hud-label">FABRIK Legs</span>
+                    <span class="hud-value" id="hudLegs">0</span>
+                </div>
+                <div class="hud-pill">
+                    <span class="hud-label">Gait Status</span>
+                    <span class="hud-value" id="hudGait">Swimming</span>
+                </div>
+            </div>
+
+            <!-- Bottom Instruction Toast -->
+            <div class="canvas-hud bottom-hud">
+                <div class="instruction-badge" id="instructionBadge">
+                    <i class="fa-solid fa-mouse-pointer"></i>
+                    <span id="instructionText">Move cursor to guide creature &bull; Click to place target &bull; Keys 1-6 switch creature</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Control Panel -->
+        <aside class="control-panel" id="controlPanel">
+            
+            <!-- 1. Creature Taxonomy Cards -->
+            <div class="panel-section">
+                <h3><i class="fa-solid fa-paw"></i> Select Creature</h3>
+                <div class="creature-grid" id="creatureSelector">
+                    <button class="creature-card active" data-creature="fish">
+                        <div class="card-icon"><i class="fa-solid fa-fish"></i></div>
+                        <div class="card-meta">
+                            <span class="creature-title">Koi Fish</span>
+                            <span class="creature-sub">Curvature Fins &bull; Undulation</span>
+                        </div>
+                    </button>
+
+                    <button class="creature-card" data-creature="lizard">
+                        <div class="card-icon"><i class="fa-solid fa-dragon"></i></div>
+                        <div class="card-meta">
+                            <span class="creature-title">Gecko Lizard</span>
+                            <span class="creature-sub">4-Leg FABRIK IK &bull; Trot Gait</span>
+                        </div>
+                    </button>
+
+                    <button class="creature-card" data-creature="snake">
+                        <div class="card-icon"><i class="fa-solid fa-worm"></i></div>
+                        <div class="card-meta">
+                            <span class="creature-title">Sand Viper</span>
+                            <span class="creature-sub">45-Joint Serpenoid Wave</span>
+                        </div>
+                    </button>
+
+                    <button class="creature-card" data-creature="spider">
+                        <div class="card-icon"><i class="fa-solid fa-spider"></i></div>
+                        <div class="card-meta">
+                            <span class="creature-title">Shadow Spider</span>
+                            <span class="creature-sub">8-Leg Ripple IK &bull; Abdomen</span>
+                        </div>
+                    </button>
+
+                    <button class="creature-card" data-creature="centipede">
+                        <div class="card-icon"><i class="fa-solid fa-bug"></i></div>
+                        <div class="card-meta">
+                            <span class="creature-title">Centipede</span>
+                            <span class="creature-sub">48 Legs &bull; Metachronal Wave</span>
+                        </div>
+                    </button>
+
+                    <button class="creature-card" data-creature="manta">
+                        <div class="card-icon"><i class="fa-solid fa-wind"></i></div>
+                        <div class="card-meta">
+                            <span class="creature-title">Abyssal Manta</span>
+                            <span class="creature-sub">Dual Wing Flap &bull; Ribbon</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. Locomotion & AI Control Modes -->
+            <div class="panel-section">
+                <h3><i class="fa-solid fa-gamepad"></i> Control & AI Mode</h3>
+                <select id="controlModeSelect" class="form-select">
+                    <option value="cursor" selected>Mouse / Touch Follow (Lead)</option>
+                    <option value="wander">Autonomous Organic Wander (Perlin Noise)</option>
+                    <option value="hunt">Predator Hunt (Chases Fleeing Prey)</option>
+                    <option value="keyboard">Manual WASD / Arrow Keys Pilot</option>
+                </select>
+                <div id="keyboardPrompt" class="prompt-hint hidden">
+                    <i class="fa-solid fa-keyboard"></i> Use <b>W/A/S/D</b> or <b>Arrow Keys</b> to steer. Hold <b>SHIFT</b> to sprint!
+                </div>
+            </div>
+
+            <!-- 3. Click Interaction Tool -->
+            <div class="panel-section">
+                <h3><i class="fa-solid fa-hand-pointer"></i> Click Action</h3>
+                <div class="segmented-control">
+                    <button class="segment-btn active" data-tool="food" title="Drop bait food pellets">
+                        <i class="fa-solid fa-cookie-bite"></i> Food
+                    </button>
+                    <button class="segment-btn" data-tool="prey" title="Spawn fleeing critter">
+                        <i class="fa-solid fa-mosquito"></i> Prey
+                    </button>
+                    <button class="segment-btn" data-tool="obstacle" title="Place rock obstacle">
+                        <i class="fa-solid fa-cubes"></i> Rock
+                    </button>
+                    <button class="segment-btn" data-tool="attractor" title="Gravity well">
+                        <i class="fa-solid fa-magnet"></i> Well
+                    </button>
+                </div>
+                <div class="button-row" style="margin-top: 10px;">
+                    <button id="spawnPreyBtn" class="btn"><i class="fa-solid fa-plus"></i> +3 Prey</button>
+                    <button id="clearEntitiesBtn" class="btn danger"><i class="fa-solid fa-trash"></i> Clear All</button>
+                </div>
+            </div>
+
+            <!-- 4. Educational X-Ray & Math Overlays -->
+            <div class="panel-section">
+                <h3><i class="fa-solid fa-eye"></i> Kinematics X-Ray & Math</h3>
+                
+                <div class="control-group">
+                    <label for="renderModeSelect">Render Mode</label>
+                    <select id="renderModeSelect" class="form-select">
+                        <option value="organic" selected>Full Organic Skin (Shaded & Textured)</option>
+                        <option value="xray">Combined X-Ray (Translucent Skin + Bones)</option>
+                        <option value="skeleton">Spine Skeleton & Joint Pivots</option>
+                        <option value="fabrik">FABRIK IK Armature & Stepping Arcs</option>
+                        <option value="mesh">Parametric Normals & Width Ribs</option>
+                    </select>
+                </div>
+
+                <div class="checkbox-grid">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="showAngleLimitsChk">
+                        <label for="showAngleLimitsChk" title="Visualizes the max angle constraint arc at each joint">Angle Limit Arcs (θ<sub>max</sub>)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="showFootprintsChk" checked>
+                        <label for="showFootprintsChk" title="Renders foot target anchors and swing trajectories">Foot Anchors & Stride</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="showNormalsChk">
+                        <label for="showNormalsChk" title="Displays joint tangents and orthogonal skin normals">Tangents & Normals</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="showVelocityLeadChk">
+                        <label for="showVelocityLeadChk" title="Shows velocity extrapolation vector for step prediction">Velocity Lead Vector</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Physics & Kinematics Parameter Sliders -->
+            <div class="panel-section">
+                <h3><i class="fa-solid fa-sliders"></i> Physics & Gait Parameters</h3>
+
+                <div class="control-group">
+                    <div class="slider-row">
+                        <label for="speedSlider">Movement Speed</label>
+                        <span id="speedVal" class="monospaced-val">3.5</span>
+                    </div>
+                    <input type="range" id="speedSlider" min="1.0" max="9.0" step="0.5" value="3.5">
+                </div>
+
+                <div class="control-group">
+                    <div class="slider-row">
+                        <label for="angleLimitSlider">Spine Angle Limit (θ<sub>max</sub>)</label>
+                        <span id="angleLimitVal" class="monospaced-val">32°</span>
+                    </div>
+                    <input type="range" id="angleLimitSlider" min="10" max="65" step="1" value="32">
+                </div>
+
+                <div class="control-group" id="stepRadiusGroup">
+                    <div class="slider-row">
+                        <label for="stepRadiusSlider">Step Stride Threshold</label>
+                        <span id="stepRadiusVal" class="monospaced-val">42px</span>
+                    </div>
+                    <input type="range" id="stepRadiusSlider" min="15" max="80" step="2" value="42">
+                </div>
+
+                <div class="control-group" id="stepLiftGroup">
+                    <div class="slider-row">
+                        <label for="stepLiftSlider">Step Lift Height</label>
+                        <span id="stepLiftVal" class="monospaced-val">16px</span>
+                    </div>
+                    <input type="range" id="stepLiftSlider" min="0" max="35" step="1" value="16">
+                </div>
+
+                <div class="control-group">
+                    <div class="slider-row">
+                        <label for="undulationSlider">Wave Undulation Amp</label>
+                        <span id="undulationVal" class="monospaced-val">1.0x</span>
+                    </div>
+                    <input type="range" id="undulationSlider" min="0.0" max="2.5" step="0.1" value="1.0">
+                </div>
+
+                <div class="control-group">
+                    <div class="slider-row">
+                        <label for="scaleSlider">Creature Scale</label>
+                        <span id="scaleVal" class="monospaced-val">1.0x</span>
+                    </div>
+                    <input type="range" id="scaleSlider" min="0.5" max="1.8" step="0.05" value="1.0">
+                </div>
+
+                <div class="button-row" style="margin-top: 12px;">
+                    <button id="resetDefaultsBtn" class="btn full-width"><i class="fa-solid fa-rotate-left"></i> Reset Creature Defaults</button>
+                </div>
+            </div>
+
+            <!-- 6. Color Palette & Styling -->
+            <div class="panel-section">
+                <h3><i class="fa-solid fa-palette"></i> Color Themes</h3>
+                <div class="palette-options" id="paletteOptions">
+                    <button class="palette-swatch active" data-palette="vibrant" title="Royal Koi (Coral / Gold)" style="background: linear-gradient(135deg, #ff4757, #ffa502);"></button>
+                    <button class="palette-swatch" data-palette="emerald" title="Emerald Jade (Jade / Mint)" style="background: linear-gradient(135deg, #05c46b, #0be881);"></button>
+                    <button class="palette-swatch" data-palette="abyssal" title="Electric Abyssal (Indigo / Cyan)" style="background: linear-gradient(135deg, #3c40c6, #0fbcf9);"></button>
+                    <button class="palette-swatch" data-palette="solar" title="Solar Phoenix (Crimson / Amber)" style="background: linear-gradient(135deg, #ff3838, #ff9f1a);"></button>
+                    <button class="palette-swatch" data-palette="obsidian" title="Obsidian Slate (Matte Charcoal)" style="background: linear-gradient(135deg, #2c3440, #181e26);"></button>
+                    <button class="palette-swatch" data-palette="ivory" title="Bone / Ivory (Clean Minimalist)" style="background: linear-gradient(135deg, #e2e8f0, #cbd5e1);"></button>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Mathematical Theory Modal -->
+    <div class="theory-modal" id="theoryModal" aria-hidden="true">
+        <div class="theory-backdrop" id="theoryBackdrop"></div>
+        <div class="theory-dialog">
+            <div class="theory-header">
+                <h2><i class="fa-solid fa-graduation-cap"></i> Procedural Kinematics: Mathematical Logic</h2>
+                <button class="theory-close-btn" id="theoryCloseBtn">&times;</button>
+            </div>
+            <div class="theory-content">
+                <section class="theory-block">
+                    <h3>1. Distance & Spine Constraints (Follow-the-Leader)</h3>
+                    <p>
+                        A creature spine consists of an array of <i>N</i> joints <i>P</i><sub>0</sub>, <i>P</i><sub>1</sub>, ..., <i>P</i><sub>N-1</sub> separated by fixed segment lengths <i>L</i><sub>i</sub>.
+                        The lead joint <i>P</i><sub>0</sub> is steered toward the movement target. Each subsequent joint <i>P</i><sub>i</sub> is constrained to remain at distance <i>L</i><sub>i-1</sub> from <i>P</i><sub>i-1</sub>:
+                    </p>
+                    <div class="math-box">
+                        <b>v</b> = P<sub>i</sub> - P<sub>i-1</sub> &emsp;|&emsp; <b>u</b> = <b>v</b> / ||<b>v</b>|| &emsp;|&emsp; P<sub>i</sub> = P<sub>i-1</sub> + <b>u</b> &times; L<sub>i-1</sub>
+                    </div>
+                </section>
+
+                <section class="theory-block">
+                    <h3>2. Angular Clamping (Anti-Collapse & Organic Curvature)</h3>
+                    <p>
+                        To prevent the spine from collapsing or pinching sharply during fast turns, we limit the change in angle &Delta;&theta;<sub>i</sub> between successive segments (P<sub>i-1</sub> &minus; P<sub>i-2</sub>) and (P<sub>i</sub> &minus; P<sub>i-1</sub>) within [&minus;&theta;<sub>max</sub>, +&theta;<sub>max</sub>]:
+                    </p>
+                    <div class="math-box">
+                        &Delta;&theta;<sub>i</sub> = atan2(sin(&theta;<sub>i</sub> - &theta;<sub>i-1</sub>), cos(&theta;<sub>i</sub> - &theta;<sub>i-1</sub>)) &emsp;|&emsp; &theta;<sub>i</sub>' = &theta;<sub>i-1</sub> + clamp(&Delta;&theta;<sub>i</sub>, &minus;&theta;<sub>max</sub>, +&theta;<sub>max</sub>)
+                    </div>
+                </section>
+
+                <section class="theory-block">
+                    <h3>3. Parametric Skinning & Contour Outlines</h3>
+                    <p>
+                        At each spine joint P<sub>i</sub>, we calculate the local tangent vector <b>t</b><sub>i</sub> and its orthogonal normal vector <b>n</b><sub>i</sub> = (&minus;t<sub>i,y</sub>, t<sub>i,x</sub>).
+                        Parametric radius functions W<sub>i</sub> dictate the creature's width profile:
+                    </p>
+                    <div class="math-box">
+                        <b>Left Vertex</b><sub>i</sub> = P<sub>i</sub> + <b>n</b><sub>i</sub> &times; W<sub>i</sub> &emsp;|&emsp; <b>Right Vertex</b><sub>i</sub> = P<sub>i</sub> &minus; <b>n</b><sub>i</sub> &times; W<sub>i</sub>
+                    </div>
+                    <p>Connecting left and right vertices with smooth cubic splines produces the organic body silhouette.</p>
+                </section>
+
+                <section class="theory-block">
+                    <h3>4. FABRIK Inverse Kinematics & Walking Gaits</h3>
+                    <p>
+                        For multi-jointed legs (Reptile, Spider, Centipede), we employ <b>Forward And Backward Reaching Inverse Kinematics (FABRIK)</b>:
+                    </p>
+                    <ul>
+                        <li><b>Forward Reach:</b> Place the end effector (foot) at target P<sub>foot</sub> and pull segments inward toward the body.</li>
+                        <li><b>Backward Reach:</b> Anchor the root joint to the shoulder/hip offset P<sub>shoulder</sub> and project segments outward.</li>
+                        <li><b>Gait Cycle & Velocity Lead:</b> Foot triggers a step when distance from rest anchor exceeds R<sub>step</sub>. Landing target predicts forward body motion: P<sub>target</sub> = P<sub>anchor</sub> + <b>v</b><sub>creature</sub> &times; T<sub>lead</sub>.</li>
+                        <li><b>Parabolic Lift Arc:</b> Foot lifts along a quadratic arc z(t) = 4 &times; H<sub>lift</sub> &times; t &times; (1 &minus; t) during swing phase.</li>
+                    </ul>
+                </section>
+            </div>
+            <div class="theory-footer">
+                <button class="btn primary" id="theoryGotItBtn">Got it, let's explore!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Application Logic -->
+    <script src="./procedural_animation.js"></script>
+</body>
+</html>

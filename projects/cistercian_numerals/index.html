@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cistercian Numerals Generator - 13th-Century Monastic Cipher</title>
+
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="./cistercian.css">
+</head>
+<body class="dark-theme">
+
+    <!-- Navigation Header -->
+    <header class="app-header">
+        <a href="../index.html" class="back-link">
+            <i class="fa-solid fa-arrow-left-long"></i>
+            <span>Back to Projects</span>
+        </a>
+        <h1 class="app-title">Cistercian Numerals</h1>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="app-container">
+        <div class="workspace">
+            <!-- Canvas Display Area -->
+            <div class="canvas-wrapper">
+                <canvas id="canvasElement"></canvas>
+            </div>
+
+            <!-- Dashboard HUD Panel -->
+            <aside class="control-panel">
+                <!-- Text input Section -->
+                <div class="panel-section">
+                    <h3><i class="fa-solid fa-keyboard"></i> Input Decoder</h3>
+                    <div class="control-group" style="margin-bottom: 4px;">
+                        <label for="modeSelect" style="color: var(--text-muted); font-size: 13px; margin-bottom: 4px;">Translation Mode</label>
+                        <select id="modeSelect" class="form-select">
+                            <option value="numbers" selected>Standard Numbers (0-9999)</option>
+                            <option value="alphabet">Alphabet Index (A-Z to 1-26)</option>
+                            <option value="ascii">ASCII Code Character Mapper</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <textarea id="numInput" placeholder="Enter integers between 0 and 9999 (e.g. 1993 4723 9433)..." rows="3">1993 4723 6859 7085 9433</textarea>
+                        <span id="inputHelper" class="input-helper">Type space-separated values to display multiple glyphs side-by-side. Numbers must be in the range 0 - 9999.</span>
+                    </div>
+                </div>
+
+                <!-- Customization Sliders -->
+                <div class="panel-section">
+                    <h3><i class="fa-solid fa-sliders"></i> Drawing Settings</h3>
+                    
+                    <div class="control-group">
+                        <div class="slider-row">
+                            <label for="sizeSlider">Glyph Height</label>
+                            <span id="sizeDisplay" class="monospaced-val">180px</span>
+                        </div>
+                        <input type="range" id="sizeSlider" min="100" max="300" step="10" value="180">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="slider-row">
+                            <label for="spacingSlider">Glyph Spacing</label>
+                            <span id="spacingDisplay" class="monospaced-val">120px</span>
+                        </div>
+                        <input type="range" id="spacingSlider" min="60" max="250" step="5" value="120">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="slider-row">
+                            <label for="strokeSlider">Stroke Thickness</label>
+                            <span id="strokeDisplay" class="monospaced-val">6px</span>
+                        </div>
+                        <input type="range" id="strokeSlider" min="2" max="14" step="1" value="6">
+                    </div>
+
+                    <div class="control-group">
+                        <label for="colorSelect" style="color: var(--text-muted); font-size: 13px; margin-bottom: 4px;">Stroke Color</label>
+                        <select id="colorSelect" class="form-select">
+                            <option value="#ffcc00" selected>Golden Yellow</option>
+                            <option value="#3da9fc">Neon Cyan</option>
+                            <option value="#ff007f">Vibrant Pink</option>
+                            <option value="#00e676">phosphor Green</option>
+                            <option value="#ffffff">Pure White</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Export Section -->
+                <div class="panel-section">
+                    <h3><i class="fa-solid fa-download"></i> Export Options</h3>
+                    <div class="button-row">
+                        <button id="downloadPng" class="btn primary"><i class="fa-solid fa-file-image"></i> PNG</button>
+                        <button id="downloadSvg" class="btn"><i class="fa-solid fa-file-code"></i> SVG</button>
+                    </div>
+                </div>
+
+                <!-- Expandable Reference Guide Accordion -->
+                <div class="panel-section">
+                    <div class="accordion-header" id="accordionHeader">
+                        <h3><i class="fa-solid fa-book-open"></i> Numeral Reference Sheet</h3>
+                        <i class="fa-solid fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="accordion-content" id="accordionContent">
+                        <img src="./cistercian_reference.png" alt="Cistercian Numeral reference guide" class="reference-img">
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Core logic JS script -->
+    <script src="./cistercian.js"></script>
+</body>
+</html>

@@ -27,8 +27,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png" />
 
-  <script src="https://kit.fontawesome.com/e10aba78d2.js" crossorigin="anonymous"></script>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link rel="stylesheet" href="projects.css" />
 </head>
@@ -46,8 +45,9 @@
   <!-- Header -->
   <header class="projects__header">
     <div class="projects__head-left">
+      <a href="../index.html?mode=personal" class="btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;font-size:13px;border-radius:10px;" aria-label="Return to portfolio homepage"><i class="fa-solid fa-arrow-left"></i> Home</a>
       <h1 class="projects__title">Projects</h1>
-      <i class="fas fa-question-circle help-icon" id="helpIcon" aria-describedby="helpTooltip" tabindex="0"></i>
+      <i class="fa-solid fa-circle-question help-icon" id="helpIcon" aria-describedby="helpTooltip" tabindex="0" title="About this gallery"></i>
     </div>
 
     <!-- Secret Key: first 4 boxed slots + tail (boxless) -->
@@ -284,8 +284,8 @@
         <article class="card" data-url="steering_behaviors/">
           <div class="thumb" style="background-image:url('../assets/img/projects/steering_behaviors.webp')"></div>
           <div class="body">
-            <h3 class="title">Steering Behaviors</h3>
-            <p class="desc">Interactive flocking simulation (Boids).</p>
+            <h3 class="title">Steering & Eco-Evolution</h3>
+            <p class="desc">High-performance Spatial Grid sandbox (3,000+ boids), Genetic Natural Selection, Perlin Flow Fields, and Web Audio synthesis.</p>
             <div class="actions">
               <a class="btn primary" href="steering_behaviors/">Open</a>
               <button class="btn" data-details>Details</button>
@@ -336,6 +336,30 @@
             <p class="desc">Interactive emotion taxonomy wheel in Turkish and English.</p>
             <div class="actions">
               <a class="btn primary" href="emotion_wheel/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="cistercian_numerals/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/cistercian_numerals.png')"></div>
+          <div class="body">
+            <h3 class="title">Cistercian Numerals</h3>
+            <p class="desc">Interactive translator and visualizer for the 13th-century Cistercian monastic cipher number system.</p>
+            <div class="actions">
+              <a class="btn primary" href="cistercian_numerals/">Open</a>
+              <button class="btn" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="procedural_animation/">
+          <div class="thumb" style="background-image:url('../assets/img/projects/procedural_animation.webp')"></div>
+          <div class="body">
+            <h3 class="title">Procedural Kinematics</h3>
+            <p class="desc">2D chain simulations, spine angle limits, parametric contours, and multi-legged FABRIK IK.</p>
+            <div class="actions">
+              <a class="btn primary" href="procedural_animation/">Open</a>
               <button class="btn" data-details>Details</button>
             </div>
           </div>

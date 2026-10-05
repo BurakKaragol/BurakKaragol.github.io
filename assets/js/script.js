@@ -379,10 +379,10 @@ function updateGalleryToggleText() {
     
     if (isExpanded) {
         lblToggleLabGallery.innerText = (currentTrans && currentTrans.btnShowLess) ? currentTrans.btnShowLess : 'Show Less';
-        if (icnToggleLabGallery) icnToggleLabGallery.className = 'fi fi-rr-angle-small-up';
+        if (icnToggleLabGallery) icnToggleLabGallery.className = 'fa-solid fa-chevron-up';
     } else {
         lblToggleLabGallery.innerText = (currentTrans && currentTrans.btnShowMore) ? currentTrans.btnShowMore : 'Show More';
-        if (icnToggleLabGallery) icnToggleLabGallery.className = 'fi fi-rr-angle-small-down';
+        if (icnToggleLabGallery) icnToggleLabGallery.className = 'fa-solid fa-chevron-down';
     }
 }
 
