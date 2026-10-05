@@ -630,6 +630,53 @@ function updateCounts() {
   if (countAllSpan) countAllSpan.textContent = `(${totalCards})`;
 }
 
+/* ===== Universal Hit Counter Fetcher ===== */
+function loadUniversalViewCounters() {
+  const cards = $$('.projects__grid .card');
+  cards.forEach(card => {
+    const rawUrl = card.getAttribute('data-url') || '';
+    const slug = rawUrl.replace(/\/$/, '').trim();
+    if (!slug) return;
+
+    // Check or create badge
+    let badge = card.querySelector('.card-views');
+    if (!badge) {
+      badge = document.createElement('div');
+      badge.className = 'card-views';
+      badge.title = 'Total page visits across all devices';
+      badge.innerHTML = `<i class="fa-solid fa-eye"></i> <span class="view-num">--</span>`;
+      const thumb = card.querySelector('.thumb');
+      if (thumb) {
+        thumb.appendChild(badge);
+      } else {
+        card.appendChild(badge);
+      }
+    }
+
+    // Asynchronously fetch hit count from universal tracker
+    const svgUrl = `https://hits.sh/burakkaragol.github.io/projects/${slug}.svg`;
+    fetch(svgUrl)
+      .then(res => res.text())
+      .then(svgText => {
+        const match = svgText.match(/<title>hits:\s*([0-9,kM+]+)<\/title>/i) || svgText.match(/aria-label="hits:\s*([0-9,kM+]+)"/i);
+        const countSpan = badge.querySelector('.view-num');
+        if (countSpan && match) {
+          countSpan.textContent = match[1];
+        } else if (countSpan && countSpan.textContent === '--') {
+          countSpan.textContent = '1';
+        }
+      })
+      .catch(() => {
+        const countSpan = badge.querySelector('.view-num');
+        if (countSpan && countSpan.textContent === '--') {
+          countSpan.textContent = '1';
+        }
+      });
+  });
+}
+
 updateCounts();
 applyFilters();
+loadUniversalViewCounters();
+
 
