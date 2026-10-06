@@ -1,6 +1,6 @@
 /**
  * Universal Project Hit Tracker
- * Records unique visits per project across all devices (Projects Hub, direct URLs, bookmarks).
+ * Records each visit per project across all devices (Projects Hub, direct URLs, bookmarks).
  */
 (function() {
   'use strict';
@@ -15,13 +15,8 @@
     const slug = rawSlug.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
 
     if (slug && slug !== 'projects') {
-      const sessionKey = 'bk_tracked_' + slug;
-      // Record hit if not already counted in current session
-      if (!sessionStorage.getItem(sessionKey)) {
-        sessionStorage.setItem(sessionKey, '1');
-        const apiUrl = `https://countapi.mileshilliard.com/api/v1/hit/burakkaragol_proj_${slug}`;
-        fetch(apiUrl, { mode: 'cors', cache: 'no-cache' }).catch(() => {});
-      }
+      const apiUrl = `https://countapi.mileshilliard.com/api/v1/hit/burakkaragol_proj_${slug}?_t=${Date.now()}`;
+      fetch(apiUrl, { mode: 'cors', cache: 'no-store' }).catch(() => {});
     }
   } catch (e) {
     // Non-blocking silent failover

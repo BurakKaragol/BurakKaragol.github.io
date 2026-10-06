@@ -653,9 +653,9 @@ function loadUniversalViewCounters() {
       }
     }
 
-    // Fetch view count without incrementing
-    const getUrl = `https://countapi.mileshilliard.com/api/v1/get/burakkaragol_proj_${cleanSlug}`;
-    fetch(getUrl, { mode: 'cors', cache: 'default' })
+    // Fetch fresh view count without incrementing
+    const getUrl = `https://countapi.mileshilliard.com/api/v1/get/burakkaragol_proj_${cleanSlug}?_t=${Date.now()}`;
+    fetch(getUrl, { mode: 'cors', cache: 'no-store' })
       .then(res => {
         if (!res.ok) {
           if (res.status === 404) return { value: 0 };
@@ -683,5 +683,13 @@ function loadUniversalViewCounters() {
 updateCounts();
 applyFilters();
 loadUniversalViewCounters();
+
+// Re-fetch fresh counts when navigating back via bfcache
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    loadUniversalViewCounters();
+  }
+});
+
 
 
