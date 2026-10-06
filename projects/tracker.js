@@ -1,17 +1,27 @@
 /**
  * Universal Project Hit Tracker
- * Tracks visits from any source (Projects Hub, direct link, bookmark) across all devices.
+ * Records unique visits per project across all devices (Projects Hub, direct URLs, bookmarks).
  */
 (function() {
   'use strict';
   try {
-    const path = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
-    const segments = path.split('/').filter(Boolean);
-    const slug = segments[segments.length - 1] || '';
+    const cleanPath = window.location.pathname
+      .replace(/\\/g, '/')
+      .replace(/\/index\.html$/, '')
+      .replace(/\/$/, '');
+    
+    const segments = cleanPath.split('/').filter(Boolean);
+    const rawSlug = segments[segments.length - 1] || '';
+    const slug = rawSlug.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
 
     if (slug && slug !== 'projects') {
-      const trackerImg = new Image();
-      trackerImg.src = `https://hits.sh/burakkaragol.github.io/projects/${slug}.svg?style=flat`;
+      const sessionKey = 'bk_tracked_' + slug;
+      // Record hit if not already counted in current session
+      if (!sessionStorage.getItem(sessionKey)) {
+        sessionStorage.setItem(sessionKey, '1');
+        const apiUrl = `https://countapi.mileshilliard.com/api/v1/hit/burakkaragol_proj_${slug}`;
+        fetch(apiUrl, { mode: 'cors', cache: 'no-cache' }).catch(() => {});
+      }
     }
   } catch (e) {
     // Non-blocking silent failover

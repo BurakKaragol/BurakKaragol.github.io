@@ -630,13 +630,13 @@ function updateCounts() {
   if (countAllSpan) countAllSpan.textContent = `(${totalCards})`;
 }
 
-/* ===== Universal Hit Counter Fetcher ===== */
+/* ===== Universal Hit Counter Fetcher (Read-Only) ===== */
 function loadUniversalViewCounters() {
   const cards = $$('.projects__grid .card');
   cards.forEach(card => {
     const rawUrl = card.getAttribute('data-url') || '';
-    const slug = rawUrl.replace(/\/$/, '').trim();
-    if (!slug) return;
+    const cleanSlug = rawUrl.replace(/\/$/, '').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '_');
+    if (!cleanSlug) return;
 
     // Check or create badge
     let badge = card.querySelector('.card-views');
@@ -653,23 +653,28 @@ function loadUniversalViewCounters() {
       }
     }
 
-    // Asynchronously fetch hit count from universal tracker
-    const svgUrl = `https://hits.sh/burakkaragol.github.io/projects/${slug}.svg`;
-    fetch(svgUrl)
-      .then(res => res.text())
-      .then(svgText => {
-        const match = svgText.match(/<title>hits:\s*([0-9,kM+]+)<\/title>/i) || svgText.match(/aria-label="hits:\s*([0-9,kM+]+)"/i);
+    // Fetch view count without incrementing
+    const getUrl = `https://countapi.mileshilliard.com/api/v1/get/burakkaragol_proj_${cleanSlug}`;
+    fetch(getUrl, { mode: 'cors', cache: 'default' })
+      .then(res => {
+        if (!res.ok) {
+          if (res.status === 404) return { value: 0 };
+          throw new Error('Fetch failed');
+        }
+        return res.json();
+      })
+      .then(data => {
         const countSpan = badge.querySelector('.view-num');
-        if (countSpan && match) {
-          countSpan.textContent = match[1];
+        if (countSpan && typeof data.value === 'number') {
+          countSpan.textContent = data.value.toLocaleString();
         } else if (countSpan && countSpan.textContent === '--') {
-          countSpan.textContent = '1';
+          countSpan.textContent = '0';
         }
       })
       .catch(() => {
         const countSpan = badge.querySelector('.view-num');
         if (countSpan && countSpan.textContent === '--') {
-          countSpan.textContent = '1';
+          countSpan.textContent = '0';
         }
       });
   });
